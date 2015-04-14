@@ -33,13 +33,6 @@ VARNAME = count _countQuery;
 QUERY(allUnits, side _x == SIDE, _countQuery); \
 VARNAME = count _countQuery;
 
-//AREAAICOUNT counts the ammount of ai units of SIDE who are inside the RADIUS
-//of OBJECT and stores the result in VARNAME
-#define AREAAICOUNT(SIDE, RADIUS, OBJECT, VARNAME) \
-QUERY(allUnits, side _x == SIDE, _areaQuery); \
-QUERY(_areaQuery, _x distance OBJECT < RADIUS, _areaQuery); \
-VARNAME = count _areaQuery;
-
 //STACKNAMES takes an array of strings and stacks the names to shorten the array
 //Example: ["abc", "abc", "abc", "ab", "c", "c"] becomes ["3 X abc", "1 X ab", "2 X c"]
 #define STACKNAMES(ARRAY, VARNAME) \
@@ -73,39 +66,6 @@ CURRENTCOUNT set [count CURRENTCOUNT, [NAME, SIDE, "currentAi"]];
 		_x set [POS, VALUE]; \
 	}; \
 } forEach FW_TEAMS;
-
-FNC_CASUALTYCHECK = {
-	
-	private["_temp", "_tempStart", "_tempCurrent", "_tempText"];
-
-	_temp = 0;
-	
-	{ 
-		if ((_x select 0) == _this select 0) exitWith {
-		
-			_tempStart = (_x select 1);
-			_tempCurrent = (_x select 2);
-			
-			if (_tempStart == 0) then {
-			
-				_tempText = format ["Casualty check:<br></br>Warning no units on team ""%1"", in file ""customization\endConditions.sqf"".", _x select 0];
-				[_tempText] call FNC_DEBUG_MESSAGE;
-				
-			} else {
-			
-				_temp = (_tempStart - _tempCurrent) / (_tempStart * 0.01);
-				
-			};
-		};
-	} forEach FW_TEAMS;
-	
-	_temp
-	
-};
-
-//CASUALTYCHECK returns the casualty percentage of TEAM
-#define CASUALTYCHECK(TEAM) \
-[TEAM] call FNC_CASUALTYCHECK;
 
 //COUNTUNITS processes the counting commands it is given
 //Example: [["WEST", west, "startPlayable"],["WEST", west, "currentPlayable"]]

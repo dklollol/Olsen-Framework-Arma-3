@@ -1,4 +1,5 @@
 #include "definitions.sqf" //DO NOT REMOVE
+#include "functions.sqf" //DO NOT REMOVE
 
 enableSaving [false, false];
 
