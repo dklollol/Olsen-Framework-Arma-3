@@ -1,20 +1,2 @@
-#include "core\dia\rscdefinitions.hpp" //Must have for the end screen to work, if removed Arma 3 will crash on mission load
-#include "core\dia\endscreen\dia_endscreen.hpp" //Must have for the end screen to work, if removed Arma 3 will crash on mission load
-#include "core\dia\endscreen\dia_debug.hpp" //Must have for the end screen to work, if removed Arma 3 will crash on mission load
-
-respawn = "BASE"; //Do not change, spectator script needs people to respawn, to be declared as dead and put into spectator mode
-respawndelay = 5; //5 seconds are needed to make sure people properly die and go into spectator
-disabledAI = 1; //disabledAI does so not slotted units do not spawn as ai
-
-class Header {
-	gameType = Coop;
-	minPlayers = 1;
-	maxPlayers = 9; //maxPlayers must always be accurate to the amount of playable units
-	playerCountMultipleOf = 1; //Disables auto balance
-};
-
-class Extended_PreInit_EventHandlers {
-	class Mission {
-		init = "GEARSCRIPT = compile preprocessFileLineNumbers 'customization\gear.sqf'; VEHGEARSCRIPT = compile preprocessFileLineNumbers 'customization\vehGear.sqf'; TRACKASSET = compile preprocessFileLineNumbers 'core\trackAsset.sqf'"; //Compiles the gear script for the server and client
-	};
-};
+#include "core\description.hpp" //DO NOT REMOVE
+#include "customization\missionSettings.hpp" //DO NOT REMOVE
