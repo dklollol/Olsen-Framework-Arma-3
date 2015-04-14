@@ -26,14 +26,14 @@ if (!isDedicated) then {
 	["endScreen", {_this execVM "core\dia\endscreen\dia_endscreen.sqf";}] call CBA_fnc_addEventHandler;
 	
 	//Various settings
-	enableEngineArtillery false; //Disable arma 3 artillery computer
-	enableRadio false;
+	enableEngineArtillery false; //Disable Arma 3 artillery computer
+	enableRadio false; //Disable Arma 3 regular radio
 	0 fadeRadio 0; //Lower radio volume to 0
 	
 	//Creates the briefing notes for the player
 	[] execVM "customization\briefing.sqf";
 	
-	respawnTickets = 0;
+	respawnTickets = 0; //Initialize respawn tickets to 0 
 	
 	player setVariable ["frameworkDead", false, true]; //Tells the framework the player is alive
 	

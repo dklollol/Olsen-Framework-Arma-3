@@ -128,3 +128,5 @@ STRING setMarkerType "EMPTY";
 call compile preprocessFileLineNumbers ("modules\" + NAME + "\init.sqf");
 
 FNC_INAREA = compile preprocessFileLineNumbers "core\inArea.sqf";
+
+FNC_SPECTATE = compile preprocessFileLineNumbers "core\spectate.sqf";

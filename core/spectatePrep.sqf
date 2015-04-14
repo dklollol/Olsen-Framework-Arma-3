@@ -51,7 +51,7 @@ if (respawnTickets > 0) then {
 	
 	if (!spectating) then {
 		
-		[_this select 0] call compile preprocessFileLineNumbers "core\spectate.sqf";
+		[_this select 0] call FNC_SPECTATE;
 		
 	} else {
 		

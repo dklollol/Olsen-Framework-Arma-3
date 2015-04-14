@@ -31,6 +31,7 @@ if (!isDedicated) then {
 				if (player distance _spawnPos > SPAWNDISTANCE) exitWith { //Exitwith ends the loop
 				
 					player removeAction (_this select 0);
+					cutText [format ["JIP teleport option lost, you went beyond %1 meters from your spawn location", SPAWNDISTANCE], 'PLAIN DOWN'];
 					
 				};
 				
