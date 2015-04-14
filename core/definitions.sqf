@@ -39,7 +39,7 @@ VARNAME = count _countQuery;
 _namesTemp = []; \
 while {count ARRAY != 0} do { \
 	FILTER(ARRAY, (ARRAY select 0) == _x, _names); \
-	_namesTemp set [count _namesTemp, (format["%1 X %2", (count _names), (_names select 0)])]; \
+	_namesTemp set [count _namesTemp, (format ["%1 X %2", (count _names), (_names select 0)])]; \
 }; \
 VARNAME = _namesTemp;
 

@@ -22,30 +22,30 @@ switch (date select 1) do {
 	case 12: {_month = "December"};
 };
 
-_day = format["%1th", date select 2];
+_day = format ["%1th", date select 2];
 if (date select 2 < 4 || date select 2 > 20) then {
 	switch ((date select 2) mod 10) do {
-		case 1: {_day = format["%1st", date select 2]};
-		case 2: {_day = format["%1nd", date select 2]};
-		case 3: {_day = format["%1rd", date select 2]};
+		case 1: {_day = format ["%1st", date select 2]};
+		case 2: {_day = format ["%1nd", date select 2]};
+		case 3: {_day = format ["%1rd", date select 2]};
 	};
 };
 
 if (date select 3 < 10) then {
-	_hour = "0" + format["%1", date select 3];
+	_hour = "0" + format ["%1", date select 3];
 }
 else {
-	_hour = format["%1", date select 3];
+	_hour = format ["%1", date select 3];
 };
 
 if (date select 4 < 10) then {
-	_min = "0" + format["%1H", date select 4];
+	_min = "0" + format ["%1H", date select 4];
 }
 else {
-	_min = format["%1H", date select 4];
+	_min = format ["%1H", date select 4];
 };
 
-[format["%1, %2 %3", (_hour + _min), _day, _month], AREA, MAP] spawn {
+[format ["%1, %2 %3", (_hour + _min), _day, _month], AREA, MAP] spawn {
 	
 	sleep 0.01;
 	_this call BIS_fnc_infoText;

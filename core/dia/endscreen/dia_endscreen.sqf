@@ -19,19 +19,19 @@ _leftText = "";
 _rightText = "";
 _textSide = 0;
 {
-	_temp = format["%1<br />Casualties: %2 out of %3<br />",(_x select 0), ((_x select 1) - (_x select 2)), (_x select 1)];
+	_temp = format ["%1<br />Casualties: %2 out of %3<br />",(_x select 0), ((_x select 1) - (_x select 2)), (_x select 1)];
 
 	if (count (_x select 3) != 0) then {
 		_temp = _temp + "<br />Disabled assets:<br />";
 		{
-			_temp = _temp + format["%1<br />", _x];
+			_temp = _temp + format ["%1<br />", _x];
 		} forEach (_x select 3);
 	};
 
 	if (count (_x select 4) != 0) then {
 		_temp = _temp + "<br />Destroyed assets:<br />";
 		{
-			_temp = _temp + format["%1<br />", _x];
+			_temp = _temp + format ["%1<br />", _x];
 		} forEach (_x select 4);
 	};
 	
@@ -54,9 +54,9 @@ if (_time >= _timeLimt) then {
 	
 };
 
-_timeLimitText = format["Mission duration: %1 out of %2 minutes", _time, _timeLimt];
+_timeLimitText = format ["Mission duration: %1 out of %2 minutes", _time, _timeLimt];
 
-_endTitleText = format["%1<br />%2", _scenario, _timeLimitText];
+_endTitleText = format ["%1<br />%2", _scenario, _timeLimitText];
 
 ((findDisplay _dia) displayCtrl _endTitle) ctrlSetStructuredText parseText _endTitleText;
 ((findDisplay _dia) displayCtrl _left) ctrlSetStructuredText parseText _leftText;

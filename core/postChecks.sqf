@@ -20,7 +20,7 @@ if (!isDedicated) then {
 			
 		};
 		
-		cutText [format['%1 %2', respawnTickets, _text], 'PLAIN DOWN'];
+		cutText [format ['%1 %2', respawnTickets, _text], 'PLAIN DOWN'];
 
 	};
 };

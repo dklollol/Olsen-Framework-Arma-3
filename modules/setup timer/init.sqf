@@ -38,7 +38,7 @@ if (!isDedicated) then {
 					_vehicle setPos _pos;
 				};
 				
-				hintSilent format["Seconds remaining: %1", round((_marker select 0) - time)];
+				hintSilent format ["Seconds remaining: %1", round((_marker select 0) - time)];
 				
 				if (time >= (_marker select 0)) then {
 					hint "Setup timer expired";
