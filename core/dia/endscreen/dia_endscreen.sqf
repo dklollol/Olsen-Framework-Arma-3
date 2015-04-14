@@ -46,7 +46,15 @@ _textSide = 0;
 	};
 } forEach _teams;
 
-_timeLimitText = format["Mission duration: %1 out of %2 minutes", (ceil(time / 60)), (_timeLimt)];
+_time = ceil(time / 60);
+
+if (_time >= _timeLimt) then {
+	
+	_time = _timeLimt;
+	
+};
+
+_timeLimitText = format["Mission duration: %1 out of %2 minutes", _time, _timeLimt];
 
 _endTitleText = format["%1<br />%2", _scenario, _timeLimitText];
 
