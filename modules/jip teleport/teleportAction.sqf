@@ -45,19 +45,19 @@ if (!isNull(_target)) then {
 	
 		_target = (vehicle _target);
 		
-		if ((vehicle _x) emptyPositions "Cargo" != 0) then {
+		if (_target emptyPositions "Cargo" != 0) then {
 		
 			player moveInCargo _target;
 		
 		} else {
 		
-			if ((vehicle _x) emptyPositions "Gunner" != 0) then {
+			if (_target emptyPositions "Gunner" != 0) then {
 			
 				player moveInGunner _target;
 			
 			} else {
 			
-				if ((vehicle _x) emptyPositions "Commander" != 0) then {
+				if (_target emptyPositions "Commander" != 0) then {
 				
 					player moveInCommander _target;
 				
