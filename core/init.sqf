@@ -40,6 +40,7 @@ if (!isDedicated) then {
 	spectating = false; //Player is not spectating
 	
 	//Makes the player go into spectator mode when dead
+	spectateTempFix = time;
 	killedEh = player addEventHandler ["Killed", {[player] execVM "core\spectatePrep.sqf";}];
 	
 	//Various settings

@@ -1,5 +1,7 @@
 #define MESSAGE "You are dead.\nEntering spectator mode..."
 
+titleText [MESSAGE, "BLACK", 0.2];
+
 waitUntil {sleep 0.2; alive player};
 
 if (respawnTickets > 0) then {
@@ -26,11 +28,7 @@ if (respawnTickets > 0) then {
 	cutText [format ['%1 %2', respawnTickets, _text], 'PLAIN DOWN'];
 	
 } else {
-
-	titleText [MESSAGE, "BLACK", 0.2];
-	sleep 1;
-	titleText [MESSAGE, "BLACK FADED", 10];
-
+		
 	player setVariable ["frameworkDead", true, true]; //Tells the framework the player is dead
 
 	player setPos [0, 0, 0];
@@ -55,7 +53,11 @@ if (respawnTickets > 0) then {
 		
 	} else {
 		
-		titleText [MESSAGE, "BLACK IN", 0.2];
-
+		if (time > spectateTempFix + 5) then {
+		
+			titleText [MESSAGE, "BLACK IN", 0.2];
+		
+		}
+		
 	};
 };

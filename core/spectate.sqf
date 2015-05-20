@@ -1,12 +1,14 @@
-spectating = true; 
+spectating = true;
+spectateTempFix = time;
 
 deadbody = _this select 0;
 
 setAperture -1;
 sleep 1;
 camera = "camconstruct" camcreate [(getPos deadbody select 0), (getPos deadbody select 1), (getPos deadbody select 2)];
-camera setdir (getdir deadbody);
 camera camConstuctionSetParams [getPos deadbody, 20000, 10000];
+camera setpos [((position deadbody) select 0) + ((sin (getdir deadbody)) * ( - 10)), ((position deadbody) select 1) + ((cos (getdir deadbody)) * (- 10)), ((position deadbody) select 2) + 2];
+camera setdir getdir deadbody;
 camera cameraeffect ["internal","back"];
 titleText ["", "BLACK IN", 0.2];
 
