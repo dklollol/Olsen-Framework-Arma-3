@@ -7,6 +7,5 @@ class Header {
 	gameType = Coop;
 	minPlayers = 1;
 	maxPlayers = 9; //maxPlayers must always be accurate to the amount of playable units
-	playerCountMultipleOf = 1; //Disables auto balance
 	
 };
