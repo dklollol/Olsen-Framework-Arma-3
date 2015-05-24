@@ -198,3 +198,42 @@ FNC_InVehicle = {
 	((vehicle _unit) != _unit)
 	
 };
+
+//ADDPLAYABLETEAM(SIDE, NAME) adds an playable team of SIDE with NAME to be tracked by the framework
+FNC_AddPlayableTeam = {
+	
+	private {"_side", "_name"];
+
+	_side = _this select 0;
+	_name = _this select 0;
+	
+	if (isMultiplayer) then {
+	
+		FW_Teams set [count FW_Teams, [_name, 0, 0, [], []]];
+		
+		CURRENTCOUNT set [count CURRENTCOUNT, [_name, _side, "startPlayable"]];
+		CURRENTCOUNT set [count CURRENTCOUNT, [_name, _side, "currentPlayable"]];
+		
+	} else {
+	
+		ADDAITEAM(_side, _name);
+		
+	};
+
+};
+
+
+//ADDAITEAM(SIDE, NAME) adds an ai team of SIDE with NAME to be tracked by the framework
+FNC_AddPlayableTeam = {
+	
+	private {"_side", "_name"];
+
+	_side = _this select 0;
+	_name = _this select 0;
+	
+	FW_Teams set [count FW_Teams, [_name, 0, 0, [], []]];
+	
+	STARTCOUNT set [count STARTCOUNT, [_name, _side, "startAi"]];
+	CURRENTCOUNT set [count CURRENTCOUNT, [_name, _side, "currentAi"]];
+
+};

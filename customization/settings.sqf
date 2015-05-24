@@ -4,8 +4,10 @@ if (isServer) then { //This scope is only for the server
 
 	timeLimit = 30; //Time limit in minutes
 
-	ADDPLAYABLETEAM(west, "USMC"); //Adds a player team called USMC on side west
-	ADDAITEAM(east, "VDV"); //Adds a ai team called VDV on side east
+	[west, "USMC"] call FNC_AddPlayableTeam; //Adds a player team called USMC on side west
+	[east, "VDV"] call FNC_AddAiTeam; //Adds a ai team called VDV on side east
+	
+	// [resistance, "Local Militia"] call FNC_AddPlayableTeam; //Adds a player team called Local Militia on side resistance (aka independent)
 
 };
 

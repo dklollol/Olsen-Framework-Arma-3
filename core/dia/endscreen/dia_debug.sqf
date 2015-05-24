@@ -4,7 +4,7 @@ if (!isDedicated) then {
 	
 	100 cutRsc ["testHud", "PLAIN"];
 
-	FW_DEBUG_MESSAGES = [];
+	FW_Debug_Messages = [];
 
 	FNC_DebugMessage = {
 		
@@ -22,11 +22,11 @@ if (!isDedicated) then {
 				
 			};
 		
-		} forEach FW_DEBUG_MESSAGES;
+		} forEach FW_Debug_Messages;
 		
 		if (!_found) then {
 		
-			FW_DEBUG_MESSAGES set [count FW_DEBUG_MESSAGES, _message];
+			FW_Debug_Messages set [count FW_Debug_Messages, _message];
 			
 			_text = "";
 			
@@ -34,7 +34,7 @@ if (!isDedicated) then {
 			
 				_text = _text + _x + "<br></br><br></br>";
 				
-			} forEach FW_DEBUG_MESSAGES;
+			} forEach FW_Debug_Messages;
 			
 			((uiNamespace getVariable "fwDebug") displayCtrl 4001) ctrlSetStructuredText parseText _text;
 		

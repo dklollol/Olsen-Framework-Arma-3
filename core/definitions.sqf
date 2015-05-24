@@ -43,22 +43,6 @@ while {count ARRAY != 0} do { \
 }; \
 VARNAME = _namesTemp;
 
-//ADDPLAYABLETEAM adds an playable team of SIDE with NAME to be tracked by the framework
-#define ADDPLAYABLETEAM(SIDE, NAME) \
-if (isMultiplayer) then { \
-	FW_Teams set [count FW_Teams, [NAME, 0, 0, [], []]]; \
-	CURRENTCOUNT set [count CURRENTCOUNT, [NAME, SIDE, "startPlayable"]]; \
-	CURRENTCOUNT set [count CURRENTCOUNT, [NAME, SIDE, "currentPlayable"]]; \
-} else { \
-	ADDAITEAM(SIDE, NAME); \
-};
-
-//ADDAITEAM adds an ai team of SIDE with NAME to be tracked by the framework
-#define ADDAITEAM(SIDE, NAME) \
-FW_Teams set [count FW_Teams, [NAME, 0, 0, [], []]]; \
-STARTCOUNT set [count STARTCOUNT, [NAME, SIDE, "startAi"]]; \
-CURRENTCOUNT set [count CURRENTCOUNT, [NAME, SIDE, "currentAi"]];
-
 //SETTEAMVARIABLE edits the variable of TEAM at POS with the new VALUE
 #define SETTEAMVARIABLE(TEAM, POS, VALUE) \
 { \
