@@ -4,13 +4,13 @@ if (!isDedicated) then {
 	
 	_target = leader player;
 	
-	if (player == _target || !(alive _target) || _target getVariable ["frameworkDead", false]) then {
+	if (player == _target || !(_target call FNC_Alive)) then {
 	
 		_rank = -1;
 	
 		{
 		
-			if (rankId _x > _rank && (alive _target) && !(_x getVariable ["frameworkDead", false])) then {
+			if (rankId _x > _rank && (_target call FNC_Alive)) then {
 				_rank = rankId _x;
 				_target = _x;
 			};

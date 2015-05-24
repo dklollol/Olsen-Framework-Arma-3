@@ -106,18 +106,6 @@ GETVARIABLES(_destroyedVehicleQuery, "vehName", _destroyedVehicleQuery); \
 STACKNAMES(_disabledVehicleQuery, DISABLEDVAR); \
 STACKNAMES(_destroyedVehicleQuery, DESTROYEDVAR);
 
-//ENDMISSION will end the mission
-//Sends the team stats, time limit, scenario and executes "endScreen" on all players machines
-#define ENDMISSION(SCENARIO) \
-FW_MISSION_ENDED = true; \
-{ \
-	_team = (_x select 0); \
-	GETDAMAGEDASSETNAMES(_team, _disabledTemp, _destroyedTemp); \
-	SETTEAMVARIABLE(_team, 3, _disabledTemp); \
-	SETTEAMVARIABLE(_team, 4, _destroyedTemp); \
-} forEach FW_TEAMS; \
-["endScreen", [SCENARIO, timeLimit, FW_TEAMS]] call CBA_fnc_globalEvent;
-
 //CREATERESPAWNMARKER will make a respawn marker for team STRING at coordinate 0, 0, 0
 #define CREATERESPAWNMARKER(STRING) \
 _marker = createMarker [STRING, [0, 0, 0]]; \
@@ -126,7 +114,5 @@ STRING setMarkerType "EMPTY";
 
 #define ADDMODULE(NAME) \
 call compile preprocessFileLineNumbers ("modules\" + NAME + "\init.sqf");
-
-FNC_INAREA = compile preprocessFileLineNumbers "core\inArea.sqf";
 
 FNC_SPECTATE = compile preprocessFileLineNumbers "core\spectate.sqf";

@@ -19,11 +19,16 @@ if (!isDedicated) then {
 			_marker = [];
 			
 			{
-				if (((_x select 0) == (side player)) && [(vehicle player), (_x select 2)] call FNC_INAREA) then {
-					_marker = [(_x select 1), (_x select 2)];	
+				if (((_x select 0) == (side player)) && [(vehicle player), (_x select 2)] call FNC_InArea) then {
+				
+					_marker = [(_x select 1), (_x select 2)];
+					
 				} else {
+				
 					(_x select 2) setMarkerAlphaLocal 0;
+					
 				};
+				
 			} forEach (_this select 0);
 			
 			_pos = getPosATL (vehicle player);
@@ -32,26 +37,29 @@ if (!isDedicated) then {
 			
 				_vehicle = (vehicle player);
 			
-				if ([_vehicle, (_marker select 1)] call FNC_INAREA) then {
+				if ([_vehicle, (_marker select 1)] call FNC_InArea) then {
+				
 					_pos = getPosATL _vehicle;
+					
 				} else {
+				
 					_vehicle setPos _pos;
+					
 				};
 				
 				hintSilent format ["Seconds remaining: %1", round((_marker select 0) - time)];
 				
 				if (time >= (_marker select 0)) then {
+				
 					hint "Setup timer expired";
 					(_marker select 1) setMarkerAlphaLocal 0;
 					_marker = [];
+					
 				};
 				
 				sleep(0.1);
 				
 			};
-
 		};
-	
 	};
-	
 };

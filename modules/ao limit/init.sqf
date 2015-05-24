@@ -29,7 +29,7 @@ if (!isDedicated) then {
 				if ((_x select 0) == (side player) || (_x select 0) == ANY) then {
 					_markers set [count _markers, (_x select 1)];	
 					
-					if ([_vehicle, (_x select 1)] call FNC_INAREA) then {
+					if ([_vehicle, (_x select 1)] call FNC_InArea) then {
 						_allowedOutside = false;
 					};
 				};
@@ -44,7 +44,7 @@ if (!isDedicated) then {
 					_outSide = true;
 				
 					{
-						if ([_vehicle, _x] call FNC_INAREA) exitWith {
+						if ([_vehicle, _x] call FNC_InArea) exitWith {
 							_outSide = false;
 						};
 					} forEach _markers;
