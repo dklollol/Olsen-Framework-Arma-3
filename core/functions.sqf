@@ -199,10 +199,10 @@ FNC_InVehicle = {
 	
 };
 
-//ADDPLAYABLETEAM(SIDE, NAME) adds an playable team of SIDE with NAME to be tracked by the framework
+//FNC_AddPlayableTeam(SIDE, NAME) adds an playable team of SIDE with NAME to be tracked by the framework
 FNC_AddPlayableTeam = {
 	
-	private {"_side", "_name"];
+	private ["_side", "_name"];
 
 	_side = _this select 0;
 	_name = _this select 1;
@@ -216,7 +216,7 @@ FNC_AddPlayableTeam = {
 		
 	} else {
 	
-		ADDAITEAM(_side, _name);
+		[_side, _name] call FNC_AddAiTeam;
 		
 	};
 
@@ -225,7 +225,7 @@ FNC_AddPlayableTeam = {
 //FNC_AddAiTeam(SIDE, NAME) adds an ai team of SIDE with NAME to be tracked by the framework
 FNC_AddAiTeam = {
 	
-	private {"_side", "_name"];
+	private ["_side", "_name"];
 
 	_side = _this select 0;
 	_name = _this select 1;
