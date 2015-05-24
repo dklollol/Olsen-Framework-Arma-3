@@ -205,7 +205,7 @@ FNC_AddPlayableTeam = {
 	private {"_side", "_name"];
 
 	_side = _this select 0;
-	_name = _this select 0;
+	_name = _this select 1;
 	
 	if (isMultiplayer) then {
 	
@@ -222,14 +222,13 @@ FNC_AddPlayableTeam = {
 
 };
 
-
-//ADDAITEAM(SIDE, NAME) adds an ai team of SIDE with NAME to be tracked by the framework
-FNC_AddPlayableTeam = {
+//FNC_AddAiTeam(SIDE, NAME) adds an ai team of SIDE with NAME to be tracked by the framework
+FNC_AddAiTeam = {
 	
 	private {"_side", "_name"];
 
 	_side = _this select 0;
-	_name = _this select 0;
+	_name = _this select 1;
 	
 	FW_Teams set [count FW_Teams, [_name, 0, 0, [], []]];
 	
