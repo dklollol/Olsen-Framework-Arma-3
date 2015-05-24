@@ -46,7 +46,7 @@ VARNAME = _namesTemp;
 //ADDPLAYABLETEAM adds an playable team of SIDE with NAME to be tracked by the framework
 #define ADDPLAYABLETEAM(SIDE, NAME) \
 if (isMultiplayer) then { \
-	FW_TEAMS set [count FW_TEAMS, [NAME, 0, 0, [], []]]; \
+	FW_Teams set [count FW_Teams, [NAME, 0, 0, [], []]]; \
 	CURRENTCOUNT set [count CURRENTCOUNT, [NAME, SIDE, "startPlayable"]]; \
 	CURRENTCOUNT set [count CURRENTCOUNT, [NAME, SIDE, "currentPlayable"]]; \
 } else { \
@@ -55,7 +55,7 @@ if (isMultiplayer) then { \
 
 //ADDAITEAM adds an ai team of SIDE with NAME to be tracked by the framework
 #define ADDAITEAM(SIDE, NAME) \
-FW_TEAMS set [count FW_TEAMS, [NAME, 0, 0, [], []]]; \
+FW_Teams set [count FW_Teams, [NAME, 0, 0, [], []]]; \
 STARTCOUNT set [count STARTCOUNT, [NAME, SIDE, "startAi"]]; \
 CURRENTCOUNT set [count CURRENTCOUNT, [NAME, SIDE, "currentAi"]];
 
@@ -65,7 +65,7 @@ CURRENTCOUNT set [count CURRENTCOUNT, [NAME, SIDE, "currentAi"]];
 	if ((_x select 0) == TEAM) then { \
 		_x set [POS, VALUE]; \
 	}; \
-} forEach FW_TEAMS;
+} forEach FW_Teams;
 
 //COUNTUNITS processes the counting commands it is given
 //Example: [["WEST", west, "startPlayable"],["WEST", west, "currentPlayable"]]
@@ -106,8 +106,8 @@ GETVARIABLES(_destroyedVehicleQuery, "vehName", _destroyedVehicleQuery); \
 STACKNAMES(_disabledVehicleQuery, DISABLEDVAR); \
 STACKNAMES(_destroyedVehicleQuery, DESTROYEDVAR);
 
-//CREATERESPAWNMARKER will make a respawn marker for team STRING at coordinate 0, 0, 0
-#define CREATERESPAWNMARKER(STRING) \
+//CreateRespawnMarker will make a respawn marker for team STRING at coordinate 0, 0, 0
+#define CreateRespawnMarker(STRING) \
 _marker = createMarker [STRING, [0, 0, 0]]; \
 _marker setMarkerShape "ICON"; \
 STRING setMarkerType "EMPTY";

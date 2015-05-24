@@ -5,15 +5,15 @@ enableSaving [false, false];
 
 if (isServer) then {
 	
-	CREATERESPAWNMARKER("respawn_west");
-	CREATERESPAWNMARKER("respawn_east");
-	CREATERESPAWNMARKER("respawn_guerrila");
-	CREATERESPAWNMARKER("respawn_civilian");
+	CreateRespawnMarker("respawn_west");
+	CreateRespawnMarker("respawn_east");
+	CreateRespawnMarker("respawn_guerrila");
+	CreateRespawnMarker("respawn_civilian");
 	
-	FW_TEAMS = []; //DO NOT REMOVE
+	FW_Teams = []; //DO NOT REMOVE
 	STARTCOUNT = []; //DO NOT REMOVE
 	CURRENTCOUNT = []; //DO NOT REMOVE
-	FW_MISSION_ENDED = false; //Mission has not ended
+	FW_MissionEnded = false; //Mission has not ended
 	
 };
 

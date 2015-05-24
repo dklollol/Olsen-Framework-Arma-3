@@ -10,7 +10,7 @@ if (isServer) then {
 
 	[] spawn { //Spawns code running in parallel
 	
-		while {!FW_MISSION_ENDED} do { //Loops while the mission is not ended
+		while {!FW_MissionEnded} do { //Loops while the mission is not ended
 			
 			COUNTUNITS(CURRENTCOUNT); //DO NOT REMOVE
 			

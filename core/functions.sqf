@@ -84,7 +84,7 @@ FNC_EndMission = {
 	
 	_scenario = _this;
 	
-	FW_MISSION_ENDED = true;
+	FW_MissionEnded = true;
 	
 	{
 	
@@ -94,14 +94,14 @@ FNC_EndMission = {
 		SETTEAMVARIABLE(_team, 3, _disabledTemp);
 		SETTEAMVARIABLE(_team, 4, _destroyedTemp);
 	
-	} forEach FW_TEAMS;
+	} forEach FW_Teams;
 
-	["endScreen", [_scenario, timeLimit, FW_TEAMS]] call CBA_fnc_globalEvent;
+	["endScreen", [_scenario, timeLimit, FW_Teams]] call CBA_fnc_globalEvent;
 
 };
 
-//FNC_CasualtyCheck(TEAM) returns the casualty percentage of TEAM
-FNC_CasualtyCheck = {
+//FNC_CasualtyPercentage(TEAM) returns the casualty percentage of TEAM
+FNC_CasualtyPercentage = {
 	
 	private ["_team", "_temp", "_tempStart", "_tempCurrent", "_tempText"];
 
@@ -117,8 +117,8 @@ FNC_CasualtyCheck = {
 			
 			if (_tempStart == 0) then {
 			
-				_tempText = format ["Casualty check:<br></br>Warning no units on team ""%1"", in file ""customization\endConditions.sqf"".", _x select 0];
-				[_tempText] call FNC_DEBUG_MESSAGE;
+				_tempText = format ["Casualty percentage:<br></br>Warning no units on team ""%1"".", _team];
+				[_tempText] call FNC_DebugMessage;
 				
 			} else {
 			
@@ -126,7 +126,41 @@ FNC_CasualtyCheck = {
 				
 			};
 		};
-	} forEach FW_TEAMS;
+		
+	} forEach FW_Teams;
+	
+	_temp
+	
+};
+
+//FNC_CasualtyCount(TEAM) returns the casualty count of TEAM
+FNC_CasualtyCount = {
+	
+	private ["_team", "_temp", "_tempStart", "_tempCurrent", "_tempText"];
+
+	_team = _this;
+	
+	_temp = 0;
+	
+	{ 
+		if ((_x select 0) == _team) exitWith {
+		
+			_tempStart = (_x select 1);
+			_tempCurrent = (_x select 2);
+			
+			if (_tempStart == 0) then {
+			
+				_tempText = format ["Casualty count:<br></br>Warning no units on team ""%1"".", _team];
+				[_tempText] call FNC_DebugMessage;
+				
+			} else {
+			
+				_temp = _tempStart - _tempCurrent;
+				
+			};
+		};
+		
+	} forEach FW_Teams;
 	
 	_temp
 	

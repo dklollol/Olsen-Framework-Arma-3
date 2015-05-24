@@ -1,5 +1,5 @@
-_westCasualty = "USMC" call FNC_CasualtyCheck; //Gets the casualty percentage of team "USMC"
-_eastCasualty = "VDV" call FNC_CasualtyCheck; //Gets the casualty percentage of team "VDV"
+_westCasualty = "USMC" call FNC_CasualtyPercentage; //Gets the casualty percentage of team "USMC"
+_eastCasualty = "VDV" call FNC_CasualtyPercentage; //Gets the casualty percentage of team "VDV"
 
 if (_westCasualty >= 50) exitWith {
 	"VDV DECISIVE VICTORY<br />USMC has retreated due to casualties." call FNC_EndMission;

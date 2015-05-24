@@ -1,4 +1,4 @@
-FNC_DEBUG_MESSAGE = {};
+FNC_DebugMessage = {};
 
 if (!isDedicated) then {
 	
@@ -6,7 +6,7 @@ if (!isDedicated) then {
 
 	FW_DEBUG_MESSAGES = [];
 
-	FNC_DEBUG_MESSAGE = {
+	FNC_DebugMessage = {
 		
 		private ["_message", "_text"];
 		
