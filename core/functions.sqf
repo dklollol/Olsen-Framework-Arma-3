@@ -173,7 +173,7 @@ FNC_Alive = {
 	
 	_unit = _this;
 	
-	(alive _unit) && !(_unit getVariable ["frameworkDead", false])
+	(alive _unit) && !(_unit getVariable ["frameworkDead", false]) && !(_unit getVariable ["ACE_isUnconscious", false])
 	
 };
 

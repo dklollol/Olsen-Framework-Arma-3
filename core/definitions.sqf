@@ -23,8 +23,7 @@ VARNAME = _temp;
 //are alive and stores the result in VARNAME
 #define COUNTPLAYABLEUNITS(SIDE, VARNAME) \
 QUERY(playableUnits, side _x == SIDE, _countQuery); \
-QUERY(_countQuery, _x getVariable ["frameworkDead", false] == false, _countQuery); \
-QUERY(_countQuery, (alive _x), _countQuery); \
+QUERY(_countQuery, _x call FNC_Alive, _countQuery); \
 VARNAME = count _countQuery;
 
 //COUNTAIUNITS will count the ammount of remaining alive ai units of SIDE 
