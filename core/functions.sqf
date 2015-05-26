@@ -222,6 +222,89 @@ FNC_AddPlayableTeam = {
 
 };
 
+
+//FNC_SpectateCheck() displays the appropriate message when the player dies
+FNC_SpectateCheck = {
+	
+	if (respawnTickets > 0) then {
+		
+		titleText ["You are dead.\nRespawning...", "BLACK", 0.2];
+		
+	} else {
+		
+		titleText ["You are dead.\nEntering spectator mode...", "BLACK", 0.2];
+		
+	};
+};
+
+//FNC_SpectatePrep() checks and handles if the player should respawn or begin spectating
+FNC_SpectatePrep = {
+	
+	private ["_respawnName", "_respawnPoint", "_text"];
+	
+	if (respawnTickets > 0) then {
+		
+		_respawnName = toLower(format ["fw_%1_respawn", side player]);
+		_respawnPoint = missionNamespace getVariable [_respawnName, objNull];
+
+		if (!isNull(_respawnPoint)) then {
+		
+			player setPos getPosATL _respawnPoint;
+			
+		};
+		
+		respawnTickets = respawnTickets - 1;
+		
+		_text = "respawns left";
+		
+		if (respawnTickets == 1) then {
+			
+			_text = "respawn left";
+			
+		};
+		
+		titleText ["You are dead.\nRespawning...", "BLACK IN", 0.2];
+		
+		cutText [format ['%1 %2', respawnTickets, _text], 'PLAIN DOWN'];
+		
+		player setVariable ["frameworkBody", player, true];
+		
+	} else {
+
+		player setVariable ["frameworkDead", true, true]; //Tells the framework the player is dead
+
+		player setCaptive true;
+		player allowdamage false;
+
+		removeHeadgear player;
+		removeGoggles player;
+		removeVest player;
+		removeBackpack player;
+		removeUniform player;
+		removeAllWeapons player;
+		removeAllAssignedItems player;
+		
+		player addWeapon "itemMap";
+		
+		player setPos [0, 0, 0];
+		[player] join grpNull;
+		
+		if (!(player getVariable ["frameworkSpectating", false])) then {
+		
+			player setVariable ["frameworkSpectating", true, true];
+			
+			[true] call acre_api_fnc_setSpectator;
+			"" execVM "core\spectate.sqf";
+			
+			
+		} else {
+		
+			titleText ["You are dead.\nEntering spectator mode...", "BLACK IN", 0.2];
+		
+		};
+	};
+};
+
 //FNC_AddAiTeam(SIDE, NAME) adds an ai team of SIDE with NAME to be tracked by the framework
 FNC_AddAiTeam = {
 	

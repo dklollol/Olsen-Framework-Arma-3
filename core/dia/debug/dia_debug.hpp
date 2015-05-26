@@ -3,7 +3,8 @@
 
 class RscTitles {
 	
-	class testHud {
+	class DIA_DEBUG {
+	
 		idd = 400;
 		fadeout = 0;
 		fadein = 0;
@@ -22,8 +23,6 @@ class RscTitles {
 				h = 1 * safezoneH;
 				
 			};
-			
 		};
-		
 	};
 };

@@ -1,5 +1,5 @@
-ADDMODULE("start text");
-ADDMODULE("jip teleport");
-ADDMODULE("marker control");
-ADDMODULE("ao limit");
-ADDMODULE("setup timer");
+#include "start_text\root.sqf"
+#include "jip_teleport\root.sqf"
+#include "marker_control\root.sqf"
+#include "ao_limit\root.sqf"
+#include "setup_timer\root.sqf"

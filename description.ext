@@ -1,2 +1,5 @@
+#define description
+
 #include "core\description.hpp" //DO NOT REMOVE
 #include "customization\missionSettings.hpp" //DO NOT REMOVE
+#include "modules\modules.sqf" //DO NOT REMOVE

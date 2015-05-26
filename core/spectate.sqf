@@ -1,7 +1,4 @@
-spectating = true;
-spectateTempFix = time;
-
-deadbody = _this select 0;
+deadbody = (player getVariable ["frameworkBody", false]);
 
 setAperture -1;
 sleep 1;
@@ -10,7 +7,7 @@ camera camConstuctionSetParams [getPos deadbody, 20000, 10000];
 camera setpos [((position deadbody) select 0) + ((sin (getdir deadbody)) * ( - 10)), ((position deadbody) select 1) + ((cos (getdir deadbody)) * (- 10)), ((position deadbody) select 2) + 2];
 camera setdir getdir deadbody;
 camera cameraeffect ["internal","back"];
-titleText ["", "BLACK IN", 0.2];
+titleText ["You are dead.\nEntering spectator mode...", "BLACK IN", 0.2];
 
 oldPos = position camera;
 oldDir = getdir camera;
@@ -95,22 +92,25 @@ _keyDown_camConstruct = (finddisplay 46) displayaddeventhandler ["MouseButtonDow
 _keyDown_switchCamera = (finddisplay 46) displayaddeventhandler ["MouseButtonDown", "
 
 	if (((_this select 1) == 1) && thirdPerson && !mapOn) then {
-	
-		camera cameraeffect ['Terminate', 'back'];
-		target switchCamera 'EXTERNAL';
-		
+			
 		if (target == deadbody) then {
+			
+			camera cameraeffect ['internal', 'back'];
+			camera setpos [((position target) select 0) + ((sin (getdir target)) * ( - 10)), ((position target) select 1) + ((cos (getdir target)) * (- 10)), ((position target) select 2) + 2];
+			camera setdir getdir target;
 			
 			cutText ['Your body', 'PLAIN DOWN'];
 			
 		} else {
 		
+			camera cameraeffect ['Terminate', 'back'];
+			target switchCamera 'EXTERNAL';
+			
 			cutText [format ['%1', name target], 'PLAIN DOWN'];
 		
-		};
-		
-		thirdPerson = false;
-		
+			thirdPerson = false;
+			
+		};		
 	};
 "];
 
@@ -270,7 +270,7 @@ _keydown_mouseZ = (findDisplay 46) displayAddEventHandler ["mousezchanged", "
 	};
 "];
 
-while {spectating} do {
+while {(player getVariable ["frameworkSpectating", false])} do {
 
 	targets = [];
 	

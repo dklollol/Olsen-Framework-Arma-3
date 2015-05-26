@@ -36,12 +36,12 @@ if (!isDedicated) then {
 	respawnTickets = 0; //Initialize respawn tickets to 0 
 	
 	player setVariable ["frameworkDead", false, true]; //Tells the framework the player is alive
+	player setVariable ["frameworkSpectating", false, true]; //Player is not spectating
+	player setVariable ["frameworkBody", player, true]; //Remembers his old body for spectating his dead body
 	
-	spectating = false; //Player is not spectating
-	
-	//Makes the player go into spectator mode when dead
-	spectateTempFix = time;
-	killedEh = player addEventHandler ["Killed", {[player] execVM "core\spectatePrep.sqf";}];
+	//Makes the player go into spectator mode when dead or respawn if he has respawn tickets
+	killedEh = player addEventHandler ["Killed", {"" call FNC_SpectateCheck}];
+	killedEh = player addEventHandler ["Respawn", {"" call FNC_SpectatePrep;}];
 	
 	//Various settings
 	player addRating 100000; //Makes sure ai doesnt turn hostile when teamkilling

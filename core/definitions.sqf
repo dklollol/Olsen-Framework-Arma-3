@@ -91,11 +91,6 @@ STACKNAMES(_destroyedVehicleQuery, DESTROYEDVAR);
 
 //CreateRespawnMarker will make a respawn marker for team STRING at coordinate 0, 0, 0
 #define CreateRespawnMarker(STRING) \
-_marker = createMarker [STRING, [0, 0, 0]]; \
+_marker = createMarker [STRING, [0, 0]]; \
 _marker setMarkerShape "ICON"; \
 STRING setMarkerType "EMPTY";
-
-#define ADDMODULE(NAME) \
-call compile preprocessFileLineNumbers ("modules\" + NAME + "\init.sqf");
-
-FNC_SPECTATE = compile preprocessFileLineNumbers "core\spectate.sqf";

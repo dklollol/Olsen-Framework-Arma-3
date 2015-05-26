@@ -2,13 +2,15 @@ FNC_DebugMessage = {};
 
 if (!isDedicated) then {
 	
-	100 cutRsc ["testHud", "PLAIN"];
+	100 cutRsc ["DIA_DEBUG", "PLAIN"];
 
 	FW_Debug_Messages = [];
 
 	FNC_DebugMessage = {
 		
-		private ["_message", "_text"];
+		private ["_someText", "_message", "_text", "_found", "_text"];
+		
+		_someText = 4001;
 		
 		_message = _this select 0;
 		
@@ -36,7 +38,7 @@ if (!isDedicated) then {
 				
 			} forEach FW_Debug_Messages;
 			
-			((uiNamespace getVariable "fwDebug") displayCtrl 4001) ctrlSetStructuredText parseText _text;
+			((uiNamespace getVariable "fwDebug") displayCtrl _someText) ctrlSetStructuredText parseText _text;
 		
 		};
 	};
