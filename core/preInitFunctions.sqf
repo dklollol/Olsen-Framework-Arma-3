@@ -107,7 +107,7 @@ FNC_AddItemOrg = {
 				};	
 			};
 			
-			if (!_succes && _type == "Uniform") then {
+			if (!_succes && _type == "uniform") then {
 				
 				if (uniform _unit == "") then {
 					
@@ -118,7 +118,7 @@ FNC_AddItemOrg = {
 				};
 			};
 			
-			if (!_succes && _type == "Vest") then {
+			if (!_succes && _type == "vest") then {
 				
 				if (vest _unit == "") then {
 					
@@ -129,7 +129,7 @@ FNC_AddItemOrg = {
 				};
 			};
 			
-			if (!_succes && _type == "Backpack") then {
+			if (!_succes && _type == "backpack") then {
 				
 				if (backpack _unit == "") then {
 					
