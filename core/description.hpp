@@ -12,7 +12,7 @@ class Extended_PreInit_EventHandlers {
 	
 	class Mission {
 	
-		init = "GEARSCRIPT = compile preprocessFileLineNumbers 'customization\gear.sqf'; VEHGEARSCRIPT = compile preprocessFileLineNumbers 'customization\vehGear.sqf'; TRACKASSET = compile preprocessFileLineNumbers 'core\trackAsset.sqf'"; //Compiles the gear script for the server and client
+		init = "'' call compile preprocessFileLineNumbers 'core\preInitFunctions.sqf'; GEARSCRIPT = compile preprocessFileLineNumbers 'customization\gear.sqf'; VEHGEARSCRIPT = compile preprocessFileLineNumbers 'customization\vehGear.sqf'; TRACKASSET = compile preprocessFileLineNumbers 'core\trackAsset.sqf'"; //Compiles the gear script for the server and client
 	
 	};
 };
