@@ -1,11 +1,11 @@
+private ["_month", "_hour", "_min", "_area", "_map"];
+
 #include "settings.sqf"
 
 //The output for example: 17:23 on the 22/02 is:
 //1723H, 22nd February
 //area
 //island
-
-private ["_month", "_hour", "_min"];
 
 switch (date select 1) do {
 	
@@ -57,7 +57,7 @@ if (date select 4 < 10) then {
 	
 };
 
-[format ["%1, %2 %3", (_hour + _min), _day, _month], AREA, MAP] spawn {
+[format ["%1, %2 %3", (_hour + _min), _day, _month], _area, _map] spawn {
 	
 	sleep 0.01;
 	_this call BIS_fnc_infoText;
