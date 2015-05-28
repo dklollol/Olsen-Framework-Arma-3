@@ -253,7 +253,7 @@ FNC_AddItemOrg = {
 				
 				if (!_succes) then {
 					
-					hint format ["GEARSCRIPT: Warning %1 overflown from %2", _item, _position];
+					hint format ["GEARSCRIPT: Warning %1 overflown from %2, in %3", _item, _position];
 
 				};
 			};
@@ -269,17 +269,45 @@ FNC_AddItemOrg = {
 			
 			} else {
 				
-				_message = "GEARSCRIPT: Warning couldn't fit %1 anywhere, originally intended for %2";
+				_message = "GEARSCRIPT: Warning couldn't fit %1 anywhere, originally intended for %2, in %3";
 				
 				if (_position == "none") then {
 					
-					_message = "GEARSCRIPT: Warning couldn't fit %1 anywhere"
+					_message = "GEARSCRIPT: Warning couldn't fit %1 anywhere, in %3"
 					
 				};
 				
-				hint format [_message, _item, _position];
+				hint format [_message, _item, _position, _unit];
 				
 			};
+		};
+	};
+};
+
+FNC_AddItemVehicleOrg = {
+	
+	private ["_vehicle", "_item", "_amount"];
+	
+	_vehicle = _this select 0;
+	_item = _this select 1;
+	_amount = 1;
+	
+	if (count _this > 2) then {
+	
+		_amount = _this select 2;
+	
+	};
+	
+	for "_x" from 1 to _amount do {
+		
+		if (_vehicle canAdd _item) then {
+			
+			_vehicle addItemCargoGlobal [_item, 1];
+			
+		} else {
+			
+			hint format ["VEHGEARSCRIPT: Warning couldn't fit %1 in %2", _item, _vehicle];
+
 		};
 	};
 };

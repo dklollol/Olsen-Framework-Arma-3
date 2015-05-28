@@ -114,7 +114,7 @@ _keyDown_switchCamera = (finddisplay 46) displayaddeventhandler ["MouseButtonDow
 	};
 "];
 
-_keyDown_nightVision = (finddisplay 46) displayaddeventhandler ["keydown", "
+_keyDown_showMap = (finddisplay 46) displayaddeventhandler ["keydown", "
 
 	if ((_this select 1) in (actionkeys 'ShowMap')) then {
 	
@@ -133,6 +133,18 @@ _keyDown_nightVision = (finddisplay 46) displayaddeventhandler ["keydown", "
 			
 			openMap true;
 			mapOn = true;
+			
+			if (thirdPerson) then {
+			
+				mapAnimAdd [0, 0.5, oldPos];
+			
+			} else {
+			
+				mapAnimAdd [0, 0.5, getPos target];
+				
+			};
+			
+			mapAnimCommit;
 			
 		} else {
 		

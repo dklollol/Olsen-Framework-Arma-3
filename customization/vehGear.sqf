@@ -3,17 +3,9 @@
 switch (_type) do {
 
 	case "HUMMVEE": {
-		CLEARCARGO;
-		ADDWEAPONCARGO("ACE_M16A4_EOT", 3);
-		ADDMAGAZINECARGO("ACE_30Rnd_556x45_S_Stanag", 20);
-		ADDMAGAZINECARGO("HandGrenade_West", 10);
-		ADDMAGAZINECARGO("SmokeShell", 10);
+		
+		["30Rnd_556x45_Stanag", 8] call FNC_AddItemVehicle;
+		["rhs_weap_m4a1_carryhandle"] call FNC_AddItemVehicle;
+		
 	};
-	
-	case "UAZ": {
-		ADDWEAPONCARGO("ACE_AK74M_Kobra", 2);
-		ADDMAGAZINECARGO("30Rnd_545x39_AK", 20);
-		ADDMAGAZINECARGO("HandGrenade_East", 10);
-	};
-	
 };

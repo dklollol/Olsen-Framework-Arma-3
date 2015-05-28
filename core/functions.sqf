@@ -240,13 +240,21 @@ FNC_SpectateCheck = {
 //FNC_SpectatePrep() checks and handles if the player should respawn or begin spectating
 FNC_SpectatePrep = {
 	
-	private ["_respawnName", "_respawnPoint", "_text"];
+	private ["_respawnName", "_respawnPoint", "_text", "_loadout"];
 	
 	if (respawnTickets > 0) then {
 		
 		_respawnName = toLower(format ["fw_%1_respawn", side player]);
 		_respawnPoint = missionNamespace getVariable [_respawnName, objNull];
 
+		_loadout = (player getVariable ["frameworkLoadout", ""]);
+		
+		if (_loadout != "") then {
+			
+			[player, _loadout] call GEARSCRIPT;
+			
+		};
+		
 		if (!isNull(_respawnPoint)) then {
 		
 			player setPos getPosATL _respawnPoint;
@@ -262,7 +270,7 @@ FNC_SpectatePrep = {
 			_text = "respawn left";
 			
 		};
-		
+				
 		titleText ["You are dead.\nRespawning...", "BLACK IN", 0.2];
 		
 		cutText [format ['%1 %2', respawnTickets, _text], 'PLAIN DOWN'];

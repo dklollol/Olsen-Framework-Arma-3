@@ -8,12 +8,12 @@ if (!local _unit) exitWith {};
 _unit setVariable ["BIS_enableRandomization", false];
 _unit setVariable ["frameworkLoadout", _type, true];
 
-removeHeadgear player;
-removeGoggles player;
-removeVest player;
-removeBackpack player;
-removeUniform player;
-removeAllWeapons player;
-removeAllAssignedItems player;
+removeHeadgear _unit;
+removeGoggles _unit;
+removeVest _unit;
+removeBackpack _unit;
+removeUniform _unit;
+removeAllWeapons _unit;
+removeAllAssignedItems _unit;
 
 FNC_AddItem = {([_unit] + _this) call FNC_AddItemOrg;};
