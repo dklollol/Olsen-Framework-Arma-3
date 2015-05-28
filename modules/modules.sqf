@@ -3,3 +3,5 @@
 #include "marker_control\root.sqf"
 #include "ao_limit\root.sqf"
 #include "setup_timer\root.sqf"
+#include "start_with_earplugs\root.sqf"
+#include "start_on_safe\root.sqf"
