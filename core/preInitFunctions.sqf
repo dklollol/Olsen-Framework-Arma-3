@@ -1,3 +1,33 @@
+FNC_TrackAsset = {
+	
+	private ["_asset", "_name", "_team"];
+	
+	_asset = vehicle (_this select 0);
+	_name = _this select 1;
+	_team = _this select 2;
+
+	_asset setVariable ["vehName", _name];
+
+	_asset setVariable ["vehTeam", _team];
+	
+};
+
+FNC_SetRadio = {
+	
+	private ["_unit", "_radio", "_channel", "_channels"];
+	
+	_unit = _this select 0;
+	_radio = _this select 1;
+	_channel = _this select 2;
+	
+	_channels = _unit getVariable ["frameworkChannels", []];
+	
+	_channels set [count _channels, [_radio, _channel]];
+	
+	player setVariable ["frameworkChannels", _channels, false];
+	
+};
+
 FNC_CanLinkItem = {
 
 	private ["_unit", "_type", "_assignedItems", "_result"];
@@ -11,7 +41,7 @@ FNC_CanLinkItem = {
 		
 		_assignedItems set [count _assignedItems, ([_x] call BIS_fnc_itemType) select 1];	
 		
-	} foreach (assignedItems _unit);
+	} forEach (assignedItems _unit);
 	
 	_result = _type in _assignedItems;
 	

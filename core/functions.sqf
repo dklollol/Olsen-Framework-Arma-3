@@ -270,7 +270,7 @@ FNC_SpectatePrep = {
 			_text = "respawn left";
 			
 		};
-				
+		
 		titleText ["You are dead.\nRespawning...", "BLACK IN", 0.2];
 		
 		cutText [format ['%1 %2', respawnTickets, _text], 'PLAIN DOWN'];

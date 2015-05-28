@@ -5,3 +5,4 @@
 #include "setup_timer\root.sqf"
 #include "start_with_earplugs\root.sqf"
 #include "start_on_safe\root.sqf"
+#include "start_on_radio_channel\root.sqf"

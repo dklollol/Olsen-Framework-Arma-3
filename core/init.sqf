@@ -42,7 +42,7 @@ if (!isDedicated) then {
 	
 	//Makes the player go into spectator mode when dead or respawn if he has respawn tickets
 	killedEh = player addEventHandler ["Killed", {"" call FNC_SpectateCheck}];
-	killedEh = player addEventHandler ["Respawn", {"" call FNC_SpectatePrep;}];
+	respawnEh = player addEventHandler ["Respawn", {"" call FNC_SpectatePrep;}];
 	
 	//Various settings
 	player addRating 100000; //Makes sure ai doesnt turn hostile when teamkilling
