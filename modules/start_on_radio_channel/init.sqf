@@ -2,7 +2,7 @@ if (!isDedicated) then {
 	
 	FNC_RadioEhHandler = {
 	
-		private ["_player", "_class", "_returnIdNumber", "_replacementId", "_channels"];
+		private ["_player", "_class"];
 		
 		_player = _this select 0;
 		_class = _this select 1;
@@ -15,14 +15,14 @@ if (!isDedicated) then {
 				
 				if (([_class] call acre_api_fnc_getBaseRadio) == (_x select 0)) exitWith {
 					
-					[_class, (_x select 1)] call acre_api_fnc_setRadioChannel;
-					hint _class;
+					["CfgAcreDataInterface", _class, "setCurrentChannel", (_x select 1) - 1] call acre_sys_data_fnc_acreEvent;
+					
 				};
 				
 			} forEach _channels;
 		};
 	};
 	
-	radioEh = ["acre_sys_radio_returnRadioId", {_this call FNC_RadioEhHandler;}] call CBA_fnc_addEventHandler;
+	radioEh = ["acre_sys_radio_returnRadioId", {_this spawn FNC_RadioEhHandler;}] call CBA_fnc_addEventHandler;
 
 };
