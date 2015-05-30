@@ -7,3 +7,9 @@
 #ifdef description
 	
 #endif
+
+#ifdef preinit
+	
+	#include "preinit.sqf"
+	
+#endif

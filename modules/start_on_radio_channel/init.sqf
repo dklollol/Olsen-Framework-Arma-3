@@ -13,7 +13,7 @@ if (!isDedicated) then {
 			
 			_newChannels = [];
 			
-			if (count _channels == 0) then {
+			if (count _channels > 0) then {
 				
 				{
 					
