@@ -3,7 +3,3 @@
 	#include "init.sqf"
 	
 #endif
-
-#ifdef description
-	
-#endif
