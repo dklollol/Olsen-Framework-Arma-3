@@ -22,7 +22,5 @@ if (!isDedicated) then { //This scope is only for the player
 			respawnTickets = 0;
 			
 		}; //End of west case
-		
 	}; //End of switch
-	
 };

@@ -44,6 +44,31 @@ if (!isDedicated) then {
 		};
 	};
 	
-	radioEh = ["acre_sys_radio_returnRadioId", {_this spawn FNC_RadioEhHandler;}] call CBA_fnc_addEventHandler;
-
+	private ["_channels", "_newChannels"];
+	
+	_channels = player getVariable ["frameworkChannels", []];
+	
+	_newChannels = [];
+	
+	{
+	
+		if ((_x select 0) in (items player)) then {
+			
+			_newChannels set [count _newChannels, _x];
+			
+		};
+		
+	} forEach _channels;
+	
+	if (count _newChannels == 0) then {
+		
+		player setVariable ["frameworkChannels", nil, false];
+	
+	} else {
+		
+		player setVariable ["frameworkChannels", _newChannels, false];	
+		
+		radioEh = ["acre_sys_radio_returnRadioId", {_this spawn FNC_RadioEhHandler;}] call CBA_fnc_addEventHandler;
+		
+	};
 };
