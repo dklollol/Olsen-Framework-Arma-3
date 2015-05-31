@@ -1,3 +1,30 @@
+FW_Debug_Messages = [];
+
+FNC_DebugMessage = {
+	
+	private ["_message", "_found"];
+	
+	_message = _this;
+	
+	_found = false;
+	
+	{
+		
+		if (_x == _message) exitWith {
+			
+			_found = true;
+			
+		};
+	
+	} forEach FW_Debug_Messages;
+	
+	if (!_found) then {
+	
+		FW_Debug_Messages set [count FW_Debug_Messages, _message];
+	
+	};
+};
+
 FNC_TrackAsset = {
 	
 	private ["_asset", "_name", "_team"];
@@ -267,7 +294,7 @@ FNC_AddItemOrg = {
 				
 				if (!_succes) then {
 					
-					hint format ["FNC_GearScript: Warning %1 overflown from %2, in %3", _item, _position, _unit];
+					(format ["FNC_GearScript: Warning %1 overflown from %2, in %3", _item, _position, _unit]) call FNC_DebugMessage;
 
 				};
 			};
@@ -291,7 +318,7 @@ FNC_AddItemOrg = {
 					
 				};
 				
-				hint format [_message, _item, _position, _unit];
+				(format [_message, _item, _position, _unit]) call FNC_DebugMessage;
 				
 			};
 		};
@@ -320,7 +347,7 @@ FNC_AddItemVehicleOrg = {
 			
 		} else {
 			
-			hint format ["FNC_GearScript: Warning couldn't fit %1 in %2", _item, _vehicle];
+			(format ["FNC_GearScript: Warning couldn't fit %1 in %2", _item, _vehicle]) call FNC_DebugMessage;
 
 		};
 	};

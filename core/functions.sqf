@@ -209,7 +209,7 @@ FNC_CasualtyPercentage = {
 			if (_tempStart == 0) then {
 			
 				_tempText = format ["Casualty percentage:<br></br>Warning no units on team ""%1"".", _team];
-				[_tempText] call FNC_DebugMessage;
+				_tempText call FNC_DebugMessage;
 				
 			} else {
 			
@@ -242,7 +242,7 @@ FNC_CasualtyCount = {
 			if (_tempStart == 0) then {
 			
 				_tempText = format ["Casualty count:<br></br>Warning no units on team ""%1"".", _team];
-				[_tempText] call FNC_DebugMessage;
+				_tempText call FNC_DebugMessage;
 				
 			} else {
 			

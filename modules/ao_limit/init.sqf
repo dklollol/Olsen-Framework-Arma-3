@@ -5,7 +5,7 @@ if !(markerType NAME == "") then { \
 	_markers set [count _markers, [SIDE, NAME]]; \
 } else { \
 	_temp = format ["AO limit module:<br></br>Warning marker ""%1"", in file ""modules\ao limit\settings.sqf"" does not exist.", NAME]; \
-	[_temp] call FNC_DebugMessage; \
+	_temp call FNC_DebugMessage; \
 };
 
 if (!isDedicated) then {

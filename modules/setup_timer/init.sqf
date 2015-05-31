@@ -3,7 +3,7 @@ if !(markerType NAME == "") then { \
 	_markers set [count _markers, [SIDE, TIME, NAME]]; \
 } else { \
 	_temp = format ["Setup timer module:<br></br>Warning marker ""%1"", in file ""modules\setup timer\settings.sqf"" does not exist.", NAME]; \
-	[_temp] call FNC_DebugMessage; \
+	_temp call FNC_DebugMessage; \
 };
 
 if (!isDedicated) then {
