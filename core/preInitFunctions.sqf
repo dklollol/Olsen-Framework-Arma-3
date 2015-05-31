@@ -6,9 +6,9 @@ FNC_TrackAsset = {
 	_name = _this select 1;
 	_team = _this select 2;
 
-	_asset setVariable ["vehName", _name];
+	_asset setVariable ["frameworkAssetName", _name];
 
-	_asset setVariable ["vehTeam", _team];
+	_asset setVariable ["frameworkAssetTeam", _team];
 	
 };
 
@@ -267,7 +267,7 @@ FNC_AddItemOrg = {
 				
 				if (!_succes) then {
 					
-					hint format ["GEARSCRIPT: Warning %1 overflown from %2, in %3", _item, _position];
+					hint format ["FNC_GearScript: Warning %1 overflown from %2, in %3", _item, _position];
 
 				};
 			};
@@ -283,11 +283,11 @@ FNC_AddItemOrg = {
 			
 			} else {
 				
-				_message = "GEARSCRIPT: Warning couldn't fit %1 anywhere, originally intended for %2, in %3";
+				_message = "FNC_GearScript: Warning couldn't fit %1 anywhere, originally intended for %2, in %3";
 				
 				if (_position == "none") then {
 					
-					_message = "GEARSCRIPT: Warning couldn't fit %1 anywhere, in %3"
+					_message = "FNC_GearScript: Warning couldn't fit %1 anywhere, in %3"
 					
 				};
 				
@@ -320,7 +320,7 @@ FNC_AddItemVehicleOrg = {
 			
 		} else {
 			
-			hint format ["VEHGEARSCRIPT: Warning couldn't fit %1 in %2", _item, _vehicle];
+			hint format ["FNC_GearScript: Warning couldn't fit %1 in %2", _item, _vehicle];
 
 		};
 	};

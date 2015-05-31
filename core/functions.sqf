@@ -1,3 +1,93 @@
+FNC_StackNames = {
+	
+	private ["_array", "_foundArray", "_newArray", "_string", "_count"];
+	
+	_array = _this;
+	_foundArray = [];
+	_newArray = [];
+	
+	{
+		
+		if (!(_x in _foundArray)) then {
+			
+			_string = _x;
+			
+			_foundArray set [count _foundArray, _string];
+			
+			_count = 0;
+			
+			{
+				
+				if (_string == _x) then {
+					
+					_count = _count + 1;
+					
+				};
+				
+			} forEach _array;
+
+			_newArray set [count _newArray, format ["%1 X %2", _count, _string]];
+			
+		};
+		
+	} forEach _array;
+	
+	_newArray
+	
+};
+
+FNC_GetDamagedAssets = {
+	
+	private ["_team", "_disabledAssets", "_destroyedAssets"];
+	
+	_team = _this;
+
+	_disabledAssets = [];
+	_destroyedAssets = [];
+	
+	{
+		
+		if (_x getVariable "frameworkAssetTeam" == _team) then {
+		
+			if (alive _x) then {
+			
+				if (!canMove _x && !canFire _x) then {
+					
+					_disabledAssets set [count _disabledAssets, _x getVariable "frameworkAssetName"];
+					
+				};
+			
+			} else {
+				
+				_destroyedAssets set [count _destroyedAssets, _x getVariable "frameworkAssetName"];
+				
+			};
+		};
+		
+	} forEach vehicles;
+	
+	_destroyedAssets = _destroyedAssets call FNC_StackNames;
+	_disabledAssets = _disabledAssets call FNC_StackNames;
+	
+	[_disabledAssets, _destroyedAssets]
+	
+};
+
+//FNC_CreateRespawnMarker will make a respawn marker for _team at coordinate 0, 0, 0
+FNC_CreateRespawnMarker = {
+	
+	private ["_team", "_markerName", "_marker"];
+	
+	_team = _this;
+	
+	_markerName = format ["respawn_%1", _team];
+	
+	_marker = createMarker [_markerName, [0, 0, 0]];
+	_marker setMarkerShape "ICON";
+	_markerName setMarkerType "EMPTY";
+	
+};
+
 //FNC_InArea(UNIT, MARKER) checks if the UNIT is within the area of MARKER, supports all shapes
 FNC_InArea = {
 
@@ -90,9 +180,10 @@ FNC_EndMission = {
 	
 		_team = (_x select 0);
 		
-		GETDAMAGEDASSETNAMES(_team, _disabledTemp, _destroyedTemp);
-		SETTEAMVARIABLE(_team, 3, _disabledTemp);
-		SETTEAMVARIABLE(_team, 4, _destroyedTemp);
+		_assets call FNC_GetDamagedAssets;
+		
+		SETTEAMVARIABLE(_team, 3, _assets select 0);
+		SETTEAMVARIABLE(_team, 4, _assets select 1);
 	
 	} forEach FW_Teams;
 
@@ -251,7 +342,7 @@ FNC_SpectatePrep = {
 		
 		if (_loadout != "") then {
 			
-			[player, _loadout] call GEARSCRIPT;
+			[player, _loadout] call FNC_GearScript;
 			
 		};
 		

@@ -5,10 +5,10 @@ enableSaving [false, false];
 
 if (isServer) then {
 	
-	CreateRespawnMarker("respawn_west");
-	CreateRespawnMarker("respawn_east");
-	CreateRespawnMarker("respawn_guerrila");
-	CreateRespawnMarker("respawn_civilian");
+	"west" call FNC_CreateRespawnMarker;
+	"east" call FNC_CreateRespawnMarker;
+	"guerrila" call FNC_CreateRespawnMarker;
+	"civilian" call FNC_CreateRespawnMarker;
 	
 	FW_Teams = []; //DO NOT REMOVE
 	STARTCOUNT = []; //DO NOT REMOVE

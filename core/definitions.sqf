@@ -32,16 +32,6 @@ VARNAME = count _countQuery;
 QUERY(allUnits, side _x == SIDE, _countQuery); \
 VARNAME = count _countQuery;
 
-//STACKNAMES takes an array of strings and stacks the names to shorten the array
-//Example: ["abc", "abc", "abc", "ab", "c", "c"] becomes ["3 X abc", "1 X ab", "2 X c"]
-#define STACKNAMES(ARRAY, VARNAME) \
-_namesTemp = []; \
-while {count ARRAY != 0} do { \
-	FILTER(ARRAY, (ARRAY select 0) == _x, _names); \
-	_namesTemp set [count _namesTemp, (format ["%1 X %2", (count _names), (_names select 0)])]; \
-}; \
-VARNAME = _namesTemp;
-
 //SETTEAMVARIABLE edits the variable of TEAM at POS with the new VALUE
 #define SETTEAMVARIABLE(TEAM, POS, VALUE) \
 { \
@@ -75,22 +65,3 @@ VARNAME = _namesTemp;
 		}; \
 	}; \
 } forEach ARRAY;
-
-//GETDAMAGEDASSETNAMES will get all of the tracked assets of SIDE and stores them
-//respectably in DISABLEDVAR and DESTROYEDVAR
-#define GETDAMAGEDASSETNAMES(SIDE, DISABLEDVAR, DESTROYEDVAR) \
-QUERY(vehicles, !(_x getVariable "vehName" == "<null>"), _vehicleQuery); \
-QUERY(_vehicleQuery, (_x getVariable "vehTeam" == SIDE), _vehicleQuery); \
-FILTER(_vehicleQuery, !alive _x, _destroyedVehicleQuery); \
-QUERY(_vehicleQuery, !canMove _x, _vehicleQuery); \
-QUERY(_vehicleQuery, !canFire _x, _disabledVehicleQuery); \
-GETVARIABLES(_disabledVehicleQuery, "vehName", _disabledVehicleQuery); \
-GETVARIABLES(_destroyedVehicleQuery, "vehName", _destroyedVehicleQuery); \
-STACKNAMES(_disabledVehicleQuery, DISABLEDVAR); \
-STACKNAMES(_destroyedVehicleQuery, DESTROYEDVAR);
-
-//CreateRespawnMarker will make a respawn marker for team STRING at coordinate 0, 0, 0
-#define CreateRespawnMarker(STRING) \
-_marker = createMarker [STRING, [0, 0]]; \
-_marker setMarkerShape "ICON"; \
-STRING setMarkerType "EMPTY";
