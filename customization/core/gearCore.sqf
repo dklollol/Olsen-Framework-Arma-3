@@ -16,4 +16,4 @@ removeUniform _unit;
 removeAllWeapons _unit;
 removeAllAssignedItems _unit;
 
-FNC_AddItem = {([_unit] + _this) call FNC_AddItemOrg;};
+FNC_AddItem = {([_unit, _type] + _this) call FNC_AddItemOrg;};

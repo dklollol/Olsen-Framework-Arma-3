@@ -78,19 +78,20 @@ FNC_AddItemOrg = {
 	private ["_unit", "_item", "_amount", "_position", "_succes", "_parents", "_type", "_message"];
 	
 	_unit = _this select 0;
-	_item = _this select 1;
-	_amount = 1;
+	_type = _this select 1;
+	_item = _this select 2;
+	_amount = 3;
 	_position = "none";
-	
-	if (count _this > 2) then {
-	
-		_amount = _this select 2;
-	
-	};
 	
 	if (count _this > 3) then {
 	
-		_position = _this select 3;
+		_amount = _this select 3;
+	
+	};
+	
+	if (count _this > 4) then {
+	
+		_position = _this select 4;
 	
 	};
 
@@ -294,7 +295,7 @@ FNC_AddItemOrg = {
 				
 				if (!_succes) then {
 					
-					(format ["FNC_AddItem: Warning %1 overflown from %2, in %3", _item, _position, _unit]) call FNC_DebugMessage;
+					(format ["FNC_AddItem: Warning %1 overflown from %2, in %3, case %4", _item, _position, _unit, _type]) call FNC_DebugMessage;
 
 				};
 			};
@@ -310,15 +311,15 @@ FNC_AddItemOrg = {
 			
 			} else {
 				
-				_message = "FNC_AddItem: Warning couldn't fit %1 anywhere, originally intended for %2, in %3";
+				_message = "FNC_AddItem: Warning couldn't fit %1 anywhere, originally intended for %2, in %3, case %4";
 				
 				if (_position == "none") then {
 					
-					_message = "FNC_AddItem: Warning couldn't fit %1 anywhere, in %3"
+					_message = "FNC_AddItem: Warning couldn't fit %1 anywhere, in %3, case %4"
 					
 				};
 				
-				(format [_message, _item, _position, _unit]) call FNC_DebugMessage;
+				(format [_message, _item, _position, _unit, _type]) call FNC_DebugMessage;
 				
 			};
 		};
@@ -330,12 +331,13 @@ FNC_AddItemVehicleOrg = {
 	private ["_vehicle", "_item", "_amount"];
 	
 	_vehicle = _this select 0;
-	_item = _this select 1;
-	_amount = 1;
+	_type = _this select 1;
+	_item = _this select 2;
+	_amount = 3;
 	
-	if (count _this > 2) then {
+	if (count _this > 3) then {
 	
-		_amount = _this select 2;
+		_amount = _this select 3;
 	
 	};
 	
@@ -347,7 +349,7 @@ FNC_AddItemVehicleOrg = {
 			
 		} else {
 			
-			(format ["FNC_AddItemVehicle: Warning couldn't fit %1 in %2", _item, _vehicle]) call FNC_DebugMessage;
+			(format ["FNC_AddItemVehicle: Warning couldn't fit %1, in %2, case %3", _item, _vehicle, _type]) call FNC_DebugMessage;
 
 		};
 	};

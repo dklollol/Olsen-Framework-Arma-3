@@ -10,4 +10,4 @@ clearMagazineCargoGlobal _vehicle;
 clearWeaponCargoGlobal _vehicle;
 clearBackpackCargoGlobal _vehicle;
 
-FNC_AddItemVehicle = {([_vehicle] + _this) call FNC_AddItemVehicleOrg;};
+FNC_AddItemVehicle = {([_vehicle, _type] + _this) call FNC_AddItemVehicleOrg;};
