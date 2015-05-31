@@ -48,15 +48,15 @@ switch (side player) do { //Checks what team the player is on
 				["rhsusf_iotv_ocp_squadleader"] call FNC_AddItem;
 				USMCuniform;
 				USMCvest;
+				["rhs_mag_30Rnd_556x45_M855A1_Stanag", 7, "vest"] call FNC_AddItem;
+				["rhs_mag_30Rnd_556x45_M855A1_Stanag_Tracer_Red", 2, "vest"] call FNC_AddItem;
 				["rhsusf_mich_helmet_marpatd_alt"] call FNC_AddItem;
 				["rhs_weap_m4a1_grip2"] call FNC_AddItem;
 				["rhsusf_acc_anpeq15_light"] call FNC_AddItem;
 				["rhsusf_acc_compm4"] call FNC_AddItem;
-				["rhs_mag_30Rnd_556x45_M855A1_Stanag", 7, "vest"] call FNC_AddItem;
-				["rhs_mag_30Rnd_556x45_M855A1_Stanag_Tracer_Red", 2, "vest"] call FNC_AddItem;
+				["16Rnd_9x21_Mag", 2, "uniform"] call FNC_AddItem;
 				["tb_p_g17_T"] call FNC_AddItem;
 				["tb_acc_m6x_LLM"] call FNC_AddItem;
-				["16Rnd_9x21_Mag", 2, "uniform"] call FNC_AddItem;
 				["binocular"] call FNC_AddItem;
 				["ACE_MapTools", 1, "vest"] call FNC_AddItem;
 				["ACRE_PRC148", 1, "vest"] call FNC_AddItem;
