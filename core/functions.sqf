@@ -187,7 +187,7 @@ FNC_EndMission = {
 	
 	} forEach FW_Teams;
 
-	["endScreen", [_scenario, timeLimit, FW_Teams]] call CBA_fnc_globalEvent;
+	["endScreen", [_scenario, FW_TimeLimit, FW_Teams]] call CBA_fnc_globalEvent;
 
 };
 
@@ -317,7 +317,7 @@ FNC_AddPlayableTeam = {
 //FNC_SpectateCheck() displays the appropriate message when the player dies
 FNC_SpectateCheck = {
 	
-	if (respawnTickets > 0) then {
+	if (FW_RespawnTickets > 0) then {
 		
 		titleText ["You are dead.\nRespawning...", "BLACK", 0.2];
 		
@@ -333,7 +333,7 @@ FNC_SpectatePrep = {
 	
 	private ["_respawnName", "_respawnPoint", "_text", "_loadout"];
 	
-	if (respawnTickets > 0) then {
+	if (FW_RespawnTickets > 0) then {
 		
 		_respawnName = toLower(format ["fw_%1_respawn", side player]);
 		_respawnPoint = missionNamespace getVariable [_respawnName, objNull];
@@ -352,11 +352,11 @@ FNC_SpectatePrep = {
 			
 		};
 		
-		respawnTickets = respawnTickets - 1;
+		FW_RespawnTickets = FW_RespawnTickets - 1;
 		
 		_text = "respawns left";
 		
-		if (respawnTickets == 1) then {
+		if (FW_RespawnTickets == 1) then {
 			
 			_text = "respawn left";
 			
@@ -364,7 +364,7 @@ FNC_SpectatePrep = {
 		
 		titleText ["You are dead.\nRespawning...", "BLACK IN", 0.2];
 		
-		cutText [format ['%1 %2', respawnTickets, _text], 'PLAIN DOWN'];
+		cutText [format ['%1 %2', FW_RespawnTickets, _text], 'PLAIN DOWN'];
 		
 		player setVariable ["frameworkBody", player, true];
 		

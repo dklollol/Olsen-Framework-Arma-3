@@ -2,56 +2,59 @@ FNC_DebugMessage = {};
 
 if (!isDedicated) then {
 	
-	100 cutRsc ["DIA_DEBUG", "PLAIN"];
-	
-	private ["_someText", "_text"];
-	
-	_someText = 4001;
-	
-	_text = "";
-	
-	{
-	
-		_text = _text + _x + "<br></br><br></br>";
+	if (FW_DebugMessagesEnabled) then {
 		
-	} forEach FW_Debug_Messages;
-	
-	((uiNamespace getVariable "fwDebug") displayCtrl _someText) ctrlSetStructuredText parseText _text;
-
-	FNC_DebugMessage = {
+		100 cutRsc ["DIA_DEBUG", "PLAIN"];
 		
-		private ["_someText", "_message", "_found", "_text"];
+		private ["_someText", "_text"];
 		
 		_someText = 4001;
 		
-		_message = _this;
-		
-		_found = false;
+		_text = "";
 		
 		{
+		
+			_text = _text + _x + "<br></br><br></br>";
 			
-			if (_x == _message) exitWith {
-				
-				_found = true;
-				
-			};
+		} forEach FW_DebugMessages;
 		
-		} forEach FW_Debug_Messages;
-		
-		if (!_found) then {
-		
-			FW_Debug_Messages set [count FW_Debug_Messages, _message];
+		((uiNamespace getVariable "frameworkDebug") displayCtrl _someText) ctrlSetStructuredText parseText _text;
+
+		FNC_DebugMessage = {
 			
-			_text = "";
+			private ["_someText", "_message", "_found", "_text"];
+			
+			_someText = 4001;
+			
+			_message = _this;
+			
+			_found = false;
 			
 			{
-			
-				_text = _text + _x + "<br></br><br></br>";
 				
-			} forEach FW_Debug_Messages;
+				if (_x == _message) exitWith {
+					
+					_found = true;
+					
+				};
 			
-			((uiNamespace getVariable "fwDebug") displayCtrl _someText) ctrlSetStructuredText parseText _text;
-		
+			} forEach FW_DebugMessages;
+			
+			if (!_found) then {
+			
+				FW_DebugMessages set [count FW_DebugMessages, _message];
+				
+				_text = "";
+				
+				{
+				
+					_text = _text + _x + "<br></br><br></br>";
+					
+				} forEach FW_DebugMessages;
+				
+				((uiNamespace getVariable "frameworkDebug") displayCtrl _someText) ctrlSetStructuredText parseText _text;
+			
+			};
 		};
 	};
 };

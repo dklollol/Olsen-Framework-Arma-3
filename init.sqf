@@ -2,9 +2,9 @@
 
 asr_ai3_main_setskills = 0; //Stops ASR from changing the skill of the AI
 
-#include "core\dia\debug\dia_debug.sqf" //DO NOT REMOVE
 #include "core\init.sqf" //DO NOT REMOVE
 #include "customization\settings.sqf" //DO NOT REMOVE
+#include "core\dia\debug\dia_debug.sqf" //DO NOT REMOVE
 
 if (isServer) then {
 

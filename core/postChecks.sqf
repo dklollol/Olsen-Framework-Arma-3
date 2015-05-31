@@ -1,6 +1,6 @@
 if (!isDedicated) then {
 	
-	if (respawnTickets > 0) then {
+	if (FW_RespawnTickets > 0) then {
 		
 		_respawnName = toLower(format ["fw_%1_respawn", side player]);
 		_respawnPoint = missionNamespace getVariable [_respawnName, objNull];
@@ -14,13 +14,13 @@ if (!isDedicated) then {
 		
 		_text = "respawns left";
 		
-		if (respawnTickets == 1) then {
+		if (FW_RespawnTickets == 1) then {
 			
 			_text = "respawn left";
 			
 		};
 		
-		cutText [format ['%1 %2', respawnTickets, _text], 'PLAIN DOWN'];
+		cutText [format ['%1 %2', FW_RespawnTickets, _text], 'PLAIN DOWN'];
 
 	};
 };

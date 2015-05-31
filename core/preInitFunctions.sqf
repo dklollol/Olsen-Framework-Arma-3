@@ -1,4 +1,4 @@
-FW_Debug_Messages = [];
+FW_DebugMessages = [];
 
 FNC_DebugMessage = {
 	
@@ -16,11 +16,11 @@ FNC_DebugMessage = {
 			
 		};
 	
-	} forEach FW_Debug_Messages;
+	} forEach FW_DebugMessages;
 	
 	if (!_found) then {
 	
-		FW_Debug_Messages set [count FW_Debug_Messages, _message];
+		FW_DebugMessages set [count FW_DebugMessages, _message];
 	
 	};
 };

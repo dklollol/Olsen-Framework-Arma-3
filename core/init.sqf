@@ -34,7 +34,7 @@ if (!isDedicated) then {
 	//Creates the briefing notes for the player
 	[] execVM "customization\briefing.sqf";
 	
-	respawnTickets = 0; //Initialize respawn tickets to 0 
+	FW_RespawnTickets = 0; //Initialize respawn tickets to 0 
 	
 	player setVariable ["frameworkDead", false, true]; //Tells the framework the player is alive
 	player setVariable ["frameworkSpectating", false, true]; //Player is not spectating
