@@ -267,7 +267,7 @@ FNC_AddItemOrg = {
 				
 				if (!_succes) then {
 					
-					hint format ["FNC_GearScript: Warning %1 overflown from %2, in %3", _item, _position];
+					hint format ["FNC_GearScript: Warning %1 overflown from %2, in %3", _item, _position, _unit];
 
 				};
 			};
