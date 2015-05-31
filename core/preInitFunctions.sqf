@@ -294,7 +294,7 @@ FNC_AddItemOrg = {
 				
 				if (!_succes) then {
 					
-					(format ["FNC_GearScript: Warning %1 overflown from %2, in %3", _item, _position, _unit]) call FNC_DebugMessage;
+					(format ["FNC_AddItem: Warning %1 overflown from %2, in %3", _item, _position, _unit]) call FNC_DebugMessage;
 
 				};
 			};
@@ -310,11 +310,11 @@ FNC_AddItemOrg = {
 			
 			} else {
 				
-				_message = "FNC_GearScript: Warning couldn't fit %1 anywhere, originally intended for %2, in %3";
+				_message = "FNC_AddItem: Warning couldn't fit %1 anywhere, originally intended for %2, in %3";
 				
 				if (_position == "none") then {
 					
-					_message = "FNC_GearScript: Warning couldn't fit %1 anywhere, in %3"
+					_message = "FNC_AddItem: Warning couldn't fit %1 anywhere, in %3"
 					
 				};
 				
@@ -347,7 +347,7 @@ FNC_AddItemVehicleOrg = {
 			
 		} else {
 			
-			(format ["FNC_GearScript: Warning couldn't fit %1 in %2", _item, _vehicle]) call FNC_DebugMessage;
+			(format ["FNC_AddItemVehicle: Warning couldn't fit %1 in %2", _item, _vehicle]) call FNC_DebugMessage;
 
 		};
 	};
