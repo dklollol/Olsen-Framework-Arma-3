@@ -75,10 +75,10 @@ FNC_CanAttachItem = {
 
 FNC_AddItemOrg = {
 	
-	private ["_unit", "_item", "_amount", "_position", "_succes", "_parents", "_type", "_message"];
+	private ["_unit", "_loadoutType", "_item", "_amount", "_position", "_succes", "_parents", "_type", "_message"];
 	
 	_unit = _this select 0;
-	_type = _this select 1;
+	_loadoutType = _this select 1;
 	_item = _this select 2;
 	_amount = 3;
 	_position = "none";
@@ -295,7 +295,7 @@ FNC_AddItemOrg = {
 				
 				if (!_succes) then {
 					
-					(format ["FNC_AddItem: Warning %1 overflown from %2, in %3, case %4", _item, _position, _unit, _type]) call FNC_DebugMessage;
+					(format ["FNC_AddItem: Warning %1 overflown from %2, in %3, case %4", _item, _position, _unit, _loadoutType]) call FNC_DebugMessage;
 
 				};
 			};
@@ -319,7 +319,7 @@ FNC_AddItemOrg = {
 					
 				};
 				
-				(format [_message, _item, _position, _unit, _type]) call FNC_DebugMessage;
+				(format [_message, _item, _position, _unit, _loadoutType]) call FNC_DebugMessage;
 				
 			};
 		};
@@ -328,10 +328,10 @@ FNC_AddItemOrg = {
 
 FNC_AddItemVehicleOrg = {
 	
-	private ["_vehicle", "_item", "_amount"];
+	private ["_vehicle", "_loadoutType", "_item", "_amount"];
 	
 	_vehicle = _this select 0;
-	_type = _this select 1;
+	_loadoutType = _this select 1;
 	_item = _this select 2;
 	_amount = 3;
 	
@@ -349,7 +349,7 @@ FNC_AddItemVehicleOrg = {
 			
 		} else {
 			
-			(format ["FNC_AddItemVehicle: Warning couldn't fit %1, in %2, case %3", _item, _vehicle, _type]) call FNC_DebugMessage;
+			(format ["FNC_AddItemVehicle: Warning couldn't fit %1, in %2, case %3", _item, _vehicle, _loadoutType]) call FNC_DebugMessage;
 
 		};
 	};
