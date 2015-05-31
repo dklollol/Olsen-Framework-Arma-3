@@ -21,9 +21,18 @@ _leftText = "";
 _rightText = "";
 _textSide = 0;
 {
-	_temp = format ["%1<br />Casualties: %2 out of %3<br />",(_x select 0), ((_x select 1) - (_x select 2)), (_x select 1)];
+	
+	_name = _x select 0;
+	_side = _x select 1;
+	_type = _x select 2;
+	_start = _x select 3;
+	_current = _x select 4;
+	_disabled = _x select 5;
+	_destroyed = _x select 6;
+	
+	_temp = format ["%1<br />Casualties: %2 out of %3<br />", _name, (_start - _current), _start];
 
-	if (count (_x select 3) != 0) then {
+	if (count _disabled != 0) then {
 	
 		_temp = _temp + "<br />Disabled assets:<br />";
 		
@@ -31,11 +40,11 @@ _textSide = 0;
 		
 			_temp = _temp + format ["%1<br />", _x];
 			
-		} forEach (_x select 3);
+		} forEach _disabled;
 		
 	};
 
-	if (count (_x select 4) != 0) then {
+	if (count _destroyed != 0) then {
 	
 		_temp = _temp + "<br />Destroyed assets:<br />";
 		
@@ -43,7 +52,7 @@ _textSide = 0;
 		
 			_temp = _temp + format ["%1<br />", _x];
 			
-		} forEach (_x select 4);
+		} forEach _destroyed;
 	};
 	
 	_temp = _temp + "<br />";
@@ -78,9 +87,9 @@ _endTitleText = format ["%1<br />%2", _scenario, _timeLimitText];
 ((findDisplay _dia) displayCtrl _left) ctrlSetStructuredText parseText _leftText;
 ((findDisplay _dia) displayCtrl _right) ctrlSetStructuredText parseText _rightText;
 
-for "x" from 1 to 120 do {
+for "_x" from 1 to 120 do {
 	
-	((findDisplay _dia) displayCtrl _bg) ctrlSetBackgroundColor [0, 0, 0, (x * (1/120))];
+	((findDisplay _dia) displayCtrl _bg) ctrlSetBackgroundColor [0, 0, 0, (_x * (1/120))];
 	sleep(0.01);
 	
 };

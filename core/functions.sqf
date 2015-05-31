@@ -1,3 +1,115 @@
+FNC_GetTeamVariable = {
+	
+	private ["_team", "_index", "_return"];
+	
+	_team = _this select 0;
+	_index = _this select 1;
+	
+	_return = "";
+	
+	{
+	
+		if ((_x select 0) == _team) exitWith {
+		
+			_return = (_x select _index);
+		
+		};
+	
+	} forEach FW_Teams;
+	
+	_return
+
+};
+
+FNC_CountTeam = {
+	
+	private ["_team", "_side", "_type", "_count", "_unitArray"];
+	
+	_team = _this;
+	
+	_side = [_team, 1] call FNC_GetTeamVariable;
+	_type = [_team, 2] call FNC_GetTeamVariable;
+	
+	_count = 0;
+	
+	if (_type == "player") then {
+	
+		_unitArray = playableUnits;
+		
+	} else {
+		
+		_unitArray = allUnits;
+		
+	};
+	
+	{
+		
+		if (side _x == _side && _x call FNC_Alive) then {
+			
+			_count = _count + 1;
+			
+		};
+		
+	} forEach _unitArray;
+	
+	_count
+	
+};
+
+FNC_StartingCount = {
+	
+	{	
+		
+		_team = (_x select 0);
+		
+		_count = _team call FNC_CountTeam;
+		
+		[_team, 3, _count] call FNC_SetTeamVariable;
+		
+	} forEach FW_Teams;
+	
+};
+
+FNC_CurrentCount = {
+	
+	{	
+		
+		_team = (_x select 0);
+		
+		_count = _team call FNC_CountTeam;
+		
+		[_team, 4, _count] call FNC_SetTeamVariable;
+		
+	} forEach FW_Teams;
+	
+};
+
+FNC_SetTeamVariable = {
+	
+	private ["_team", "_index", "_value", "_return"];
+	
+	_team = _this select 0;
+	_index = _this select 1;
+	_value = _this select 2;
+	
+	_return = false;
+	
+	{
+	
+		if ((_x select 0) == _team) exitWith {
+		
+			_x set [_index, _value];
+			
+			_return = true;
+		
+		};
+	
+	} forEach FW_Teams;
+	
+	_return
+
+};
+
 FNC_StackNames = {
 	
 	private ["_array", "_foundArray", "_newArray", "_string", "_count"];
@@ -182,8 +294,8 @@ FNC_EndMission = {
 		
 		_assets = _team call FNC_GetDamagedAssets;
 		
-		SETTEAMVARIABLE(_team, 3, _assets select 0);
-		SETTEAMVARIABLE(_team, 4, _assets select 1);
+		[_team, 5, _assets select 0] call FNC_SetTeamVariable;
+		[_team, 6, _assets select 1] call FNC_SetTeamVariable;
 	
 	} forEach FW_Teams;
 
@@ -194,66 +306,55 @@ FNC_EndMission = {
 //FNC_CasualtyPercentage(TEAM) returns the casualty percentage of TEAM
 FNC_CasualtyPercentage = {
 	
-	private ["_team", "_temp", "_tempStart", "_tempCurrent", "_tempText"];
+	private ["_team", "_count", "_start", "_current", "_tempText"];
 
 	_team = _this;
 	
-	_temp = 0;
+	_count = 0;
+
+	_start = [_team, 3] call FNC_GetTeamVariable;
+	_current = [_team, 4] call FNC_GetTeamVariable;
 	
-	{ 
-		if ((_x select 0) == _team) exitWith {
-		
-			_tempStart = (_x select 1);
-			_tempCurrent = (_x select 2);
-			
-			if (_tempStart == 0) then {
-			
-				_tempText = format ["Casualty percentage:<br></br>Warning no units on team ""%1"".", _team];
-				_tempText call FNC_DebugMessage;
-				
-			} else {
-			
-				_temp = (_tempStart - _tempCurrent) / (_tempStart * 0.01);
-				
-			};
-		};
-		
-	} forEach FW_Teams;
+	if (_start == 0) then {
 	
-	_temp
+		_tempText = format ["Casualty count:<br></br>Warning no units on team ""%1"".", _team];
+		_tempText call FNC_DebugMessage;
+		
+	} else {
+	
+		_count = (_start - _current) / (_start * 0.01);
+		
+	};
+	
+	_count
+	
 	
 };
 
 //FNC_CasualtyCount(TEAM) returns the casualty count of TEAM
 FNC_CasualtyCount = {
 	
-	private ["_team", "_temp", "_tempStart", "_tempCurrent", "_tempText"];
+	private ["_team", "_count", "_start", "_current", "_tempText"];
 
 	_team = _this;
 	
-	_temp = 0;
+	_count = 0;
+
+	_start = [_team, 3] call FNC_GetTeamVariable;
+	_current = [_team, 4] call FNC_GetTeamVariable;
 	
-	{ 
-		if ((_x select 0) == _team) exitWith {
-		
-			_tempStart = (_x select 1);
-			_tempCurrent = (_x select 2);
-			
-			if (_tempStart == 0) then {
-			
-				_tempText = format ["Casualty count:<br></br>Warning no units on team ""%1"".", _team];
-				_tempText call FNC_DebugMessage;
-				
-			} else {
-			
-				_temp = _tempStart - _tempCurrent;
-				
-			};
-		};
-		
-	} forEach FW_Teams;
+	if (_start == 0) then {
 	
-	_temp
+		_tempText = format ["Casualty count:<br></br>Warning no units on team ""%1"".", _team];
+		_tempText call FNC_DebugMessage;
+		
+	} else {
+	
+		_count = _start - _current;
+		
+	};
+	
+	_count
 	
 };
 
@@ -290,29 +391,26 @@ FNC_InVehicle = {
 	
 };
 
-//FNC_AddPlayableTeam(SIDE, NAME) adds an playable team of SIDE with NAME to be tracked by the framework
-FNC_AddPlayableTeam = {
+//FNC_AddTeam(SIDE, TYPE, NAME) adds a team on SIDE with NAME of TYPE to be tracked by the framework
+FNC_AddTeam = {
 	
-	private ["_side", "_name"];
+	private ["_side", "_name", "_type"];
 
 	_side = _this select 0;
 	_name = _this select 1;
+	_type = _this select 2;
 	
 	if (isMultiplayer) then {
 	
-		FW_Teams set [count FW_Teams, [_name, 0, 0, [], []]];
-		
-		CURRENTCOUNT set [count CURRENTCOUNT, [_name, _side, "startPlayable"]];
-		CURRENTCOUNT set [count CURRENTCOUNT, [_name, _side, "currentPlayable"]];
+		FW_Teams set [count FW_Teams, [_name, _side, _type,  0, 0, [], []]];
 		
 	} else {
 	
-		[_side, _name] call FNC_AddAiTeam;
+		FW_Teams set [count FW_Teams, [_name, _side, "ai",  0, 0, [], []]];
 		
 	};
 
 };
-
 
 //FNC_SpectateCheck() displays the appropriate message when the player dies
 FNC_SpectateCheck = {
@@ -402,19 +500,4 @@ FNC_SpectatePrep = {
 		
 		};
 	};
-};
-
-//FNC_AddAiTeam(SIDE, NAME) adds an ai team of SIDE with NAME to be tracked by the framework
-FNC_AddAiTeam = {
-	
-	private ["_side", "_name"];
-
-	_side = _this select 0;
-	_name = _this select 1;
-	
-	FW_Teams set [count FW_Teams, [_name, 0, 0, [], []]];
-	
-	STARTCOUNT set [count STARTCOUNT, [_name, _side, "startAi"]];
-	CURRENTCOUNT set [count CURRENTCOUNT, [_name, _side, "currentAi"]];
-
 };

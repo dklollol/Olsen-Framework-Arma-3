@@ -1,13 +1,15 @@
+asr_ai3_main_setskills = 0; //Stops ASR from changing the skill of the AI
+
 if (isServer) then { //This scope is only for the server
 
 	setViewDistance 2500; //View distance for the server (the ai's)
 
 	FW_TimeLimit = 30; //Time limit in minutes
 
-	[west, "USMC"] call FNC_AddPlayableTeam; //Adds a player team called USMC on side west
-	[east, "VDV"] call FNC_AddAiTeam; //Adds a ai team called VDV on side east
+	[west, "USMC", "player"] call FNC_AddTeam; //Adds a player team called USMC on side west
+	[east, "VDV", "ai"] call FNC_AddTeam; //Adds a ai team called VDV on side east
 	
-	// [resistance, "Local Militia"] call FNC_AddPlayableTeam; //Adds a player team called Local Militia on side resistance (aka independent)
+	// [resistance, "Local Militia", "player"] call FNC_AddTeam; //Adds a player team called Local Militia on side resistance (aka independent)
 
 };
 

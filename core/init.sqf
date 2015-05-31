@@ -1,4 +1,3 @@
-#include "definitions.sqf" //DO NOT REMOVE
 #include "functions.sqf" //DO NOT REMOVE
 
 enableSaving [false, false];
@@ -11,8 +10,6 @@ if (isServer) then {
 	"civilian" call FNC_CreateRespawnMarker;
 	
 	FW_Teams = []; //DO NOT REMOVE
-	STARTCOUNT = []; //DO NOT REMOVE
-	CURRENTCOUNT = []; //DO NOT REMOVE
 	FW_MissionEnded = false; //Mission has not ended
 	
 };
