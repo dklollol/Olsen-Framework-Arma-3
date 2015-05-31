@@ -71,17 +71,25 @@ _textSide = 0;
 	
 } forEach _teams;
 
-_time = ceil(time / 60);
+if (_timeLimt != 0) then {
 
-if (_time >= _timeLimt) then {
+	_time = ceil(time / 60);
+
+	if (_time >= _timeLimt) then {
+		
+		_time = _timeLimt;
+		
+	};
+
+	_timeLimitText = format ["Mission duration: %1 out of %2 minutes", _time, _timeLimt];
+
+	_endTitleText = format ["%1<br />%2", _scenario, _timeLimitText];
+
+} else {
 	
-	_time = _timeLimt;
+	_endTitleText = _scenario;
 	
 };
-
-_timeLimitText = format ["Mission duration: %1 out of %2 minutes", _time, _timeLimt];
-
-_endTitleText = format ["%1<br />%2", _scenario, _timeLimitText];
 
 ((findDisplay _dia) displayCtrl _endTitle) ctrlSetStructuredText parseText _endTitleText;
 ((findDisplay _dia) displayCtrl _left) ctrlSetStructuredText parseText _leftText;

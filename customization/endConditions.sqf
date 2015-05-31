@@ -14,7 +14,7 @@ if (_eastCasualty >= 75) exitWith {
 };
 
 
-if ((time / 60) >= FW_TimeLimit) exitWith { //It is recommended that you do not remove the time limit end condition 
+if ((time / 60) >= FW_TimeLimit && FW_TimeLimit != 0) exitWith { //It is recommended that you do not remove the time limit end condition 
 	
 	"TIME LIMIT REACHED!" call FNC_EndMission;
 	
