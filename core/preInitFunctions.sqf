@@ -80,7 +80,7 @@ FNC_AddItemOrg = {
 	_unit = _this select 0;
 	_loadoutType = _this select 1;
 	_item = _this select 2;
-	_amount = 3;
+	_amount = 1;
 	_position = "none";
 	
 	if (count _this > 3) then {
@@ -333,7 +333,7 @@ FNC_AddItemVehicleOrg = {
 	_vehicle = _this select 0;
 	_loadoutType = _this select 1;
 	_item = _this select 2;
-	_amount = 3;
+	_amount = 1;
 	
 	if (count _this > 3) then {
 	
