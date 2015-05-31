@@ -20,3 +20,4 @@ removeAllWeapons _unit;
 removeAllAssignedItems _unit;
 
 FNC_AddItem = {([_unit, _type] + _this) call FNC_AddItemOrg;};
+FNC_AddItemRandom = {([[_unit, _type]] + [_this]) call FNC_AddItemRandomOrg;};

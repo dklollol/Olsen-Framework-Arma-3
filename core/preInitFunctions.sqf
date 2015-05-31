@@ -339,6 +339,57 @@ FNC_AddItemOrg = {
 	};
 };
 
+FNC_AddItemRandomOrg = {
+	
+	private ["_unit", "_loadoutType", "_items", "_amount", "_position", "_randomPick"];
+
+	_unit = (_this select 0) select 0;
+	_loadoutType = (_this select 0) select 1;
+	
+	_items = _this select 1;
+	
+	_amount = 1;
+	_position = "none";
+		
+	if (count _items > 1) then {
+		
+		if (typeName (_items select 1) == "ARRAY") then {
+		
+			_position = "array";
+		
+		} else {
+		
+			if (typeName (_items select 1) == "SCALAR") then {
+				
+				_amount = _items select 1;
+				
+				if (count _items > 2) then {
+	
+					_position = _items select 2;
+				
+				};			
+				
+				_items = _items select 0;
+				
+			};		
+		};
+	};
+	
+	if (_position == "array") then {
+	
+		_randomPick = [1, count _items] call FNC_RandomRange;
+		
+		([_unit, _loadoutType] + (_items select (_randomPick - 1))) call FNC_AddItemOrg;
+	
+	} else {
+	
+		_randomPick = [1, count _items] call FNC_RandomRange;
+		
+		[_unit, _loadoutType, _items select (_randomPick - 1), _amount, _position] call FNC_AddItemOrg;
+	
+	};
+};
+
 FNC_AddItemVehicleOrg = {
 	
 	private ["_vehicle", "_loadoutType", "_item", "_amount"];
@@ -365,5 +416,50 @@ FNC_AddItemVehicleOrg = {
 			(format ["FNC_AddItemVehicle: Warning couldn't fit %1, in %2, case %3", _item, _vehicle, _loadoutType]) call FNC_DebugMessage;
 
 		};
+	};
+};
+
+FNC_AddItemVehicleRandomOrg = {
+	
+	private ["_vehicle", "_loadoutType", "_items", "_amount", "_position", "_randomPick"];
+
+	_vehicle = (_this select 0) select 0;
+	_loadoutType = (_this select 0) select 1;
+	
+	_items = _this select 1;
+	
+	_amount = 1;
+	_position = "none";
+		
+	if (count _items > 1) then {
+		
+		if (typeName (_items select 1) == "ARRAY") then {
+		
+			_position = "array";
+		
+		} else {
+		
+			if (typeName (_items select 1) == "SCALAR") then {
+				
+				_amount = _items select 1;
+				
+				_items = _items select 0;
+				
+			};		
+		};
+	};
+	
+	if (_position == "array") then {
+	
+		_randomPick = [1, count _items] call FNC_RandomRange;
+		
+		([_vehicle, _loadoutType] + (_items select (_randomPick - 1))) call FNC_AddItemVehicleOrg;
+	
+	} else {
+	
+		_randomPick = [1, count _items] call FNC_RandomRange;
+		
+		[_vehicle, _loadoutType, _items select (_randomPick - 1), _amount] call FNC_AddItemVehicleOrg;
+	
 	};
 };
