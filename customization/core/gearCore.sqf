@@ -1,3 +1,6 @@
+#define random(MIN, MAX) \
+([MIN, MAX] call FNC_RandomRange)
+
 private ["_unit", "_type"];
 
 _unit = _this select 0;

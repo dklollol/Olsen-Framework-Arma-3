@@ -25,6 +25,19 @@ FNC_DebugMessage = {
 	};
 };
 
+FNC_RandomRange = {
+	
+	private ["_min", "_max", "_return"];
+	
+	_min = _this select 0;
+	_max = _this select 1;
+	
+	_return = _min + (floor(random (1 + _max - _min)));
+	
+	_return
+	
+};
+
 FNC_TrackAsset = {
 	
 	private ["_asset", "_name", "_team"];
