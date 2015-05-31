@@ -180,7 +180,7 @@ FNC_EndMission = {
 	
 		_team = (_x select 0);
 		
-		_assets call FNC_GetDamagedAssets;
+		_assets = _team call FNC_GetDamagedAssets;
 		
 		SETTEAMVARIABLE(_team, 3, _assets select 0);
 		SETTEAMVARIABLE(_team, 4, _assets select 1);
