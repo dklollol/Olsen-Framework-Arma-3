@@ -46,9 +46,9 @@ FNC_TrackAsset = {
 	_name = _this select 1;
 	_team = _this select 2;
 
-	_asset setVariable ["frameworkAssetName", _name];
+	_asset setVariable ["FW_AssetName", _name];
 
-	_asset setVariable ["frameworkAssetTeam", _team];
+	_asset setVariable ["FW_AssetTeam", _team];
 	
 };
 

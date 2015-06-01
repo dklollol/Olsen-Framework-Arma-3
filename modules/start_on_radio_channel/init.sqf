@@ -9,7 +9,7 @@ if (!isDedicated) then {
 		
 		if (_player == player) then {
 			
-			_channels = player getVariable ["frameworkChannels", []];
+			_channels = player getVariable ["FW_Channels", []];
 			
 			_newChannels = [];
 			
@@ -33,12 +33,12 @@ if (!isDedicated) then {
 			
 			if (count _newChannels == 0) then {
 				
-				player setVariable ["frameworkChannels", nil, false];
-				["acre_sys_radio_returnRadioId", radioEh] call CBA_fnc_removeEventHandler;
+				player setVariable ["FW_Channels", nil, false];
+				["acre_sys_radio_returnRadioId", FW_RadioEh] call CBA_fnc_removeEventHandler;
 			
 			} else {
 				
-				player setVariable ["frameworkChannels", _newChannels, false];	
+				player setVariable ["FW_Channels", _newChannels, false];	
 				
 			};
 		};
@@ -46,7 +46,7 @@ if (!isDedicated) then {
 	
 	private ["_channels", "_newChannels"];
 	
-	_channels = player getVariable ["frameworkChannels", []];
+	_channels = player getVariable ["FW_Channels", []];
 	
 	_newChannels = [];
 	
@@ -62,13 +62,13 @@ if (!isDedicated) then {
 	
 	if (count _newChannels == 0) then {
 		
-		player setVariable ["frameworkChannels", nil, false];
+		player setVariable ["FW_Channels", nil, false];
 	
 	} else {
 		
-		player setVariable ["frameworkChannels", _newChannels, false];	
+		player setVariable ["FW_Channels", _newChannels, false];	
 		
-		radioEh = ["acre_sys_radio_returnRadioId", {_this spawn FNC_RadioEhHandler;}] call CBA_fnc_addEventHandler;
+		FW_RadioEh = ["acre_sys_radio_returnRadioId", {_this spawn FNC_RadioEhHandler;}] call CBA_fnc_addEventHandler;
 		
 	};
 };

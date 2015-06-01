@@ -159,19 +159,19 @@ FNC_GetDamagedAssets = {
 	
 	{
 		
-		if (_x getVariable "frameworkAssetTeam" == _team) then {
+		if (_x getVariable "FW_AssetTeam" == _team) then {
 		
 			if (alive _x) then {
 			
 				if (!canMove _x && !canFire _x) then {
 					
-					_disabledAssets set [count _disabledAssets, _x getVariable "frameworkAssetName"];
+					_disabledAssets set [count _disabledAssets, _x getVariable "FW_AssetName"];
 					
 				};
 			
 			} else {
 				
-				_destroyedAssets set [count _destroyedAssets, _x getVariable "frameworkAssetName"];
+				_destroyedAssets set [count _destroyedAssets, _x getVariable "FW_AssetName"];
 				
 			};
 		};
@@ -279,7 +279,7 @@ FNC_InArea = {
 };
 
 //FNC_EndMission(SCENARIO) will end the mission
-//Sends the team stats, time limit, scenario and executes "endScreen" on all players machines
+//Sends the team stats, time limit, scenario and executes "FW_EndMission" on all players machines
 FNC_EndMission = {
 	
 	private ["_scenario", "_team"];
@@ -299,7 +299,7 @@ FNC_EndMission = {
 	
 	} forEach FW_Teams;
 
-	["endScreen", [_scenario, FW_TimeLimit, FW_Teams]] call CBA_fnc_globalEvent;
+	["FW_EndMission", [_scenario, FW_TimeLimit, FW_Teams]] call CBA_fnc_globalEvent;
 
 };
 
@@ -365,7 +365,7 @@ FNC_Alive = {
 	
 	_unit = _this;
 	
-	(alive _unit) && !(_unit getVariable ["frameworkDead", false]) && !(_unit getVariable ["ACE_isUnconscious", false])
+	(alive _unit) && !(_unit getVariable ["FW_Dead", false]) && !(_unit getVariable ["ACE_isUnconscious", false])
 	
 };
 
@@ -436,7 +436,7 @@ FNC_SpectatePrep = {
 		_respawnName = toLower(format ["fw_%1_respawn", side player]);
 		_respawnPoint = missionNamespace getVariable [_respawnName, objNull];
 
-		_loadout = (player getVariable ["frameworkLoadout", ""]);
+		_loadout = (player getVariable ["FW_Loadout", ""]);
 		
 		if (_loadout != "") then {
 			
@@ -464,11 +464,11 @@ FNC_SpectatePrep = {
 		
 		cutText [format ['%1 %2', FW_RespawnTickets, _text], 'PLAIN DOWN'];
 		
-		player setVariable ["frameworkBody", player, true];
+		player setVariable ["FW_Body", player, true];
 		
 	} else {
 
-		player setVariable ["frameworkDead", true, true]; //Tells the framework the player is dead
+		player setVariable ["FW_Dead", true, true]; //Tells the framework the player is dead
 
 		player setCaptive true;
 		player allowdamage false;
@@ -486,9 +486,9 @@ FNC_SpectatePrep = {
 		player setPos [0, 0, 0];
 		[player] join grpNull;
 		
-		if (!(player getVariable ["frameworkSpectating", false])) then {
+		if (!(player getVariable ["FW_Spectating", false])) then {
 		
-			player setVariable ["frameworkSpectating", true, true];
+			player setVariable ["FW_Spectating", true, true];
 			
 			[true] call acre_api_fnc_setSpectator;
 			"" execVM "core\spectate.sqf";

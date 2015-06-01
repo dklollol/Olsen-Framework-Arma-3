@@ -6,10 +6,10 @@ FNC_SetRadio = {
 	_radio = _this select 1;
 	_channel = _this select 2;
 	
-	_channels = _unit getVariable ["frameworkChannels", []];
+	_channels = _unit getVariable ["FW_Channels", []];
 	
 	_channels set [count _channels, [_radio, _channel]];
 	
-	_unit setVariable ["frameworkChannels", _channels, false];
+	_unit setVariable ["FW_Channels", _channels, false];
 	
 };

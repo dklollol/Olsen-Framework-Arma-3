@@ -9,7 +9,7 @@ class RscTitles {
 		fadeout = 0;
 		fadein = 0;
 		duration = 1e+1000;
-		onLoad = "uiNamespace setVariable ['frameworkDebug', _this select 0];";
+		onLoad = "uiNamespace setVariable ['FW_Debug', _this select 0];";
 		
 		class controlsBackground {
 		

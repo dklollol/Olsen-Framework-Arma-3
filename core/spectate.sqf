@@ -1,4 +1,4 @@
-deadbody = (player getVariable ["frameworkBody", false]);
+deadbody = (player getVariable ["FW_Body", false]);
 
 setAperture -1;
 sleep 1;
@@ -17,7 +17,7 @@ viewMode = 0;
 targets = [];
 
 {
-	if (!(_x getVariable ["frameworkDead", false])) then {
+	if (!(_x getVariable ["FW_Dead", false])) then {
 	
 		targets set [count targets, _x];
 		
@@ -282,13 +282,13 @@ _keydown_mouseZ = (findDisplay 46) displayAddEventHandler ["mousezchanged", "
 	};
 "];
 
-while {(player getVariable ["frameworkSpectating", false])} do {
+while {(player getVariable ["FW_Spectating", false])} do {
 
 	targets = [];
 	
 	{
 	
-		if (!(_x getVariable ["frameworkDead", false])) then {
+		if (!(_x getVariable ["FW_Dead", false])) then {
 		
 			targets set [count targets, _x];
 			

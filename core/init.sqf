@@ -19,8 +19,8 @@ if (!isDedicated) then {
 	//Anything done using "player" must be past this line for JIP compatibility
 	waitUntil {!(isNull player)};
 	
-	//"endScreen" player event sends the received variables to the end screen
-	["endScreen", {_this execVM "core\dia\endscreen\dia_endscreen.sqf";}] call CBA_fnc_addEventHandler;
+	//"FW_EndMission" player event sends the received variables to the end screen
+	FW_EndMissionEh = ["FW_EndMission", {_this execVM "core\dia\endscreen\dia_endscreen.sqf";}] call CBA_fnc_addEventHandler;
 	
 	//Various settings
 	enableEngineArtillery false; //Disable Arma 3 artillery computer
@@ -33,13 +33,13 @@ if (!isDedicated) then {
 	
 	FW_RespawnTickets = 0; //Initialize respawn tickets to 0 
 	
-	player setVariable ["frameworkDead", false, true]; //Tells the framework the player is alive
-	player setVariable ["frameworkSpectating", false, true]; //Player is not spectating
-	player setVariable ["frameworkBody", player, true]; //Remembers his old body for spectating his dead body
+	player setVariable ["FW_Dead", false, true]; //Tells the framework the player is alive
+	player setVariable ["FW_Spectating", false, true]; //Player is not spectating
+	player setVariable ["FW_Body", player, true]; //Remembers his old body for spectating his dead body
 	
 	//Makes the player go into spectator mode when dead or respawn if he has respawn tickets
-	killedEh = player addEventHandler ["Killed", {"" call FNC_SpectateCheck}];
-	respawnEh = player addEventHandler ["Respawn", {"" call FNC_SpectatePrep;}];
+	FW_KilledEh = player addEventHandler ["Killed", {"" call FNC_SpectateCheck}];
+	FW_RespawnEh = player addEventHandler ["Respawn", {"" call FNC_SpectatePrep;}];
 	
 	//Various settings
 	player addRating 100000; //Makes sure ai doesnt turn hostile when teamkilling

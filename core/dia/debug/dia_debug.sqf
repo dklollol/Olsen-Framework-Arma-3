@@ -18,7 +18,7 @@ if (!isDedicated) then {
 			
 		} forEach FW_DebugMessages;
 		
-		((uiNamespace getVariable "frameworkDebug") displayCtrl _someText) ctrlSetStructuredText parseText _text;
+		((uiNamespace getVariable "FW_Debug") displayCtrl _someText) ctrlSetStructuredText parseText _text;
 
 		FNC_DebugMessage = {
 			
@@ -52,7 +52,7 @@ if (!isDedicated) then {
 					
 				} forEach FW_DebugMessages;
 				
-				((uiNamespace getVariable "frameworkDebug") displayCtrl _someText) ctrlSetStructuredText parseText _text;
+				((uiNamespace getVariable "FW_Debug") displayCtrl _someText) ctrlSetStructuredText parseText _text;
 			
 			};
 		};
