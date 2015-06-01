@@ -1,3 +1,5 @@
+// Module by Starfox64 (STEAM_0:1:37636871) //
+
 FW_MissionCalls = [];
 FW_COC = [];
 

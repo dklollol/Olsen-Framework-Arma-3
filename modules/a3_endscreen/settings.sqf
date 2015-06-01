@@ -1,3 +1,5 @@
+// Module by Starfox64 (STEAM_0:1:37636871) //
+
 //If you wish to use this EndScreen please use the following syntax to update endConditions.sqf
 
 // FNC_EndMission Syntax:

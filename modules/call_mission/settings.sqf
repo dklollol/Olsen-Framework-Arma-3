@@ -1,3 +1,5 @@
+// Module by Starfox64 (STEAM_0:1:37636871) //
+
 // Call Mission Configuration
 //
 // RegisterMissionCall:
