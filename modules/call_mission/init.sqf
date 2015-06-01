@@ -14,14 +14,14 @@ if (isServer) then {
 
 			if ((_x select 0) == _callID && leader group _player == _player) exitWith {
 				["Calling mission...", "hint", _player] call BIS_fnc_MP;
-				[] spawn (_x select 3);
+				(_x select 3) call FNC_EndMission;
 			};
 
 		} forEach FW_MissionCalls;
 
 	};
 
-	FW_CallMissionXEH = ["frameworkCallMission", {_this spawn FNC_CallMission;}] call CBA_fnc_addEventHandler;
+	FW_CallMissionEh = ["frameworkCallMission", {_this spawn FNC_CallMission;}] call CBA_fnc_addEventHandler;
 
 	[] spawn {
 
@@ -127,14 +127,14 @@ if (!isDedicated) then {
 
 FNC_RegisterMissionCall = {
 
-	private ["_callID", "_callSide", "_callName", "_callCode"];
+	private ["_callID", "_callSide", "_callName", "_callArgs"];
 
 	_callID = _this select 0;
 	_callSide = _this select 1;
 	_callName = _this select 2;
-	_callCode = _this select 3;
+	_callArgs = _this select 3;
 
-	FW_MissionCalls set [count FW_MissionCalls, [_callID, _callSide, _callName, _callCode]];
+	FW_MissionCalls set [count FW_MissionCalls, [_callID, _callSide, _callName, _callArgs]];
 
 };
 

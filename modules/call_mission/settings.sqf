@@ -4,19 +4,26 @@
 // This section is used to add an option to call the mission as a CO.
 //
 // Syntax:
-// [string CALL_IDENTIFIER, side SIDE_WITH_ACCESS, string ACTION_TEXT, code CODE_TO_EXECUTE] call FNC_RegisterMissionCall;
+// [string CALL_IDENTIFIER, side SIDE_WITH_ACCESS, string ACTION_TEXT, any FNC_EndMission ARGUMENT] call FNC_RegisterMissionCall;
 //
 // Examples:
 // COOP
-// ["CALLVIC", west, "Call Victory", {["MissionCalled", true] call FNC_EndMission;}] call FNC_RegisterMissionCall;
-// ["CALLFAIL", west, "Call Failure", {["MissionCalled", false] call FNC_EndMission;}] call FNC_RegisterMissionCall;
+// ["CALLVIC", west, "Call Victory", "The CO called the mission a victory!"] call FNC_RegisterMissionCall;
+// ["CALLFAIL", west, "Call Failure", "The CO called the mission a failure!"] call FNC_RegisterMissionCall;
 //
 // TVT
-// ["OPFORVIC", west, "Surrender (OPFOR Victory)", {["MissionCalled", true, east] call FNC_EndMission; ["MissionCalled", false, west] call FNC_EndMission;}] call FNC_RegisterMissionCall;
-// ["BLUFORVIC", east, "Surrender (BLUFOR Victory)", {["MissionCalled", false, east] call FNC_EndMission; ["MissionCalled", true, west] call FNC_EndMission;}] call FNC_RegisterMissionCall;
+// ["OPFORVIC", west, "Surrender (OPFOR Victory)", "The BLUFOR CO surrendered!"] call FNC_RegisterMissionCall;
+// ["BLUFORVIC", east, "Surrender (BLUFOR Victory)", "The BLUFOR CO surrendered!"] call FNC_RegisterMissionCall;
+//
+// NOTE:
+// If you are using the a3_endmission module replace the last argument (end scenario) with this syntax:
+//
+// TVT
+// [[west, "OPFOREliminated", true], [east, "OPFOREliminated", false]]
+//
+// COOP
+// ["OPFOREliminated", true]
 
-["OPFORVIC", west, "Surrender (OPFOR Victory)", {["MissionCalled", true, east] call FNC_EndMission; ["MissionCalled", false, west] call FNC_EndMission;}] call FNC_RegisterMissionCall;
-["BLUFORVIC", east, "Surrender (BLUFOR Victory)", {["MissionCalled", false, east] call FNC_EndMission; ["MissionCalled", true, west] call FNC_EndMission;}] call FNC_RegisterMissionCall;
 
 
 // RegisterCOC:
@@ -29,6 +36,3 @@
 // Examples:
 // [west, ["1'6", "1'1", "1'2", "1'3"]] call FNC_RegisterCOC;
 // [east, ["232", "232'Alpha", "232'Bravo", "232'Charlie"]] call FNC_RegisterCOC;
-
-[west, ["1'6", "1'1", "1'2", "1'3", "1'1 Sierra", "1'2 Sierra", "1'3 Sierra"]] call FNC_RegisterCOC;
-[east, ["Receptionist", "Maid 1", "Maid 2", "Goupil"]] call FNC_RegisterCOC;
