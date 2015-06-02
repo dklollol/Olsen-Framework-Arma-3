@@ -5,7 +5,7 @@ if (isServer) then {
 
 	FNC_CallMission = {
 
-		private ["_player", "_callID", "_prefix"];
+		private ["_player", "_callID"];
 
 		_player = _this select 0;
 		_callID = _this select 1;
