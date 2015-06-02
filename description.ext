@@ -23,3 +23,13 @@ class rscTitles {
 	#include "modules\modules.sqf" //DO NOT REMOVE
 
 };
+
+#undef description_titles
+#define description_params
+
+class Params {
+	
+	#include "core\description.hpp" //DO NOT REMOVE
+	#include "modules\modules.sqf" //DO NOT REMOVE
+	
+};

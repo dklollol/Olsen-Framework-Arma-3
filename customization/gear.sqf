@@ -12,9 +12,7 @@
 ["rhs_mag_m67", 1, "vest"] call FNC_AddItem; \
 ["rhs_mag_an_m8hc", 2, "vest"] call FNC_AddItem; 
 
-#define USMCweapon \
-
-
+#define USMCweapon 
 
 //Everyone gets this stuff.
 #define BASIC \

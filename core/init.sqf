@@ -29,7 +29,7 @@ if (!isDedicated) then {
 	0 fadeRadio 0; //Lower radio volume to 0
 	
 	//Creates the briefing notes for the player
-	[] execVM "customization\briefing.sqf";
+	"" execVM "customization\briefing.sqf";
 	
 	FW_RespawnTickets = 0; //Initialize respawn tickets to 0 
 	
