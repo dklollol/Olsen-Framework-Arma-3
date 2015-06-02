@@ -1,8 +1,13 @@
 if (!isDedicated) then {
 	
-	if (currentWeapon player != "") then {
-	
-		[player, currentWeapon player, currentMuzzle player] call ace_safemode_fnc_lockSafety;
-	
+	"" spawn {
+
+		sleep 0.01;
+		
+		if (currentWeapon player != "") then {
+		
+			[player, currentWeapon player, currentMuzzle player] call ace_safemode_fnc_lockSafety;
+		
+		};
 	};
 };
