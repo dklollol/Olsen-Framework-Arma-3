@@ -38,7 +38,7 @@
 //["rhsusf_ach_helmet_ocp"] call FNC_AddItem; \ //Helmet
 
 
-switch (side player) do { //Checks what team the player is on
+switch (side _unit) do { //Checks what team the player is on
 
 	case west: { //If player is west he gets this gear.
 

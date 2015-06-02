@@ -1,0 +1,30 @@
+2015/02/27 - v1.0 Public Release
+====================
+
+
+2015/03/09 - v1.1
+====================
+
+-changed: added documentation and BIS_fnc_param usage to all scripts
+-changed: added fnc_registerEH (incomplete)
+-fixed: removed cfgRemoteExec requirement
+
+
+2015/03/12 - v1.11
+====================
+
+-changed: removed fnc_registerEH (unneeded)
+
+
+2015/03/27 - v1.12
+====================
+
+-changed: added some definitions to resource defaults
+
+
+2015/04/04 - v1.13
+====================
+
+-changed: added cl_fnc_keyBind: custom keybinding script
+-changed: added cl_fnc_vectorAverage: function to find 3D average between an arbitrary number of vectors
+-changed: added cl_fnc_randomSign: function to generate random math sign

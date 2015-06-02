@@ -1,4 +1,4 @@
-deadbody = (player getVariable ["FW_Body", false]);
+deadbody = (player getVariable "FW_Body");
 
 setAperture -1;
 sleep 1;
@@ -17,7 +17,7 @@ viewMode = 0;
 targets = [];
 
 {
-	if (!(_x getVariable ["FW_Dead", false])) then {
+	if (!(_x getVariable "FW_Dead")) then {
 	
 		targets set [count targets, _x];
 		

@@ -8,3 +8,4 @@
 #include "start_on_radio_channel\root.sqf"
 #include "a3_endscreen\root.sqf"
 #include "call_mission\root.sqf"
+#include "voiper_spectate\root.sqf"

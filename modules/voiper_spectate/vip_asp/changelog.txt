@@ -1,0 +1,24 @@
+2015/05/06 - v1.0 Public Release
+====================
+
+
+2015/05/20 - v1.01
+====================
+
+-fixed: compat with BIS updated goggles
+-fixed: units who died prior to spectate start were named "Error: No Unit"
+-fixed: could not detect respawn="base" in description.ext
+-changed: compat with ace_hearing
+-changed: removed compat with uo_nametags
+-changed: AI spectating is now optional
+-changed: added slow/fast options for numpad pitch/yaw/roll
+-changed: rebound mouse roll modifier to shift
+-changed: implemented line render approximation to reduce tracker map lag
+
+
+2015/05/23 - v1.02
+====================
+
+-fixed: error when switching to unit when no units alive
+-fixed: error when exiting camera when tracking off
+-changed: added compat with ace_nametags

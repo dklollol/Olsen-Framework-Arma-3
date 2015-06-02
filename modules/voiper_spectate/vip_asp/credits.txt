@@ -1,0 +1,3 @@
+Thanks to:
+
+-Karel Moricky, author of the original Splendid Camera script, from which ASP's camera script is derived.

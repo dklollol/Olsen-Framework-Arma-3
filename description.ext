@@ -3,3 +3,23 @@
 #include "core\description.hpp" //DO NOT REMOVE
 #include "customization\missionSettings.hpp" //DO NOT REMOVE
 #include "modules\modules.sqf" //DO NOT REMOVE
+
+#undef description
+#define description_functions
+
+class CfgFunctions {
+
+	#include "core\description.hpp" //DO NOT REMOVE
+	#include "modules\modules.sqf" //DO NOT REMOVE
+
+};
+	
+#undef description_functions
+#define description_titles
+	
+class rscTitles {
+
+	#include "core\description.hpp" //DO NOT REMOVE
+	#include "modules\modules.sqf" //DO NOT REMOVE
+
+};

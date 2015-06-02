@@ -20,7 +20,12 @@ if (!isDedicated) then {
 			
 		};
 		
-		cutText [format ['%1 %2', FW_RespawnTickets, _text], 'PLAIN DOWN'];
+		_text spawn {
+
+			sleep 5;
+			cutText [format ['%1 %2', FW_RespawnTickets, _this], 'PLAIN DOWN'];
+
+		};
 
 	};
 };
