@@ -1,5 +1,3 @@
-// Module by Starfox64 (STEAM_0:1:37636871) //
-
 FW_MissionCalls = [];
 FW_COC = [];
 
@@ -7,16 +5,32 @@ if (isServer) then {
 
 	FNC_CallMission = {
 
-		private ["_player", "_callID"];
+		private ["_player", "_callID", "_prefix"];
 
 		_player = _this select 0;
 		_callID = _this select 1;
 
 		{
 
-			if ((_x select 0) == _callID && leader group _player == _player) exitWith {
+			if ((_x select 1) == sideUnknown && (_x select 0) == _callID) exitWith {
+
 				["Calling mission...", "hint", _player] call BIS_fnc_MP;
 				(_x select 3) call FNC_EndMission;
+
+			};
+
+			if ((_x select 0) == _callID) exitWith {
+
+
+				if (_player getVariable ["frameworkIsCO", false]) then {
+
+					["Calling mission...", "hint", _player] call BIS_fnc_MP;
+					(_x select 3) call FNC_EndMission;
+
+				} else {
+					["You must be the CO to call this mission.", "hint", _player] call BIS_fnc_MP;
+				};
+
 			};
 
 		} forEach FW_MissionCalls;
@@ -44,7 +58,18 @@ if (isServer) then {
 
 							if ((groupID _group) == _x && (side leader _group) == (_coc select 0)) exitWith {
 
-								[(leader _group), "FNC_UpdateCO", (side leader _group)] call BIS_fnc_MP;
+								if !((leader _group) getVariable ["frameworkIsCO", false]) then {
+
+									(leader _group) setVariable ["frameworkIsCO", true, false];
+
+									{
+
+										if (((side _x) == (side leader _group)) && _x != (leader _group)) then {
+											_x setVariable ["frameworkIsCO", false, false];
+										};
+
+									} forEach playableUnits;
+								};
 
 							};
 
@@ -56,7 +81,7 @@ if (isServer) then {
 
 			} forEach FW_COC;
 
-			sleep(30);
+			sleep(60);
 		};
 	};
 
@@ -64,64 +89,18 @@ if (isServer) then {
 
 if (!isDedicated) then {
 
-	FW_CallActions = [];
+	FNC_CallMissionReq = {
 
-	FNC_AddCallMenu = {
+		private ["_callID", "_reqAdmin"];
 
-		private ["_actionID"];
+		_callID = _this select 0;
+		_reqAdmin = _this select 1;
 
-		if (({(_x select 1) == side player} count FW_MissionCalls) == 0) exitWith {};
-
-		_actionID = player addAction ["<t color='#FBB829'>Call Mission Menu</t>", "[] call FNC_ClearCallActions; [] call FNC_AddCallOptions;", nil, 0];
-		FW_CallActions set [count FW_CallActions, _actionID];
-
-	};
-
-	FNC_AddCallOptions = {
-
-		private ["_actionID"];
-
-		{
-			if ((_x select 1) == side player) then {
-				_actionID = player addAction ["<t color='#19C819'>" + (_x select 2) + "</t>", "['frameworkCallMission', [player, '" + (_x select 0) + "']] call CBA_fnc_globalEvent; [] call FNC_ClearCallActions; [] call FNC_AddCallMenu;", nil, 0];
-				FW_CallActions set [count FW_CallActions, _actionID];
-			};
-
-		} forEach FW_MissionCalls;
-
-		_actionID = player addAction ["<t color='#C84646'>Close Menu</t>", "[] call FNC_ClearCallActions; [] call FNC_AddCallMenu;", nil, 0];
-		FW_CallActions set [count FW_CallActions, _actionID];
-
-	};
-
-	FNC_ClearCallActions = {
-
-		{player removeAction _x} forEach FW_CallActions;
-		FW_CallActions = [];
-
-	};
-
-	FNC_UpdateCO = {
-
-		private ["_newCO"];
-
-		_newCO = _this;
-
-		if (_this == player) then {
-
-			if (count FW_CallActions == 0) then {
-
-				hint "You are the CO, you may call this mission at any time using the [Call Mission Menu] action.";
-
-				[] call FNC_AddCallMenu;
-
-			};
-
-		} else {
-
-			[] call FNC_ClearCallActions;
-
+		if (_reqAdmin && !serverCommandAvailable "#kick") exitWith {
+			hint "Only server admins may use this feature!";
 		};
+
+		["frameworkCallMission", [player, _callID]] call CBA_fnc_globalEvent;
 
 	};
 
@@ -151,4 +130,14 @@ FNC_RegisterCOC = {
 
 };
 
+// Admin Call Options
+["AdminBLUFOR", sideUnknown, "Call Mission BLUFOR Victory", [[west, "AdminCalled", true], [east, "AdminCalled", false], [independent, "AdminCalled", false], [civilian, "AdminCalled", false]]] call FNC_RegisterMissionCall;
+["AdminOPFOR", sideUnknown, "Call Mission OPFOR Victory", [[west, "AdminCalled", false], [east, "AdminCalled", true], [independent, "AdminCalled", false], [civilian, "AdminCalled", false]]] call FNC_RegisterMissionCall;
+["AdminINDFOR", sideUnknown, "Call Mission INDFOR Victory", [[west, "AdminCalled", false], [east, "AdminCalled", false], [independent, "AdminCalled", true], [civilian, "AdminCalled", false]]] call FNC_RegisterMissionCall;
+["AdminCIVFOR", sideUnknown, "Call Mission CIVFOR Victory", [[west, "AdminCalled", false], [east, "AdminCalled", false], [independent, "AdminCalled", false], [civilian, "AdminCalled", true]]] call FNC_RegisterMissionCall;
+
 #include "settings.sqf"
+
+if (!isDedicated) then {
+	#include "menu.sqf"
+};
