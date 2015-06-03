@@ -1,3 +1,4 @@
+#include "framework_menu\root.sqf"
 #include "start_text\root.sqf"
 #include "jip_teleport\root.sqf"
 #include "marker_control\root.sqf"
