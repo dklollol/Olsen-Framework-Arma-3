@@ -1,3 +1,5 @@
+["Voiper Spectate", "Replaces the standard spectate script with Voiper's spectator script.", "Voiper &amp; Olsen"] call FNC_RegisterModule;
+
 if (!isDedicated) then {
 	
 	FNC_SpectatePrep = {
