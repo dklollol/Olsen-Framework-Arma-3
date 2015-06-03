@@ -1,3 +1,5 @@
+["Start Text", "Displays animated text on mission start.", "Olsen &amp; Starfox64"] call FNC_RegisterModule;
+
 private ["_month", "_hour", "_min", "_startTextArray", "_line", "_unparsedText"];
 
 #include "settings.sqf"

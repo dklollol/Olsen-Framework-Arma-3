@@ -1,3 +1,5 @@
+["AO Limit", "Allows the mission maker to set AO limits to specific sides.", "Olsen"] call FNC_RegisterModule;
+
 #define ANY sideLogic
 
 #define ADDAOMARKER(SIDE, NAME) \

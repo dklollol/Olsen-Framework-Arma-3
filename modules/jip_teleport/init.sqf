@@ -1,3 +1,5 @@
+["JIP Teleport", "Adds an action to JIP players that allows them to teleport to their SL.", "Olsen"] call FNC_RegisterModule;
+
 #include "settings.sqf"
 
 if (!isDedicated) then {

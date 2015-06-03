@@ -1,3 +1,5 @@
+["Start with earplugs", "Automatically puts earplugs on players.", "Olsen"] call FNC_RegisterModule;
+
 if (!isDedicated) then {
 
 	"" spawn {
