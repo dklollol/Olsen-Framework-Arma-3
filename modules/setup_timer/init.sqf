@@ -1,3 +1,5 @@
+["Setup Timer", "Allows the mission maker to restrict the AO of a side for a set amount of time.", "Olsen"] call FNC_RegisterModule;
+
 #define ADDSETUPMARKER(SIDE, TIME, NAME) \
 if !(markerType NAME == "") then { \
 	_markers set [count _markers, [SIDE, TIME, NAME]]; \

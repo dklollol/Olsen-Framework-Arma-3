@@ -1,3 +1,5 @@
+["Start on safe", "Forces ACE Safety on all players when the mission starts.", "Olsen"] call FNC_RegisterModule;
+
 if (!isDedicated) then {
 	
 	"" spawn {

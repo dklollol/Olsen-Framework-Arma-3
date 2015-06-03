@@ -1,3 +1,5 @@
+["Start on radio channel", "Allows the mission maker to set the channel of ACRE radios.", "Olsen"] call FNC_RegisterModule;
+
 if (!isDedicated) then {
 	
 	FNC_RadioEhHandler = {
