@@ -4,7 +4,7 @@ class vip_asp_dlg_overlay {
 	enableSimulation = 1;
 	movingEnable = 1;
 	enableDisplay = 1;
-	onLoad = "uiNamespace setVariable ['vip_asp_dlg_overlay', _this select 0]; ['OverlayList', _this select 0] call vip_asp_fnc_cl_newCamera";
+	onLoad = "uiNamespace setVariable ['vip_asp_dlg_overlay', _this select 0]; ['Init', _this] call vip_asp_fnc_cl_overlay";
 	onUnload = "";
 	
 	class controls {
@@ -80,9 +80,9 @@ class vip_asp_dlg_overlay {
 			//onMouseMoving = "";
 			//onMouseHolding = "";
 
-			//onTreeSelChanged = "['OverlaySelect', _this] call vip_asp_fnc_cl_newCamera; false";
+			//onTreeSelChanged = "['OverlaySelect', _this] call vip_asp_fnc_cl_camera; false";
 			//onTreeSelChanged = "systemChat str (_this select 1)";
-			onTreeDblClick = "['OverlaySelect', _this] call vip_asp_fnc_cl_newCamera; false";
+			onTreeDblClick = "['Select', _this] call vip_asp_fnc_cl_overlay; false";
 			//onTreeSelChanged = "systemChat str ['onTreeSelChanged',_this]; false";
 			//onTreeLButtonDown = "systemChat str ['onTreeLButtonDown',_this]; true";
 			//onTreeDblClick = "systemChat str ['onTreeDblClick',_this]; false";
@@ -99,7 +99,7 @@ class vip_asp_dlg_vd {
 	enableDisplay = 0;
 	movingEnable = true;
 
-	onLoad = "uiNamespace setVariable ['vip_asp_dlg_vd', _this select 0]; ['ViewDistance', _this] call vip_asp_fnc_cl_newCamera; false";
+	onLoad = "uiNamespace setVariable ['vip_asp_dlg_vd', _this select 0]; ['Init', _this] call vip_asp_fnc_cl_vd; false";
 	onUnload = "";
 	
 	class ControlsBackground {
@@ -199,7 +199,7 @@ class vip_asp_dlg_vd {
 			thumb = "\A3\ui_f\data\gui\cfg\slider\thumb_ca.paa";
 			
 			text = "";
-			onSliderPosChanged = "['ViewDistance', _this] call vip_asp_fnc_cl_newCamera";
+			onSliderPosChanged = "['Slider', _this] call vip_asp_fnc_cl_vd";
 			onMouseEnter = "vip_asp_var_cl_mouseBusy = true; false";
 			onMouseExit = "vip_asp_var_cl_mouseBusy = false; false";
 		};
@@ -211,9 +211,9 @@ class vip_asp_dlg_map {
 	idd = 12202;
 	enableSimulation = 1; 
 	enableDisplay = 0;
-	onLoad = "uiNameSpace setVariable ['vip_asp_dlg_map', _this select 0]; ['MapInit', _this select 0] call vip_asp_fnc_cl_newCamera";
-	onUnload = "['MapClose', _this select 0] call vip_asp_fnc_cl_newCamera";
-	onKeyDown = "['MapKeyDown', _this] call vip_asp_fnc_cl_newCamera";
+	onLoad = "uiNameSpace setVariable ['vip_asp_dlg_map', _this select 0]; ['Init', _this select 0] call vip_asp_fnc_cl_map";
+	onUnload = "['Close', _this select 0] call vip_asp_fnc_cl_map";
+	onKeyDown = "['KeyDown', _this] call vip_asp_fnc_cl_map";
 	
 	class controls {
 	

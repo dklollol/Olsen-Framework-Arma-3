@@ -32,7 +32,7 @@ class vip_asp_rsc_crosshair {
 
 class vip_asp_rsc_status {
 
-	onLoad = "uiNamespace setVariable ['vip_asp_rsc_status', _this select 0]; ['Status', _this select 0] call vip_asp_fnc_cl_newCamera";
+	onLoad = "uiNamespace setVariable ['vip_asp_rsc_status', _this select 0]; ['Status', _this select 0] call vip_asp_fnc_cl_camera";
 	idd = -1;
 	movingEnable=0;
 	fadein=0;
@@ -214,7 +214,7 @@ class vip_asp_rsc_compass {
 };
 
 class vip_asp_rsc_help {
-	onLoad = "uiNamespace setVariable ['vip_asp_rsc_help', _this select 0]; ['Help', _this select 0] call vip_asp_fnc_cl_newCamera";
+	onLoad = "uiNamespace setVariable ['vip_asp_rsc_help', _this select 0]; ['Help', _this select 0] call vip_asp_fnc_cl_camera";
 	idd = -1;
 	movingEnable=0;
 	fadein=0;

@@ -22,3 +22,21 @@
 -fixed: error when switching to unit when no units alive
 -fixed: error when exiting camera when tracking off
 -changed: added compat with ace_nametags
+
+
+2015/06/02 - v1.03
+====================
+
+-fixed: added keyref for numpad5
+-fixed: selected unit's tracking lines were not yellow when free cam on
+-fixed: could not select elevated units using map
+-fixed: dead player names disappeared on JIP
+-fixed: sometimes spectators appeared on map
+-fixed: players who JIPed in could not be spectated
+-fixed: "Error: No Unit" when players disconnected
+-fixed: 3rd person was no go when disabled via difficulty
+-fixed: various tracking issues
+-fixed: various JIP issues
+-changed: refactored how spectateable units are chosen
+-changed: AI do not retain names after death
+-changed: added numpad pitch/yaw/roll/zoom slow/fast keys

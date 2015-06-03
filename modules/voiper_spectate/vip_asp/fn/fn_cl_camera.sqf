@@ -12,7 +12,7 @@
 		
 	Example:
 		//camera isn't permanent, tracking is on while camera is on, AI on
-		["Init", [false, 1, true]] call vip_asp_fnc_cl_newCamera;
+		["Init", [false, 1, true]] call vip_asp_fnc_cl_camera;
 
 	Returns:
 	None.
@@ -129,7 +129,7 @@ switch _mode do {
 		if (isNull findDisplay 46) exitWith {
 			_this spawn {
 				waitUntil {!isNull findDisplay 46};
-				["Init", _this] call vip_asp_fnc_cl_newCamera;
+				["Init", _this] call vip_asp_fnc_cl_camera;
 			};		
 		};
 		
@@ -146,12 +146,8 @@ switch _mode do {
 		if (_tracking > 0) then {
 			if (isNil "vip_asp_var_cl_trackingArray") then {[true] call vip_asp_fnc_cl_tracking};
 		};
-
-		if (isNil "vip_asp_var_cl_respawnPos") then {
-			_mapSize = (configFile >> "CfgWorlds" >> worldName >> "mapSize");
-			_worldEdge = if (isNumber _mapSize) then {getNumber _mapSize} else {32768};
-			vip_asp_var_cl_respawnPos = [_worldEdge, _worldEdge];
-		};
+		
+		call vip_asp_fnc_cl_penPos;
 
 		//camera
 		_camPos = if (!isNil "vip_asp_var_cl_startingPos") then {
@@ -160,7 +156,7 @@ switch _mode do {
 			if (!vip_asp_var_cl_noEscape) then {
 				getPos cameraOn
 			} else {
-				[(vip_asp_var_cl_respawnPos select 0) / 2, (vip_asp_var_cl_respawnPos select 0) / 2, 0]
+				[(vip_asp_var_cl_penPos select 0) / 2, (vip_asp_var_cl_penPos select 0) / 2, 0]
 			};
 		};
 		_camPos set [2, (_camPos select 2) + 2];
@@ -183,15 +179,12 @@ switch _mode do {
 		vip_asp_var_cl_cameraOn = true;
 		vip_asp_var_cl_focus = [-1, -1];
 		vip_asp_var_cl_lock = [-1];
-		vip_asp_var_cl_targets = [];
 		vip_asp_var_cl_attach = objNull;
 		vip_asp_var_cl_unit = objNull;
-		vip_asp_var_cl_unitCount = 0;
-		vip_asp_var_cl_deadList = [];
 		vip_asp_var_cl_mouseBusy = false;
-		vip_asp_var_cl_displayMarkers = 3;
-		vip_asp_var_cl_eh_listLast = false;
+		vip_asp_var_cl_markers = 3;
 		vip_asp_var_cl_accTime = 1;
+		vip_asp_var_cl_third = false;
 		
 		//define only if doesn't exist (to preserve saved spots from a previous cam session)
 		if (isNil "vip_asp_var_cl_savedSpots") then {
@@ -201,7 +194,7 @@ switch _mode do {
 		
 		if (isNil "vip_asp_var_cl_savedUnits") then {
 			vip_asp_var_cl_savedUnits = [];
-			for "_i" from 0 to 9 do {vip_asp_var_cl_savedUnits set [_i, []]};
+			for "_i" from 0 to 9 do {vip_asp_var_cl_savedUnits set [_i, objNull]};
 		};
 		
 		vip_asp_var_cl_keys = [];
@@ -211,30 +204,17 @@ switch _mode do {
 			vip_asp_var_cl_keys set [_i, false];
 		};
 		
-		//functions
-		vip_asp_fnc_cl_sideColour = {
-			_side = _this select 0;
-			_b = 1;
-			_d = 0.35;
-			switch (_side) do {
-				case 1: {[0.45, 0.45, _b, 0.9]};
-				case 0: {[_b, _d, _d, 0.9]};
-				case 2: {[_d, _b, _d, 0.9]};
-				case 3: {[_b, _b, _b, 0.9]};
-			};
-		};
-
 		_display = findDisplay 46;
 		
-		vip_asp_eh_draw3D = addMissionEventhandler ["Draw3D", {['Draw3D', _this] call vip_asp_fnc_cl_newCamera}];
-		addMissionEventHandler ["Ended", {if (!isNil "vip_asp_obj_cl_cam") then {["Exit"] call vip_asp_fnc_cl_newCamera}}];
-		vip_asp_eh_key1 = _display displayAddEventHandler ["keyDown", {['KeyDown', _this] call vip_asp_fnc_cl_newCamera}];
-		vip_asp_eh_key2 = _display displayAddEventHandler ["keyUp", {['KeyUp', _this] call vip_asp_fnc_cl_newCamera}];
-		vip_asp_eh_key3 = _display displayAddEventHandler ["mouseButtonDown", {['MouseButtonDown', _this] call vip_asp_fnc_cl_newCamera}];
-		vip_asp_eh_key4 = _display displayAddEventHandler ["mouseButtonUp", {['MouseButtonUp',_this] call vip_asp_fnc_cl_newCamera}];
-		vip_asp_eh_key5 = _display displayAddEventHandler ["mouseZChanged", {['MouseZChanged',_this] call vip_asp_fnc_cl_newCamera}];
-		vip_asp_eh_key6 = _display displayAddEventHandler ["mouseMoving", {['Mouse',_this] call vip_asp_fnc_cl_newCamera}];
-		vip_asp_eh_key7  =_display displayAddEventHandler ["mouseHolding", {['Mouse',_this] call vip_asp_fnc_cl_newCamera}];
+		vip_asp_eh_draw3D = addMissionEventhandler ["Draw3D", {['Draw3D', _this] call vip_asp_fnc_cl_camera}];
+		addMissionEventHandler ["Ended", {if (!isNil "vip_asp_obj_cl_cam") then {["Exit"] call vip_asp_fnc_cl_camera}}];
+		vip_asp_eh_key1 = _display displayAddEventHandler ["keyDown", {['KeyDown', _this] call vip_asp_fnc_cl_camera}];
+		vip_asp_eh_key2 = _display displayAddEventHandler ["keyUp", {['KeyUp', _this] call vip_asp_fnc_cl_camera}];
+		vip_asp_eh_key3 = _display displayAddEventHandler ["mouseButtonDown", {['MouseButtonDown', _this] call vip_asp_fnc_cl_camera}];
+		vip_asp_eh_key4 = _display displayAddEventHandler ["mouseButtonUp", {['MouseButtonUp',_this] call vip_asp_fnc_cl_camera}];
+		vip_asp_eh_key5 = _display displayAddEventHandler ["mouseZChanged", {['MouseZChanged',_this] call vip_asp_fnc_cl_camera}];
+		vip_asp_eh_key6 = _display displayAddEventHandler ["mouseMoving", {['Mouse',_this] call vip_asp_fnc_cl_camera}];
+		vip_asp_eh_key7  =_display displayAddEventHandler ["mouseHolding", {['Mouse',_this] call vip_asp_fnc_cl_camera}];
 
 		//remove mission layer
 		_displayMission = [] call (uiNamespace getVariable "BIS_fnc_displayMission");
@@ -274,18 +254,9 @@ switch _mode do {
 			ace_nametags_showNamesForAI = false;
 		};
 		
-		//apply marker settings for units already dead
-		{
-			if (true) then {
-				if (!vip_asp_var_cl_ai && (_x getVariable ["vip_asp_isAI", true])) exitWith {};
-				_name = _x getVariable ["vip_asp_deadName", ""];
-				_side = [_x] call vip_cmn_fnc_cl_getSide;
-				_icon = getText (configFile >> "CfgVehicles" >> (typeOf _x) >> "Icon");
-				_colour = [_side] call vip_asp_fnc_cl_sideColour;
-				_x setVariable ["vip_asp_draw", [true, _name, _side, _icon, _colour]];
-				["Killed", [_x, objNull]] call vip_asp_fnc_cl_newCamera;
-			};
-		} forEach allDead;
+		if (isClass (configFile >> "CfgPatches" >> "ace_interact_menu")) then {
+			["vip_asp_aceInteract", {false}] call ace_common_fnc_addCanInteractWithCondition;
+		};
 		
 		["Press H for Controls", 0, 1] spawn BIS_fnc_dynamicText;
 	};
@@ -301,7 +272,7 @@ switch _mode do {
 		_pitch = vip_asp_var_cl_vector select 1;
 		_bank = vip_asp_var_cl_vector select 2;
 		_camPos = getPosASL _cam;
-		_coef = (vip_asp_var_cl_moveScale * (((getPosATL _cam) select 2) / 2)) min 15 max 0.001;
+		_coef = (vip_asp_var_cl_moveScale * (((getPosATL _cam) select 2) / 2)) min 50 max 0.001;
 		
 		_move = {
 			_inPos = _this;
@@ -361,7 +332,8 @@ switch _mode do {
 				(_pos select 1) + ((cos (_moveDir)) * _coef * _dY),
 				(_pos select 2) + _dZ * _coef / 1.5
 			];
-			_camPos set [2, (_camPos select 2) max (getTerrainHeightASL _camPos + 0.1)]; //for some reason, cameras reports 10cm higher than they actually are (without visual change for those 10cm)
+			//for some reason, at visual height = 0, cameras report 10cm higher than they actually are
+			_camPos set [2, (_camPos select 2) max (getTerrainHeightASL _camPos + 0.1)]; 
 
 			_camPos call _move;
 		};
@@ -415,12 +387,12 @@ switch _mode do {
 		if (_keys select DIK_NUMPADMULTIPLY) then {[+1] call _camBank};
 
 		if (_keys select DIK_ADD) then {
-			vip_asp_var_cl_fov = vip_asp_var_cl_fov - (vip_asp_var_cl_fov / 50) max 0.01;
+			vip_asp_var_cl_fov = vip_asp_var_cl_fov - (vip_asp_var_cl_fov / 50 * _rotMod) max 0.01;
 			_cam camPrepareFOV vip_asp_var_cl_fov;
 			_cam camCommitPrepared 0;
 		};
 		if (_keys select DIK_SUBTRACT) then {
-			vip_asp_var_cl_fov = vip_asp_var_cl_fov + (vip_asp_var_cl_fov / 50) min 2;
+			vip_asp_var_cl_fov = vip_asp_var_cl_fov + (vip_asp_var_cl_fov / 50 * _rotMod) min 2;
 			_cam camPrepareFOV vip_asp_var_cl_fov;
 			_cam camCommitPrepared 0;
 		};
@@ -505,7 +477,7 @@ switch _mode do {
 		
 		_diff = _this select 1;
 		if (_diff > 0) then {
-			vip_asp_var_cl_moveScale = vip_asp_var_cl_moveScale + (vip_asp_var_cl_moveScale / 10) min 5;
+			vip_asp_var_cl_moveScale = vip_asp_var_cl_moveScale + (vip_asp_var_cl_moveScale / 10) min 1;
 		} else {
 			vip_asp_var_cl_moveScale = vip_asp_var_cl_moveScale - (vip_asp_var_cl_moveScale / 10) max 0.001;
 		};
@@ -543,7 +515,7 @@ switch _mode do {
 			_num = _this select 0;
 			_arr = vip_asp_var_cl_savedSpots select _num;
 			if (count (_arr) > 0) then {
-				if (!_camOn) then {["Camera", ["Free"]] call vip_asp_fnc_cl_newCamera;};
+				if (!_camOn) then {["Camera", ["Free"]] call vip_asp_fnc_cl_camera;};
 				call _detach;
 				_cam setPos (_arr select 0);
 				_vector = _arr select 1;
@@ -557,29 +529,35 @@ switch _mode do {
 		
 		_camSaveUnit = {
 			_num = _this select 0;
-			if (!isNull _unit) then {vip_asp_var_cl_savedUnits set [_num, [_unit]]};
+			
+			if (!isNull _unit) then {
+				_alreadySaved = vip_asp_var_cl_savedUnits find _unit;
+				if (_alreadySaved > -1) then {
+					vip_asp_var_cl_savedUnits set [_alreadySaved, objNull];
+				};
+				vip_asp_var_cl_savedUnits set [_num, _unit]
+			};
 		};
 		
 		_camLoadUnit = {
 			_num = _this select 0;
-			_arr = vip_asp_var_cl_savedUnits select _num;
-			if (count (_arr) > 0) then {
-				_unit = _arr select 0;
-				if (_lock > -1) then {["Camera", ["Lock"]] call vip_asp_fnc_cl_newCamera};
+			_unit = vip_asp_var_cl_savedUnits select _num;
+			if (!isNull _unit) then {
+				if (_lock > -1) then {["Camera", ["Lock"]] call vip_asp_fnc_cl_camera};
 				if (vip_asp_var_cl_unit == _unit) then {
 					call _detach;
 					if (_camOn) then {
-						["Camera", ["Third"]] call vip_asp_fnc_cl_newCamera;
+						["Camera", ["Third"]] call vip_asp_fnc_cl_camera;
 					} else {
-						["Camera", ["SwitchUnit"]] call vip_asp_fnc_cl_newCamera;
+						["Camera", ["SwitchUnit"]] call vip_asp_fnc_cl_camera;
 					};
 				} else {
 				
 					vip_asp_var_cl_unit = _unit;
-					if ((vip_asp_var_cl_lock select 0) > -1) then {["Camera", ["Lock"]] call vip_asp_fnc_cl_newCamera};
+					if ((vip_asp_var_cl_lock select 0) > -1) then {["Camera", ["Lock"]] call vip_asp_fnc_cl_camera};
 					if (!_camOn) then {
 						call _detach;
-						["Camera", ["SwitchUnit"]] call vip_asp_fnc_cl_newCamera;
+						["Camera", ["SwitchUnit"]] call vip_asp_fnc_cl_camera;
 					};
 				};
 			};	
@@ -587,7 +565,7 @@ switch _mode do {
 		
 		_detach = {
 			if (!isNull vip_asp_var_cl_attach) then {
-				["Camera", ["Attach"]] call vip_asp_fnc_cl_newCamera;
+				["Camera", ["Attach"]] call vip_asp_fnc_cl_camera;
 			};
 		};
 		
@@ -631,6 +609,8 @@ switch _mode do {
 			
 			case (DIK_NUMPAD0): {_return = true};
 			
+			case (DIK_NUMPADDEL): {_return = true};
+			
 			case (DIK_BACKSPACE): {
 				vip_asp_var_cl_focus = if (!_shift) then {
 					[-1, 1];
@@ -654,50 +634,50 @@ switch _mode do {
 			case (DIK_SPACE): {
 				if (!_camOn) exitWith {};
 				if (_ctrl) then {
-					["Camera", ["Attach"]] call vip_asp_fnc_cl_newCamera;
+					["Camera", ["Attach"]] call vip_asp_fnc_cl_camera;
 				} else {
-					["Camera", ["Lock"]] call vip_asp_fnc_cl_newCamera;
+					["Camera", ["Lock"]] call vip_asp_fnc_cl_camera;
 				};
 			};
 			
 			case (DIK_LEFT): {
-				["Camera", ["NewUnit", -1]] call vip_asp_fnc_cl_newCamera
+				["Camera", ["NewUnit", -1]] call vip_asp_fnc_cl_camera
 			};
 			
 			case (DIK_RIGHT): {
-				["Camera", ["NewUnit", 1]] call vip_asp_fnc_cl_newCamera
+				["Camera", ["NewUnit", 1]] call vip_asp_fnc_cl_camera
 			};
 			
 			case (DIK_UP): {
 				if (isNull vip_asp_var_cl_unit) exitWith {};
-				if (_lock > -1) then {["Camera", ["Lock"]] call vip_asp_fnc_cl_newCamera};
+				if (_lock > -1) then {["Camera", ["Lock"]] call vip_asp_fnc_cl_camera};
 				call _detach;
 				if (_camOn) then {
-					["Camera", ["Third"]] call vip_asp_fnc_cl_newCamera;
+					["Camera", ["Third"]] call vip_asp_fnc_cl_camera;
 				} else {
-					if (cameraView == "EXTERNAL") then {
-						["Camera", ["First"]] call vip_asp_fnc_cl_newCamera;
+					if (vip_asp_var_cl_third) then {
+						["Camera", ["First"]] call vip_asp_fnc_cl_camera;
 					};
 				};
 			};
 			
 			case (DIK_DOWN): {
 				if (isNull vip_asp_var_cl_unit) exitWith {};
-				if (_lock > -1) then {["Camera", ["Lock"]] call vip_asp_fnc_cl_newCamera};
+				if (_lock > -1) then {["Camera", ["Lock"]] call vip_asp_fnc_cl_camera};
 				call _detach;
 				if (!_camOn) then {
-					if (cameraView == "INTERNAL" || cameraView == "GUNNER") then {
-						["Camera", ["Third"]] call vip_asp_fnc_cl_newCamera;
+					if (!vip_asp_var_cl_third) then {
+						["Camera", ["Third"]] call vip_asp_fnc_cl_camera;
 					} else {
-						["Camera", ["Free"]] call vip_asp_fnc_cl_newCamera;
+						["Camera", ["Free"]] call vip_asp_fnc_cl_camera;
 					};
 				};
 			};
 			
 			case (DIK_T): {
-				vip_asp_var_cl_displayMarkers = vip_asp_var_cl_displayMarkers + 1;
-				if (vip_asp_var_cl_displayMarkers > 3) then {vip_asp_var_cl_displayMarkers = 0};
-				if (vip_asp_var_cl_displayMarkers == 0) then {clearRadio};
+				vip_asp_var_cl_markers = vip_asp_var_cl_markers + 1;
+				if (vip_asp_var_cl_markers > 3) then {vip_asp_var_cl_markers = 0};
+				if (vip_asp_var_cl_markers == 0) then {clearRadio};
 			};
 			
 			case (DIK_U): {
@@ -717,7 +697,7 @@ switch _mode do {
 				_xhair = uiNamespace getVariable "vip_asp_rsc_crosshair";
 				if (isNull _xhair) then {
 					_layer cutRsc ["vip_asp_rsc_crosshair", "PLAIN", 0, true];
-					["CrosshairColour"] call vip_asp_fnc_cl_newCamera;
+					["CrosshairColour"] call vip_asp_fnc_cl_camera;
 				} else {
 					_layer cutText ["", "PLAIN"];
 				};
@@ -799,7 +779,7 @@ switch _mode do {
 						disableSerialization;
 						_display = _this select 0;
 						_message = ["Do you want to exit camera mode?", "Adapted Spectator Platform", nil, true, _display] call BIS_fnc_guiMessage;
-						if (_message) then {["Exit"] call vip_asp_fnc_cl_newCamera};
+						if (_message) then {["Exit"] call vip_asp_fnc_cl_camera};
 					};
 				};
 			};
@@ -864,6 +844,7 @@ switch _mode do {
 		
 			case "Free": {
 				vip_asp_var_cl_cameraOn = true;
+				vip_asp_var_cl_third = false;
 				detach _cam;
 				player switchCamera "Internal";
 				_cam cameraEffect ["Internal", "Back"];
@@ -877,55 +858,61 @@ switch _mode do {
 			};
 			
 			case "First": {
-				if (vip_asp_var_cl_unit == player) exitWith {};
+				if (_unit == player) exitWith {};
 				vip_asp_var_cl_cameraOn = false;
+				vip_asp_var_cl_third = false;
 				_cam attachTo [vehicle _unit, [0,0.1,0]];
 				_cam cameraEffect ["Terminate", "Back"];
-				if (vehicle _unit != _unit) then {
-					vehicle _unit switchCamera "Internal"
-				} else {
-					_unit switchCamera "Internal";
-				};
+				vehicle _unit switchCamera "Internal";
 			};
 			
 			case "Third": {
-				if (vip_asp_var_cl_unit == player) exitWith {};
+				if (_unit == player) exitWith {};
+				vip_asp_var_cl_third = true;
 				vip_asp_var_cl_cameraOn = false;
-				_cam attachTo [vehicle _unit, [0,0.1,0]];
-				_cam cameraEffect ["Terminate", "Back"];
-				if (vehicle _unit != _unit) then {
-					vehicle _unit switchCamera "External"
+				if (!difficultyEnabled "3rdPersonView") then {
+					player switchCamera "Internal";
+					_cam cameraEffect ["Internal", "Back"];
+					cameraEffectEnableHUD true;
+					if (vehicle _unit == _unit) then {
+						_cam attachTo [_unit, [0.1, -2.4, 0.6], "head"];
+					} else {
+						_cam attachTo [vehicle _unit, [0, -7, 1.5]];
+					};
 				} else {
-					_unit switchCamera "External";
+					_cam attachTo [vehicle _unit, [0,0.1,0]];
+					_cam cameraEffect ["Terminate", "Back"];
+					vehicle _unit switchCamera "External";
 				};
 			};
 			
 			case "NewUnit": {
 			
 				_increment = _this select 1;
-				if (count allUnits > 0) then {
-					_allUnits = allUnits;
-					{
-						if !((_x getVariable "vip_asp_draw") select 0) then {_allUnits deleteAt _forEachIndex};
-					} forEach allUnits;
-					
-					_count = count _allUnits;
-					if (count _allUnits < 1) exitWith {};
-					_index = _allUnits find _unit;
+				_units = [];
+				{
+					if (alive _x) then {_units pushBack _x};
+				} forEach vip_asp_var_cl_units;
+				
+				_count = count _units;
+				
+				if (_count > 0) then {
+
+					_index = _units find _unit;
 					_index = _index + _increment;
 					if (_index < 0) then {_index = _count - 1};
 					if (_index > (_count - 1)) then {_index = 0};
-					
-					vip_asp_var_cl_unit = _allUnits select _index;
-					if (!_camOn) then {["Camera", ["SwitchUnit"]] call vip_asp_fnc_cl_newCamera};
+				
+					vip_asp_var_cl_unit = _units select _index;
+					if (!_camOn) then {["Camera", ["SwitchUnit"]] call vip_asp_fnc_cl_camera};
 				};		
 			};
 			
 			case "SwitchUnit": {
-				if (cameraView == "INTERNAL" || cameraView == "GUNNER") then {
-					["Camera", ["First"]] call vip_asp_fnc_cl_newCamera;
+				if (!vip_asp_var_cl_third) then {
+					["Camera", ["First"]] call vip_asp_fnc_cl_camera;
 				} else {
-					["Camera", ["Third"]] call vip_asp_fnc_cl_newCamera;
+					["Camera", ["Third"]] call vip_asp_fnc_cl_camera;
 				};
 			};
 			
@@ -944,7 +931,7 @@ switch _mode do {
 					
 					_cam camPrepareTarget (vip_asp_var_cl_lock select 1);
 					_cam camCommitPrepared 0;
-					["CrosshairColour"] call vip_asp_fnc_cl_newCamera;
+					["CrosshairColour"] call vip_asp_fnc_cl_camera;
 				} else {
 
 					_dir = getDir _cam;
@@ -968,7 +955,7 @@ switch _mode do {
 					};
 					vip_asp_var_cl_vector = [_dir, _pitchBank select 0, 0];
 					[_cam, vip_asp_var_cl_vector] call BIS_fnc_setObjectRotation;
-					["CrosshairColour"] call vip_asp_fnc_cl_newCamera;				
+					["CrosshairColour"] call vip_asp_fnc_cl_camera;				
 				};
 			};
 			
@@ -982,236 +969,37 @@ switch _mode do {
 							_dir = _dir - getDir _target;
 							_cam attachTo [_target];
 							vip_asp_var_cl_attach = _target;
-							["CrosshairColour"] call vip_asp_fnc_cl_newCamera;
+							["CrosshairColour"] call vip_asp_fnc_cl_camera;
 						};
 					};
 				} else {
 					detach _cam;
 					vip_asp_var_cl_attach = objNull;
-					["CrosshairColour"] call vip_asp_fnc_cl_newCamera;
+					["CrosshairColour"] call vip_asp_fnc_cl_camera;
 				};
 				vip_asp_var_cl_vector = [_dir, _pitchBank select 0, _pitchBank select 1];
 				[_cam, vip_asp_var_cl_vector] call BIS_fnc_setObjectRotation;
 			};
 		};
 		
-		["CrosshairColour"] call vip_asp_fnc_cl_newCamera;
+		["CrosshairColour"] call vip_asp_fnc_cl_camera;
 	};
 	
 	///////////////////////////////////////////////////////////////////////////////////////////
 	case "Draw3D": {
-	
-		_cam = vip_asp_obj_cl_cam;		
-		_overlay = uiNamespace getVariable "vip_asp_dlg_overlay";
+		
+		_map = uiNameSpace getVariable "vip_asp_dlg_map";
+		if (!isNull _map) exitWith {};
+
 		_compass = uiNamespace getVariable "vip_asp_rsc_compass";
 		_status = uiNamespace getVariable "vip_asp_rsc_status";
-		_map = uiNameSpace getVariable "vip_asp_dlg_map";
+		if (!isNull _compass) then {[_compass] call vip_asp_fnc_cl_compass};
+		if (!isNull _status) then {[_status] call vip_asp_fnc_cl_status};
 		
-		if (floor(diag_ticktime) mod 2 == 0) then {
-			if (vip_asp_var_cl_eh_listLast) exitWith {};
-			_allUnitsCount = count allUnits;
-			if (_allUnitsCount != vip_asp_var_cl_unitCount) then {
-				vip_asp_var_cl_unitCount = _allUnitsCount;
-				_unitsToList = [];
-				{if (!(_x getVariable ["vip_asp_listed", false]) && alive _x) then {_unitsToList pushBack _x}} forEach allUnits;
-				if (count _unitsToList > 0) then {
-					{
-						_x setVariable ["vip_asp_listed", true];
-						[_x] call vip_asp_fnc_cl_objectVar2;
-						
-						if (_x distance vip_asp_var_cl_respawnPos > 200) then {
-							_name = name _x;
-							_side = [_x] call vip_cmn_fnc_cl_getSide;
-							_icon = getText (configFile >> "CfgVehicles" >> (typeOf _x) >> "Icon");
-							_colour = [_side] call vip_asp_fnc_cl_sideColour;
-							_x setVariable ["vip_asp_draw", [true, _name, _side, _icon, _colour]];
-						} else {_x setVariable ["vip_asp_draw", [false]]};
-						
-						_x addEventHandler ["Killed", {["Killed", _this] call vip_asp_fnc_cl_newCamera}];
-						_x addEventHandler ["Respawn", {["Respawn", _this] call vip_asp_fnc_cl_newCamera}];
-					} forEach _unitsToList;
-				};
-				//overlay list
-				if (!isNull _overlay) then {["OverlayList", _overlay] call vip_asp_fnc_cl_newCamera};
-			};
-			vip_asp_var_cl_eh_listLast = true;
-		} else {vip_asp_var_cl_eh_listLast = false};
-		
-		if (!isNull _map) exitWith {};
-		
-		if (vip_asp_var_cl_displayMarkers > 0) then {
-		
-			_topIcon = [];
-			_scale = safeZoneH / 100;
-			_list = allUnits;
-			_list append vip_asp_var_cl_deadList;
-			_textMax = (1.5 * _scale);
-			_textMin = 6 * _scale;
-			_iconMax = (30 * _scale);
-			_iconMin = (120 * _scale);
-			
-			{
-				_unit = _x;
-				_draw = _unit getVariable "vip_asp_draw";
-				
-				if (_draw select 0) then {
-				
-					//exit if we don't display AI
-					if (alive _unit && !vip_asp_var_cl_ai && !isPlayer _unit) exitWith {};
-				
-					_veh = vehicle _unit;
-					_inVeh = (_veh != _unit);
-					_cmdr = if (_inVeh && (_unit == ((crew _veh) select 0))) then {true} else {false};
-					
-					_toPos = if (_inVeh && _cmdr) then {_veh} else {_unit};
-					_pos = if (surfaceIsWater getPos _toPos) then {getPosASLVisual _toPos} else {getPosATLVisual _toPos};
-					
-					if (count (worldToScreen _pos) > 0) then {
-					
-						_name = _draw select 1;
-						_side = _draw select 2;
-	
-						_icon = "";
-						_iconSize = 0;
-						
-						_text = "";
-						_textSize = 0;
-						
-						_colour = _draw select 4;
-						_pos set [2, (_pos select 2) + 3];
-						_dist = (_cam distance _pos) + 0.1;
-						_distScaled = _scale / sqrt(_dist);
-						
-						_iconScale = 300 * _distScaled;
-						_iconSize = _iconScale max _iconMax min _iconMin;
-						
-						_showText = (_dist < 2000 && vip_asp_var_cl_displayMarkers >= 2);
-						if (_showText) then {
-							_textScale = 10 * _distScaled;
-							_textSize = _textScale max _textMax min _textMin;
-						};
-						
-						if (_inVeh) then {
-							if (_cmdr) then {
-								_icon = getText (configFile >> "CfgVehicles" >> (typeOf _veh) >> "Icon");
-								_text = if (_showText) then {
-									"[" + (getText (configFile >> "CfgVehicles" >> (typeOf _veh) >> "displayName")) + "] " + _name
-								} else {""};
-								_pos set [2, (_pos select 2) + 3];
-							} else {
-								_iconSize = 0;
-								_text = if (_showText) then {_name} else {""};
-								_textSize = if (_dist < 25) then {_textSize / 1.5} else {0};
-							};
-						} else {
-							_icon = _draw select 3;
-							_text = if (_showText) then {_name} else {""};
-						};
-						
-						if (vip_asp_var_cl_displayMarkers > 2) then {
-							_text = _text + " [" + str ceil(_dist) + "]";
-						};
-						
-						if (_unit == vip_asp_var_cl_unit) exitWith {
-							_topIcon = [_icon, [1,1,0,1], _pos, _iconSize, _iconSize, 0, _text, 2, _textSize, "PuristaBold", "CENTER", true];
-						};
-						
-						drawIcon3D [_icon, _colour, _pos, _iconSize, _iconSize, 0, _text, 2, _textSize, "PuristaMedium"];
-					};
-				};
-			} forEach _list;
-			
-			if ((count _topIcon > 0) && vip_asp_var_cl_cameraOn) then {drawIcon3D _topIcon};
-			
-			if (vip_asp_var_cl_displayMarkers > 2) then {
-			
-				_iconSize = (20 * _size) max _scale min _min;
-				_mines = allMines;
-			
-				{
-					_pos = getPos _x;
-					_dist = (_cam distance _pos) + 0.1;
-					_distScaled = _scale / sqrt(_dist);
-						
-					_iconScale = 300 * _distScaled;
-					_iconSize = _iconScale max _iconMax min _iconMin;
-					
-					_textSize = 0;
-					_showText = (_dist < 2000 && vip_asp_var_cl_displayMarkers >= 2);
-					if (_showText) then {
-						_textScale = 10 * _distScaled;
-						_textSize = _textScale max _textMax min _textMin;
-					};
-						
-					_name = switch (typeOf _x) do {
-					
-						case "APERSTripMine_Wire_Ammo": {"Tripwire Mine"};
-						case "APERSBoundingMine_Range_Ammo": {"Bounding Mine"};
-						case "ClaymoreDirectionalMine_Remote_Ammo";
-						case "ClaymoreDirectionalMine_Remote_Ammo_Scripted": {"Claymore Mine"};
-						case "DemoCharge_Remote_Ammo";
-						case "DemoCharge_Remote_Ammo_Scripted": {"Demo Charge"};
-						case "SatchelCharge_Remote_Ammo";
-						case "SatchelCharge_Remote_Ammo_Scripted": {"Satchel Charge"};
-						case "APERSMine_Range_Ammo": {"APERS Mine"};
-						case "ATMine_Range_Ammo": {"AT Mine"};
-						case "SLAMDirectionalMine_Wire_Ammo": {"SLAM"};
-					};
-					
-					drawIcon3D ["\A3\ui_f\data\map\markers\military\triangle_CA.paa", [1,1,0,1], getPos _x, _iconSize, _iconSize, 0, _name, 1, _textSize, "PuristaMedium"];
-				} forEach _mines;
-			};
+		if (vip_asp_var_cl_markers > 0) then {
+			call vip_asp_fnc_cl_drawMines3D;
+			call vip_asp_fnc_cl_drawUnits3D;
 		};
-		
-		if (!isNull _compass) then {["Compass", [_compass]] call vip_asp_fnc_cl_newCamera};
-		if (!isNull _status) then {["Status", _status] call vip_asp_fnc_cl_newCamera};
-	};
-	
-	///////////////////////////////////////////////////////////////////////////////////////////
-	case "Compass": {
-	
-		_dialog = _this select 0;
-		_cam = vip_asp_obj_cl_cam;
-		_unit = vip_asp_var_cl_unit;
-
-		_Q1 = _dialog displayCtrl 1;
-		_Q2 = _dialog displayCtrl 2;
-		_Q3 = _dialog displayCtrl 3;
-		_Q4 = _dialog displayCtrl 4;
-		_qOrder = [];
-
-		_RESUNITS_X = safeZoneW / 100;
-		_CENTRE = safeZoneX + safeZoneW / 2;
-		_COMPASS_W = _RESUNITS_X * 20;
-		_COMPASS_H = _COMPASS_W / 15;
-		_COMPASS_X = _CENTRE - _COMPASS_W / 2;
-		_y = safeZoneY;
-		_ARC_W = _COMPASS_W / 2;
-		_degUnit = _COMPASS_W / 180;
-
-		_dir = if (vip_asp_var_cl_cameraOn) then {getDir _cam} else {getDir _unit};
-		_angleFromCentre = _dir - floor(_dir / 90) * 90;
-		_leftEdgePos = _angleFromCentre * _degUnit;
-
-		_positions = [
-			[_CENTRE - _leftEdgePos - _ARC_W, _y],
-			[_CENTRE - _leftEdgePos, _y],
-			[_CENTRE - _leftEdgePos + _ARC_W, _y],
-			[0, _y - 1]
-		];
-
-		switch (true) do {
-
-			case ((_dir >= 0) && (_dir < 90)): {_qOrder = [_Q4, _Q1, _Q2, _Q3]};
-			case ((_dir >= 90) && (_dir < 180)): {_qOrder = [_Q1, _Q2, _Q3, _Q4]};
-			case ((_dir >= 180) && (_dir < 270)): {_qOrder = [_Q2, _Q3, _Q4, _Q1]};
-			case (_dir >= 270): {_qOrder = [_Q3, _Q4, _Q1, _Q2]};
-		};
-
-		{
-			_x ctrlSetPosition (_positions select _forEachIndex);
-			_x ctrlCommit 0;
-		} forEach _qOrder;
 	};
 	
 	///////////////////////////////////////////////////////////////////////////////////////////
@@ -1224,411 +1012,6 @@ switch _mode do {
 			};
 			(_xhair displayCtrl 0) ctrlSetTextColor _colour;
 		};
-	};
-	
-	///////////////////////////////////////////////////////////////////////////////////////////
-	case "OverlayList": {
-	
-		_overlay = _this;
-		_ctrl = _overlay displayCtrl 0;
-		_count = _ctrl tvCount [];
-		for "_i" from 0 to _count do {
-			_ctrl tvDelete [_x];
-		};
-		
-		vip_asp_overlayClose = false;
-		
-		_ctrl tvAdd [[], "Opfor"];
-		_ctrl tvAdd [[], "Blufor"];
-		_ctrl tvAdd [[], "Indfor"];
-		_ctrl tvAdd [[], "Civilian"];
-		
-		_unitList = [];
-		
-		{
-			_units = units _x;
-			private ["_groupNum"];
-			{
-				if (_x getVariable ["vip_asp_listed", false]) then {
-					_arr = _x getVariable "vip_asp_draw";
-					if (_arr select 0) then {
-						_name = _arr select 1;
-						_side = _arr select 2;
-						_icon = _arr select 3;
-						_picture = "\a3\ui_f\data\map\VehicleIcons\" + _icon + "_ca.paa";
-						_treeIndex = [];
-						_unitList pushBack _x;
-						
-						if (_forEachIndex == 0) then {
-							_groupNum = _ctrl tvAdd [[_side], _name];
-							_treeIndex = [_side, _groupNum];
-						} else {
-							_num = _ctrl tvAdd [[_side, _groupNum], _name];
-							_treeIndex = [_side, _groupNum, _num];
-						};
-
-						_ctrl tvSetPicture [_treeIndex, _picture];
-						_ctrl tvSetData [_treeIndex, [_x] call vip_asp_fnc_cl_objectVar2];
-						_unitList pushBack _treeIndex;
-					};
-				};
-			} forEach _units;
-		} forEach allGroups;
-		
-		if (!isNull vip_asp_var_cl_unit) then {
-			_treeIndex = _unitList select ((_unitList find vip_asp_var_cl_unit) + 1);
-			_ctrl tvSetCurSel _treeIndex;
-		};
-	};
-	
-	///////////////////////////////////////////////////////////////////////////////////////////
-	case "OverlaySelect": {
-	
-		_ctrl = _this select 0;
-		_selection = _this select 1;
-		if (count _selection < 2) exitWith {};
-		
-		_str = _ctrl tvData _selection;
-		_unit = missionNamespace getVariable _str;
-		vip_asp_var_cl_unit = _unit;
-		if (vip_asp_var_cl_cameraOn) then {
-			["Camera", ["Third"]] call vip_asp_fnc_cl_newCamera;
-		} else {
-			["Camera", ["SwitchUnit"]] call vip_asp_fnc_cl_newCamera;
-		};
-	};
-
-	///////////////////////////////////////////////////////////////////////////////////////////
-	case "Status": {
-	
-		_display = _this;
-		_speedText = (str ([vip_asp_var_cl_moveScale, 4] call BIS_fnc_cutDecimals)) + "v";
-		(_display displayCtrl 0) ctrlSetText _speedText;
-		_name = "";
-		_colour = [1,1,1,1];
-		if (!isNull vip_asp_var_cl_unit) then {
-			_arr = vip_asp_var_cl_unit getVariable "vip_asp_draw";
-			_name = _arr select 1;
-			_colour = _arr select 4;
-			_colour set [3, 1];
-		};
-		(_display displayCtrl 1) ctrlSetText _name;
-		(_display displayCtrl 1) ctrlSetTextColor _colour;
-		_mode = if (vip_asp_var_cl_cameraOn) then {
-			if (isNull vip_asp_var_cl_attach) then {"FREE"} else {"ATTACH"};
-		} else {
-			if (cameraView == "INTERNAL") then {"FIRST"} else {"THIRD"};
-		};
-		(_display displayCtrl 2) ctrlSetText _mode;
-		
-		_timeText = [dayTime] call BIS_fnc_timeToString;
-		(_display displayCtrl 3) ctrlSetText _timeText;
-		
-		_fovText = (str ([vip_asp_var_cl_fov, 3] call BIS_fnc_cutDecimals)) + "a";
-		(_display displayCtrl 4) ctrlSetText _fovText;
-		
-		_timeAccText = (str ([vip_asp_var_cl_accTime, 4] call BIS_fnc_cutDecimals)) + "x";
-		(_display displayCtrl 5) ctrlSetText _timeAccText;
-		
-		_focusDist = [vip_asp_var_cl_focus select 0, 1] call BIS_fnc_cutDecimals;
-		_focusBlur = vip_asp_var_cl_focus select 1;
-		
-		_focusText = if (_focusDist == -1 && _focusBlur == 1) then {"Auto"} else {if (_focusDist < 0) then {toString [8734]} else {str _focusDist + "m"}};
-		(_display displayCtrl 6) ctrlSetText _focusText;
-	};
-	
-	///////////////////////////////////////////////////////////////////////////////////////////
-	case "ViewDistance": {
-		_dialog = if (count _this > 1) then {ctrlParent (_this select 0)} else {_this select 0};
-		_dist = if (count _this > 1) then {_this select 1} else {-1};
-		_text = _dialog displayCtrl 1;
-		_slider = _dialog displayCtrl 2;
-		
-		if (_dist < 0) then {
-			_slider slidersetRange [1000,20000];
-			_slider sliderSetSpeed [1000,1000,1000];
-			_slider sliderSetPosition viewDistance;
-		} else {
-			setViewDistance _dist;
-		};
-
-		_text ctrlSetText str viewDistance;
-	};
-	
-	///////////////////////////////////////////////////////////////////////////////////////////
-	case "MapInit": {
-
-		_map = _this displayCtrl 1;
-
-		if (isNil "vip_asp_mapPos") then {
-			vip_asp_mapPos = [(vip_asp_var_cl_respawnPos select 0) / 2, (vip_asp_var_cl_respawnPos select 1) / 2];
-		};
-
-		if (isNil "vip_asp_mapZoom") then {
-			vip_asp_mapZoom = 0.75;
-		};
-
-		_map ctrlMapAnimAdd [0, vip_asp_mapZoom, vip_asp_mapPos];
-		ctrlMapAnimCommit _map;
-		setMousePosition [0.5, 0.5];
-
-		_map ctrlAddEventHandler ["Draw", {['MapDraw', _this] call vip_asp_fnc_cl_newCamera}];
-		_map ctrlAddEventHandler ["MouseButtonDblClick", {['MapClick', _this] call vip_asp_fnc_cl_newCamera}];	
-	};
-	
-	///////////////////////////////////////////////////////////////////////////////////////////
-	case "MapClose": {
-		_map = _this displayCtrl 1;
-		vip_asp_mapPos = _map ctrlMapScreenToWorld [0.5,0.5];
-		vip_asp_mapZoom = ctrlMapScale _map;
-	};
-	
-	///////////////////////////////////////////////////////////////////////////////////////////
-	case "MapDraw": {
-	
-		_map = _this select 0;
-		_zoom = ctrlMapScale _map;
-		_scale = 5 * safeZoneH / 100;
-		_size = _scale / _zoom;
-		_min = 300 * _scale;
-		_textSize = (1/4 * _size) max (_scale / 2) min (_scale / 1.5);
-			
-		if (vip_asp_var_cl_displayMarkers > 0) then {
-			
-			_topIcon = [];
-			_list = allUnits;
-			_list append vip_asp_var_cl_deadList;
-			{
-				_unit = _x;
-				_draw = _unit getVariable "vip_asp_draw";
-				
-				if (_draw select 0) then {
-					//exit if we don't display AI
-					if (alive _unit && !vip_asp_var_cl_ai && !isPlayer _unit) exitWith {};
-					
-					_veh = vehicle _unit;
-					_inVeh = (_veh != _unit);
-					if (_inVeh && !(_unit == ((crew _veh) select 0))) exitWith {};
-					
-					_toPos = if (_inVeh) then {_veh} else {_unit};
-					_pos = getPosVisual _toPos;
-					_dir = getDir _toPos;
-					
-					_name = _draw select 1;
-					_side = _draw select 2;
-					_icon = "";
-					_iconSize = 0;
-					_iconText = "";
-					_colour = _draw select 4;
-
-					if (_inVeh) then {
-						_icon = getText (configFile >> "CfgVehicles" >> (typeOf _veh) >> "Icon");
-						_iconSize = (50 * _size) max _scale min (_min * 2);
-						_iconText = "[" + (getText (configFile >> "CfgVehicles" >> (typeOf _veh) >> "displayName")) + "] " + _name;
-					} else {
-						_icon = _draw select 3;
-						_iconSize = (50 * _size) max _scale min _min;
-						_iconText = _name;
-					};
-					
-					if (vip_asp_var_cl_displayMarkers < 2) then {_iconText = ""};
-					
-					if (_unit == vip_asp_var_cl_unit) exitWith {_topIcon = [_icon, [1,1,0,1], _pos, _iconSize, _iconSize, _dir, _iconText, 1, _textSize, "PuristaBold", "RIGHT"]};
-					
-					_map drawIcon [_icon, _colour, _pos, _iconSize, _iconSize, _dir, _iconText, 1, _textSize, "PuristaMedium", "RIGHT"];
-				};
-			} forEach _list;
-			
-			if (count _topIcon > 0) then {_map drawIcon _topIcon};
-			
-			if (vip_asp_var_cl_displayMarkers > 2) then {
-			
-				_iconSize = (20 * _size) max _scale min _min;
-				_mines = allMines;
-			
-				{
-					_name = switch (typeOf _x) do {
-					
-						case "APERSTripMine_Wire_Ammo": {"Tripwire Mine"};
-						case "APERSBoundingMine_Range_Ammo": {"Bounding Mine"};
-						case "ClaymoreDirectionalMine_Remote_Ammo";
-						case "ClaymoreDirectionalMine_Remote_Ammo_Scripted": {"Claymore Mine"};
-						case "DemoCharge_Remote_Ammo";
-						case "DemoCharge_Remote_Ammo_Scripted": {"Demo Charge"};
-						case "SatchelCharge_Remote_Ammo";
-						case "SatchelCharge_Remote_Ammo_Scripted": {"Satchel Charge"};
-						case "APERSMine_Range_Ammo": {"APERS Mine"};
-						case "ATMine_Range_Ammo": {"AT Mine"};
-						case "SLAMDirectionalMine_Wire_Ammo": {"SLAM"};
-					};
-					
-					_map drawIcon ["\A3\ui_f\data\map\markers\military\triangle_CA.paa", [1,1,0,1], getPos _x, _iconSize, _iconSize, getDir _x, _name, 1, _textSize / 2, "PuristaMedium"];
-				} forEach _mines;
-				
-				{
-					_unit = _x select 0;
-					_draw = _unit getVariable ["vip_asp_draw", []];
-					if (count _draw > 1) then {
-						_colour = _draw select 4;
-						if (!vip_asp_var_cl_cameraOn) then {
-							if (_unit == vip_asp_var_cl_unit) then {_colour = [1,1,0,1]};
-						};
-						_positions = _x select 1;
-						_count = count _positions;
-						_step = floor (10 * _zoom) min 3 max 1;
-						_lastIndex = 0;
-
-						if (_count > 1) then {
-							for "_i" from 0 to (_count - 1) step _step do {;
-								if (_i > 0 && _i < _count) then {
-									_pos1 = _positions select _i;
-									_pos2 = _positions select (_i - _step);
-									_lastIndex = _i;
-									_map drawLine [_pos1, _pos2, _colour];
-								};
-							};
-						};
-						//((_count - _step + _count mod _step) max 0)
-						if (alive _unit) then {_map drawLine [_positions select _lastIndex, getPosVisual _unit, _colour]};
-					};
-				} forEach vip_asp_var_cl_trackingArray;
-			};
-		};
-		
-		if (vip_asp_var_cl_cameraOn) then {
-			_map drawIcon ["\A3\ui_f\data\gui\Rsc\RscDisplayMissionEditor\iconcamera_ca.paa", [1,1,1,1], getPos vip_asp_obj_cl_cam, 500 * _scale, 500 * _scale, getDir vip_asp_obj_cl_cam, "", 0, 0, "PuristaMedium"];
-		};
-		
-	};
-
-	///////////////////////////////////////////////////////////////////////////////////////////
-	case "MapClick": {
-		_map = _this select 0;
-		_button = _this select 1;
-		_shift = _this select 4;
-		_mapPos = _map ctrlMapScreenToWorld [_this select 2, _this select 3];
-
-		if (_shift) then {
-			if (vip_asp_var_cl_cameraOn) then {
-				_dir = [getPos vip_asp_obj_cl_cam, _mapPos] call BIS_fnc_dirTo;
-				vip_asp_var_cl_vector set [0, _dir];
-				[vip_asp_obj_cl_cam, vip_asp_var_cl_vector] call BIS_fnc_setObjectRotation;				
-			};
-		} else {
-		
-			_newUnit = objNull;
-		
-			_scale = ctrlMapScale _map;
-			_radius = _scale * 250;
-			_units = nearestObjects [_mapPos, ["CAManBase"], _radius];
-			_vehs = nearestObjects [_mapPos, ["LandVehicle", "Air"], _radius];
-			
-			if (count _units > 0) then {
-				{
-					if ((_x getVariable "vip_asp_draw") select 0) exitWith {
-						_newUnit = _units select _forEachIndex;
-					};
-				} forEach _units;
-			};
-			
-			if (isNull _newUnit) then {
-				if (count _vehs > 0) then {
-					{
-						if (!isNull _newUnit) exitWith {};
-						_crew = crew _x;
-						if (count _crew > 0) then {
-							{
-								if ((_x getVariable "vip_asp_draw") select 0) exitWith {
-									_newUnit = _crew select _forEachIndex;
-								};
-							} forEach _crew;
-						};
-					} forEach _vehs;
-				};			
-			};
-			
-			if (!isNull _newUnit) then {
-				vip_asp_var_cl_unit = _newUnit;
-				if (vip_asp_var_cl_cameraOn) then {
-					["Camera", ["Third"]] call vip_asp_fnc_cl_newCamera;
-				} else {
-					if (cameraView == "EXTERNAL") then {
-						["Camera", ["Third"]] call vip_asp_fnc_cl_newCamera;
-					} else {
-						["Camera", ["First"]] call vip_asp_fnc_cl_newCamera;
-					};
-				};
-			} else {
-			
-				if (!vip_asp_var_cl_cameraOn) then {
-					["Camera", ["Free"]] call vip_asp_fnc_cl_newCamera;
-				};
-				_mapPos set [2, 10];
-				vip_asp_obj_cl_cam setPosATL _mapPos;
-			};
-		};
-	};
-	
-	///////////////////////////////////////////////////////////////////////////////////////////
-	case "MapKeyDown": {
-		_key = _this select 1;
-		_shift = _this select 2;
-		_ctrl = _this select 3;
-		_alt = _this select 4;
-		_return = false;
-	
-		switch (_key) do {
-			case (DIK_DELETE): {_return = true};
-		};
-		
-		_return
-	};
-	
-	///////////////////////////////////////////////////////////////////////////////////////////
-	case "Killed": {
-		_unit = _this select 0;
-		_killer = _this select 1;
-		_arr = _unit getVariable "vip_asp_draw";
-		_colour = _arr select 4;
-		{_colour set [_forEachIndex, _x / 2.5]} forEach _colour;
-		_colour set [3, 0.8];
-		_arr set [4, _colour];
-		_unit setVariable ["vip_asp_draw", _arr];
-		vip_asp_var_cl_deadList pushBack _unit;
-
-		if (!isNull _killer) then {
-			if (vip_asp_var_cl_displayMarkers > 2) then {
-				_text = if (_killer == _unit) then {
-					format ["%1 died", name _unit]
-				} else {
-					format ["%2 killed %1", name _unit, name _killer]
-				};
-				systemChat _text;
-			};
-		};
-		
-		if (_unit == vip_asp_var_cl_unit && !vip_asp_var_cl_cameraOn) then {
-			["Camera", ["Free"]] call vip_asp_fnc_cl_newCamera;
-			vip_asp_var_cl_unit = objNull;
-		};
-		
-		if (!isNil "vip_asp_var_cl_trackingArray") then {
-			_pos = getPos _unit;
-			_pos resize 2;
-			_index = -1;
-			{if ((_x select 0) == _unit) then {_index = _forEachIndex}} forEach vip_asp_var_cl_trackingArray;
-			_unitArray = vip_asp_var_cl_trackingArray select _index;
-			_trackingArray = _unitArray select 1;
-			_trackingArray pushBack _pos;
-			_unitArray set [1, _trackingArray];
-			vip_asp_var_cl_trackingArray set [_index, _unitArray];
-		};
-	};
-	
-	///////////////////////////////////////////////////////////////////////////////////////////
-	case "Respawn": {
-		_unit = _this select 0;
-		_unit setVariable ["vip_asp_listed", false];
 	};
 	
 	///////////////////////////////////////////////////////////////////////////////////////////
@@ -1655,10 +1038,11 @@ Autofocus<br />
 Disable Focus<br />
 Pitch and Yaw<br />
 Roll<br />
-Pitch/Yaw/Roll Fast<br />
-Pitch/Yaw/Roll Slow<br />
+Pitch/Roll Reset<br />
 Zoom<br />
 Reset Zoom<br />
+P/Y/R/Z Fast<br />
+P/Y/R/Z Slow<br />
 </t>
 ";
 
@@ -1681,10 +1065,11 @@ Backspace<br />
 Shift + Backspace<br />
 Numpad 1...9<br />
 Numpad / and *<br />
-Numpad 0<br />
-Numpad Decimal<br />
+Numpad 5<br />
 Numpad - and +<br />
 Numpad Enter<br />
+Numpad 0<br />
+Numpad Decimal<br />
 </t>
 ";
 
@@ -1757,35 +1142,6 @@ _add2 = parseText "<t align='left'>
 	};
 	
 	///////////////////////////////////////////////////////////////////////////////////////////
-	case "Tracking": {
-		{
-			_unit = _x;
-
-			if (_unit distance vip_asp_var_cl_respawnPos > 200) then {
-			
-				if (alive _unit && !vip_asp_var_cl_ai && !isPlayer _unit) exitWith {};
-				_pos = getPos _unit;
-				_pos resize 2;
-				
-				_index = -1;
-				{if ((_x select 0) == _unit) then {_index = _forEachIndex}} forEach vip_asp_var_cl_trackingArray;
-				if (_index == -1) exitWith {vip_asp_var_cl_trackingArray pushBack [_unit, [_pos]]};
-					_unitArray = vip_asp_var_cl_trackingArray select _index;
-					_trackingArray = _unitArray select 1;
-					_latestIndex = (count _trackingArray) - 1;
-					_latestPos = _trackingArray select _latestIndex;
-					_diffX = abs((_latestPos select 0) - (_pos select 0));
-					_diffY = abs((_latestPos select 1) - (_pos select 1));
-					if !((_diffX < 20) && (_diffY < 20)) then {
-						_trackingArray pushBack _pos;		
-						_unitArray set [1, _trackingArray];
-						vip_asp_var_cl_trackingArray set [_index, _unitArray];
-					};
-			};
-		} forEach allUnits;
-	};
-	
-	///////////////////////////////////////////////////////////////////////////////////////////
 	case "Exit": {
 		
 		if (!isNil "vip_asp_var_cl_trackingArray") then {
@@ -1798,6 +1154,14 @@ _add2 = parseText "<t align='left'>
 			ace_nametags_showPlayerNames = vip_asp_var_cl_ACEtags select 0;
 			ace_nametags_showNamesForAI = vip_asp_var_cl_ACEtags select 1;
 			vip_asp_var_cl_ACEtags = nil;
+		};
+		
+		if (isClass (configFile >> "CfgPatches" >> "ace_hearing")) then {
+			ace_hearing_disableVolumeUpdate = false;
+		};
+		
+		if (isClass (configFile >> "CfgPatches" >> "ace_interact_menu")) then {
+			["vip_asp_aceInteract"] call ace_common_fnc_removeCanInteractWithCondition;
 		};
 
 		_cam = vip_asp_obj_cl_cam;
@@ -1819,22 +1183,18 @@ _add2 = parseText "<t align='left'>
 		vip_asp_var_cl_cameraOn = nil;
 		vip_asp_var_cl_focus = nil;
 		vip_asp_var_cl_lock = nil;
-		vip_asp_var_cl_targets = nil;
 		vip_asp_var_cl_attach = nil;
 		vip_asp_var_cl_unit = nil;
-		vip_asp_var_cl_unitCount = nil;
-		vip_asp_var_cl_deadList = nil;
 		vip_asp_var_cl_mouseBusy = nil;
-		vip_asp_var_cl_displayMarkers = nil;
+		vip_asp_var_cl_markers = nil;
 		vip_asp_var_cl_keys = nil;
 		vip_asp_fnc_cl_sideColour = nil;
-		vip_asp_var_cl_eh_listLast = nil;
 		vip_asp_var_cl_accTime = nil;
 		vip_asp_var_cl_ai = nil;
 
 		_display = findDisplay 46;
 		
-		removeMissionEventhandler ["Draw3D", vip_asp_eh_draw3D];
+		removeMissionEventHandler ["Draw3D", vip_asp_eh_draw3D];
 		_display displayRemoveEventHandler ["keyDown", vip_asp_eh_key1];
 		_display displayRemoveEventHandler ["keyUp", vip_asp_eh_key2];
 		_display displayRemoveEventHandler ["mouseButtonDown", vip_asp_eh_key3];

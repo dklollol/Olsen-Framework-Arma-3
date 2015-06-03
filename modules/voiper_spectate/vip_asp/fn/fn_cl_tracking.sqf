@@ -19,20 +19,26 @@ if (_init) then {
 	}];
 
 	//begin unit tracking
-	vip_asp_var_cl_eh_trackingLast = false;
 	vip_asp_var_cl_trackingArray = [];
-	//establish starting positions
-	["Tracking"] call vip_asp_fnc_cl_newCamera;
 
-	//add PFH
-	["vip_asp_eh_tracking", "onEachFrame", {
-		if (floor diag_ticktime mod 20 == 0) then {
-			if (!vip_asp_var_cl_eh_trackingLast) then {
-				["Tracking"] call vip_asp_fnc_cl_newCamera;
-				vip_asp_var_cl_eh_trackingLast = true;
-			};
-		} else {vip_asp_var_cl_eh_trackingLast = false};
-	}] call BIS_fnc_addStackedEventHandler;
+	[] spawn {
+	
+		waitUntil {time > 2};
+		//add PFH
+		vip_asp_var_cl_eh_trackingLast = false;
+		
+		["vip_asp_eh_tracking", "onEachFrame", {
+			if (floor diag_ticktime mod 20 == 0) then {
+				if (!vip_asp_var_cl_eh_trackingLast) then {
+					call vip_asp_fnc_cl_trackUnits;
+					vip_asp_var_cl_eh_trackingLast = true;
+				};
+			} else {vip_asp_var_cl_eh_trackingLast = false};
+		}] call BIS_fnc_addStackedEventHandler;
+		
+		call vip_asp_fnc_cl_trackUnits;
+	};
+	
 } else {
 	["vip_asp_eh_tracking", "onEachFrame"] call BIS_fnc_removeStackedEventHandler;
 	vip_asp_var_cl_trackingArray = nil;
