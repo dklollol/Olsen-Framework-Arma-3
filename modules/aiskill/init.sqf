@@ -10,7 +10,8 @@ FNC_setAISkill =
 						"spottime",
 						"spotdistance",
 						"commanding",
-						"general"];
+						"general",
+						"courage"];
 
 	if(count _this < 2) then
 	{
@@ -44,7 +45,7 @@ FNC_setAISkill =
 					};
 					default
 					{
-						_temp = format ["AI skill module:<br></br>Condition in file ""modules\aiskill\settings.sqf"" is wrong."];
+						_temp = format ["AI skill module:<br></br>Condition ""%1"" in file ""modules\aiskill\settings.sqf"" is wrong.",_temp select 0];
 						_temp call FNC_DebugMessage; 
 					};
 				};
@@ -116,7 +117,7 @@ FNC_setAISkill =
 	}
 	else 
 	{  
-		if(_value < 0.2 || _value >= 1) then
+		if(_value < 0.2 || _value > 1) then
 		{
 			_temp = format ["AI skill module:<br></br>Warning AI-Skill-Value ""%1"", in file ""modules\aiskill\settings.sqf"" , is wrong.", _value];
 			_temp call FNC_DebugMessage; 

@@ -1,13 +1,26 @@
-//Description
-//Sets Aiskill to VALUE for all AI if all CONDITIONS are met
+//["aimingspeed", 1] call FNC_setAISkill;
+//["aimingshake", 1 ,["Distance",200,TEST]] call FNC_setAISkill;
+//["courage", 1 ,["Distance",200,TEST],["Side",west]] call FNC_setAISkill;
+//TESTCASE
+
+
+
+
+
+
+
+
+
 //EXAMPLE:["aimingspeed", 1] call FNC_setAISkill;
-//		  ["aimingspeed", 0.9,["Distance",200,GAMELOGIC1]] call FNC_setAISkill;
+//["aimingspeed", 0.9,["Distance",200,GAMELOGIC1]] call FNC_setAISkill;
 //[STRING,VALUE,CONDITIONS] call FNC_setAISkill
 //CONDITIONSARRAY currently supports side and distance
-//HOW to use CONDITIONS ["Distance",RANGE,POSITION];
-//			 			["Side",SIDE];
-//it is possible to chain unlimited Conditions
-//Example: ["aimingspeed", 0.9,["Distance",200,GAMELOGIC1],["Side",west]] call FNC_setAISkill;
+//HOW to use ["Distance",RANGE,POSITION];
+//			 ["Side",west];
+// it is possible to chain Conditions
+//Example ["aimingspeed", 0.9,["Distance",200,GAMELOGIC1],["Side",west]] call FNC_setAISkill;
+//Description
+//Sets Aiskill to VALUE for all AI if all CONDITIONS are met
 //Comments:
 //Value = number between 0.2 and 1
 //Leave Conditions out to change all AI ["aimingspeed", 1] call FNC_setAISkill;
