@@ -43,6 +43,10 @@ FNC_setAISkill =
 					{
 						_conditions set [count _conditions, [_temp select 0, _temp select 1]];
 					};
+					case "True":
+					{
+						_conditions set [count _conditions, ["True"]];
+					};
 					default
 					{
 						_temp = format ["AI skill module:<br></br>Condition ""%1"" in file ""modules\aiskill\settings.sqf"" is wrong.",_temp select 0];
@@ -72,6 +76,7 @@ FNC_setAISkill =
 	if(_isstringcorrect && _value > 0.2 && _value <= 1) then
 	{
 		{
+			_conditionCheck = [];
 			_condition = false;
 			_unit = _x;
 			{
@@ -81,39 +86,50 @@ FNC_setAISkill =
 					{
 						if(_unit distance (_x select 2) <= (_x select 1)) then 
 						{
+							_conditionCheck set [count _conditionCheck,true];
 							_condition = true;
 						}
 						else
 						{
-							_condition = false;
+							_conditionCheck set [count _conditionCheck,false];
 						};
 					};
 					case "Side":
 					{
 						if(side _unit == (_x select 1)) then
 						{
+							_conditionCheck set [count _conditionCheck,true];
 							_condition = true;
 						}
 						else
 						{
-							_condition = false;
+							_conditionCheck set [count _conditionCheck,false];
 						};
 					};
 					case "True":
 					{
+						_conditionCheck set [count _conditionCheck,true];
 						_condition = true;
 					};
 					default
 					{
-						_condition = false;
+						_conditionCheck set [count _conditionCheck,false];
 					};
 				};
 			}forEach _conditions;
+			{
+				if(!(_x)) then
+				{
+					_condition = false;
+				};
+			}forEach _conditionCheck;
+
 			if(!(isPlayer _x) && _condition) then
 			{
 				_x setSkill [_aiskill , _value];
 			};
 		}forEach allUnits;
+
 	}
 	else 
 	{  
