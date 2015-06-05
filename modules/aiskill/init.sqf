@@ -1,7 +1,7 @@
 FNC_setAISkill = 
 {
-	private ["_aiskill", "_value","_condition","_aiskillstring","_conditions"];
 
+	private ["_aiskill", "_value","_condition","_aiskillstring","_conditions"];
 	_aiskillstrings = [
 						"aimingspeed",
 						"spotdistance",
@@ -30,22 +30,39 @@ FNC_setAISkill =
 			_temp = _this select i;
 			if(count _temp < 2) then
 			{
-				_temp = format ["AI skill module:<br></br>Conditions in file ""modules\aiskill\settings.sqf"" is wrong."];
-				_temp call FNC_DebugMessage; 
-			};
-			switch(_temp select 0) do
+				if(_temp select 0 == "Vehicle") then
+				{
+					_conditions set [count _conditions, ["Vehicle"]];
+				}
+				else
+				{
+					_temp = format ["AI skill module:<br></br>Conditions in file ""modules\aiskill\settings.sqf"" is wrong."];
+					_temp call FNC_DebugMessage; 
+				};			
+			}
+			else
+			{
+				switch(_temp select 0) do
 				{
 					case "Distance":
 					{
-						_conditions set [count _conditions, [_temp select 0, _temp select 1,_temp select 2]];
+						_conditions set [count _conditions, _temp];
 					};
 					case "Side":
 					{
-						_conditions set [count _conditions, [_temp select 0, _temp select 1]];
+						_conditions set [count _conditions, _temp];
 					};
 					case "True":
 					{
 						_conditions set [count _conditions, ["True"]];
+					};
+					case "Group":
+					{
+						_conditions set [count _conditions, _temp];
+					};
+					case "Vehicle":
+					{
+						_conditions set [count _conditions, [_temp]];
 					};
 					default
 					{
@@ -53,7 +70,7 @@ FNC_setAISkill =
 						_temp call FNC_DebugMessage; 
 					};
 				};
-			
+			};		
 		};	
 	};
 	if(count _this == 2) then
@@ -62,8 +79,6 @@ FNC_setAISkill =
 		_value = _this select 1;
 		_conditions = [["True"]];
 	};
-
-
 
 	_isstringcorrect = false;
 	{
@@ -86,8 +101,8 @@ FNC_setAISkill =
 					{
 						if(_unit distance (_x select 2) <= (_x select 1)) then 
 						{
-							_conditionCheck set [count _conditionCheck,true];
 							_condition = true;
+							_conditionCheck set [count _conditionCheck,true];
 						}
 						else
 						{
@@ -98,8 +113,8 @@ FNC_setAISkill =
 					{
 						if(side _unit == (_x select 1)) then
 						{
-							_conditionCheck set [count _conditionCheck,true];
 							_condition = true;
+							_conditionCheck set [count _conditionCheck,true];
 						}
 						else
 						{
@@ -108,8 +123,47 @@ FNC_setAISkill =
 					};
 					case "True":
 					{
-						_conditionCheck set [count _conditionCheck,true];
 						_condition = true;
+						_conditionCheck set [count _conditionCheck,true];
+					};
+					case "Group":
+					{
+						if(group _unit == _x select 1) then
+						{
+							_condition = true;
+							_conditionCheck set [count _conditionCheck,true];
+						}
+						else
+						{
+							_conditionCheck set [count _conditionCheck,false];
+						};
+					};
+					case "Vehicle":
+					{
+						if(count _x == 1) then
+						{
+							if(_unit call FNC_InVehicle) then
+							{
+								_condition = true;
+								_conditionCheck set [count _conditionCheck,true];
+							}
+							else
+							{
+								_conditionCheck set [count _conditionCheck,false];
+							};
+						}
+						else
+						{
+							if(_unit in (_x select 1) == true) then
+							{
+								_condition = true;
+								_conditionCheck set [count _conditionCheck,true];
+							}
+							else
+							{
+								_conditionCheck set [count _conditionCheck,false];
+							};
+						}
 					};
 					default
 					{
