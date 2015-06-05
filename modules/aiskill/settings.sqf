@@ -1,31 +1,56 @@
-//["aimingspeed", 1] call FNC_setAISkill;
-//["aimingshake", 1 ,["Distance",200,TEST]] call FNC_setAISkill;
-//["courage", 1 ,["Distance",200,TEST],["Side",west]] call FNC_setAISkill;
-//TESTCASE
 
 
+//Author:		Sacher
+
+//Definition:	[AISKILLSTRING,VALUE,CONDITION,CONDITION,CONDITION....]
+
+//Description: 	With this module you can change the sub-skills of the ai. Sub-skills are normally defined by the missions unit skill slider.
+//				With this module you can setup 3 kinds of Conditions for changing the skill of the AI. You can chain Conditions together.
+//Comments: VALUE needs to be between 0.2 and 1 to function correctly			
+//			You have to play around with the Values
+//			On larger Missions don't go ham on Conditions since they have to be checked for every AI.
+//			Normally up to 3 is acceptable for most missions
+//			This Function can be called midgame to change AI. Usefull when Morale has been signifantly lowered.
+//			Also do not look inside the init.sqf because its horrible but its working.(sqf is way too limiting)
+
+//CONDITIONS:	["Distance",RANGE,OBJECT/GAMELOGIC]
+//			 	["Side",SIDE]
+//			  	["Group",GROUP]
+//				["Vehicle"]
+//				["Vehicle",Vehicle]
+//Example: 	["aimingspeed", 1] call FNC_setAISkill;
+// 			This is the most lightweight Example of setting Skills. It will change the Sub-Skill of all AI in the Mission.
+//			Usecase: Simple change to all AI
+
+//			["aimingspeed", 0.9,["Distance",200,GAMELOGIC1]] call FNC_setAISkill;
+//			This Example uses 1 Condition to filter AI. It will only change AI which are withing 200m for GAMELOGIC1.
+//			Usecase:AI defending a certain area will be changed
+
+//			["aimingspeed", 0.9,["Distance",200,GENERAL]] call FNC_setAISkill;
+//			This Example pretty much works like the one above but this time all Units within 200m of the unit General
+//			Usecase: Bodyguard of General receives different skill
+
+//			["aimingspeed", 0.9,["Side",west]] call FNC_setAISkill;
+//			This example will change all AI which are on side west
+//			Usecase: You have multiple AI sides in your mission andd only want to change Inurgents which are on side resistance
+
+//			["aimingspeed", 0.9,["Group",group General]] call FNC_setAISkill;
+//			This example will change all AI which are in the group of General
+//			Usecase: Generals Bodyguard is the only one affected and other ai around him are not changed
+
+//			["aimingspeed", 0.9,["Vehicle"]] call FNC_setAISkill;
+//			This Example will change all AI which are inside a Vehicle
+//			Usecase: Mechanized mounted forces receive different skills
+
+//			["aimingspeed", 0.9,["Vehicle",Vehicle]] call FNC_setAISkill;
+//			This Example will change all AI which are inside Vehicle1
+//			Usecase: Certain Vehicle has a squad which has been servin for years and has better skills
+
+//Chaining:	["aimingspeed", 0.9,["Distance",200,GAMELOGIC1],["Side",west],["Vehicle"]] call FNC_setAISkill;
+//			This example will change all which are within 200m of GAMELOGIC1 and are on Side west and are mounted in an Vehicle
 
 
-
-
-
-
-
-//EXAMPLE:["aimingspeed", 1] call FNC_setAISkill;
-//["aimingspeed", 0.9,["Distance",200,GAMELOGIC1]] call FNC_setAISkill;
-//[STRING,VALUE,CONDITIONS] call FNC_setAISkill
-//CONDITIONSARRAY currently supports side and distance
-//HOW to use ["Distance",RANGE,POSITION];
-//			 ["Side",west];
-// it is possible to chain Conditions
-//Example ["aimingspeed", 0.9,["Distance",200,GAMELOGIC1],["Side",west]] call FNC_setAISkill;
-//Description
-//Sets Aiskill to VALUE for all AI if all CONDITIONS are met
-//Comments:
-//Value = number between 0.2 and 1
-//Leave Conditions out to change all AI ["aimingspeed", 1] call FNC_setAISkill;
-//
-//
+//AISKILLSTRINGS:
 //"aimingspeed"				Affects how well the AI can lead a target
 //							Affects how accurately the AI estimate range and calculates bullet drop
 //							Affects how well the AI compensates for weapon dispersion
@@ -41,6 +66,7 @@
 //"courage" 				Affects unit's subordinates' morale (Higher value = more courage)
 
 //"general" 				Raw "Skill", value is distributed to sub-skills unless defined otherwise. Affects the AI's decision making.
+//							Basically the Skill-Slider equivalent.
 
 //"reloadspeed" 			Affects the delay between switching or reloading a weapon (Higher value = less delay)
 
