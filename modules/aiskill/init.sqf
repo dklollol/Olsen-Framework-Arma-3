@@ -141,7 +141,6 @@ FNC_setAISkill =
 				if(!(isPlayer _x) && _condition) then
 				{
 					_x setSkill [_aiskill , _value];
-					hint "ok";
 				};
 			}forEach allUnits;
 
