@@ -24,7 +24,7 @@ if (isServer) then {
 			if ((_x select 0) == _callID) exitWith {
 
 
-				if (_player getVariable ["frameworkIsCO", false]) then {
+				if (_player getVariable ["FW_IsCO", false]) then {
 
 					["Calling mission...", "hint", _player] call BIS_fnc_MP;
 					(_x select 3) call FNC_EndMission;
@@ -43,35 +43,40 @@ if (isServer) then {
 
 	[] spawn {
 
-		private ["_coc", "_group"];
+		private ["_coc", "_group", "_found"];
 
 		while {true} do {
 			{
 
 				_coc = _x;
+				_found = false;
 
 				{
 
 					_group = _x;
 
-					if (_group != grpNull) then {
+					if (_found) exitWith {};
+
+					if (_group != grpNull && (side leader _group) == (_coc select 0)) then {
 
 						{
 
-							if ((groupID _group) == _x && (side leader _group) == (_coc select 0)) exitWith {
+							if ((groupID _group) == _x) exitWith {
 
-								if !((leader _group) getVariable ["frameworkIsCO", false]) then {
+								if !((leader _group) getVariable ["FW_IsCO", false]) then {
 
-									(leader _group) setVariable ["frameworkIsCO", true, false];
+									(leader _group) setVariable ["FW_IsCO", true, false];
 
 									{
 
 										if (((side _x) == (side leader _group)) && _x != (leader _group)) then {
-											_x setVariable ["frameworkIsCO", false, false];
+											_x setVariable ["FW_IsCO", false, false];
 										};
 
 									} forEach playableUnits;
 								};
+
+								_found = true;
 
 							};
 
