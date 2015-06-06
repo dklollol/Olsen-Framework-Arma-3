@@ -22,7 +22,7 @@ if (!isDedicated) then {
 
 	if ((_target distance player) >  JIPDISTANCE) then {
 	
-		_teleportAction = player addAction ["Teleport to Squad", "modules\jip teleport\teleportAction.sqf", _target];
+		_teleportAction = player addAction ["Teleport to Squad", "modules\jip_teleport\teleportAction.sqf", _target];
 		
 		[_teleportAction] spawn { //Spawns code running in parallel
 		
