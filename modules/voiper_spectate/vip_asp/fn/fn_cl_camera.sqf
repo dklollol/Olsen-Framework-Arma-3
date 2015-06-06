@@ -1190,7 +1190,6 @@ _add2 = parseText "<t align='left'>
 		vip_asp_var_cl_keys = nil;
 		vip_asp_fnc_cl_sideColour = nil;
 		vip_asp_var_cl_accTime = nil;
-		vip_asp_var_cl_ai = nil;
 
 		_display = findDisplay 46;
 		

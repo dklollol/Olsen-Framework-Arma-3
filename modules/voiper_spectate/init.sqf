@@ -51,7 +51,8 @@ if (!isDedicated) then {
 			player removeEventHandler ["Killed", FW_KilledEh];
 			player removeEventHandler ["Respawn", FW_RespawnEh];
 			
-			["Start", [false,true, position (player getVariable "FW_Body")]] call compile preprocessFileLinenumbers "modules\voiper_spectate\vip_asp\vip_asp_init.sqf";
+			["Init", [false, true, position (player getVariable "FW_Body")]] call compile preprocessFileLinenumbers "modules\voiper_spectate\vip_asp\vip_asp_init.sqf";
+			["Start", [false, true, position (player getVariable "FW_Body")]] call compile preprocessFileLinenumbers "modules\voiper_spectate\vip_asp\vip_asp_init.sqf";
 			
 			titleText ["You are dead.\nEntering spectator mode...", "BLACK IN", 0.2];
 			
