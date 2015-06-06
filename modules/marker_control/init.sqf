@@ -11,6 +11,8 @@ if !(markerType NAME == "") then { \
 };
 
 if (!isDedicated) then {
+	
+	private ["_markers"];
 
 	_markers = [];
 

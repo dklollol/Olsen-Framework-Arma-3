@@ -9,6 +9,8 @@ if !(markerType NAME == "") then { \
 };
 
 if (!isDedicated) then {
+	
+	private ["_markers", "_pos", "_timeLeft", "_string"];
 
 	_markers = [];
 
@@ -49,9 +51,25 @@ if (!isDedicated) then {
 					
 				};
 				
-				hintSilent format ["Seconds remaining: %1", round((_marker select 0) - time)];
+				_timeLeft = round((_marker select 0) - time);
 				
-				if (time >= (_marker select 0)) then {
+				if (_timeLeft < 0) then {
+					
+					_timeLeft = 0;
+					
+				};
+				
+				_string = "Time remaining: %1:%2";
+				
+				if (_timeLeft % 60 < 10) then {
+					
+					_string = "Time remaining: %1:0%2";
+					
+				};
+				
+				hintSilent format [_string, floor(_timeLeft / 60), _timeLeft % 60];
+				
+				if (_timeLeft == 0) then {
 				
 					hint "Setup timer expired";
 					(_marker select 1) setMarkerAlphaLocal 0;

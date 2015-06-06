@@ -349,13 +349,13 @@ FNC_AddItemRandomOrg = {
 	_items = _this select 1;
 	
 	_amount = 1;
-	_position = "none";
+	_position = "NONE";
 		
 	if (count _items > 1) then {
 		
 		if (typeName (_items select 1) == "ARRAY") then {
 		
-			_position = "array";
+			_position = "ARRAY";
 		
 		} else {
 		
@@ -375,17 +375,27 @@ FNC_AddItemRandomOrg = {
 		};
 	};
 	
-	if (_position == "array") then {
+	_randomPick = (_items select (([1, count _items] call FNC_RandomRange) - 1));
 	
-		_randomPick = [1, count _items] call FNC_RandomRange;
-		
-		([_unit, _loadoutType] + (_items select (_randomPick - 1))) call FNC_AddItemOrg;
+	if (_position == "ARRAY") then {
+	
+		if (typeName (_randomPick select 0) == "ARRAY") then {
+			
+			{
+				
+				([_unit, _loadoutType] + _x) call FNC_AddItemOrg;
+				
+			} forEach _randomPick;
+			
+		} else {
+			
+			([_unit, _loadoutType] + _randomPick) call FNC_AddItemOrg;
+			
+		};
 	
 	} else {
-	
-		_randomPick = [1, count _items] call FNC_RandomRange;
 		
-		[_unit, _loadoutType, _items select (_randomPick - 1), _amount, _position] call FNC_AddItemOrg;
+		[_unit, _loadoutType, _randomPick, _amount, _position] call FNC_AddItemOrg;
 	
 	};
 };
@@ -429,13 +439,13 @@ FNC_AddItemVehicleRandomOrg = {
 	_items = _this select 1;
 	
 	_amount = 1;
-	_position = "none";
+	_position = "NONE";
 		
 	if (count _items > 1) then {
 		
 		if (typeName (_items select 1) == "ARRAY") then {
 		
-			_position = "array";
+			_position = "ARRAY";
 		
 		} else {
 		
@@ -449,17 +459,43 @@ FNC_AddItemVehicleRandomOrg = {
 		};
 	};
 	
-	if (_position == "array") then {
+	_randomPick = (_items select (([1, count _items] call FNC_RandomRange) - 1));
 	
-		_randomPick = [1, count _items] call FNC_RandomRange;
-		
-		([_vehicle, _loadoutType] + (_items select (_randomPick - 1))) call FNC_AddItemVehicleOrg;
+	if (_position == "ARRAY") then {
+	
+		if (typeName (_randomPick select 0) == "ARRAY") then {
+			
+			{
+				
+				([_vehicle, _loadoutType] + _x) call FNC_AddItemVehicleOrg;
+				
+			} forEach _randomPick;
+			
+		} else {
+			
+			([_vehicle, _loadoutType] + _randomPick) call FNC_AddItemVehicleOrg;
+			
+		};
 	
 	} else {
-	
-		_randomPick = [1, count _items] call FNC_RandomRange;
 		
-		[_vehicle, _loadoutType, _items select (_randomPick - 1), _amount] call FNC_AddItemVehicleOrg;
+		[_vehicle, _loadoutType, _randomPick, _amount] call FNC_AddItemVehicleOrg;
 	
 	};
+};
+
+FNC_RemoveAllGear = {
+	
+	private ["_unit"];
+	
+	_unit = _this;
+	
+	removeHeadgear _unit;
+	removeGoggles _unit;
+	removeVest _unit;
+	removeBackpack _unit;
+	removeUniform _unit;
+	removeAllWeapons _unit;
+	removeAllAssignedItems _unit;
+	
 };
