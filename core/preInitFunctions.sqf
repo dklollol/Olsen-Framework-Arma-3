@@ -500,6 +500,19 @@ FNC_RemoveAllGear = {
 	
 };
 
+FNC_RemoveAllVehicleGear = {
+
+	private ["_vehicle"];
+
+	_vehicle = _this;
+
+	clearItemCargoGlobal _vehicle;
+	clearMagazineCargoGlobal _vehicle;
+	clearWeaponCargoGlobal _vehicle;
+	clearBackpackCargoGlobal _vehicle;
+
+};
+
 FW_Modules = [];
 
 FNC_RegisterModule = {

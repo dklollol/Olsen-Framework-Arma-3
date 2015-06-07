@@ -43,7 +43,7 @@ if (isServer) then {
 
 	[] spawn {
 
-		private ["_coc", "_group", "_found"];
+		private ["_coc", "_groupID", "_group", "_found"];
 
 		while {true} do {
 			{
@@ -53,15 +53,15 @@ if (isServer) then {
 
 				{
 
-					_group = _x;
+					_groupID = _x;
 
 					if (_found) exitWith {};
 
-					if (_group != grpNull && (side leader _group) == (_coc select 0)) then {
-
 						{
 
-							if ((groupID _group) == _x) exitWith {
+							_group = _x;
+
+							if (_group != grpNull && (groupID _group) == _groupID && (side leader _group) == (_coc select 0)) exitWith {
 
 								if !((leader _group) getVariable ["FW_IsCO", false]) then {
 
@@ -80,11 +80,9 @@ if (isServer) then {
 
 							};
 
-						} forEach (_coc select 1);
+						} forEach allGroups;
 
-					};
-
-				} forEach allGroups;
+				} forEach (_coc select 1);
 
 			} forEach FW_COC;
 
