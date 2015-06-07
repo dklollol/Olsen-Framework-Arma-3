@@ -499,3 +499,21 @@ FNC_RemoveAllGear = {
 	removeAllAssignedItems _unit;
 	
 };
+
+FW_Modules = [];
+
+FNC_RegisterModule = {
+
+	private ["_name", "_description", "_author"];
+
+	_name = _this select 0;
+	_description = _this select 1;
+	_author = _this select 2;
+
+	FW_Modules set [count FW_Modules, [_name, _description, _author]];
+
+};
+
+FNC_Briefing = compile preprocessFileLineNumbers "customization\briefing.sqf";
+
+FNC_Menu = compile preprocessFileLineNumbers "core\menu.sqf";
