@@ -499,3 +499,16 @@ FNC_RemoveAllGear = {
 	removeAllAssignedItems _unit;
 	
 };
+
+FNC_RemoveAllVehicleGear = {
+
+	private ["_vehicle"];
+
+	_vehicle = _this;
+
+	clearItemCargoGlobal _vehicle;
+	clearMagazineCargoGlobal _vehicle;
+	clearWeaponCargoGlobal _vehicle;
+	clearBackpackCargoGlobal _vehicle;
+
+};
