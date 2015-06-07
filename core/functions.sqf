@@ -486,6 +486,8 @@ FNC_SpectatePrep = {
 		player setPos [0, 0, 0];
 		[player] join grpNull;
 		
+		hideObjectGlobal player;
+		
 		if (!(player getVariable ["FW_Spectating", false])) then {
 		
 			player setVariable ["FW_Spectating", true, true];
