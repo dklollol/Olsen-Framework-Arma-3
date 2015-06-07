@@ -39,7 +39,7 @@ ENDTAB;
 }; //End of switch
 	
 NEWTAB("VI. Mission notes:") //This is shown for everyone
-Olsen Framework V3.0
+//Text goes here
 ENDTAB;
 
 NEWTAB("Game Mastering") //This is shown for everyone
