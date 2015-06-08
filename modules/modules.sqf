@@ -1,3 +1,8 @@
+//Modules are added by including the root.sqf which tells the framework where specific sections of the module should be loaded.
+
+//Example:
+//#include "start_text\root.sqf"
+
 #include "jip_teleport\root.sqf"
 #include "start_text\root.sqf"
 #include "start_with_earplugs\root.sqf"
