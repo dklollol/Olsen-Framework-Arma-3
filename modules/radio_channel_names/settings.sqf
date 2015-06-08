@@ -2,7 +2,7 @@
 
 switch (_side) do { //Checks what team the player is on
 
-	case west: { //If player is west he receives this message
+	case west: { //If the player is on side west, he receives these radio channel names
 
 		[1, "PLTNET 1"] call FNC_SetChannelName;
 		[2, "PLTNET 2"] call FNC_SetChannelName;
