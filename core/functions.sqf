@@ -290,8 +290,7 @@ FNC_AreaAiCount =
 			_count = _count +1;
 		};
 
-	}
-	forEach allUnits;
+	}forEach allUnits;
 	_count
 };
 //FNC_EndMission(SCENARIO) will end the mission
