@@ -1,0 +1,1 @@
+//This module overwrites the default spectator script with voipers spectator, taking the framework into account.

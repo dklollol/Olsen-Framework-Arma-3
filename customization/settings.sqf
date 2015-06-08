@@ -23,7 +23,7 @@ if (!isDedicated) then { //This scope is only for the player
 
 		case west: { //If player is west he receives this respawn ticket count
 			
-			FW_RespawnTickets = 0;
+			FW_RespawnTickets = 0;//If respawn is enabled you must create empty game logics, for respawn points, following the name format fw_side_respawn. Example: fw_west_respawn
 			
 		}; //End of west case
 	}; //End of switch

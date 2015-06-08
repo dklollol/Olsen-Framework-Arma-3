@@ -1,0 +1,1 @@
+//This module automatically inserts the player ear plugs if he has any.
