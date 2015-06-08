@@ -277,7 +277,23 @@ FNC_InArea = {
 	_result
 
 };
+FNC_AreaAiCount = 
+{
+	private["_side","_logic","_radius"];
+	_side = _this select 0;
+	_radius = _this select 1;
+	_logic = _this select 2;
+	_count = 0;
+	{
+		if((side _x == _side) && ((_x distance _logic) < _radius) && (_x call FNC_Alive)) then
+		{
+			_count = _count +1;
+		};
 
+	}
+	forEach allUnits;
+	_count
+};
 //FNC_EndMission(SCENARIO) will end the mission
 //Sends the team stats, time limit, scenario and executes "FW_EndMission" on all players machines
 FNC_EndMission = {
