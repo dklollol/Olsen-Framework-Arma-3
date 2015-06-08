@@ -104,7 +104,7 @@ FNC_AddItemOrg = {
 	
 	if (count _this > 4) then {
 	
-		_position = _this select 4;
+		_position = toLower (_this select 4);
 	
 	};
 
@@ -525,6 +525,20 @@ FNC_RegisterModule = {
 
 	FW_Modules set [count FW_Modules, [_name, _description, _author]];
 
+};
+
+FNC_SetRadioPresetAll = {
+	
+	private ["_preset"];
+	
+	_preset = _this;
+	
+	["ACRE_PRC343", _preset] call acre_api_fnc_setPreset;
+	["ACRE_PRC77", _preset] call acre_api_fnc_setPreset;
+	["ACRE_PRC117F", _preset] call acre_api_fnc_setPreset;
+	["ACRE_PRC152", _preset] call acre_api_fnc_setPreset;
+	["ACRE_PRC148", _preset] call acre_api_fnc_setPreset;
+	
 };
 
 FNC_Briefing = compile preprocessFileLineNumbers "customization\briefing.sqf";

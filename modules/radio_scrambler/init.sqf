@@ -34,17 +34,13 @@ if (!isDedicated) then {
 			
 				_preset = _x select 1;
 				
-				["ACRE_PRC343", _preset] call acre_api_fnc_setPreset;
-				["ACRE_PRC77", _preset] call acre_api_fnc_setPreset;
-				["ACRE_PRC117F", _preset] call acre_api_fnc_setPreset;
-				["ACRE_PRC152", _preset] call acre_api_fnc_setPreset;
-				["ACRE_PRC148", _preset] call acre_api_fnc_setPreset;				
+				_preset call FNC_SetRadioPresetAll;			
 				
 			};
 			
 		} forEach FW_PresetChannels;
 		
-		FW_PresetChannels = nil;
+		FW_RadioScrambler = true;
 		
 	};
 };

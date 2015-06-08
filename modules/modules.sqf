@@ -3,3 +3,4 @@
 #include "start_with_earplugs\root.sqf"
 #include "start_on_safe\root.sqf"
 #include "start_on_radio_channel\root.sqf"
+#include "auto_track_assets\root.sqf"
