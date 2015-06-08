@@ -6,4 +6,4 @@
 
 //Example:
 //ADDMARKER(west, "start");
-//ADDMARKER(SYSTEM, "objPolana");
+//ADDMARKER(SYSTEM, "objBravo");
