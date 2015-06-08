@@ -278,7 +278,7 @@ FNC_InArea = {
 
 };
 
-FNC_AreaCount =  {
+FNC_AreaCount = {
 	
 	private ["_side", "_logic", "_radius", "_count"];
 	
