@@ -37,11 +37,18 @@ class CfgDebriefing {
 		pictureColor[] = {0.7,0.6,0.0,1};
 	};
 	
-	// Default call_mission EndType
+	// Default call_mission EndTypes
 	class MissionCalled {
 		subtitle = "The mission was called by a CO";
 		pictureBackground = "";
 		picture = "hd_objective";
+		pictureColor[] = {0.7,0.6,0.0,1};
+	};
+	
+	class AdminCalled {
+		subtitle = "The mission was called by the Admin";
+		pictureBackground = "";
+		picture = "mil_objective";
 		pictureColor[] = {0.7,0.6,0.0,1};
 	};
 
