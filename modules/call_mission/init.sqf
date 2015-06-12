@@ -144,5 +144,8 @@ FNC_RegisterCOC = {
 #include "settings.sqf"
 
 if (!isDedicated) then {
-	#include "menu.sqf"
+	[] spawn {
+		sleep (0.1);
+		#include "menu.sqf"
+	};
 };
