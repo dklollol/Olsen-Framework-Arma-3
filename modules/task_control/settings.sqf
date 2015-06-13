@@ -1,8 +1,7 @@
 /*
 	Task Control Module by Briland
-
+	V1.0
 	This module allows easy control of local ARMA 3 task in a multiplayer environment.
-
 
 	ADD a task with:
 	ADDTASK(TARGET, POSITION, TITLE, DESCRIPTION, WPTITLE);
@@ -28,7 +27,7 @@
 	_state = [TITLE] call FNC_GETTASKSTATE;
 
 	EXAMPLE:
-	ADDTASK(west, position obj1, "Objective 1", "Go to this point and Destroy Objective #1 with the explosive charges that your engineers have.", "OBJ 1");
+	ADDTASK(west, obj1, "Objective 1", "Go to this point and Destroy Objective #1 with the explosive charges that your engineers have.", "OBJ 1");
 	ASSIGNTASK("Objective 1");							// make objective 1 the active objective
 
 	while {!FW_MissionEnded} do {						// Loops while the mission is not ended
@@ -41,16 +40,5 @@
 	};
 */
 
-ADDTASK(west, position obj1, "Objective 1", "This objective should be seen by all west", "OBJ 1");
-ADDTASK(east, obj2, "Objective 2", "This objective should be seen by all east", "OBJ 2");
-ADDTASK(group coUnit, objNull, "Objective 3", "This objective should be seen by all in the co unit group", "OBJ 3");
-ADDTASK(east, objNull, "Objective 4", "This objective should only be seen by east", "OBJ 4");
-ADDTASK(east, objNull, "Objective 5", "This objective should only be seen by east", "OBJ 5");
-ADDTASK(coUnit, objNull, "Objective 6", "This objective should only be seen by counit", "OBJ 6");
-ASSIGNTASK("Objective 1");
-FAILTASK("Objective 5");
-CANCELTASK("Objective 2");
-RESETTASK("Objective 4");
-COMPLETETASK("Objective 3");
-REMOVETASK("Objective 6");
-
+ADDTASK(west, obj1, "Objective 1", "Go to this point and Destroy Objective #1 with the explosive charges that your engineers have.", "OBJ 1");
+ASSIGNTASK("Objective 1");	
