@@ -9,7 +9,11 @@ The Olsen Framework is a simple framework designed for ArmA 3. It supports modul
 Find out more about the framework on GitHub.<br/>
 github.com/dklollol/Olsen-Framework-Arma-3<br/>
 <br/>
+<<<<<<< HEAD
 Current Version: 3.0.2 BETA
+=======
+Current Version: 3.0.1 BETA
+>>>>>>> master
 ";
 
 player createDiaryRecord ["FW_Menu", ["Framework Info", _info]];
