@@ -402,12 +402,13 @@ FNC_AddItemRandomOrg = {
 
 FNC_AddItemVehicleOrg = {
 	
-	private ["_vehicle", "_loadoutType", "_item", "_amount"];
+	private ["_vehicle", "_loadoutType", "_item", "_amount", "_type"];
 	
 	_vehicle = _this select 0;
 	_loadoutType = _this select 1;
 	_item = _this select 2;
 	_amount = 1;
+	_type = (_item call BIS_fnc_itemType) select 1;
 	
 	if (count _this > 3) then {
 	
@@ -418,8 +419,16 @@ FNC_AddItemVehicleOrg = {
 	for "_x" from 1 to _amount do {
 		
 		if (_vehicle canAdd _item) then {
-			
-			_vehicle addItemCargoGlobal [_item, 1];
+		
+			if (_type == "backpack") then {
+
+				_vehicle addBackpackCargoGlobal [_item, 1];
+
+			} else {
+
+				_vehicle addItemCargoGlobal [_item, 1];
+
+			};
 			
 		} else {
 			
