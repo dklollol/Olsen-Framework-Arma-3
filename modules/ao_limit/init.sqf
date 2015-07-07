@@ -52,7 +52,7 @@ if (!isDedicated) then {
 					} forEach _markers;
 					
 					if (_outside) then {
-						if (!(_allowedOutside)) then {
+						if (!(_allowedOutside) && (_vehicle call FNC_Alive)) then {
 							_vehicle setPos _pos;
 						};
 					} else {

@@ -1,21 +1,30 @@
 FNC_GetTeamVariable = {
 	
-	private ["_team", "_index", "_return"];
+	private ["_team", "_index", "_return", "_found", "_tempText"];
 	
 	_team = _this select 0;
 	_index = _this select 1;
 	
-	_return = "";
+	_return = 0;
+	_found = false;
 	
 	{
 	
 		if ((_x select 0) == _team) exitWith {
 		
 			_return = (_x select _index);
+			_found = true;
 		
 		};
 	
 	} forEach FW_Teams;
+	
+	if (!_found) then {
+
+		_tempText = format ["Critical:<br></br>Team ""%1"" does not exist.", _team];
+		_tempText call FNC_DebugMessage;
+
+	};
 	
 	_return
 

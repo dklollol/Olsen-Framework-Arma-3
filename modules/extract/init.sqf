@@ -49,6 +49,8 @@ FNC_Extract = {
 	};
 
 	_wpLand = (group driver _veh) addWaypoint [_landPos, 0];
+	_wpLand setWaypointbehaviour "CARELESS";
+	_wpLand setWaypointCombatMode "BLUE";
 
 	if (_isHelicopter) then {
 		_veh flyInHeight _alt;
