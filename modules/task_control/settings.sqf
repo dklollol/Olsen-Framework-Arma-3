@@ -13,7 +13,6 @@
 	DESCRIPTION is the detailed description of the task, this can be as long as you want it to be.
 	WPTITLE the title of the task as it shows up on the map.
 
-
 	Update a task with:
 	COMPLETETASK(TITLE);  	// sets the task to Succeeded
 	FAILTASK(TITLE);		// sets the task to Failed
@@ -26,6 +25,13 @@
 
 	GET a task's current state with:
 	_state = [TITLE] call FNC_GETTASKSTATE;
+
+	Possible states:
+	"Succeeded"
+	"Failed"
+	"Canceled"
+	"Created"
+	"Assigned"
 
 	EXAMPLE:
 	ADDTASK(west, position obj1, "Objective 1", "Go to this point and Destroy Objective #1 with the explosive charges that your engineers have.", "OBJ 1");
