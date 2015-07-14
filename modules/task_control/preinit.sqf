@@ -57,7 +57,7 @@ FNC_GETTASKSTATE = {
 
 };
 
-FNC_GETTASKCOMPLETED = {
+FNC_TASKCOMPLETED = {
 
 	private ["_title", "_state", "_completed"];
 
