@@ -35,7 +35,7 @@ if (!isDedicated) then {
 				
 			};
 			
-			titleText ["You are dead.\nRespawning...", "BLACK IN", 0.2];
+			call BIS_fnc_VRFadeIn;
 			
 			cutText [format ['%1 %2', FW_RespawnTickets, _text], 'PLAIN DOWN'];
 			
@@ -54,7 +54,7 @@ if (!isDedicated) then {
 			["Init", [false, true, position (player getVariable "FW_Body")]] call compile preprocessFileLinenumbers "modules\voiper_spectate\vip_asp\vip_asp_init.sqf";
 			["Start", [false, true, position (player getVariable "FW_Body")]] call compile preprocessFileLinenumbers "modules\voiper_spectate\vip_asp\vip_asp_init.sqf";
 			
-			titleText ["You are dead.\nEntering spectator mode...", "BLACK IN", 0.2];
+			call BIS_fnc_VRFadeIn;
 			
 		};
 	};

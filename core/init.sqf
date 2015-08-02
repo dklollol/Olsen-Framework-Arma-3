@@ -39,7 +39,7 @@ if (!isDedicated) then {
 	player setVariable ["FW_Body", player, true]; //Remembers his old body for spectating his dead body
 	
 	//Makes the player go into spectator mode when dead or respawn if he has respawn tickets
-	FW_KilledEh = player addEventHandler ["Killed", {"" call FNC_SpectateCheck}];
+	FW_KilledEh = player addEventHandler ["Killed", {"" spawn FNC_SpectateCheck}];
 	FW_RespawnEh = player addEventHandler ["Respawn", {"" call FNC_SpectatePrep;}];
 	
 	//Various settings
