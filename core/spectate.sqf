@@ -7,7 +7,15 @@ camera camConstuctionSetParams [getPos deadbody, 20000, 10000];
 camera setpos [((position deadbody) select 0) + ((sin (getdir deadbody)) * ( - 10)), ((position deadbody) select 1) + ((cos (getdir deadbody)) * (- 10)), ((position deadbody) select 2) + 2];
 camera setdir getdir deadbody;
 camera cameraeffect ["internal","back"];
-titleText ["You are dead.\nEntering spectator mode...", "BLACK IN", 0.2];
+
+call BIS_fnc_VRFadeIn;
+
+"dynamicBlur" ppEffectEnable true;
+"dynamicBlur" ppEffectAdjust [6];
+"dynamicBlur" ppEffectCommit 0;
+
+"dynamicBlur" ppEffectAdjust [0.0];
+"dynamicBlur" ppEffectCommit 5;
 
 oldPos = position camera;
 oldDir = getdir camera;

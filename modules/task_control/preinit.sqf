@@ -57,3 +57,19 @@ FNC_GETTASKSTATE = {
 
 };
 
+FNC_TASKCOMPLETED = {
+
+	private ["_title", "_state", "_completed"];
+
+	_title = _this select 0;
+	_state = [_title] call FNC_GETTASKSTATE;
+	_completed = false;
+
+	if (_state == "Succeeded") then {
+		_completed = true;
+	};
+
+	_completed
+
+};
+

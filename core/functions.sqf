@@ -446,15 +446,28 @@ FNC_AddTeam = {
 
 //FNC_SpectateCheck() displays the appropriate message when the player dies
 FNC_SpectateCheck = {
-	
+
+	("BIS_layerEstShot" call BIS_fnc_rscLayer) cutRsc ["RscStatic", "PLAIN"];
+
+	sleep 0.4;
+
+	playSound "Simulation_Fatal";
+	call BIS_fnc_VRFadeOut;
+
+	sleep 1;
+
+	playSound ("Transition" + str (1 + floor random 3));
+
+	sleep 1;
+
 	if (FW_RespawnTickets > 0) then {
-		
-		titleText ["You are dead.\nRespawning...", "BLACK", 0.2];
-		
+
+		["<br/>You are dead.<br/><br/>Respawning...", 0, 0.2, 2.5, 0.5, 0, 1000] spawn BIS_fnc_dynamicText;
+
 	} else {
-		
-		titleText ["You are dead.\nEntering spectator mode...", "BLACK", 0.2];
-		
+
+		["<br/>You are dead.<br/><br/>Entering spectator mode...", 0, 0.2, 2.5, 0.5, 0, 1000] spawn BIS_fnc_dynamicText;
+
 	};
 };
 
@@ -492,7 +505,7 @@ FNC_SpectatePrep = {
 			
 		};
 		
-		titleText ["You are dead.\nRespawning...", "BLACK IN", 0.2];
+		call BIS_fnc_VRFadeIn;
 		
 		cutText [format ['%1 %2', FW_RespawnTickets, _text], 'PLAIN DOWN'];
 		
@@ -530,7 +543,7 @@ FNC_SpectatePrep = {
 			
 		} else {
 		
-			titleText ["You are dead.\nEntering spectator mode...", "BLACK IN", 0.2];
+			call BIS_fnc_VRFadeIn;
 		
 		};
 	};
