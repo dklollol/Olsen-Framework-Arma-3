@@ -3,7 +3,7 @@
 //Example:
 //#include "start_text\root.sqf"
 
-#include "jip_teleport\root.sqf"
+#include "jip\root.sqf"
 #include "start_text\root.sqf"
 #include "start_with_earplugs\root.sqf"
 #include "start_on_safe\root.sqf"
