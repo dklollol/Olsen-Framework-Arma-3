@@ -116,7 +116,7 @@ while{_run} do
 				};
 			
 			};
-			case "RESISTANCE":
+			case "GUER":
 			{
 				if(_update) then
 				{
@@ -197,7 +197,6 @@ while{_run} do
 				{
 					CZMARKERCOLLECTION set [_countforwins,[_currentOwner select 0,_marker,true]];
 					_run = false;
-					hint str CZMARKERCOLLECTION;
 				};
 			}
 			else
