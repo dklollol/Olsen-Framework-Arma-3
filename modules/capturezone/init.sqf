@@ -10,7 +10,7 @@ FNC_setColors =
 {
 	_colors = _this;
 };
-FNC_setMessage =
+FNC_setMessages =
 {
 	_messages = _this;
 };
