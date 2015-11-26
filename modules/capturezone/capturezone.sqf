@@ -135,6 +135,25 @@ while{_run} do
 				};
 		
 			};
+			case "RESISTANCE":
+			{
+				if(_update) then
+				{
+					CZMESSAGE = _messages select 2;
+					publicVariable "CZMESSAGE";
+					[-1, {hintSilent  CZMESSAGE}] call CBA_fnc_globalExecute;
+					_marker setMarkerColor (_colors select 2);
+					if(_oldOwner select 0 != "CONTESTED") then
+					{
+						_timer = time;
+						
+					};
+					_updateContested  = true;
+					_update = false;
+					_updateUncontested = true;
+				};
+		
+			};
 			case "CIVILIAN":
 			{
 				if(_update) then
