@@ -9,7 +9,7 @@ FNC_RescueHostage = {
 
 	if (_unit getVariable ["FW_Rescued", false]) exitWith {};
 
-	if (animationState _unit == "acts_aidlpsitmstpssurwnondnon04") then {
+	if (animationState _unit find "acts_aidlpsitmstpssurwnondnon" != -1) then {
 
 		_unit removeEventHandler ["AnimDone", _unit getVariable ["FW_EhAnimDone", 0]];
 		_unit playMoveNow "Acts_AidlPsitMstpSsurWnonDnon_out";
