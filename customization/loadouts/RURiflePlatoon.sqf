@@ -137,7 +137,7 @@ case (package + "RF"): {
 
 case (package + "MD"): {
 	
-	["rhs_6b23_digi"] call FNC_AddItem;  //Vest
+	["rhs_6b23_digi_6sh92"] call FNC_AddItem;  //Vest
 	
 	uniform;
 	IFAK;
