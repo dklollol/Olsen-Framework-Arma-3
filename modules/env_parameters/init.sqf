@@ -1,18 +1,18 @@
-if (isServer) then {
+if (isServer) and (isMultiplayer) then {
 	
-	private ["_TimeLimit"];
+	private ["_TimeLimitParam"];
 	
-	_TimeLimit = "TimeLimit" call BIS_fnc_getParamValue;
+	_TimeLimitParam = "TimeLimit" call BIS_fnc_getParamValue;
 	
-	if (_TimeLimit == -1) then {
+	if (_TimeLimitParam == -1) then {
 		
 		FW_TimeLimit = 0;
 		
 	} else {
 	
-		if ((FW_TimeLimit + _TimeLimit) > 0) then {
+		if ((FW_TimeLimit + _TimeLimitParam) > 0) then {
 		
-			FW_TimeLimit = FW_TimeLimit + _TimeLimit;
+			FW_TimeLimit = FW_TimeLimit + _TimeLimitParam;
 		
 		} else {
 		
