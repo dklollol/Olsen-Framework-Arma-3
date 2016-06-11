@@ -16,6 +16,12 @@ if (isServer) then {
 			
 			#include "customization\endConditions.sqf" //DO NOT REMOVE
 			
+			//The time limit in minutes variable called FW_TimeLimit is set in customization/settings.sqf, to disable the time limit set it to 0
+			if ((time / 60) >= FW_TimeLimit && FW_TimeLimit != 0) exitWith { //It is recommended that you do not remove the time limit end condition 
+				
+				FW_TimeLimitMessage call FNC_EndMission;
+				
+			};
 		};	
 	};
 };

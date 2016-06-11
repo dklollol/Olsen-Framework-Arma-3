@@ -80,7 +80,17 @@ FNC_CanAttachItem = {
 	_weapon = _this select 0;
 	_item = _this select 1;
 	
-	_result = _item in ([_weapon] call BIS_fnc_compatibleItems);
+	_result = false;
+	
+	{
+	
+		if (_item == _x) exitWith {
+		
+			_result = true;
+			
+		};
+		
+	} forEach ([_weapon] call BIS_fnc_compatibleItems);
 	
 	_result
 	
