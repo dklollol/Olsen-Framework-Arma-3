@@ -78,7 +78,7 @@ case (package + "TL"): {
 
 case (package + "AR"): {
 	
-	["rhs_6b23_digi"] call FNC_AddItem;  //Vest
+	["rhs_6b23_digi_6sh92"] call FNC_AddItem;  //Vest
 	
 	uniform;
 	IFAK;
@@ -117,7 +117,7 @@ case (package + "RFAT"): {
 
 case (package + "RF"): {
 	
-	["rhs_6b23_digi"] call FNC_AddItem;  //Vest
+	["rhs_6b23_digi_6sh92"] call FNC_AddItem;  //Vest
 	
 	uniform;
 	IFAK;
