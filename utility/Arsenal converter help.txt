@@ -1,5 +1,8 @@
 How to use the arsenalConverter.exe.
 
+Download here:
+https://dl.dropboxusercontent.com/u/3999976/arsenalConverter.exe
+
 1. First create/load a loadout in the Arma 3 arsenal.
 2. Click export, this will copy the code into your clipboard (aka CTRL + C).
 3. Run the arsenalConverter.exe, this will convert your clipboard code to Olsen framework gear code.
