@@ -12,12 +12,24 @@ if (isServer) then {
 	FW_Teams = []; //DO NOT REMOVE
 	FW_MissionEnded = false; //Mission has not ended
 	
+	FW_EventPlayerSpawnedHandle = ["FW_PlayerSpawned", {_this call FNC_EventPlayerSpawned;}] call CBA_fnc_addEventHandler;
+	FW_EventRespawnedHandle = addMissionEventHandler ["EntityRespawned", {_this call FNC_EventRespawned;}];
+	FW_EventKilledHandle = addMissionEventHandler ["EntityKilled", {_this call FNC_EventKilled;}];
+	FW_EventDisconnectHandle = addMissionEventHandler ["HandleDisconnect", {_this call FNC_EventDisconnect;}];
+	
 };
 
 if (!isDedicated) then {
 
 	//Anything done using "player" must be past this line for JIP compatibility
 	waitUntil {!(isNull player)};
+	
+	if (!isServer) then {
+	
+		//Tells the server the player has spawned
+		["FW_PlayerSpawned", player] call CBA_fnc_serverEvent;
+		
+	};
 	
 	//"FW_EndMission" player event sends the received variables to the end screen
 	FW_EndMissionEh = ["FW_EndMission", {_this execVM "core\dia\endscreen\dia_endscreen.sqf";}] call CBA_fnc_addEventHandler;
@@ -39,7 +51,7 @@ if (!isDedicated) then {
 	player setVariable ["FW_Body", player, true]; //Remembers his old body for spectating his dead body
 	
 	//Makes the player go into spectator mode when dead or respawn if he has respawn tickets
-	FW_KilledEh = player addEventHandler ["Killed", {"" spawn FNC_SpectateCheck}];
+	FW_KilledEh = player addEventHandler ["Killed", {"" spawn FNC_SpectateCheck;}];
 	FW_RespawnEh = player addEventHandler ["Respawn", {"" call FNC_SpectatePrep;}];
 	
 	//Various settings

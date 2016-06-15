@@ -12,8 +12,6 @@ if (isServer) then {
 	
 		while {!FW_MissionEnded} do { //Loops while the mission is not ended
 			
-			"" call FNC_CurrentCount; //DO NOT REMOVE
-			
 			#include "customization\endConditions.sqf" //DO NOT REMOVE
 			
 			//The time limit in minutes variable called FW_TimeLimit is set in customization/settings.sqf, to disable the time limit set it to 0
