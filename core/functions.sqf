@@ -228,8 +228,16 @@ FNC_UntrackUnit = {
 FNC_StartingCount = {
 
 	{
+	
+		if (!(_x getVariable ["FW_DontTrack", false])) then {
+			
+			_x call FNC_TrackUnit;
+			
+		} else {
+		
+			_x setVariable ["FW_DontTrack", nil];
 
-		_x call FNC_TrackUnit;
+		};
 
 	} forEach allUnits;
 
