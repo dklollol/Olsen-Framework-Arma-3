@@ -169,8 +169,16 @@ FNC_EventRespawned = {
 	
 	_new = _this select 0;
 
-	_new call FNC_EventSpawned;
+	if (!(_new getVariable "FW_Dead")) then {	
 	
+		_new call FNC_EventSpawned;
+		
+	} else {
+		
+		_new call FNC_UntrackUnit;
+		
+	};
+
 };
 
 FNC_TrackUnit = {
