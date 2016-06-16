@@ -517,6 +517,24 @@ FNC_AddItemVehicleRandomOrg = {
 	};
 };
 
+FNC_Chance = {
+	
+	private ["_chance", "_result"];
+	
+	_chance = _this;
+	
+	_result = ((random 1) <= (_chance / 100));
+	
+	if (_chance == 0) then {
+		
+		_result = false;
+		
+	};
+	
+	_result
+	
+};
+
 FNC_RemoveAllGear = {
 
 	private ["_unit"];
