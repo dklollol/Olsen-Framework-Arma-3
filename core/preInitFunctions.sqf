@@ -14,6 +14,24 @@ FNC_UntrackUnit = {
 
 };
 
+FNC_ZeroLead = {
+	
+	private ["_value", "_result"];
+	
+	_value = _this;
+	
+	_result = str _value;
+	
+	if (_value < 10) then {
+		
+		_result = "0" + (str _value);
+		
+	};
+	
+	_result
+	
+};
+
 FNC_DebugMessage = {
 
 	private ["_message", "_found"];
