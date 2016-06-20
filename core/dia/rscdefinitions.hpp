@@ -661,13 +661,6 @@ class RscListBox
 	};
 	class ListScrollBar
 	{
-		color[] = 
-		{
-			1,
-			1,
-			1,
-			1
-		};
 		autoScrollEnabled = 1;
 	};
 	x = 0;
@@ -676,7 +669,7 @@ class RscListBox
 	h = 0.3;
 	style = 16;
 	font = "RobotoCondensed";
-	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 	shadow = 0;
 	colorShadow[] = 
 	{
