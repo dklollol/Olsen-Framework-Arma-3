@@ -1,4 +1,4 @@
-["Interact Menu Debug", "Adds a new menu to the framework allowing players to force the ACE Interact Menu to load.", "Starfox64 & Olsen"] call FNC_RegisterModule;
+["Interact Menu Debug", "Adds a new menu to the framework allowing players to force the ACE Interact Menu to load.", "Starfox64 &amp; Olsen"] call FNC_RegisterModule;
 
 if (!isDedicated) then {
 
