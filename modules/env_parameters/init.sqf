@@ -1,4 +1,4 @@
-if (isServer) and (isMultiplayer) then {
+if ((isServer) and (isMultiplayer)) then {
 	
 	private ["_TimeLimitParam"];
 	
