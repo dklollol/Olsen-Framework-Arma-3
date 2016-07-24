@@ -44,18 +44,21 @@ if (!isDedicated) then {
 		} else {
 
 			player setVariable ["FW_Dead", true, true]; //Tells the framework the player is dead
-
+			
 			player setCaptive true;
 			player allowdamage false;
+ 			[player, true] remoteExec ["setCaptive", 2];
+            [player, false] remoteExec ["allowdamage", 2];
 
 			player call FNC_RemoveAllGear;
 
 			player addWeapon "itemMap";
 
-			player setPos [0, 0, 0];
+			player setPos [7519, 7526, 5];
 			[player] join grpNull;
 
 			hideObjectGlobal player;
+			player remoteExec ["hideObjectGlobal", 2];
 
 			if (!(player getVariable ["FW_Spectating", false])) then {
 
@@ -67,19 +70,29 @@ if (!isDedicated) then {
 				
 				#include "settings.sqf"
 
-				player setpos getmarkerpos Spectator_Marker;
+                if (getMarkerColor Spectator_Marker == "") then {
+                } else {
+                    player setpos getmarkerpos Spectator_Marker;
+                };
 
 				["Initialize", [player, Whitelisted_Sides, Ai_Viewed_By_Spectator, Free_Camera_Mode_Available, Third_Person_Perspective_Camera_mode_Available, Show_Focus_Info_Widget, Show_Camera_Buttons_Widget, Show_Controls_Helper_Widget, Show_Header_Widget, Show_Entities_And_Locations_Lists]] call BIS_fnc_EGSpectator;
 				
-				//["Initialize", [player, [], true, true, true, true, true, true, true, true]] call BIS_fnc_EGSpectator;
-
-				player setPos [0, 0, 0];
+                if (getMarkerColor Spectator_Marker == "") then {
+                } else {
+                	player setPos [7519, 7526, 5];
+                };
+				
+                "" execVM "modules\EG_Spectator_Mode\keepBreathing.sqf";
 
 			} else {
 
 				call BIS_fnc_VRFadeIn;
 
 			};
+
 		};
+
+
+
 	};
 };
