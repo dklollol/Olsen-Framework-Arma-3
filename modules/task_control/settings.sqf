@@ -37,12 +37,14 @@
 	ADDTASK(west, position obj1, "Objective 1", "Go to this point and Destroy Objective #1 with the explosive charges that your engineers have.", "OBJ 1");
 	ASSIGNTASK("Objective 1");							// make objective 1 the active objective
 
-	while {!FW_MissionEnded} do {						// Loops while the mission is not ended
-		sleep 30; 										// sleep for optimisation
-		if (!(alive obj1_building)) exitwith {			// when obj1_building is no longer alive
-			COMPLETETASK("Objective 1");				// Complete the first objective
-			ADDTASK(west, position airfield, "Return to Base", "Good job return to BASE!", "RTB"); // Assigned the RTB objective
-			ASSIGNTASK("Return to Base");				// make the RTB objective the active objective
+	[] spawn {
+		while {!FW_MissionEnded} do {						// Loops while the mission is not ended
+			sleep 30; 										// sleep for optimisation
+			if (!(alive obj1_building)) exitwith {			// when obj1_building is no longer alive
+				COMPLETETASK("Objective 1");				// Complete the first objective
+				ADDTASK(west, position airfield, "Return to Base", "Good job return to BASE!", "RTB"); // Assigned the RTB objective
+				ASSIGNTASK("Return to Base");				// make the RTB objective the active objective
+			};
 		};
 	};
 */

@@ -116,6 +116,25 @@ while{_run} do
 				};
 			
 			};
+			case "GUER":
+			{
+				if(_update) then
+				{
+					CZMESSAGE = _messages select 2;
+					publicVariable "CZMESSAGE";
+					[-1, {hintSilent  CZMESSAGE}] call CBA_fnc_globalExecute;
+					_marker setMarkerColor (_colors select 2);
+					if(_oldOwner select 0 != "CONTESTED") then
+					{
+						_timer = time;
+						
+					};
+					_updateContested  = true;
+					_update = false;
+					_updateUncontested = true;
+				};
+		
+			};
 			case "RESISTANCE":
 			{
 				if(_update) then
@@ -197,7 +216,6 @@ while{_run} do
 				{
 					CZMARKERCOLLECTION set [_countforwins,[_currentOwner select 0,_marker,true]];
 					_run = false;
-					hint str CZMARKERCOLLECTION;
 				};
 			}
 			else

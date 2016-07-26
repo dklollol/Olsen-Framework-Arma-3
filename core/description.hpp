@@ -6,7 +6,7 @@
 	respawn = "BASE"; //Do not change, spectator script needs people to respawn, to be declared as dead and put into spectator mode
 	respawndelay = 5; //5 seconds are needed to make sure people properly die and go into spectator
 	disabledAI = 1; //disabledAI does so not slotted units do not spawn as ai
-	respawnButton = 0; //Disables the respawn button
+	respawnButton = 1; //Disables the respawn button
 	respawnDialog = 0; //Disables the score screen while respawning
 
 	class Extended_PreInit_EventHandlers {

@@ -1,3 +1,5 @@
+disableUserInput true;
+
 createDialog "DIA_ENDSCREEN";
 _dia = 300;
 _bg = 3000;
@@ -8,8 +10,6 @@ _right = 3003;
 _scenario = _this select 0;
 _timeLimt = _this select 1;
 _teams = _this select 2;
-
-disableUserInput true;
 
 {
 	

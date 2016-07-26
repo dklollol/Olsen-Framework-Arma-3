@@ -10,7 +10,7 @@ FNC_setColors =
 {
 	_colors = _this;
 };
-FNC_setMessage =
+FNC_setMessages =
 {
 	_messages = _this;
 };
@@ -21,7 +21,12 @@ FNC_isCaptured =
 	{
 		if( _this == _x select 1 && (_x select 2)) then
 		{
+
 			_return = _x select 0;
+			if(_return == "GUER") then
+			{
+				_return = "RESISTANCE";
+			};
 		}
 	}forEach CZMARKERCOLLECTION;
 	_return

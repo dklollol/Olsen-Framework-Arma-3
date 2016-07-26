@@ -6,3 +6,9 @@
 //Example:
 //[this, "UNICEF Hemmit", "USMC"] call FNC_TrackAsset;
 //[this, "Entrenched DShK", "VDV"] call FNC_TrackAsset;
+
+//To manually track all units inside a marker use [marker, team] call FNC_TrackAssetArea; the team has to correspond with the teams declared in customization\settings.sqf.
+
+//Example:
+//["SpawnUSMC", "USMC"] call FNC_TrackAssetArea;
+//["SpawnVDV", "VDV"] call FNC_TrackAssetArea;

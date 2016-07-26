@@ -9,3 +9,9 @@
 	#include "params.hpp"
 
 #endif
+
+#ifdef framework
+
+	#include "init.sqf"
+
+#endif
