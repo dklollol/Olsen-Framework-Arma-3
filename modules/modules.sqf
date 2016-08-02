@@ -10,10 +10,10 @@
 #include "interact_menu_debug\root.sqf"
 #include "start_on_safe\root.sqf"
 #include "start_with_earplugs\root.sqf"
+#include "disconnect_Control\root.sqf"
 
 //Additional modules that can be enabled by removing the // please note that there might be settings to be tweaked inside the modules/module folder.
 
-//#include "radio_channel_names\root.sqf"
 //#include "a3_endscreen\root.sqf"
 //#include "aiskill\root.sqf"
 //#include "anti_nd\root.sqf"
@@ -26,6 +26,7 @@
 //#include "extract\root.sqf"
 //#include "hostage\root.sqf"
 //#include "marker_control\root.sqf"
+//#include "radio_channel_names\root.sqf"
 //#include "radio_scrambler\root.sqf"
 //#include "setup_timer\root.sqf"
 //#include "start_in_parachute\root.sqf"
