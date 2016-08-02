@@ -36,7 +36,7 @@ if (!isDedicated) then {
 
 			#include "settings.sqf"
 
-			if (time < Disconnect_Control_Time/60 && (side _unit) in Disconnect_Control_Sides) then {
+			if (time < disconnect_control_time * 60 && (side _unit) in disconnect_control_sides) then {
 
 				deleteVehicle _unit;
 				
