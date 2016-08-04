@@ -16,6 +16,8 @@ if (isServer) then {
 	FW_EventRespawnedHandle = addMissionEventHandler ["EntityRespawned", {_this call FNC_EventRespawned;}];
 	FW_EventKilledHandle = addMissionEventHandler ["EntityKilled", {_this call FNC_EventKilled;}];
 	
+	FW_EventDisconnectHandle = addMissionEventHandler ["HandleDisconnect", {_this call FNC_EventDisconnect;}];
+
 };
 
 if (!isDedicated) then {
