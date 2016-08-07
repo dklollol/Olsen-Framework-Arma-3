@@ -18,5 +18,5 @@
 // Whether to show entities / locations lists (true/false)
 	Show_Entities_And_Locations_Lists = true;
 
-// Define where the spectator camera starts. (add a marker with the name inside the "")
+// Define optional location where the spectator camera starts. If not specified, the camera will start at player's death location.
 	Spectator_Marker = "";
