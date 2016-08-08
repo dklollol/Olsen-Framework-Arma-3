@@ -5,23 +5,23 @@
 
 //Enabled modules by default, disabled them by adding // in front.
 
-#include "jip\root.sqf"
+#include "anti_nd\root.sqf"
 #include "auto_track_assets\root.sqf"
+#include "disconnect_control\root.sqf"
+#include "EG_Spectator_Mode\root.sqf"
 #include "interact_menu_debug\root.sqf"
+#include "jip\root.sqf"
 #include "start_on_safe\root.sqf"
 #include "start_with_earplugs\root.sqf"
-#include "disconnect_Control\root.sqf"
 
 //Additional modules that can be enabled by removing the // please note that there might be settings to be tweaked inside the modules/module folder.
 
 //#include "a3_endscreen\root.sqf"
 //#include "aiskill\root.sqf"
-//#include "anti_nd\root.sqf"
 //#include "ao_limit\root.sqf"
 //#include "babel_setup\root.sqf"
 //#include "call_mission\root.sqf"
 //#include "capturezone\root.sqf"
-//#include "EG_Spectator_Mode\root.sqf"
 //#include "env_parameters\root.sqf"
 //#include "extract\root.sqf"
 //#include "hostage\root.sqf"

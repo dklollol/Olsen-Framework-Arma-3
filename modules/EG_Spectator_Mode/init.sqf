@@ -1,10 +1,10 @@
-["EG_Spectator_Mode", "Replaces the standard spectate script with the Vanilla Spectator script.", "BI &amp; Perfk"] call FNC_RegisterModule;
+["EG Spectator Mode", "Replaces the Olsen Framework spectator script with the Vanilla Spectator.", "BI &amp; Perfk"] call FNC_RegisterModule;
 
 if (!isDedicated) then {
 
 	FNC_SpectatePrep = {
 
-		private ["_respawnName", "_respawnPoint", "_text", "_loadout"];
+		private ["_respawnName", "_respawnPoint", "_text", "_loadout", "_pos", "_dir", "_cam"];
 
 		if (FW_RespawnTickets > 0) then {
 
@@ -45,6 +45,9 @@ if (!isDedicated) then {
 
 			player setVariable ["FW_Dead", true, true]; //Tells the framework the player is dead
 			
+			player remoteExecCall ["hideObject", 0];
+			player remoteExecCall ["hideObjectGlobal", 2];
+			
 			player setCaptive true;
 			player allowdamage false;
  			[player, true] remoteExec ["setCaptive", 2];
@@ -54,11 +57,8 @@ if (!isDedicated) then {
 
 			player addWeapon "itemMap";
 
-			player setPos [7519, 7526, 5];
+			player setPos [0, 0, 0];
 			[player] join grpNull;
-
-			hideObjectGlobal player;
-			player remoteExec ["hideObjectGlobal", 2];
 
 			if (!(player getVariable ["FW_Spectating", false])) then {
 
@@ -69,20 +69,37 @@ if (!isDedicated) then {
 				call BIS_fnc_VRFadeIn;
 				
 				#include "settings.sqf"
-
-                if (getMarkerColor Spectator_Marker == "") then {
-                } else {
-                    player setpos getmarkerpos Spectator_Marker;
-                };
+				
+				
+				_pos = [2000, 2000, 100];
+				_dir = 0;
+				
+				if (getMarkerColor Spectator_Marker == "") then {
+					if (!isNull (_this select 1)) then {
+							_pos = [(getpos (_this select 1)) select 0, (getpos (_this select 1)) select 1, ((getposATL (_this select 1)) select 2)+1.8]; //set camera pos on player body
+							_dir = getDir (_this select 1);
+						};
+				} else {
+					_pos = getmarkerpos Spectator_Marker;
+				};
 
 				["Initialize", [player, Whitelisted_Sides, Ai_Viewed_By_Spectator, Free_Camera_Mode_Available, Third_Person_Perspective_Camera_mode_Available, Show_Focus_Info_Widget, Show_Camera_Buttons_Widget, Show_Controls_Helper_Widget, Show_Header_Widget, Show_Entities_And_Locations_Lists]] call BIS_fnc_EGSpectator;
 				
-                if (getMarkerColor Spectator_Marker == "") then {
-                } else {
-                	player setPos [7519, 7526, 5];
-                };
+				_cam = missionNamespace getVariable ["BIS_EGSpectatorCamera_camera", objNull];
 				
-                "" execVM "modules\EG_Spectator_Mode\keepBreathing.sqf";
+				if (_cam != objNull) then {
+					_cam setposATL _pos;
+					_cam setDir _dir;
+				};
+				
+				titleText ["\n\nPress SHIFT, ALT or SHIFT+ALT to modify camera speed.\nYou can open map and click somewhere to move camera to that postion.\n\nSpectator controls can be customized in controls settings in Camera tab.", "PLAIN", 1, true];
+				
+				[] spawn {
+					while {(player getVariable ["FW_Spectating", false])} do {
+						player setOxygenRemaining 1;
+						sleep 0.25;
+					};
+				};
 
 			} else {
 
