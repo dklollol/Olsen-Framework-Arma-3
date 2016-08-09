@@ -42,6 +42,12 @@ if (!isDedicated) then {
 					_msg2 = "\nDistance from base: " + str round (FW_SpawnPos distance player) + " out of " + str (round ANTI_ND_DIST) + " meters.";
 				};
 				hintC format ["Anti-ND protection active!%1%2", _msg1, _msg2];
+				if ((_this select 5) call BIS_fnc_isThrowable) then {
+					player addMagazine (_this select 5);
+				}
+				else {
+					player setAmmo [currentWeapon player, (player ammo currentWeapon player) + 1];
+				};
 			};
 		}];
 
