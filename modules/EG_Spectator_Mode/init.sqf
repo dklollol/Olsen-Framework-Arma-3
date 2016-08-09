@@ -1,5 +1,7 @@
 ["EG Spectator Mode", "Replaces the Olsen Framework spectator script with the Vanilla Spectator.", "BI &amp; Perfk"] call FNC_RegisterModule;
 
+//#define DEBUG
+
 if (isDedicated) exitWith {};
 
 //function ran from keyHandler
@@ -19,15 +21,18 @@ killcam_toggleFnc = {
 #include "settings.sqf"
 
 if (killcam_active) then {
-
+#ifdef DEBUG
 	systemchat "killcam activated";
-
+#endif
 	//hitHandler used for retrieving information if killed EH won't fire properly
 	killcam_hitHandle = player addEventHandler ["Hit", {
+#ifdef DEBUG
 		systemchat "Hit";
+#endif
 		if (vehicle (_this select 1) != vehicle player && (_this select 1) != objNull) then {
+#ifdef DEBUG
 			systemchat "Hit check successful";
-			
+#endif
 			//we store this information in case it's needed if killed EH doesn't fire
 			missionNamespace setVariable ["killcam_LastHit", 
 				[_this, time, ASLtoAGL eyePos (_this select 0), ASLtoAGL eyePos (_this select 1)]
@@ -44,15 +49,18 @@ if (killcam_active) then {
 		if (vehicle (_this select 1) != vehicle (_this select 0) && (_this select 1) != objNull) then {
 		
 			//this is the standard case (killed EH got triggered by getting shot)
+#ifdef DEBUG
 			systemchat "standard";
-			
+#endif
 			//save position during time of death
 			killcam_unit_pos = ASLtoAGL eyePos (_this select 0);
 			killcam_killer = (_this select 1);
 			killcam_killer_pos = ASLtoAGL eyePos (_this select 1);
 		} else {
 			//we will try to retrieve info from our hit EH
+#ifdef DEBUG
 			systemchat "not standard";
+#endif
 			_last_hit_info = missionNamespace getVariable ["killcam_LastHit", []];
 			
 			//hit info retrieved, now we check if it's not caused by fall damage etc.
@@ -62,7 +70,9 @@ if (killcam_active) then {
 				((_last_hit_info select 0) select 1) != objNull &&
 				((_last_hit_info select 0) select 1) != player
 				) then {
+#ifdef DEBUG
 					systemchat "data ok";
+#endif
 					killcam_unit_pos = _last_hit_info select 2;
 					killcam_killer = _last_hit_info select 0 select 1;
 					killcam_killer_pos = _last_hit_info select 3;
@@ -188,7 +198,9 @@ FNC_SpectatePrep = {
 					//this cool piece of code adds key handler to spectator display
 					//it takes some time for display to create, so we have to delay it.
 					[{!isNull (findDisplay 60492)}, {
+#ifdef DEBUG
 						systemchat "Loaded!";
+#endif
 						killcam_keyHandle = (findDisplay 60492) displayAddEventHandler ["keyDown", {call killcam_toggleFnc;}];
 					}, []] call CBA_fnc_waitUntilAndExecute;
 					
