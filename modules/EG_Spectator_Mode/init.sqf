@@ -10,6 +10,7 @@ killcam_toggleFnc = {
 	if ((_this select 1) == 37) then {
 		if (killcam_toggle) then {
 			killcam_toggle = false;
+			cutText ["", "PLAIN DOWN"];
 		}
 		else {
 			killcam_toggle = true;
@@ -253,7 +254,7 @@ FNC_SpectatePrep = {
 			
 			_killcam_msg = "";
 			if (killcam_active) then {
-				_killcam_msg = "Press K to toggle indicator showing location where you were killed from.<br/>";
+				_killcam_msg = "Press <t color='#FFA500'>K</t> to toggle indicator showing location where you were killed from.<br/>";
 			};
 			_text = format ["<t size='0.5' color='#ffffff'>%1Press <t color='#FFA500'>SHIFT</t>, <t color='#FFA500'>ALT</t> or <t color='#FFA500'>SHIFT+ALT</t> to modify camera speed. Open map by pressing <t color='#FFA500'>M</t> and click anywhere to move camera to that postion.<br/> 
 			Spectator controls can be customized in game <t color='#FFA500'>options->controls->'Camera'</t> tab.</t>", _killcam_msg];
