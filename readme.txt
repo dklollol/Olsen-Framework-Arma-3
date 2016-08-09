@@ -195,7 +195,7 @@ FNC_NotTrackUnit
 		nothing
 		
 	Example:
-		player call FNC_UntrackUnit
+		player call FNC_NotTrackUnit
 		
 		Result:
 			player is not tracked by framework
