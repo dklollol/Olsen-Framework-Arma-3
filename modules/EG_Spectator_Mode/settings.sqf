@@ -21,4 +21,5 @@
 // Define where the spectator camera starts. (add a marker with the name inside the "")
 	Spectator_Marker = "";
 
+// Activate showing information about killer
 	killcam_active = true;
