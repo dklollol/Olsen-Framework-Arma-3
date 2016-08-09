@@ -11,6 +11,7 @@ killcam_toggleFnc = {
 		}
 		else {
 			killcam_toggle = true;
+			cutText ["Line shows LOS from postion of enemy to player's position during the time of death.\nPress K to toggle hud markers off.", "PLAIN DOWN"];
 		};
 	};
 };
@@ -65,10 +66,15 @@ if (killcam_active) then {
 					killcam_unit_pos = _last_hit_info select 2;
 					killcam_killer = _last_hit_info select 0 select 1;
 					killcam_killer_pos = _last_hit_info select 3;
+				}
+				else {
+					//everything failed, we set value we will detect later
+					killcam_killer_pos = [0,0,0];
+					killcam_unit_pos = ASLtoAGL eyePos (_this select 0);
+					killcam_killer = objNull;
 				};
 			}
 			else {
-				//everything failed, we set value we will detect later
 				killcam_killer_pos = [0,0,0];
 				killcam_unit_pos = ASLtoAGL eyePos (_this select 0);
 				killcam_killer = objNull;
@@ -147,6 +153,10 @@ FNC_SpectatePrep = {
 			} else {
 				_pos = getmarkerpos Spectator_Marker;
 			};
+			
+			if (abs(_pos select 0) < 2 && abs(_pos select 1) < 2) then {
+				_pos = [2000, 2000, 100];
+			};
 
 			["Initialize", 
 				[
@@ -182,17 +192,22 @@ FNC_SpectatePrep = {
 						killcam_keyHandle = (findDisplay 60492) displayAddEventHandler ["keyDown", {call killcam_toggleFnc;}];
 					}, []] call CBA_fnc_waitUntilAndExecute;
 					
-					_pos = ([_pos, -1.8, ([(_this select 1), killcam_killer] call BIS_fnc_dirTo)] call BIS_fnc_relPos);
-					_cam setposATL _pos;
-					
-					//vector magic
-					_temp1 = ([getposASL _cam, getposASL killcam_killer] call BIS_fnc_vectorFromXToY);
-					_temp = (_temp1 call CBA_fnc_vect2Polar);
-					
-					//we check if camera is not pointing up, just in case
-					if (abs(_temp select 2) > 89) then {_temp set [2, 0]};
-					[_cam, [_temp select 1, _temp select 2]] call BIS_fnc_setObjectRotation;
-					
+					if (!isNull killcam_killer) then {
+						_pos = ([_pos, -1.8, ([(_this select 1), killcam_killer] call BIS_fnc_dirTo)] call BIS_fnc_relPos);
+						_cam setposATL _pos;
+						
+						//vector magic
+						_temp1 = ([getposASL _cam, getposASL killcam_killer] call BIS_fnc_vectorFromXToY);
+						_temp = (_temp1 call CBA_fnc_vect2Polar);
+						
+						//we check if camera is not pointing up, just in case
+						if (abs(_temp select 2) > 89) then {_temp set [2, 0]};
+						[_cam, [_temp select 1, _temp select 2]] call BIS_fnc_setObjectRotation;
+					}
+					else {
+						_cam setposATL _pos;
+						_cam setDir _dir;
+					};
 					
 					killcam_texture = "a3\ui_f\data\gui\cfg\debriefing\enddeath_ca.paa";
 					
@@ -201,6 +216,7 @@ FNC_SpectatePrep = {
 						if (missionNamespace getVariable ["killcam_toggle", false]) then {
 						
 							if ((killcam_killer_pos select 0) != 0) then {
+								
 								_u = killcam_unit_pos;
 								_k = killcam_killer_pos;
 								if ((_u distance _k) < 2000) then {
@@ -210,7 +226,9 @@ FNC_SpectatePrep = {
 									drawLine3D [[(_u select 0)-0.01, (_u select 1)+0.01, (_u select 2)-0.01], [(_k select 0)-0.01, (_k select 1)+0.01, (_k select 2)-0.01], [1,0,0,1]];
 									drawLine3D [[(_u select 0)+0.01, (_u select 1)-0.01, (_u select 2)+0.01], [(_k select 0)+0.01, (_k select 1)-0.01, (_k select 2)+0.01], [1,0,0,1]];
 								};
-								drawIcon3D [killcam_texture, [1,0,0,1], [eyePos killcam_killer select 0, eyePos killcam_killer select 1, (ASLtoAGL eyePos killcam_killer select 2) + 0.4], 0.7, 0.7, 0, "killer", 1, 0.04, "PuristaMedium"];
+								if (!isNull killcam_killer) then {
+									drawIcon3D [killcam_texture, [1,0,0,1], [eyePos killcam_killer select 0, eyePos killcam_killer select 1, (ASLtoAGL eyePos killcam_killer select 2) + 0.4], 0.7, 0.7, 0, "killer", 1, 0.04, "PuristaMedium"];
+								};
 							}
 							else {
 								cutText ["killer info unavailable", "PLAIN DOWN"];
@@ -225,8 +243,8 @@ FNC_SpectatePrep = {
 			if (killcam_active) then {
 				_killcam_msg = "Press K to toggle indicator showing location where you were killed from.<br/>";
 			};
-			_text = format ["<t size='0.5' color='#ffffff'>%1Press <t color='#5555ff'>SHIFT</t>, <t color='#5555ff'>ALT</t> or <t color='#5555ff'>SHIFT+ALT</t> to modify camera speed. Open map by pressing <t color='#5555ff'>M</t> and click anywhere to move camera to that postion.<br/> 
-			Spectator controls can be customized in game <t color='#5555ff'>options->controls->'Camera'</t> tab.</t>", _killcam_msg];
+			_text = format ["<t size='0.5' color='#ffffff'>%1Press <t color='#FFA500'>SHIFT</t>, <t color='#FFA500'>ALT</t> or <t color='#FFA500'>SHIFT+ALT</t> to modify camera speed. Open map by pressing <t color='#FFA500'>M</t> and click anywhere to move camera to that postion.<br/> 
+			Spectator controls can be customized in game <t color='#FFA500'>options->controls->'Camera'</t> tab.</t>", _killcam_msg];
 			
 			[_text, 0.55, 0.8, 20, 1] spawn BIS_fnc_dynamicText;
 
