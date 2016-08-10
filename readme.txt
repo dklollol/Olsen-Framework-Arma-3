@@ -346,21 +346,19 @@ FNC_AddItemRandom
 
 	Description:
 		Add item random to local unit. Can specify container and amount.
+		For more info, visit https://github.com/dklollol/Olsen-Framework-Arma-3/wiki/gear.sqf
 		
 	Parameters:
-		- array of classnames of items to choose from [array]
-		- amount of item to add [number] (OPTIONAL)
-		- container name "uniform"/"vest"/"backpack" available [string] (OPTIONAL)
+		n/a
 		
 	Returns:
 		nothing
 		
 	Example:
-		[["ItemMap", "itemWatch"]] call FNC_AddItem;
+		n/a
 		
 		Result:
-			Map or watch added to inventory.
-			Returned: nothing
+			n/a
 
 
 FNC_AddItemVehicle
@@ -388,8 +386,7 @@ FNC_AddItemVehicleRandom
 		Add random item to vehicle's cargo.
 		
 	Parameters:
-		- array of classnames [array]
-		- amount to add [number]
+		n/a
 		
 	Returns:
 		nothing
