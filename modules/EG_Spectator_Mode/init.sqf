@@ -1,6 +1,7 @@
 ["EG Spectator Mode", "Replaces the Olsen Framework spectator script with the Vanilla Spectator.", "BI &amp; Perfk"] call FNC_RegisterModule;
 
-//#define DEBUG
+#define DEBUG_MSG(MSG)\
+//systemchat MSG;\
 
 if (isDedicated) exitWith {};
 
@@ -22,18 +23,12 @@ killcam_toggleFnc = {
 #include "settings.sqf"
 
 if (killcam_active) then {
-#ifdef DEBUG
-	systemchat "killcam activated";
-#endif
+	DEBUG_MSG("killcam activated")
 	//hitHandler used for retrieving information if killed EH won't fire properly
 	killcam_hitHandle = player addEventHandler ["Hit", {
-#ifdef DEBUG
-		systemchat "Hit";
-#endif
+		DEBUG_MSG("HIT EH")
 		if (vehicle (_this select 1) != vehicle player && (_this select 1) != objNull) then {
-#ifdef DEBUG
-			systemchat "Hit check successful";
-#endif
+			DEBUG_MSG("HIT data valid")
 			//we store this information in case it's needed if killed EH doesn't fire
 			missionNamespace setVariable ["killcam_LastHit", 
 				[_this, time, ASLtoAGL eyePos (_this select 0), ASLtoAGL eyePos (_this select 1)]
@@ -50,18 +45,13 @@ if (killcam_active) then {
 		if (vehicle (_this select 1) != vehicle (_this select 0) && (_this select 1) != objNull) then {
 		
 			//this is the standard case (killed EH got triggered by getting shot)
-#ifdef DEBUG
-			systemchat "standard";
-#endif
-			//save position during time of death
+			DEBUG_MSG("using killed EH")
 			killcam_unit_pos = ASLtoAGL eyePos (_this select 0);
 			killcam_killer = (_this select 1);
 			killcam_killer_pos = ASLtoAGL eyePos (_this select 1);
 		} else {
 			//we will try to retrieve info from our hit EH
-#ifdef DEBUG
-			systemchat "not standard";
-#endif
+			DEBUG_MSG("using hit EH")
 			_last_hit_info = missionNamespace getVariable ["killcam_LastHit", []];
 			
 			//hit info retrieved, now we check if it's not caused by fall damage etc.
@@ -71,14 +61,13 @@ if (killcam_active) then {
 				((_last_hit_info select 0) select 1) != objNull &&
 				((_last_hit_info select 0) select 1) != player
 				) then {
-#ifdef DEBUG
-					systemchat "data ok";
-#endif
+					DEBUG_MSG("HIT data check successful")
 					killcam_unit_pos = _last_hit_info select 2;
 					killcam_killer = _last_hit_info select 0 select 1;
 					killcam_killer_pos = _last_hit_info select 3;
 				}
 				else {
+					DEBUG_MSG("HIT data not valid")
 					//everything failed, we set value we will detect later
 					killcam_killer_pos = [0,0,0];
 					killcam_unit_pos = ASLtoAGL eyePos (_this select 0);
@@ -86,6 +75,7 @@ if (killcam_active) then {
 				};
 			}
 			else {
+				DEBUG_MSG("HIT and KILLED EHs not valid")
 				killcam_killer_pos = [0,0,0];
 				killcam_unit_pos = ASLtoAGL eyePos (_this select 0);
 				killcam_killer = objNull;
@@ -98,7 +88,7 @@ if (killcam_active) then {
 
 FNC_SpectatePrep = {
 
-	private ["_respawnName", "_respawnPoint", "_text", "_loadout", "_pos", "_dir", "_cam"];
+	private ["_respawnName", "_respawnPoint", "_text", "_loadout", "_pos", "_dir", "_cam", "_body", "_temp", "_temp1", "_killcam_msg"];
 
 	if (FW_RespawnTickets > 0) then {
 
@@ -199,13 +189,12 @@ FNC_SpectatePrep = {
 					//this cool piece of code adds key handler to spectator display
 					//it takes some time for display to create, so we have to delay it.
 					[{!isNull (findDisplay 60492)}, {
-#ifdef DEBUG
-						systemchat "Loaded!";
-#endif
+						DEBUG_MSG("Display loaded, attaching key EH")
 						killcam_keyHandle = (findDisplay 60492) displayAddEventHandler ["keyDown", {call killcam_toggleFnc;}];
 					}, []] call CBA_fnc_waitUntilAndExecute;
 					
 					if (!isNull killcam_killer) then {
+						DEBUG_MSG("found valid killer")
 						_pos = ([_pos, -1.8, ([(_this select 1), killcam_killer] call BIS_fnc_dirTo)] call BIS_fnc_relPos);
 						_cam setposATL _pos;
 						
@@ -218,6 +207,7 @@ FNC_SpectatePrep = {
 						[_cam, [_temp select 1, _temp select 2]] call BIS_fnc_setObjectRotation;
 					}
 					else {
+						DEBUG_MSG("no valid killer")
 						_cam setposATL _pos;
 						_cam setDir _dir;
 					};
