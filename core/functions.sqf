@@ -127,6 +127,24 @@ FNC_EventSpawned = {
 	
 };
 
+FNC_EventRespawned = {
+	
+	private ["_new"];
+	
+	_new = _this select 0;
+
+	if (!(_new getVariable "FW_Dead")) then {	
+	
+		_new call FNC_EventSpawned;
+		
+	} else {
+		
+		_new call FNC_UntrackUnit;
+		
+	};
+
+};
+
 FNC_EventDisconnect = {
 
 	private ["_unit", "_side", "_type", "_total", "_current"];
@@ -154,30 +172,10 @@ FNC_EventDisconnect = {
 			};
 
 		} forEach FW_Teams;
-
-		deleteVehicle _unit;
 	
 	};
 
 	false
-
-};
-
-FNC_EventRespawned = {
-	
-	private ["_new"];
-	
-	_new = _this select 0;
-
-	if (!(_new getVariable "FW_Dead")) then {	
-	
-		_new call FNC_EventSpawned;
-		
-	} else {
-		
-		_new call FNC_UntrackUnit;
-		
-	};
 
 };
 

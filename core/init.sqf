@@ -16,6 +16,8 @@ if (isServer) then {
 	FW_EventRespawnedHandle = addMissionEventHandler ["EntityRespawned", {_this call FNC_EventRespawned;}];
 	FW_EventKilledHandle = addMissionEventHandler ["EntityKilled", {_this call FNC_EventKilled;}];
 	
+	FW_EventDisconnectHandle = addMissionEventHandler ["HandleDisconnect", {_this call FNC_EventDisconnect;}];
+
 };
 
 if (!isDedicated) then {
@@ -51,7 +53,7 @@ if (!isDedicated) then {
 	
 	//Makes the player go into spectator mode when dead or respawn if he has respawn tickets
 	FW_KilledEh = player addEventHandler ["Killed", {"" spawn FNC_SpectateCheck;}];
-	FW_RespawnEh = player addEventHandler ["Respawn", {"" call FNC_SpectatePrep;}];
+	FW_RespawnEh = player addEventHandler ["Respawn", {_this call FNC_SpectatePrep;}];
 	
 	//Various settings
 	player addRating 100000; //Makes sure ai doesnt turn hostile when teamkilling

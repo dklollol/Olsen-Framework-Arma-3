@@ -23,8 +23,8 @@ class Wind {
 
 class Fog {
 	title = "Fog";
-	texts[] = {"Mission default", "No Fog", "Slightly Foggy", "Foggy", "Very Foggy", "No Visibility"};
-	values[] = {-1, 0, 2.5, 5, 7.5, 10};
+	texts[] = {"Mission default", "No Fog", "Slightly Foggy", "Foggy", "Very Foggy"};
+	values[] = {-1, 0, 1, 2, 3};
 	default = -1;
 };
 
