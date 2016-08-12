@@ -1,5 +1,7 @@
 ["Environment / Mission Parameters", "Allows the admin to choose between different weather parameters.", "Starfox64, Olsen"] call FNC_RegisterModule;
 
+#include "settings.sqf"
+
 if (isMultiplayer) then {
 	
 	private ["_TimeOfDayParam", "_WeatherParam", "_WindParam", "_FogParam", "_date", "_overcast", "_wind", "_fog"];
@@ -48,9 +50,18 @@ if (isMultiplayer) then {
 	_FogParam = "Fog" call BIS_fnc_getParamValue;
 
 	if (_FogParam != -1) then {
-
-		_fog = _FogParam;
-		0 setFog (_fog / 10);
+	
+		if (defaultFogType) then {
+			_fog = _FogParam;
+			0 setFog (_fog / 3.2);
+		}
+		else {
+			_fog = (fogArrays select _FogParam);
+			if (count _fog == 0) then {
+				_fog = [0,0,0];
+			};
+			0 setFog _fog;
+		};
 		
 	};
 };
