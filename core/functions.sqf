@@ -245,10 +245,6 @@ FNC_StartingCount = {
 
 			_x call FNC_TrackUnit;
 
-		} else {
-
-			_x setVariable ["FW_DontTrack", nil];
-
 		};
 
 	} forEach allUnits;
@@ -432,13 +428,14 @@ FNC_AreaCount = {
 	params [
 		["_side", sideUnknown, [sideUnknown]],
 		["_radius", 0, [0]],
-		["_logic", objNull, [objNull]]
+		["_logic", objNull, [objNull]],
+		["_noUntracked", false]
 	];
 
 	_count = 0;
 
 	{
-		if ((side _x == _side) && ((_x distance _logic) < _radius) && (_x call FNC_Alive)) then {
+		if ((side _x == _side) && (!(_x getVariable ["FW_DontTrack", false]) || !_noUntracked) && ((_x distance _logic) < _radius) && (_x call FNC_Alive)) then {
 
 			_count = _count + 1;
 
