@@ -1,5 +1,6 @@
 FNC_setCapturezone = 
 {
+
 	[_this,_colors,_intervall,_messages] execVM "modules\capturezone\capturezone.sqf";
 };
 FNC_setIntervall =
@@ -29,11 +30,13 @@ FNC_isCaptured =
 			};
 		}
 	}forEach CZMARKERCOLLECTION;
+	
 	_return
 
 };
-CZMESSAGE = "test";
-publicVariable "CZMESSAGE";
+
+
+
 if(isServer) then {
 	private["_zones","_intervall","_colors"];
 	_intervall = 15;
@@ -43,3 +46,4 @@ if(isServer) then {
 	_colors = ["ColorBlue","ColorRed","ColorGreen","ColorYellow","ColorWhite","ColorKhaki"];
 	#include "settings.sqf"
 };
+
