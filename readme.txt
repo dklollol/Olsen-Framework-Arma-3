@@ -1,4 +1,4 @@
-Framework Version: 3.1.0
+Framework Version: 3.1.1
 
 For information on how to make a mission please visit:
 https://github.com/dklollol/Olsen-Framework-Arma-3/wiki/Making-your-first-mission
