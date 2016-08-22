@@ -1,39 +1,42 @@
 ["Radio scrambler", "Randomizes the radio channels simply by using the 4 default presets.", "Olsen"] call FNC_RegisterModule;
 
-if (isServer) then {
-	private ["_presets", "_data"];
-	
-	_presets = ["default", "default2", "default3", "default4"];
-	_data = [];
-	{
-		_data set [count _data, [_x, _presets deleteAt (floor random (count _presets))]];
-		
-	} forEach [west, east, resistance, civilian];
-	
-	["FW_PresetChannels", _data] call CBA_fnc_publicVariable;
-};
+if(!isDedicated) then {
+	[] spawn {
+		waitUntil { !isNull acre_player };
 
-if (!isDedicated) then {
-	
-	"" spawn {
-	
-		sleep 0.01;
-	
-		waitUntil {!(isNil("FW_PresetChannels"))};
-		
-		{
-			
-			if (_x select 0 == side player) exitWith {
-			
-				_preset = _x select 1;
-				
-				_preset call FNC_SetRadioPresetAll;
-				
+		_side = side acre_player;
+		switch _side do { 
+			case east: { 
+				["ACRE_PRC343", "default2" ] call acre_api_fnc_setPreset;
+				["ACRE_PRC77", "default2" ] call acre_api_fnc_setPreset;
+				["ACRE_PRC117F", "default2" ] call acre_api_fnc_setPreset;
+				["ACRE_PRC152", "default2" ] call acre_api_fnc_setPreset;
+				["ACRE_PRC148", "default2" ] call acre_api_fnc_setPreset;
 			};
-			
-		} forEach FW_PresetChannels;
+			case west: { 
+				["ACRE_PRC343", "default3" ] call acre_api_fnc_setPreset;
+				["ACRE_PRC77", "default3" ] call acre_api_fnc_setPreset;
+				["ACRE_PRC117F", "default3" ] call acre_api_fnc_setPreset;
+				["ACRE_PRC152", "default3" ] call acre_api_fnc_setPreset;
+				["ACRE_PRC148", "default3" ] call acre_api_fnc_setPreset;
+			};
+			case independent: { 
+				["ACRE_PRC343", "default4" ] call acre_api_fnc_setPreset;
+				["ACRE_PRC77", "default4" ] call acre_api_fnc_setPreset;
+				["ACRE_PRC117F", "default4" ] call acre_api_fnc_setPreset;
+				["ACRE_PRC152", "default4" ] call acre_api_fnc_setPreset;
+				["ACRE_PRC148", "default4" ] call acre_api_fnc_setPreset;
+			};
+			default { 
+				["ACRE_PRC343", "default" ] call acre_api_fnc_setPreset;
+				["ACRE_PRC77", "default" ] call acre_api_fnc_setPreset;
+				["ACRE_PRC117F", "default" ] call acre_api_fnc_setPreset;
+				["ACRE_PRC152", "default" ] call acre_api_fnc_setPreset;
+				["ACRE_PRC148", "default" ] call acre_api_fnc_setPreset;
+			};
+		};
 		
 		FW_RadioScrambler = true;
-		
 	};
 };
+
