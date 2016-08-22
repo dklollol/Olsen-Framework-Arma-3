@@ -1,68 +1,74 @@
 FNC_GetTeamVariable = {
-	
-	private ["_team", "_index", "_return", "_found", "_tempText"];
-	
-	_team = _this select 0;
-	_index = _this select 1;
-	
+
+	private ["_return", "_found", "_tempText"];
+
+	params [
+		["_team", "", [""]],
+		["_index", 0, [0]]
+	];
+
 	_return = 0;
 	_found = false;
-	
+
 	{
-	
+
 		if ((_x select 0) == _team) exitWith {
-		
+
 			_return = (_x select _index);
 			_found = true;
-		
+
 		};
-	
+
 	} forEach FW_Teams;
-	
+
 	if (!_found) then {
 
 		_tempText = format ["Critical:<br></br>Team ""%1"" does not exist.", _team];
 		_tempText call FNC_DebugMessage;
 
 	};
-	
+
 	_return
 
 };
 
 FNC_SetTeamVariable = {
-	
-	private ["_team", "_index", "_value", "_return"];
-	
-	_team = _this select 0;
-	_index = _this select 1;
-	_value = _this select 2;
-	
+
+	private ["_return"];
+
+	params [
+		["_team", "", [""]],
+		["_index", 0, [0]],
+		"_value"
+	];
+
 	_return = false;
-	
+
 	{
-	
+
 		if ((_x select 0) == _team) exitWith {
-		
+
 			_x set [_index, _value];
-			
+
 			_return = true;
-		
+
 		};
-	
+
 	} forEach FW_Teams;
-	
+
 	_return
 
 };
 
 FNC_EventKilled = {
 
-	private ["_unit", "_killer", "_side", "_type", "_current"];
+	private ["_side", "_type", "_current"];
 
-	_unit = _this select 0;
-	_killer = _this select 1;
-	
+	params [
+		["_unit", objNull, [objNull]],
+		["_killer", objNull, [objNull]]
+	];
+
 	if (_unit getVariable ["FW_Tracked", false]) then {
 
 		{
@@ -78,19 +84,19 @@ FNC_EventKilled = {
 			};
 
 		} forEach FW_Teams;
-	
+
 	};
-	
+
 };
 
 FNC_EventPlayerSpawned = {
-	
+
 	private ["_unit"];
 
 	_unit = _this;
-	
+
 	_unit call FNC_TrackUnit;
-	
+
 };
 
 FNC_EventSpawned = {
@@ -100,7 +106,7 @@ FNC_EventSpawned = {
 	_unit = _this;
 
 	if (_unit getVariable ["FW_Tracked", false]) then {
-	
+
 		{
 
 			_side = _x select 1;
@@ -124,23 +130,23 @@ FNC_EventSpawned = {
 		} forEach FW_Teams;
 
 	};
-	
+
 };
 
 FNC_EventRespawned = {
-	
+
 	private ["_new"];
-	
+
 	_new = _this select 0;
 
-	if (!(_new getVariable "FW_Dead")) then {	
-	
+	if (!(_new getVariable "FW_Dead")) then {
+
 		_new call FNC_EventSpawned;
-		
+
 	} else {
-		
+
 		_new call FNC_UntrackUnit;
-		
+
 	};
 
 };
@@ -152,7 +158,7 @@ FNC_EventDisconnect = {
 	_unit = _this select 0;
 
 	if (_unit getVariable ["FW_Tracked", false]) then {
-		
+
 		{
 
 			_side = _x select 1;
@@ -172,7 +178,7 @@ FNC_EventDisconnect = {
 			};
 
 		} forEach FW_Teams;
-	
+
 	};
 
 	false
@@ -180,11 +186,11 @@ FNC_EventDisconnect = {
 };
 
 FNC_TrackUnit = {
-	
+
 	private ["_unit"];
-	
+
 	_unit = _this;
-	
+
 	if (!(_unit getVariable ["FW_Tracked", false])) then {
 
 		_unit setVariable ["FW_Side", side _unit];
@@ -193,17 +199,17 @@ FNC_TrackUnit = {
 		_unit call FNC_EventSpawned;
 
 	};
-	
+
 };
 
 FNC_UntrackUnit = {
-	
+
 	private ["_unit", "_side", "_type", "_total", "_current"];
-	
+
 	_unit = _this;
-	
+
 	if (_unit getVariable ["FW_Tracked", false]) then {
-	
+
 		{
 
 			_side = _x select 1;
@@ -223,25 +229,21 @@ FNC_UntrackUnit = {
 			};
 
 		} forEach FW_Teams;
-		
+
 		_unit setVariable ["FW_Side", nil];
 		_unit setVariable ["FW_Tracked", nil];
 
 	};
-	
+
 };
 
 FNC_StartingCount = {
 
 	{
-	
+
 		if (!(_x getVariable ["FW_DontTrack", false])) then {
-			
+
 			_x call FNC_TrackUnit;
-			
-		} else {
-		
-			_x setVariable ["FW_DontTrack", nil];
 
 		};
 
@@ -342,10 +344,12 @@ FNC_CreateRespawnMarker = {
 //FNC_InArea(UNIT, MARKER) checks if the UNIT is within the area of MARKER, supports all shapes
 FNC_InArea = {
 
-	private ["_unit", "_marker", "_pos", "_xSize", "_ySize", "_radius", "_result", "_x", "_y", "_temp"];
+	private ["_pos", "_xSize", "_ySize", "_radius", "_result", "_x", "_y", "_temp"];
 
-	_unit = _this select 0;
-	_marker = _this select 1;
+	params [
+		["_unit", objNull, [objNull]],
+		["_marker", "", [""]]
+	];
 
 	_pos = markerPos _marker;
 
@@ -419,16 +423,19 @@ FNC_InArea = {
 
 FNC_AreaCount = {
 
-	private ["_side", "_logic", "_radius", "_count"];
+	private ["_count"];
 
-	_side = _this select 0;
-	_radius = _this select 1;
-	_logic = _this select 2;
+	params [
+		["_side", sideUnknown, [sideUnknown]],
+		["_radius", 0, [0]],
+		["_logic", objNull, [objNull]],
+		["_noUntracked", false]
+	];
 
 	_count = 0;
 
 	{
-		if ((side _x == _side) && ((_x distance _logic) < _radius) && (_x call FNC_Alive)) then {
+		if ((side _x == _side) && (!(_x getVariable ["FW_DontTrack", false]) || !_noUntracked) && ((_x distance _logic) < _radius) && (_x call FNC_Alive)) then {
 
 			_count = _count + 1;
 
@@ -552,14 +559,14 @@ FNC_InVehicle = {
 
 };
 
-//FNC_AddTeam(SIDE, TYPE, NAME) adds a team on SIDE with NAME of TYPE to be tracked by the framework
+//FNC_AddTeam(SIDE, NAME, TYPE) adds a team on SIDE with NAME of TYPE to be tracked by the framework
 FNC_AddTeam = {
 
-	private ["_side", "_name", "_type"];
-
-	_side = _this select 0;
-	_name = _this select 1;
-	_type = _this select 2;
+	params [
+		["_side", sideUnknown, [sideUnknown]],
+		["_name", "Unknown", [""]],
+		["_type", "ai", [""]]
+	];
 
 	if (isMultiplayer) then {
 
@@ -594,7 +601,7 @@ FNC_SpectateCheck = {
 		["<br/>You are dead.<br/><br/>Respawning...", 0, 0.2, 2.5, 0.5, 0, 1000] spawn BIS_fnc_dynamicText;
 
 	} else {
-	
+
 		player setVariable ["FW_Dead", true, true]; //Tells the framework the player is dead
 
 		["<br/>You are dead.<br/><br/>Entering spectator mode...", 0, 0.2, 2.5, 0.5, 0, 1000] spawn BIS_fnc_dynamicText;

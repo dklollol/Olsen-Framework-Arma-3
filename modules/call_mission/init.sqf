@@ -7,10 +7,10 @@ if (isServer) then {
 
 	FNC_CallMission = {
 
-		private ["_player", "_callID"];
-
-		_player = _this select 0;
-		_callID = _this select 1;
+		params [
+			["_player", objNull, [objNull]],
+			["_callID", "", [""]]
+		];
 
 		{
 
@@ -94,14 +94,29 @@ if (isServer) then {
 
 if (!isDedicated) then {
 
+	FW_IsAdmin = false;
+
+	[] spawn {
+		waituntil {!isnull (finddisplay 46)};
+
+		// serverCommandAvailable must be executed from a UI Eh.
+		(findDisplay 46) displayAddEventHandler ["MouseMoving", {
+			if (serverCommandAvailable "#kick") then {
+				FW_IsAdmin = true;
+			} else {
+				FW_IsAdmin = false;
+			};
+		}];
+	};
+
 	FNC_CallMissionReq = {
 
-		private ["_callID", "_reqAdmin"];
+		params [
+			["_callID", "", [""]],
+			["_reqAdmin", false, [false]]
+		];
 
-		_callID = _this select 0;
-		_reqAdmin = _this select 1;
-
-		if (_reqAdmin && !serverCommandAvailable "#kick") exitWith {
+		if (_reqAdmin && !FW_IsAdmin) exitWith {
 			hint "Only server admins may use this feature!";
 		};
 
@@ -113,12 +128,12 @@ if (!isDedicated) then {
 
 FNC_RegisterMissionCall = {
 
-	private ["_callID", "_callSide", "_callName", "_callArgs"];
-
-	_callID = _this select 0;
-	_callSide = _this select 1;
-	_callName = _this select 2;
-	_callArgs = _this select 3;
+	params [
+		["_callID", "", [""]],
+		["_callSide", sideUnknown, [sideUnknown]],
+		["_callName", "", [""]],
+		["_callArgs", [], [[]]]
+	];
 
 	FW_MissionCalls set [count FW_MissionCalls, [_callID, _callSide, _callName, _callArgs]];
 
@@ -126,10 +141,10 @@ FNC_RegisterMissionCall = {
 
 FNC_RegisterCOC = {
 
-	private ["_side", "_coc"];
-
-	_side = _this select 0;
-	_coc = _this select 1;
+	params [
+		["_side", sideUnknown, [sideUnknown]],
+		["_coc", [], [[]]]
+	];
 
 	FW_COC set [count FW_COC, [_side, _coc]];
 
