@@ -15,7 +15,7 @@ _colors = _this select 1;
 _intervall = _this select 2;
 _messages = _this select 3;
 _markerCount = [_marker,[]];
-CZMARKERCOLLECTION set [count CZMARKERCOLLECTION,["none",_marker ,false]];
+
 _countforwins = 0;
 {
 	_markerCount select 1 set [count (_markerCount select 1) ,[_x ,0,_wins select _countforwins]]; //side,count,win
@@ -35,6 +35,7 @@ sleep(1);
 _run = true;
 while{_run} do
 {
+	
 	start = time;
 	_delta = _start - _end;
 	//count all units in area n special format [_marker,[[_side,count,win],[_side,count,win]]];
@@ -88,10 +89,11 @@ while{_run} do
 						_timer = time;
 						
 					};
-					CZMESSAGE = _messages select 0;
-					publicVariable "CZMESSAGE";
-					[-1, {hintSilent CZMESSAGE}] call CBA_fnc_globalExecute;
-					_marker setMarkerColor (_colors select 0);
+					_mes = _messages select 0;
+					
+					[-1, {hintSilent _this},_mes] call CBA_fnc_globalExecute;
+					[-1, {(_this select 0) setMarkerColor (_this select 1)}, [_marker,_colors select 0]] call CBA_fnc_globalExecute;
+					;
 					_updateContested  = true;
 					_update = false;
 					_updateUncontested = true;
@@ -102,10 +104,10 @@ while{_run} do
 			{
 				if(_update) then
 				{
-					CZMESSAGE = _messages select 1;
-					publicVariable "CZMESSAGE";
-					[-1, {hintSilent CZMESSAGE}] call CBA_fnc_globalExecute;
-					_marker setMarkerColor (_colors select 1);
+					_mes = _messages select 1;
+					
+					[-1, {hintSilent _this},_mes] call CBA_fnc_globalExecute;
+					[-1, {(_this select 0) setMarkerColor (_this select 1)}, [_marker,_colors select 1]] call CBA_fnc_globalExecute;
 					if(_oldOwner select 0 != "CONTESTED") then
 					{
 						_timer = time;		
@@ -120,10 +122,10 @@ while{_run} do
 			{
 				if(_update) then
 				{
-					CZMESSAGE = _messages select 2;
-					publicVariable "CZMESSAGE";
-					[-1, {hintSilent  CZMESSAGE}] call CBA_fnc_globalExecute;
-					_marker setMarkerColor (_colors select 2);
+					_mes = _messages select 2;
+					
+					[-1, {hintSilent _this},_mes] call CBA_fnc_globalExecute;
+					[-1, {(_this select 0) setMarkerColor (_this select 1)}, [_marker,_colors select 2]] call CBA_fnc_globalExecute;
 					if(_oldOwner select 0 != "CONTESTED") then
 					{
 						_timer = time;
@@ -139,10 +141,10 @@ while{_run} do
 			{
 				if(_update) then
 				{
-					CZMESSAGE = _messages select 2;
-					publicVariable "CZMESSAGE";
-					[-1, {hintSilent  CZMESSAGE}] call CBA_fnc_globalExecute;
-					_marker setMarkerColor (_colors select 2);
+					_mes = _messages select 2;
+					
+					[-1, {hintSilent _this},_mes] call CBA_fnc_globalExecute;
+					[-1, {(_this select 0) setMarkerColor (_this select 1)}, [_marker,_colors select 2]] call CBA_fnc_globalExecute;
 					if(_oldOwner select 0 != "CONTESTED") then
 					{
 						_timer = time;
@@ -158,10 +160,10 @@ while{_run} do
 			{
 				if(_update) then
 				{
-					CZMESSAGE = _messages select 3;
-					publicVariable "CZMESSAGE";
-					[-1, {hintSilent CZMESSAGE}] call CBA_fnc_globalExecute;
-					_marker setMarkerColor (_colors select 3);
+					_mes = _messages select 3;
+					
+					[-1, {hintSilent _this},_mes] call CBA_fnc_globalExecute;
+					[-1, {(_this select 0) setMarkerColor (_this select 1)}, [_marker,_colors select 3]] call CBA_fnc_globalExecute;
 					if(_oldOwner select 0 != "CONTESTED") then
 					{
 						_timer = time;
@@ -178,10 +180,10 @@ while{_run} do
 			{
 				if(_updateUncontested) then
 				{
-					CZMESSAGE = _messages select 5;
-					publicVariable "CZMESSAGE";
-					[-1, {hintSilent CZMESSAGE}] call CBA_fnc_globalExecute;
-					_marker setMarkerColor (_colors select 5);
+					_mes = _messages select 5;
+					
+					[-1, {hintSilent _this},_mes] call CBA_fnc_globalExecute;
+					[-1, {(_this select 0) setMarkerColor (_this select 1)}, [_marker,_colors select 5]] call CBA_fnc_globalExecute;
 					sleep(_intervall);
 					_updateUncontested = false;
 					_update = true;
@@ -192,10 +194,10 @@ while{_run} do
 			{
 				if(_updateContested) then
 				{
-					CZMESSAGE = _messages select 4;
-					publicVariable "CZMESSAGE";
-					[-1, {hintSilent CZMESSAGE}] call CBA_fnc_globalExecute;
-					_marker setMarkerColor (_colors select 4);
+					_mes = _messages select 4;
+					
+					[-1, {hintSilent _this},_mes] call CBA_fnc_globalExecute;
+					[-1, {(_this select 0) setMarkerColor (_this select 1)}, [_marker,_colors select 4]] call CBA_fnc_globalExecute;
 					_updateContested  = false;
 					_update = true;
 					_updateUncontested = true;

@@ -33,3 +33,6 @@
 // will set hints which are displayed when the zone is being captured
 // Default: ["Blufor is capturing the zone","Opfor is capturing the zone","Resistance is capturing the zone","Civilian is capturing the  zone","The zone is contested","The zone is uncontested"]; If a side isn't in the mission just use "" to make it shorter;
 // Example ["Blufor is capturing the zone","Opfor is capturing the zone","Resistance is capturing the zone","Civilian is capturing the zone","The zone is contested","The zone is uncontested"] call FNC_setMessages;
+
+
+//["","","","","",""] call FNC_setMessages;
