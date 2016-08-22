@@ -34,11 +34,12 @@ FNC_isCaptured =
 };
 CZMESSAGE = "test";
 publicVariable "CZMESSAGE";
-if(!isServer) exitWith {};
-private["_zones","_intervall","_colors"];
-_intervall = 15;
-_messages = ["Blufor is capturing the zone","Opfor is capturing the zone","Resistance is capturing the zone","Civilian is capturing the zone","The zone is contested","The zone is uncontested"];
-CZMARKERCOLLECTION = [];
+if(isServer) then {
+	private["_zones","_intervall","_colors"];
+	_intervall = 15;
+	_messages = ["Blufor is capturing the zone","Opfor is capturing the zone","Resistance is capturing the zone","Civilian is capturing the zone","The zone is contested","The zone is uncontested"];
+	CZMARKERCOLLECTION = [];
 
-_colors = ["ColorBlue","ColorRed","ColorGreen","ColorYellow","ColorWhite","ColorKhaki"];
-#include "settings.sqf"		
+	_colors = ["ColorBlue","ColorRed","ColorGreen","ColorYellow","ColorWhite","ColorKhaki"];
+	#include "settings.sqf"
+};

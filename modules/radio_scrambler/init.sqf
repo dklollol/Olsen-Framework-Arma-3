@@ -1,23 +1,16 @@
-#define random(MIN, MAX) \
-([MIN, MAX] call FNC_RandomRange)
-
 ["Radio scrambler", "Randomizes the radio channels simply by using the 4 default presets.", "Olsen"] call FNC_RegisterModule;
 
 if (isServer) then {
-	
 	private ["_presets", "_data"];
 	
 	_presets = ["default", "default2", "default3", "default4"];
 	_data = [];
-	
 	{
-		
-		_data set [count _data, [_x, _presets deleteAt (random(1, count _presets) - 1)]];
+		_data set [count _data, [_x, _presets deleteAt (floor random (count _presets))]];
 		
 	} forEach [west, east, resistance, civilian];
-
-	["FW_PresetChannels", _data] call CBA_fnc_publicVariable;
 	
+	["FW_PresetChannels", _data] call CBA_fnc_publicVariable;
 };
 
 if (!isDedicated) then {
@@ -34,7 +27,7 @@ if (!isDedicated) then {
 			
 				_preset = _x select 1;
 				
-				_preset call FNC_SetRadioPresetAll;			
+				_preset call FNC_SetRadioPresetAll;
 				
 			};
 			
