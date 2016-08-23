@@ -1,10 +1,10 @@
 FNC_SetTeamColor = {
-	
-	private ["_unit", "_color"];
-	
-	_unit = _this select 0;
-	_color = _this select 1;
-	
+
+	params [
+		["_unit", objNull, [objNull]],
+		["_color", "", [""]]
+	];
+
 	_unit setVariable ["FW_TeamColor", _color, false];
-	
+
 };

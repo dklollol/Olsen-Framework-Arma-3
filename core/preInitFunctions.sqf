@@ -15,21 +15,21 @@ FNC_NotTrackUnit = {
 };
 
 FNC_ZeroLead = {
-	
+
 	private ["_value", "_result"];
-	
+
 	_value = _this;
-	
+
 	_result = str _value;
-	
+
 	if (_value < 10) then {
-		
+
 		_result = "0" + (str _value);
-		
+
 	};
-	
+
 	_result
-	
+
 };
 
 FNC_DebugMessage = {
@@ -59,10 +59,12 @@ FNC_DebugMessage = {
 
 FNC_RandomRange = {
 
-	private ["_min", "_max", "_return"];
+	private ["_return"];
 
-	_min = _this select 0;
-	_max = _this select 1;
+	params [
+		["_min", 0, [0]],
+		["_max", 0, [0]]
+	];
 
 	_return = _min + (floor(random (1 + _max - _min)));
 
@@ -72,11 +74,13 @@ FNC_RandomRange = {
 
 FNC_TrackAsset = {
 
-	private ["_asset", "_name", "_team"];
+	params [
+		["_asset", objNull, [objNull]],
+		["_name", "", [""]],
+		["_team", "", [""]]
+	];
 
-	_asset = vehicle (_this select 0);
-	_name = _this select 1;
-	_team = _this select 2;
+	_asset = vehicle (_asset);
 
 	_asset setVariable ["FW_AssetName", _name];
 
@@ -86,10 +90,12 @@ FNC_TrackAsset = {
 
 FNC_CanLinkItem = {
 
-	private ["_unit", "_type", "_assignedItems", "_result"];
+	private ["_assignedItems", "_result"];
 
-	_unit = _this select 0;
-	_type = _this select 1;
+	params [
+		["_unit", objNull, [objNull]],
+		["_type", "", [""]]
+	];
 
 	_assignedItems = [];
 
@@ -107,10 +113,12 @@ FNC_CanLinkItem = {
 
 FNC_CanAttachItem = {
 
-	private ["_weapon", "_item", "_result"];
+	private ["_result"];
 
-	_weapon = _this select 0;
-	_item = _this select 1;
+	params [
+		["_weapon", objNull, [objNull]],
+		["_item", "", [""]]
+	];
 
 	_result = false;
 
@@ -536,21 +544,21 @@ FNC_AddItemVehicleRandomOrg = {
 };
 
 FNC_Chance = {
-	
+
 	private ["_chance", "_result"];
-	
+
 	_chance = _this;
-	
+
 	_result = ((random 1) <= (_chance / 100));
-	
+
 	if (_chance == 0) then {
-		
+
 		_result = false;
-		
+
 	};
-	
+
 	_result
-	
+
 };
 
 FNC_RemoveAllGear = {
