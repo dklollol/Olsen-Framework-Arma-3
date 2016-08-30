@@ -116,7 +116,7 @@ FNC_CanAttachItem = {
 	private ["_result"];
 
 	params [
-		["_weapon", objNull, [objNull]],
+		["_weapon", "", [""]],
 		["_item", "", [""]]
 	];
 
