@@ -1,5 +1,3 @@
-disableUserInput true;
-
 createDialog "DIA_ENDSCREEN";
 _dia = 300;
 _bg = 3000;
@@ -100,6 +98,5 @@ for "_x" from 1 to 120 do {
 	
 };
 
-sleep (15);
-disableUserInput false;
+sleep (10);
 endMission "END1";

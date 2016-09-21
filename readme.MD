@@ -1,4 +1,4 @@
-Framework Version: 3.1.1
+Framework Version: 3.2.0
 
 For information on how to make a mission please visit:
 https://github.com/dklollol/Olsen-Framework-Arma-3/wiki/Making-your-first-mission
@@ -398,6 +398,23 @@ FNC_AddItemVehicleRandom
 		Result:
 			n/a
 
+FNC_countTeam
+
+    Description:
+        Get unit count for set team.
+        
+    Parameters:
+        - team name [string]
+        
+    Returns:
+        unit count [number]
+        
+    Example:
+        "USMC" call FNC_countTeam
+        
+            Result:
+                Amount of alive units in USMC is returned
+                Returned: 10
 
 
 Internal gearscript's functions:

@@ -8,13 +8,13 @@
 #include "anti_nd\root.sqf"
 #include "auto_track_assets\root.sqf"
 #include "disconnect_control\root.sqf"
-#include "EG_Spectator_Mode\root.sqf"
-#include "interact_menu_debug\root.sqf"
+#include "eg_spectator_mode\root.sqf"
 #include "jip\root.sqf"
 #include "start_on_safe\root.sqf"
 #include "start_with_earplugs\root.sqf"
 
-//Additional modules that can be enabled by removing the // please note that there might be settings to be tweaked inside the modules/module folder.
+//Additional modules that can be enabled by removing the // 
+//!!Some of them require changing settings in their settings.sqf file!!
 
 //#include "a3_endscreen\root.sqf"
 //#include "aiskill\root.sqf"
