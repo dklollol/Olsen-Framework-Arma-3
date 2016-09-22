@@ -2,34 +2,42 @@
 
 #include "settings.sqf"
 
+if (isServer && FW_enable_channel_names) then {
+    {
+        _x params ["_cn_radioName", "_cn_channel", "_cn_label", "_cn_name"];
+        [_cn_radioName, FW_Presets select _forEachIndex, _cn_channel, _cn_label, _cn_name] remoteExecCall ["acre_api_fnc_setPresetChannelField", 0, true];
+    } foreach FW_ChannelNames;
+};
+
 if(!isDedicated) then {
 	[] spawn {
 		waitUntil { !isNull acre_player };
 
 		private _side = side player;
         private _customSide = (player getVariable ["FW_CustomScramble", nil]);
-        private _preset = "default";
-        
+
         if (isNil "_customSide") then {
             _side = _customSide;
         };
         
+        private _side_i = 3;
+        switch (_side) do { 
+            case west: { 
+                _side_i = 0;
+            };
+            case east: { 
+                _side_i = 1;
+            };
+            case independent: { 
+                _side_i = 2;
+            };
+            default { 
+                _side_i = 3;
+            };
+        };
         
         if (FW_enable_scramble) then {
-            switch _side do { 
-                case east: { 
-                    _preset = "default2";
-                };
-                case west: { 
-                    _preset = "default3";
-                };
-                case independent: { 
-                    _preset = "default4";
-                };
-                default { 
-                    _preset = "default";
-                };
-            };
+            private _preset = FW_Presets select _side_i;
             
             ["ACRE_PRC343", _preset ] call acre_api_fnc_setPreset;
             ["ACRE_PRC77", _preset ] call acre_api_fnc_setPreset;
@@ -37,22 +45,17 @@ if(!isDedicated) then {
             ["ACRE_PRC152", _preset ] call acre_api_fnc_setPreset;
             ["ACRE_PRC148", _preset ] call acre_api_fnc_setPreset;
         };
-        
-        if (FW_enable_channel_names) then {
-            FW_ChannelName params ["_cn_radioName", "_cn_channel", "_cn_label", "_cn_name"];
-            [_cn_radioName, _preset, _cn_channel, _cn_label, _cn_name] remoteExecCall ["acre_api_fnc_setPresetChannelField", 0, true];
-        };
 
-        private _languages = player getVariable ["FW_Languages", []];
-        
         if (FW_enable_babel) then {
-            FW_Languages call acre_api_fnc_babelSetSpokenLanguages;
-        };
+            (FW_LanguagesBabel select _side_i) call acre_api_fnc_babelSetSpokenLanguages;
         
-        if (count _languages > 0) then {
-            
-            _languages call acre_api_fnc_babelSetSpokenLanguages;
-            
+            private _languages = player getVariable ["FW_Languages", []];
+
+            if (count _languages > 0) then {
+                
+                _languages call acre_api_fnc_babelSetSpokenLanguages;
+                
+            };
         };
 
         private _channels = player getVariable ["FW_Channels", []];
@@ -72,7 +75,6 @@ if(!isDedicated) then {
             };
         } foreach _channels;
 		
-		FW_RadioScrambler = true;
 	};
     
 };
