@@ -87,3 +87,27 @@ FW_Languages_babel = [
     ["fr", "en", "ru"],//INDEPENDENT
     ["en"]//DEFAULT
 ];
+
+///////////////////////
+//EXTRA SETTINGS
+///////////////////////
+
+/*
+ * For More info visit:
+ * http://acre.idi-systems.com/api/api_general.html
+*/
+
+//Specify and value between 1.0 and 0. Setting it to 0 means the terrain loss model is disabled, 1 is default.
+//Note this setting only effects loss caused by terrain, loss due to power dissipation over range will always occur.
+
+//[1.0] call acre_api_fnc_setLossModelScale;
+
+//Sets the duplex of radio transmissions.
+//If set to true, it means that you will receive transmissions even while talking and multiple people can speak at the same time.
+
+//[false] call acre_api_fnc_setFullDuplex;
+
+//Sets whether transmissions will interfere with each other.
+//This, by default, causes signal loss when multiple people are transmitting on the same frequency.
+
+//[true] call acre_api_fnc_setInterference;
