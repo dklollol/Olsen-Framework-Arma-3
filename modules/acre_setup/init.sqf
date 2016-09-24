@@ -8,7 +8,6 @@ if (isServer && FW_enable_channel_names) then {
         {
             _x params ["_radioName", "_channel", "_label", "_name"];
             _label = [_radioName, _label] call acre_api_fnc_mapChannelFieldName;
-            systemChat str _label;
             [_radioName, FW_Presets select _index, _channel, _label, _name] remoteExecCall ["acre_api_fnc_setPresetChannelField", 0, true];
 
         } foreach _x;
