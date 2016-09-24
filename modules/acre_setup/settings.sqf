@@ -12,7 +12,7 @@ FW_enable_scramble = false;
  * 
  * Example:
  * [this, east] call FNC_SetScramble;
- * Will set unit's radio to set faction's scramble setting.
+ * Will set unit's radio to east's scramble setting.
  * (if following example is used on west unit, that unit will hear east units on radio, but won't hear west)
 */
 
@@ -40,22 +40,21 @@ FW_enable_channel_names = false;
 //define custom radio channel names in following array
 //don't change "label" value!
 FW_ChannelNames = [
-    [//WEST
-        ["ACRE_PRC148", "1", "label", "1PLT"],
-        ["ACRE_PRC148", "2", "label", "2PLT"],
+    [//WEST - USE SIDE SETTINGS ONLY IF SCRAMBLE IS ON
+        ["ACRE_PRC152", "1", "label", "name west"],
+        ["ACRE_PRC148", "2", "label", "name west 2"],
         ["ACRE_PRC117F", "10", "label", "CHANNEL NAME"]
     ],
     [//EAST
-        ["ACRE_PRC148", "1", "label", "1PLT"],
+        ["ACRE_PRC148", "1", "label", "1PLT"]
     ],
     [//INDEPENDENT
-        ["ACRE_PRC148", "1", "label", "1PLT"],
-        ["ACRE_PRC148", "2", "label", "2PLT"]
+    
     ],
-    [//DEFAULT
-        ["ACRE_PRC148", "1", "label", "1PLT"],
-        ["ACRE_PRC148", "2", "label", "2PLT"]
-    ],
+    [//DEFAULT - USE THIS IF SCRAMBLE IS OFF
+        ["ACRE_PRC148", "1", "label", "default"],
+        ["ACRE_PRC148", "2", "label", "default 2"]
+    ]
 ];
 
 //////////////
@@ -111,3 +110,9 @@ FW_Languages_babel = [
 //This, by default, causes signal loss when multiple people are transmitting on the same frequency.
 
 //[true] call acre_api_fnc_setInterference;
+
+//Sets whether AI can detect players speaking.
+//This utilizes an advanced model of inverse-square volume detection and randomization against the range of the unit, and duration and quantity of speaking.
+//In a nutshell, the closer you are to an AI unit and the more you speak - the better chance he has of hearing you.
+
+//[false] call acre_api_fnc_setRevealToAI;

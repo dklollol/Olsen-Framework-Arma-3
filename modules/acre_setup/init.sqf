@@ -4,8 +4,14 @@
 
 if (isServer && FW_enable_channel_names) then {
     {
-        _x params ["_cn_radioName", "_cn_channel", "_cn_label", "_cn_name"];
-        [_cn_radioName, FW_Presets select _forEachIndex, _cn_channel, _cn_label, _cn_name] remoteExecCall ["acre_api_fnc_setPresetChannelField", 0, true];
+        _index = _forEachIndex;
+        {
+            _x params ["_radioName", "_channel", "_label", "_name"];
+            _label = [_radioName, _label] call acre_api_fnc_mapChannelFieldName;
+            systemChat str _label;
+            [_radioName, FW_Presets select _index, _channel, _label, _name] remoteExecCall ["acre_api_fnc_setPresetChannelField", 0, true];
+
+        } foreach _x;
     } foreach FW_ChannelNames;
 };
 
@@ -16,7 +22,7 @@ if(!isDedicated) then {
 		private _side = side player;
         private _customSide = (player getVariable ["FW_CustomScramble", nil]);
 
-        if (isNil "_customSide") then {
+        if (!isNil "_customSide") then {
             _side = _customSide;
         };
         
@@ -57,18 +63,18 @@ if(!isDedicated) then {
                 
             };
         };
-
+        
+        waitUntil {[] call acre_api_fnc_isInitialized};
+        
         private _channels = player getVariable ["FW_Channels", []];
 
-        private _radioID;
         {
             _x params [
                 ["_radio", ""],
                 ["_channel", 1],
                 ["_spatial", "CENTER"]
             ];
-            _radioID = [_radio] call acre_api_fnc_getRadioByType;
-            
+            private _radioID = [_radio] call acre_api_fnc_getRadioByType;
             if (!isNil "_radioID") then {
                 [_radioID, _channel] call acre_api_fnc_setRadioChannel;
                 [_radioID, _spatial] call acre_api_fnc_setRadioSpatial;

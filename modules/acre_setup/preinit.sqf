@@ -15,7 +15,7 @@ FNC_SetRadio = {
 
 	private _channels = _unit getVariable ["FW_Channels", []];
 
-	_channels pushBack [_radio, _channel, _spatial]];
+	_channels pushBack [_radio, _channel, _spatial];
 
 	_unit setVariable ["FW_Channels", _channels, false];
 
