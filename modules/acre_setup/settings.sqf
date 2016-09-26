@@ -52,8 +52,8 @@ FW_ChannelNames = [
     
     ],
     [//DEFAULT - USE THIS IF SCRAMBLE IS OFF
-        ["ACRE_PRC148", "1", "label", "default"],
-        ["ACRE_PRC148", "2", "label", "default 2"]
+        ["ACRE_PRC148", "1", "label", "default name"],
+        ["ACRE_PRC148", "2", "label", "default name 2"]
     ]
 ];
 
@@ -75,12 +75,15 @@ FW_enable_babel = false;
 */
 
 //define all available languages here
-["en", "English"] call acre_api_fnc_babelAddLanguageType;
-["ru", "Russian"] call acre_api_fnc_babelAddLanguageType;
-["fr", "French"] call acre_api_fnc_babelAddLanguageType;
+
+FW_all_languages = [
+    ["en", "English"],
+    ["ru", "Russian"],
+    ["fr", "French"]
+];
 
 //define languages for different sides
-FW_Languages_babel = [
+FW_languages_babel = [
     ["fr", "en"],//WEST
     ["ru", "en"],//EAST
     ["fr", "en", "ru"],//INDEPENDENT

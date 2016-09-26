@@ -52,7 +52,9 @@ if(!isDedicated) then {
         };
 
         if (FW_enable_babel) then {
-            (FW_LanguagesBabel select _side_i) call acre_api_fnc_babelSetSpokenLanguages;
+            {_x call acre_api_fnc_babelAddLanguageType;} foreach FW_all_languages;
+            
+            (FW_languages_babel select _side_i) call acre_api_fnc_babelSetSpokenLanguages;
         
             private _languages = player getVariable ["FW_Languages", []];
 
