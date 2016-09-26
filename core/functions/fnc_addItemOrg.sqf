@@ -23,7 +23,7 @@ private ["_succes", "_parents", "_type", "_message"];
 private _amount = 1;
 private _position = "none";
 
-if !(_item call FNC_checkClassname) exitWith {};
+if !([_item, _unit] call FNC_checkClassname) exitWith {};
 
 if (count _this > 3) then {
 

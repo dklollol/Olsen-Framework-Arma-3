@@ -23,7 +23,7 @@ _item = _this select 2;
 _amount = 1;
 _type = (_item call BIS_fnc_itemType) select 1;
 
-if !(_item call FNC_checkClassname) exitWith {};
+if !([_item] call FNC_checkClassname) exitWith {};
 
 if (count _this > 3) then {
 
