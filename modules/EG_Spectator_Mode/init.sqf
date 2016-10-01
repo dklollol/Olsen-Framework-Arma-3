@@ -19,6 +19,46 @@ if (!isDedicated) then {
 			};
 		};
 	};
+    
+    eg_keyHandler_display_hidden = false;
+    
+    eg_keyHandler = {
+        params ["_control", "_code", "_shift", "_control", "_alt"];
+
+        private _acre = ["ACRE2", "HeadSet"] call CBA_fnc_getKeybind;
+        if (!isNil "_acre") then {
+            private _action = _acre select 4;
+            private _keys = _acre select 5;
+
+            if (_code == _keys select 0 && (_keys select 1) isEqualTo [_shift, _control, _alt]) then {
+                call _action;
+            };
+        };
+        
+        if (_code == 35 && !_shift && _control && !_alt) then {
+            if (!eg_keyHandler_display_hidden) then {
+                (findDisplay 60492) closedisplay 1;
+                eg_keyHandler_display_hidden = true;
+            };
+        };
+	};
+    
+    eg_keyHandler2 = {
+        params ["_control", "_code", "_shift", "_control", "_alt"];
+        
+        if (_code == 35 && !_shift && _control && !_alt &&
+        !isNil "eg_keyHandler_display_hidden" &&
+        {eg_keyHandler_display_hidden}
+        ) then {
+            ([] call BIS_fnc_displayMission) createDisplay "RscDisplayEGSpectator";
+            eg_keyHandler_display_hidden = false;
+            
+            eg_keyHandle = (findDisplay 60492) displayAddEventHandler ["keyDown", {call eg_keyHandler;}];
+            if (killcam_active) then {
+                killcam_keyHandle = (findDisplay 60492) displayAddEventHandler ["keyDown", {call killcam_toggleFnc;}];
+            };
+        };
+    };
 
 	#include "settings.sqf"
 
@@ -177,6 +217,14 @@ if (!isDedicated) then {
 				_cam = missionNamespace getVariable ["BIS_EGSpectatorCamera_camera", objNull];
 				
 				if (_cam != objNull) then {
+                    
+                    [{!isNull (findDisplay 60492)}, {
+							DEBUG_MSG("Display loaded, attaching key EH")
+							eg_keyHandle = (findDisplay 60492) displayAddEventHandler ["keyDown", {call eg_keyHandler;}];
+                            eg_keyHandle = (findDisplay 46) displayAddEventHandler ["keyDown", {call eg_keyHandler2}];
+					}, []] call CBA_fnc_waitUntilAndExecute;
+                    
+                    
 					if (!killcam_active) then {
 						//we move 2 meters back so player's body is visible
 						_pos = ([_pos, -2, _dir] call BIS_fnc_relPos);
@@ -246,8 +294,10 @@ if (!isDedicated) then {
 				if (killcam_active) then {
 					_killcam_msg = "Press <t color='#FFA500'>K</t> to toggle indicator showing location where you were killed from.<br/>";
 				};
-				_text = format ["<t size='0.5' color='#ffffff'>%1Press <t color='#FFA500'>SHIFT</t>, <t color='#FFA500'>ALT</t> or <t color='#FFA500'>SHIFT+ALT</t> to modify camera speed. Open map by pressing <t color='#FFA500'>M</t> and click anywhere to move camera to that postion.<br/> 
-				Spectator controls can be customized in game <t color='#FFA500'>options->controls->'Camera'</t> tab.</t>", _killcam_msg];
+				_text = format ["<t size='0.5' color='#ffffff'>%1
+                Close spectator HUD by pressing <t color='#FFA500'>CTRL+H</t>.<br/>
+                Press <t color='#FFA500'>SHIFT</t>, <t color='#FFA500'>ALT</t> or <t color='#FFA500'>SHIFT+ALT</t> to modify camera speed. Open map by pressing <t color='#FFA500'>M</t> and click anywhere to move camera to that postion.<br/> 
+                Spectator controls can be customized in game <t color='#FFA500'>options->controls->'Camera'</t> tab.</t>", _killcam_msg];
 				
 				[_text, 0.55, 0.8, 20, 1] spawn BIS_fnc_dynamicText;
 
