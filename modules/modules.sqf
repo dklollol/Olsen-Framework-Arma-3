@@ -23,6 +23,7 @@
 //#include "ao_limit\root.sqf"
 //#include "call_mission\root.sqf"
 //#include "capturezone\root.sqf"
+//#include "cover_map\root.sqf"
 //#include "env_parameters\root.sqf"
 //#include "extract\root.sqf"
 //#include "hostage\root.sqf"

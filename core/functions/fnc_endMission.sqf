@@ -15,17 +15,23 @@
 
 private _scenario = _this;
 
-FW_MissionEnded = true;
+if (time > 0) then {
 
-{
+    FW_MissionEnded = true;
 
-    private _team = (_x select 0);
+    {
 
-    private _assets = _team call FNC_GetDamagedAssets;
+        private _team = (_x select 0);
 
-    [_team, 5, _assets select 0] call FNC_SetTeamVariable;
-    [_team, 6, _assets select 1] call FNC_SetTeamVariable;
+        private _assets = _team call FNC_GetDamagedAssets;
 
-} forEach FW_Teams;
+        [_team, 5, _assets select 0] call FNC_SetTeamVariable;
+        [_team, 6, _assets select 1] call FNC_SetTeamVariable;
 
-["FW_EndMission", [_scenario, FW_TimeLimit, FW_Teams]] call CBA_fnc_globalEvent;
+    } forEach FW_Teams;
+
+    ["FW_EndMission", [_scenario, FW_TimeLimit, FW_Teams]] call CBA_fnc_globalEvent;
+    
+} else {
+    "End Conditions have just been triggered. Mission is broken!" remoteExec ["systemChat", 0, false];
+};

@@ -6,10 +6,11 @@ if (isServer && FW_enable_channel_names) then {
     {
         _index = _forEachIndex;
         {
-            _x params ["_radioName", "_channel", "_label", "_name"];
-            _label = [_radioName, _label] call acre_api_fnc_mapChannelFieldName;
-            [_radioName, FW_Presets select _index, _channel, _label, _name] remoteExecCall ["acre_api_fnc_setPresetChannelField", 0, true];
-
+            _x params ["_channel", "_label", "_name"];
+            {
+                _label = [_x, _label] call acre_api_fnc_mapChannelFieldName;
+                [_x, FW_Presets select _index, _channel, _label, _name] remoteExecCall ["acre_api_fnc_setPresetChannelField", 0, true];
+            } forEach ["ACRE_PRC117F", "ACRE_PRC148", "ACRE_PRC152"];
         } foreach _x;
     } foreach FW_ChannelNames;
 };

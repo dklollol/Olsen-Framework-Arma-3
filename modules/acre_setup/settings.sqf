@@ -6,6 +6,9 @@ FW_Presets = ["default2", "default3", "default4", "default"]; //do not change
 
 FW_enable_scramble = false;
 
+//If enabled all sides will have different scramble frequencies.
+//Function below is to switch one unit to different scramble side.
+
 /*
  * FNC_SetScramble
  * Change unit's scramble so it matches set faction
@@ -41,9 +44,9 @@ FW_enable_channel_names = false;
 //don't change "label" value!
 FW_ChannelNames = [
     [//WEST - USE SIDE SETTINGS ONLY IF SCRAMBLE IS ON
-        ["ACRE_PRC152", "1", "label", "name west"],
-        ["ACRE_PRC148", "2", "label", "name west 2"],
-        ["ACRE_PRC117F", "10", "label", "CHANNEL NAME"]
+        ["1", "label", "name west"],
+        ["2", "label", "name west 2"],
+        ["10", "label", "CHANNEL NAME"]
     ],
     [//EAST
         ["ACRE_PRC148", "1", "label", "1PLT"]

@@ -10,9 +10,7 @@ if (isServer) then {
 	"" call FNC_StartingCount; //DO NOT REMOVE
 
 	[] spawn { //Spawns code running in parallel
-        
-        waitUntil {time > 1};
-        
+
 		while {!FW_MissionEnded} do { //Loops while the mission is not ended
 			
 			#include "customization\endConditions.sqf" //DO NOT REMOVE
