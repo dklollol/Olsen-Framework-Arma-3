@@ -107,18 +107,44 @@ FW_languages_babel = [
 
 //[1.0] call acre_api_fnc_setLossModelScale;
 
+
 //Sets the duplex of radio transmissions.
 //If set to true, it means that you will receive transmissions even while talking and multiple people can speak at the same time.
 
 //[false] call acre_api_fnc_setFullDuplex;
+
 
 //Sets whether transmissions will interfere with each other.
 //This, by default, causes signal loss when multiple people are transmitting on the same frequency.
 
 //[true] call acre_api_fnc_setInterference;
 
+
 //Sets whether AI can detect players speaking.
 //This utilizes an advanced model of inverse-square volume detection and randomization against the range of the unit, and duration and quantity of speaking.
 //In a nutshell, the closer you are to an AI unit and the more you speak - the better chance he has of hearing you.
 
 //[false] call acre_api_fnc_setRevealToAI;
+
+
+/*
+Sets the starting position for ACRE VOLUME SLIDER VALUE.
+[0.1] = 2-3 m.
+[0.4] = 20 m.
+[0.7] = 50 m. (can be heard out to 80 m.)
+[1.0] = unknown but + 50 m.
+[1.3] = unknown but + 50 m.
+*/
+
+//[0.4] call acre_api_fnc_setSelectableVoiceCurve;
+
+
+//Sets the starting position for ACRE VOLUME SLIDER. -2/-1/0/1/2 where 0 is Center.
+
+//acre_sys_gui_VolumeControl_Level = -1;
+
+
+//This setting can be used to disable the simulation of antenna radiation patterns for both the transmitting and receiving radios.
+//It will make all antennas act with perfect omni-directional behaviour. (true/false)
+
+//[true] call acre_api_fnc_ignoreAntennaDirection;
