@@ -2,36 +2,41 @@
 
 #include "settings.sqf"
 
-aidrivers_removeUnit = {
-    params ["_target", "_caller"];
+aidrivers_toggle = {
+    params ["_target", "_caller", "_id"];
+    if (!isNull (_target getVariable ["aidrivers_driver", objNull])) then {
+        [_target] call aidrivers_removeUnit;
+    } else {
+        [_target, _caller] call aidrivers_createUnit;
+    };
+};
 
-    private _driver = _target getVariable ["AI_driver", objNull];
+aidrivers_removeUnit = {
+    params ["_target"];
+
+    private _driver = _target getVariable ["aidrivers_driver", objNull];
     
     if (!isNull _driver) then {
         deleteVehicle _driver;
-        private _id = _target getVariable ["AI_driver_id", -1];
-        if (_id != -1) then {
-            _target removeAction _id;
-        };
-        _target addAction ["spawn AI driver", {_this remoteExecCall ["aidrivers_createUnit", 2, false];}, [], 0, false, true, "", "isNull (driver _target) && vehicle _this == _target"];
     };
 };
 
 aidrivers_createUnit = {
-    params ["_target", "_caller", "_id"];
+    params ["_target", "_caller"];
     
     if (!isNull driver _target) exitWith {};
-
-    _target removeAction _id;
     
-    [_target, {
-        private _id = _this addAction ["remove AI driver", {_this call aidrivers_removeUnit}, [], 0, false, true, "", "vehicle _this == _target"];
-        _this setVariable ["AI_driver_id", _id, false];
-    }] remoteExecCall ["BIS_fnc_Call", 0, false];
+    private _class = "B_Soldier_F";
+    if (side _caller == EAST) then {
+        _class = "O_Soldier_F";
+    };
+    if (side _caller == INDEPENDENT) then {
+        _class = "I_Soldier_F";
+    };
     
-    _unit = group _caller createUnit ["B_Soldier_F", [0,0,0], [], 0, "CAN_COLLIDE"];
+    _unit = group _caller createUnit [_class, [0,0,0], [], 0, "CAN_COLLIDE"];
 
-    _target setVariable ["AI_driver", _unit, true];
+    _target setVariable ["aidrivers_driver", _unit];
     
     _unit setCombatMode "BLUE";
     _unit moveInDriver _target;
@@ -47,7 +52,7 @@ aidrivers_createUnit = {
                 _unit enableAI "PATH";
             };
             if (!alive _target || !alive _caller || !alive _unit || (vehicle _unit) != _target) then {
-                [_target, _caller] remoteExecCall ["aidrivers_removeUnit", 0, false];
+                [_target, _caller] call aidrivers_removeUnit;
                 [_handle] call CBA_fnc_removePerFrameHandler;
             };
         }, 1, [_unit, _target, _caller, _id2]] call CBA_fnc_addPerFrameHandler;
@@ -56,5 +61,5 @@ aidrivers_createUnit = {
 };
 
 {
-    _x addAction ["spawn AI driver", {_this remoteExecCall ["aidrivers_createUnit", 2, false];}, [], 0, false, true, "", "isNull (driver _target) && vehicle _this == _target"];
+    _x addAction ["Add/Remove AI driver", {_this remoteExecCall ["aidrivers_toggle", 2, false];}, [], 0, false, true, "", "vehicle _this == _target"];
 } foreach VEHS;
