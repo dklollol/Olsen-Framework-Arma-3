@@ -38,7 +38,6 @@ aidrivers_createUnit = {
 
     _target setVariable ["aidrivers_driver", _unit];
     
-    _unit setCombatMode "BLUE";
     _unit moveInDriver _target;
     
     [{vehicle (_this select 0) != _this select 0}, {
