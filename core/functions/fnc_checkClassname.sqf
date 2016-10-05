@@ -19,7 +19,7 @@ params [
 
 private _result = (isClass (configfile >> "CfgWeapons" >> _class)
 || (isClass (configFile >> "CfgMagazines" >> _class))
-|| (isClass (configFile >> "CfgGlasses >> _class"))
+|| (isClass (configFile >> "CfgGlasses" >> _class))
 || (isClass (configFile >> "CfgVehicles" >> _class))
 );
 

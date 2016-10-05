@@ -5,15 +5,24 @@ _endTitle = 3001;
 _left = 3002;
 _right = 3003;
 
-_scenario = _this select 0;
-_timeLimt = _this select 1;
-_teams = _this select 2;
+params ["_scenario", "_timeLimit", "_teams"];
 
 {
 	
 	_x enableSimulation false;
 	
 } forEach vehicles;
+
+[] spawn {
+
+    sleep 4;
+    {
+
+        _x enableSimulation false;
+        removeAllWeapons _x;
+
+    } forEach allPlayers;
+};
 
 _leftText = "";
 _rightText = "";

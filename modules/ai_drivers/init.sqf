@@ -50,7 +50,7 @@ aidrivers_createUnit = {
             } else {
                 _unit enableAI "PATH";
             };
-            if (!alive _target || !alive _caller || !alive _unit || (vehicle _unit) != _target) then {
+            if (!alive _target || !alive _caller || !alive _unit || (vehicle _unit) != _target || (driver _target) != _unit) then {
                 [_target, _caller] call aidrivers_removeUnit;
                 [_handle] call CBA_fnc_removePerFrameHandler;
             };

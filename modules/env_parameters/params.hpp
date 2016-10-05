@@ -2,7 +2,7 @@
 
 class TimeOfDay {
 	title = "Time";
-	texts[] = {"Mission default", "0600", "1200", "1800", "0000", "Early dawn", "Dawn", "Dusk", "Early dusk", "Random"};
+	texts[] = {"Mission default", "0600", "1200", "1800", "0000", "Early dawn", "Dawn", "Early dusk", "Dusk", "Random"};
 	values[] = {-1, 6, 12, 18, 0, -2, -3, -4, -5, -10};
 	default = -1;
 };

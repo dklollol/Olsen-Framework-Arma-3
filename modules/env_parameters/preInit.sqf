@@ -21,16 +21,16 @@ if (isMultiplayer) then {
             
                 switch (_TimeParam) do {
                     case -2: {
-                        _t = (_sunsetSunrise select 0) - 0.5;
+                        _t = (_sunsetSunrise select 0) - 1.25;
                     };
                     case -3: {
-                        _t = (_sunsetSunrise select 0);
+                        _t = (_sunsetSunrise select 0) - 0.75;
                     };
                     case -4: {
                         _t = (_sunsetSunrise select 1);
                     };
                     case -5: {
-                        _t = (_sunsetSunrise select 1) - 0.5;
+                        _t = (_sunsetSunrise select 1) + 0.5;
                     };
                 };
             };
@@ -90,7 +90,7 @@ if (isMultiplayer) then {
 	if (_FogParam != -1) then {
         
         if (_FogParam == -10) then {
-            _FogParam = floor random 4;
+            _FogParam = (floor random [0, 10, 30]) / 10;
         };
         
 		if (defaultFogType) then {

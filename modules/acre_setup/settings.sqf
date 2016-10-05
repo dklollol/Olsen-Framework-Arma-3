@@ -49,14 +49,14 @@ FW_ChannelNames = [
         ["10", "label", "CHANNEL NAME"]
     ],
     [//EAST
-        ["ACRE_PRC148", "1", "label", "1PLT"]
+        ["1", "label", "1PLT"]
     ],
     [//INDEPENDENT
     
     ],
     [//DEFAULT - USE THIS IF SCRAMBLE IS OFF
-        ["ACRE_PRC148", "1", "label", "default name"],
-        ["ACRE_PRC148", "2", "label", "default name 2"]
+        ["1", "label", "default name"],
+        ["2", "label", "default name 2"]
     ]
 ];
 
