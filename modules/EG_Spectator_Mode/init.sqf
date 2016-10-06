@@ -151,7 +151,6 @@ if (!isDedicated) then {
 				_text = "respawn left";
 			};
 
-			call BIS_fnc_VRFadeIn;
 			cutText [format ['%1 %2', FW_RespawnTickets, _text], 'PLAIN DOWN'];
 			player setVariable ["FW_Body", player, true];
 		} 
@@ -177,7 +176,6 @@ if (!isDedicated) then {
 
 				player setVariable ["FW_Spectating", true, true];
 				[true] call acre_api_fnc_setSpectator;
-				call BIS_fnc_VRFadeIn;
 				
 				//we set default pos in case all methods fail and we and up with 0,0,0
 				_pos = [2000, 2000, 100];

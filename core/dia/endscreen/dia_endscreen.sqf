@@ -28,14 +28,8 @@ _leftText = "";
 _rightText = "";
 _textSide = 0;
 {
-	
-	_name = _x select 0;
-	_side = _x select 1;
-	_type = _x select 2;
-	_start = _x select 3;
-	_current = _x select 4;
-	_disabled = _x select 5;
-	_destroyed = _x select 6;
+
+    _x params ["_name", "_side", "_type", "_start", "_current", "_disabled", "_destroyed"];
 	
 	_temp = format ["%1<br />Casualties: %2 out of %3<br />", _name, (_start - _current), _start];
 
@@ -80,17 +74,17 @@ _textSide = 0;
 
 _endTitleText = _scenario;
 
-if (_timeLimt != 0) then {
+if (_timeLimit != 0) then {
 
 	_time = ceil(time / 60);
 
-	if (_time >= _timeLimt) then {
+	if (_time >= _timeLimit) then {
 		
-		_time = _timeLimt;
+		_time = _timeLimit;
 		
 	};
 
-	_timeLimitText = format ["Mission duration: %1 out of %2 minutes", _time, _timeLimt];
+	_timeLimitText = format ["Mission duration: %1 out of %2 minutes", _time, _timeLimit];
 
 	_endTitleText = format ["%1<br />%2", _scenario, _timeLimitText];
 	

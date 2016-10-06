@@ -12,18 +12,6 @@
  * Public: No
  */
 
-("BIS_layerEstShot" call BIS_fnc_rscLayer) cutRsc ["RscStatic", "PLAIN"];
-
-sleep 0.4;
-
-playSound "Simulation_Fatal";
-call BIS_fnc_VRFadeOut;
-
-sleep 1;
-
-playSound ("Transition" + str (1 + floor random 3));
-
-sleep 1;
 
 if (FW_RespawnTickets > 0) then {
 
@@ -33,6 +21,16 @@ if (FW_RespawnTickets > 0) then {
 
     player setVariable ["FW_Dead", true, true]; //Tells the framework the player is dead
 
-    ["<br/>You are dead.<br/><br/>Entering spectator mode...", 0, 0.2, 2.5, 0.5, 0, 1000] spawn BIS_fnc_dynamicText;
+    cutText ["\n", "BLACK", 0.01, true];
+    ["FW_death", 0, true] call ace_common_fnc_setHearingCapability;
+    0 fadeSound 0;
+    sleep 2.5;
+    
+    ["<t color='#FF0000'>YOU ARE DEAD</t>", 0, 0.4, 1.5, 0.5, 0, 1000] spawn BIS_fnc_dynamicText;
+    
+    sleep 2.5;
+    cutText ["\n", "PLAIN", 0, true];
+    ["FW_death", 0, false] call ace_common_fnc_setHearingCapability;
+    0 fadeSound 1;
 
 };
