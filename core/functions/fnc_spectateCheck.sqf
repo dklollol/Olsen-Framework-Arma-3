@@ -21,16 +21,6 @@ if (FW_RespawnTickets > 0) then {
 
     player setVariable ["FW_Dead", true, true]; //Tells the framework the player is dead
 
-    cutText ["\n", "BLACK", 0.01, true];
-    ["FW_death", 0, true] call ace_common_fnc_setHearingCapability;
-    0 fadeSound 0;
-    sleep 2.5;
-    
-    ["<t color='#FF0000'>YOU ARE DEAD</t>", 0, 0.4, 1.5, 0.5, 0, 1000] spawn BIS_fnc_dynamicText;
-    
-    sleep 2.5;
-    cutText ["\n", "PLAIN", 0, true];
-    ["FW_death", 0, false] call ace_common_fnc_setHearingCapability;
-    0 fadeSound 1;
+
 
 };

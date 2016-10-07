@@ -5,6 +5,39 @@
 
 if (!isDedicated) then {
 
+    FW_KilledEh = player addEventHandler ["Killed", {
+        [] spawn {
+            if (eg_instant_death) then {
+                sleep 0.1;
+                cutText ["\n", "BLACK", 0.01, true];
+                ["FW_death", 0, true] call ace_common_fnc_setHearingCapability;
+                0 fadeSound 0;
+                sleep 1.9;
+                
+                ["<t color='#FF0000'>YOU ARE DEAD</t>", 0, 0.4, 2, 0.5, 0, 1000] spawn BIS_fnc_dynamicText;
+                
+                sleep 3;
+                cutText ["\n","BLACK IN", 5];
+                ["FW_death", 0, false] call ace_common_fnc_setHearingCapability;
+                0 fadeSound 1;
+            } else {
+                ("BIS_layerEstShot" call BIS_fnc_rscLayer) cutRsc ["RscStatic", "PLAIN"];
+
+                sleep 0.4;
+
+                playSound "Simulation_Fatal";
+                call BIS_fnc_VRFadeOut;
+
+                sleep 1;
+
+                playSound ("Transition" + str (1 + floor random 3));
+
+                sleep 1;
+                call BIS_fnc_VRFadeIn;
+            };
+        };
+    }];
+
 	//function ran from keyHandler
 	killcam_toggleFnc = {
 		//37 is DIK code for K
@@ -183,14 +216,14 @@ if (!isDedicated) then {
 				
 				//our function is called from Respawned EH, so select 1 is player's body
 				_body = (_this select 1);
-				if (getMarkerColor Spectator_Marker == "") then {
+				if (getMarkerColor eg_spectator_marker == "") then {
 					if (!isNull _body) then {
 						//set camera pos on player body
 						_pos = [(getpos _body) select 0, (getpos _body) select 1, ((getposATL _body) select 2)+1.2];
 						_dir = getDir _body;
 					};
 				} else {
-					_pos = getmarkerpos Spectator_Marker;
+					_pos = getmarkerpos eg_spectator_marker;
 				};
 				
 				if (abs(_pos select 0) < 2 && abs(_pos select 1) < 2) then {
@@ -200,15 +233,15 @@ if (!isDedicated) then {
 				["Initialize", 
 					[
 					player,
-					Whitelisted_Sides,
-					Ai_Viewed_By_Spectator,
-					Free_Camera_Mode_Available,
-					Third_Person_Perspective_Camera_mode_Available,
-					Show_Focus_Info_Widget,
-					Show_Camera_Buttons_Widget,
-					Show_Controls_Helper_Widget,
-					Show_Header_Widget,
-					Show_Entities_And_Locations_Lists
+					eg_Whitelisted_Sides,
+					eg_Ai_Viewed_By_Spectator,
+					eg_Free_Camera_Mode_Available,
+					eg_Third_Person_Perspective_Camera_mode_Available,
+					eg_Show_Focus_Info_Widget,
+					eg_Show_Camera_Buttons_Widget,
+					eg_Show_Controls_Helper_Widget,
+					eg_Show_Header_Widget,
+					eg_Show_Entities_And_Locations_Lists
 					]
 				] call BIS_fnc_EGSpectator;
 				
