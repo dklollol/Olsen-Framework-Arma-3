@@ -1,4 +1,28 @@
-#include "functions.sqf" //DO NOT REMOVE
+PREP(getTeamVariable);
+PREP(setTeamVariable);
+PREP(eventKilled);
+PREP(eventPlayerSpawned);
+PREP(eventSpawned);
+PREP(eventRespawned);
+PREP(eventDisconnect);
+PREP(trackUnit);
+PREP(untrackUnit);
+PREP(StartingCount);
+PREP(stackNames);
+PREP(getDamagedAssets);
+PREP(createRespawnMarker);
+PREP(inArea);
+PREP(areaCount);
+PREP(endMission);
+PREP(casualtyPercentage);
+PREP(casualtyCount);
+PREP(alive);
+PREP(hasEmptyPositions);
+PREP(inVehicle);
+PREP(addTeam);
+PREP(spectateCheck);
+PREP(spectatePrep);
+PREP(countTeam);
 
 enableSaving [false, false];
 

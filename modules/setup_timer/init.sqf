@@ -8,7 +8,7 @@ if !(markerType NAME == "") then { \
 	_temp call FNC_DebugMessage; \
 };
 
-if (!isDedicated) then {
+if (!isServer) then {
 	
 	private ["_markers", "_pos", "_timeLeft", "_string"];
 
@@ -18,8 +18,10 @@ if (!isDedicated) then {
 	
 	if ((count _markers) > 0) then {
 	
-		[_markers] spawn {
+		[_markers, serverTime] spawn {
 			
+            params ["_markers", "_startTime"];
+            
 			_marker = [];
 			
 			{
@@ -33,7 +35,7 @@ if (!isDedicated) then {
 					
 				};
 				
-			} forEach (_this select 0);
+			} forEach _markers;
 			
 			_pos = getPosATL (vehicle player);
 			
@@ -51,7 +53,7 @@ if (!isDedicated) then {
 					
 				};
 				
-				_timeLeft = round((_marker select 0) - time);
+				_timeLeft = round(_startTime + (_marker select 0) - serverTime);
 				
 				if (_timeLeft < 0) then {
 					
