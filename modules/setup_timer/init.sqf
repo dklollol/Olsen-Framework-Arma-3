@@ -8,6 +8,14 @@ if !(markerType NAME == "") then { \
 	_temp call FNC_DebugMessage; \
 };
 
+if (isServer) then {
+    [] spawn {
+        waitUntil {time > 0};
+        FW_setup_start_time = serverTime;
+        publicVariable "FW_setup_start_time";
+    };
+};
+
 if (!isServer) then {
 	
 	_markers = [];
@@ -15,14 +23,6 @@ if (!isServer) then {
 	#include "settings.sqf"
 	
 	if ((count _markers) > 0) then {
-    
-        if (isServer) then {
-            [] spawn {
-                waitUntil {time > 0};
-                FW_setup_start_time = serverTime;
-                publicVariable "FW_setup_start_time";
-            };
-        };
 	
 		[_markers] spawn {
 			
