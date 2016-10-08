@@ -10,17 +10,27 @@ if !(markerType NAME == "") then { \
 
 if (!isServer) then {
 	
-	private ["_markers", "_pos", "_timeLeft", "_string"];
-
 	_markers = [];
 
 	#include "settings.sqf"
 	
 	if ((count _markers) > 0) then {
+    
+        if (isServer) then {
+            [] spawn {
+                waitUntil {time > 0};
+                FW_setup_start_time = serverTime;
+                publicVariable "FW_setup_start_time";
+            };
+        };
 	
-		[_markers, serverTime] spawn {
+		[_markers] spawn {
 			
-            params ["_markers", "_startTime"];
+            private ["_pos", "_timeLeft", "_string"];
+            params ["_markers"];
+            
+            waitUntil {!isNil "FW_setup_start_time"};
+            _startTime = FW_setup_start_time;
             
 			_marker = [];
 			
