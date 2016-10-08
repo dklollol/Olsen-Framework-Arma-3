@@ -1,5 +1,7 @@
 ["ACRE setup", "Module for all ACRE settings.", "BlackHawk"] call FNC_RegisterModule;
 
+FW_Presets = ["default2", "default3", "default4", "default"];
+
 #include "settings.sqf"
 
 if (isServer && FW_enable_channel_names) then {
@@ -22,6 +24,24 @@ if(!isDedicated) then {
 		private _side = side player;
         private _customSide = (player getVariable ["FW_CustomScramble", nil]);
 
+        if (!isNil "FW_Acre_Volume_Value") then {
+            if ((abs FW_Acre_Volume_Value) > 2) then {
+              FW_Acre_Volume_Value = 0;
+            };
+            private _v = 0.7;
+            switch (FW_Acre_Volume_Value) do {
+                case -2: {_v = 0.1;}; 
+                case -1: {_v = 0.4;}; 
+                case 0: {_v = 0.7;}; 
+                case 1: {_v = 1.0;}; 
+                case 2: {_v = 1.3;}; 
+                default {_v = 0.7;}; 
+            };
+            [_v] call acre_api_fnc_setSelectableVoiceCurve;
+            acre_sys_gui_VolumeControl_Level = FW_Acre_Volume_Value;
+        };
+        
+        
         if (!isNil "_customSide") then {
             _side = _customSide;
         };

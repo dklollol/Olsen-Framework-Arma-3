@@ -1,5 +1,3 @@
-FW_Presets = ["default2", "default3", "default4", "default"]; //do not change
-
 //////////////////
 //RADIO SCRAMBLE
 //////////////////
@@ -42,21 +40,43 @@ FW_enable_channel_names = false;
 
 //define custom radio channel names in following array
 //don't change "label" value!
+
 FW_ChannelNames = [
     [//WEST - USE SIDE SETTINGS ONLY IF SCRAMBLE IS ON
-        ["1", "label", "name west"],
-        ["2", "label", "name west 2"],
-        ["10", "label", "CHANNEL NAME"]
+        ["1", "label", "PLTNET 1"],
+        ["2", "label", "PLTNET 2"],
+        ["3", "label", "PLTNET 3"],
+        ["4", "label", "PLTNET 4"],
+        ["5", "label", "COY"],
+        ["6", "label", "CAS"],
+        ["7", "label", "FIRES"]
     ],
     [//EAST
-        ["1", "label", "1PLT"]
+        ["1", "label", "PLTNET 1"],
+        ["2", "label", "PLTNET 2"],
+        ["3", "label", "PLTNET 3"],
+        ["4", "label", "PLTNET 4"],
+        ["5", "label", "COY"],
+        ["6", "label", "CAS"],
+        ["7", "label", "FIRES"]
     ],
     [//INDEPENDENT
-    
+        ["1", "label", "PLTNET 1"],
+        ["2", "label", "PLTNET 2"],
+        ["3", "label", "PLTNET 3"],
+        ["4", "label", "PLTNET 4"],
+        ["5", "label", "COY"],
+        ["6", "label", "CAS"],
+        ["7", "label", "FIRES"]
     ],
     [//DEFAULT - USE THIS IF SCRAMBLE IS OFF
-        ["1", "label", "default name"],
-        ["2", "label", "default name 2"]
+        ["1", "label", "PLTNET 1"],
+        ["2", "label", "PLTNET 2"],
+        ["3", "label", "PLTNET 3"],
+        ["4", "label", "PLTNET 4"],
+        ["5", "label", "COY"],
+        ["6", "label", "CAS"],
+        ["7", "label", "FIRES"]
     ]
 ];
 
@@ -90,7 +110,7 @@ FW_languages_babel = [
     ["fr", "en"],//WEST
     ["ru", "en"],//EAST
     ["fr", "en", "ru"],//INDEPENDENT
-    ["en"]//DEFAULT
+    ["en"]//DEFAULT/CIVILIAN
 ];
 
 ///////////////////////
@@ -99,52 +119,62 @@ FW_languages_babel = [
 
 /*
  * For More info visit:
+ * http://gitlab.idi-systems.com/idi-systems/acre2-public/wikis/home
  * http://acre.idi-systems.com/api/api_general.html
+ *
+ * Remove // to enable a setting.
 */
 
-//Specify and value between 1.0 and 0. Setting it to 0 means the terrain loss model is disabled, 1 is default.
-//Note this setting only effects loss caused by terrain, loss due to power dissipation over range will always occur.
+/*Specify and value between 1.0 and 0. Setting it to 0 means the terrain loss model is disabled, 1 is default.
+  Note this setting only effects loss caused by terrain, loss due to power dissipation over range will always occur.*/
 
-//[1.0] call acre_api_fnc_setLossModelScale;
+//[0.0] call acre_api_fnc_setLossModelScale;
 
 
-//Sets the duplex of radio transmissions.
-//If set to true, it means that you will receive transmissions even while talking and multiple people can speak at the same time.
+/*Sets the duplex of radio transmissions.
+  If set to true, it means that you will receive transmissions even while talking and multiple people can speak at the same time.*/
 
 //[false] call acre_api_fnc_setFullDuplex;
 
 
-//Sets whether transmissions will interfere with each other.
-//This, by default, causes signal loss when multiple people are transmitting on the same frequency.
+/*Sets whether transmissions will interfere with each other.
+  This, by default, causes signal loss when multiple people are transmitting on the same frequency.*/
 
-//[true] call acre_api_fnc_setInterference;
+//[false] call acre_api_fnc_setInterference;
 
 
-//Sets whether AI can detect players speaking.
-//This utilizes an advanced model of inverse-square volume detection and randomization against the range of the unit, and duration and quantity of speaking.
-//In a nutshell, the closer you are to an AI unit and the more you speak - the better chance he has of hearing you.
+/*Sets whether AI can detect players speaking.
+  This utilizes an advanced model of inverse-square volume detection and randomization against the range of the unit, and duration and quantity of speaking.
+  In a nutshell, the closer you are to an AI unit and the more you speak - the better chance he has of hearing you.*/
 
 //[false] call acre_api_fnc_setRevealToAI;
 
 
-/*
-Sets the starting position for ACRE VOLUME SLIDER VALUE.
-[0.1] = 2-3 m.
-[0.4] = 20 m.
-[0.7] = 50 m. (can be heard out to 80 m.)
-[1.0] = unknown but + 50 m.
-[1.3] = unknown but + 50 m.
-*/
+/*This setting can be used to disable the simulation of antenna radiation patterns for both the transmitting and receiving radios.
+  It will make all antennas act with perfect omni-directional behaviour. (true/false)*/
 
-//[0.4] call acre_api_fnc_setSelectableVoiceCurve;
-
-
-//Sets the starting position for ACRE VOLUME SLIDER. -2/-1/0/1/2 where 0 is Center.
-
-//acre_sys_gui_VolumeControl_Level = -1;
-
-
-//This setting can be used to disable the simulation of antenna radiation patterns for both the transmitting and receiving radios.
-//It will make all antennas act with perfect omni-directional behaviour. (true/false)
 
 //[true] call acre_api_fnc_ignoreAntennaDirection;
+
+
+/*
+  Direct speech slider
+  ACRE2 has a built in direct speech slider allowing you to determine how far your voice in direct speech should travel. The system has five states and by default starts in the middle state. The below table contains an approximated table with empirical testing by Bullhorn.
+  
+  Volume state: -1 | Loud (m): 1  | Quiet (m): 2  | Barely audible (m): 13
+  Volume state: -2 | Loud (m): 3  | Quiet (m): 15 | Barely audible (m): 55
+  Volume state: 0  | Loud (m): 8  | Quiet (m): 30 | Barely audible (m): 100
+  Volume state: -1 | Loud (m): 12 | Quiet (m): 45 | Barely audible (m): 145
+  Volume state: -2 | Loud (m): 15 | Quiet (m): 55 | Barely audible (m): 196
+  
+  
+  Volume state  |  Loud (m)  |  Quiet (m)  |  Barely audible (m)
+  -2            |  1         |  2          |  13
+  -1            |  3         |  15         |  55
+   0            |  8         |  30         |  100
+  +1            |  12        |  45         |  145
+  +2            |  15        |  55         |  195
+*/
+
+FW_Acre_Volume_Value = -1;
+
