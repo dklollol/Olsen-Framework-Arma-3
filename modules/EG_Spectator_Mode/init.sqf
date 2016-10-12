@@ -5,39 +5,6 @@
 
 if (!isDedicated) then {
 
-    FW_KilledEh = player addEventHandler ["Killed", {
-        [] spawn {
-            if (eg_instant_death) then {
-                sleep 0.1;
-                cutText ["\n", "BLACK", 0.01, true];
-                ["FW_death", 0, true] call ace_common_fnc_setHearingCapability;
-                0 fadeSound 0;
-                sleep 1.9;
-                
-                ["<t color='#FF0000'>YOU ARE DEAD</t>", 0, 0.4, 2, 0.5, 0, 1000] spawn BIS_fnc_dynamicText;
-                
-                sleep 3;
-                cutText ["\n","BLACK IN", 5];
-                ["FW_death", 0, false] call ace_common_fnc_setHearingCapability;
-                0 fadeSound 1;
-            } else {
-                ("BIS_layerEstShot" call BIS_fnc_rscLayer) cutRsc ["RscStatic", "PLAIN"];
-
-                sleep 0.4;
-
-                playSound "Simulation_Fatal";
-                call BIS_fnc_VRFadeOut;
-
-                sleep 1;
-
-                playSound ("Transition" + str (1 + floor random 3));
-
-                sleep 1;
-                call BIS_fnc_VRFadeIn;
-            };
-        };
-    }];
-
 	//function ran from keyHandler
 	killcam_toggleFnc = {
 		//37 is DIK code for K
@@ -99,61 +66,105 @@ if (!isDedicated) then {
 		DEBUG_MSG("killcam activated")
 		//hitHandler used for retrieving information if killed EH won't fire properly
 		killcam_hitHandle = player addEventHandler ["Hit", {
+            params ["_unit", "_causedBy", "_damage"];
 			DEBUG_MSG("HIT EH")
-			if (vehicle (_this select 1) != vehicle player && (_this select 1) != objNull) then {
+			if (vehicle _causedBy != vehicle player && _causedBy != objNull) then {
 				DEBUG_MSG("HIT data valid")
 				//we store this information in case it's needed if killed EH doesn't fire
-				missionNamespace setVariable ["killcam_LastHit", 
-					[_this, time, ASLtoAGL eyePos (_this select 0), ASLtoAGL eyePos (_this select 1)]
-				];
+				killcam_LastHit = [_this, time, ASLtoAGL eyePos _unit, ASLtoAGL eyePos _causedBy];
 			};
+            if (_damage > 1) then {_damage = 1};
+            killcam_LastHitDamage = _damage;
 		}];
 
 		//START OF KILLED EH///////////
 		killcam_killedHandle = player addEventHandler ["Killed", {
+            params ["_unit", "_killer"];
 			//let's remove hit EH, it's not needed
 			player removeEventHandler ["hit", killcam_hitHandle];
 			
 			//we check if player didn't kill himself or died for unknown reasons
-			if (vehicle (_this select 1) != vehicle (_this select 0) && (_this select 1) != objNull) then {
+			if (vehicle _killer != vehicle _unit && _killer != objNull) then {
 			
 				//this is the standard case (killed EH got triggered by getting shot)
 				DEBUG_MSG("using killed EH")
-				killcam_unit_pos = ASLtoAGL eyePos (_this select 0);
-				killcam_killer = (_this select 1);
-				killcam_killer_pos = ASLtoAGL eyePos (_this select 1);
+				killcam_unit_pos = ASLtoAGL eyePos _unit;
+				killcam_killer = _killer;
+				killcam_killer_pos = ASLtoAGL eyePos _killer;
 			} else {
 				//we will try to retrieve info from our hit EH
 				DEBUG_MSG("using hit EH")
-				_last_hit_info = missionNamespace getVariable ["killcam_LastHit", []];
+				_last_hit_info = [];
+                if (!isNil "killcam_LastHit") then {
+                    _last_hit_info = killcam_LastHit;
+                };
 				
 				//hit info retrieved, now we check if it's not caused by fall damage etc.
 				//also we won't use info that's over 10 seconds old
+                private _damage = 0.5;
 				if (count _last_hit_info != 0) then {
-					if ((_last_hit_info select 1) + 10 > time &&
-					((_last_hit_info select 0) select 1) != objNull &&
-					((_last_hit_info select 0) select 1) != player
+                    _last_hit_info params ["_data", "_time", "_unitPos", "_killerPos"];
+					if (_time + 10 > time &&
+					(_data select 1) != objNull &&
+					(_data select 1) != player
 					) then {
 						DEBUG_MSG("HIT data check successful")
-						killcam_unit_pos = _last_hit_info select 2;
-						killcam_killer = _last_hit_info select 0 select 1;
-						killcam_killer_pos = _last_hit_info select 3;
+						killcam_unit_pos = _unitPos;
+						killcam_killer = _data select 1;
+						killcam_killer_pos = _killerPos;
 					}
 					else {
 						DEBUG_MSG("HIT data not valid")
 						//everything failed, we set value we will detect later
 						killcam_killer_pos = [0,0,0];
-						killcam_unit_pos = ASLtoAGL eyePos (_this select 0);
+						killcam_unit_pos = ASLtoAGL eyePos _unit;
 						killcam_killer = objNull;
 					};
 				}
 				else {
 					DEBUG_MSG("HIT and KILLED EHs not valid")
 					killcam_killer_pos = [0,0,0];
-					killcam_unit_pos = ASLtoAGL eyePos (_this select 0);
+					killcam_unit_pos = ASLtoAGL eyePos _unit;
 					killcam_killer = objNull;
 				};
 			};
+
+            [] spawn {
+                if (eg_instant_death) then {
+                    private _damage = 0.5;
+                    if (!isNil "killcam_LastHitDamage") then {
+                        _damage = killcam_LastHitDamage;
+                    };
+                    sleep 0.1;
+                    cutText ["\n", "BLACK", 1.01-_damage, true];
+                    ["FW_death", 0, true] call ace_common_fnc_setHearingCapability;
+                    sleep 1.01-_damage;
+                    0 fadeSound 0;
+                    sleep 0.89+_damage;
+                    
+                    ["<t color='#FF0000'>YOU ARE DEAD</t>", 0, 0.4, 2, 0.5, 0, 1000] spawn BIS_fnc_dynamicText;
+                    
+                    sleep 3;
+                    cutText ["\n","BLACK IN", 5];
+                    ["FW_death", 0, false] call ace_common_fnc_setHearingCapability;
+                    0 fadeSound 1;
+                } else {
+                    ("BIS_layerEstShot" call BIS_fnc_rscLayer) cutRsc ["RscStatic", "PLAIN"];
+
+                    sleep 0.4;
+
+                    playSound "Simulation_Fatal";
+                    call BIS_fnc_VRFadeOut;
+
+                    sleep 1;
+
+                    playSound ("Transition" + str (1 + floor random 3));
+
+                    sleep 1;
+                    call BIS_fnc_VRFadeIn;
+                };
+            };
+            
 		}];
 		//END OF KILLED EH///////////
 
