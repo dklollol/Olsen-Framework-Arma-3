@@ -15,5 +15,6 @@ switch (_type) do {
 	
 	#include "loadouts\USMCRiflePlatoon.sqf"
 	#include "loadouts\RURiflePlatoon.sqf"
+    //#include "loadouts\BAF.sqf"
 	
 };
