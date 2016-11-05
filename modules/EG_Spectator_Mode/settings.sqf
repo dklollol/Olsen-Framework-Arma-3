@@ -1,5 +1,5 @@
 
-// Whitelisted sides, empty means all (BLUFOR,OPFOR,GUER,CIV)
+// Whitelisted sides (BLUFOR,OPFOR,RESISTANCE,CIVILIAN)
 	eg_whitelisted_sides = [BLUFOR,OPFOR,RESISTANCE,CIVILIAN];
 // Whether AI can be viewed by the spectator (true/false)
 	eg_ai_viewed_by_spectator = false;

@@ -21,6 +21,7 @@
 //#include "ai_drivers\root.sqf"
 //#include "aiskill\root.sqf"
 //#include "ao_limit\root.sqf"
+//#include "building_replacer\root.sqf"
 //#include "call_mission\root.sqf"
 //#include "capturezone\root.sqf"
 //#include "cover_map\root.sqf"
