@@ -9,7 +9,7 @@
 
 #define uniform \
 	["rhs_uniform_FROG01_d"] call FNC_AddItem; \
-	["tin_backpack_kitbag_tan"] call FNC_AddItem; \
+	["rhsusf_assault_eagleaiii_coy"] call FNC_AddItem; \
 	["rhsusf_lwh_helmet_marpatd", "rhsusf_lwh_helmet_marpatd_ess", "rhsusf_lwh_helmet_marpatd_headset"] call FNC_AddItemRandom;
 	
 //["rhs_uniform_FROG01_wd"] call FNC_AddItem; Woodland Cammo
@@ -54,7 +54,7 @@ case (package + "SL"): {
 	
 	["rhs_weap_m4_carryhandle"] call FNC_AddItem; //Primary rifle
 	["rhsusf_acc_compm4"] call FNC_AddItem; //Red dot sight
-	
+
 };
 
 case (package + "TL"): {

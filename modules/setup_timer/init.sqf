@@ -8,10 +8,16 @@ if !(markerType NAME == "") then { \
 	_temp call FNC_DebugMessage; \
 };
 
-if (!isDedicated) then {
-	
-	private ["_markers", "_pos", "_timeLeft", "_string"];
+if (isServer) then {
+    [] spawn {
+        waitUntil {time > 0};
+        FW_setup_start_time = serverTime;
+        publicVariable "FW_setup_start_time";
+    };
+};
 
+if (!isServer) then {
+	
 	_markers = [];
 
 	#include "settings.sqf"
@@ -20,6 +26,12 @@ if (!isDedicated) then {
 	
 		[_markers] spawn {
 			
+            private ["_pos", "_timeLeft", "_string"];
+            params ["_markers"];
+            
+            waitUntil {!isNil "FW_setup_start_time"};
+            _startTime = FW_setup_start_time;
+            
 			_marker = [];
 			
 			{
@@ -33,7 +45,7 @@ if (!isDedicated) then {
 					
 				};
 				
-			} forEach (_this select 0);
+			} forEach _markers;
 			
 			_pos = getPosATL (vehicle player);
 			
@@ -51,7 +63,7 @@ if (!isDedicated) then {
 					
 				};
 				
-				_timeLeft = round((_marker select 0) - time);
+				_timeLeft = round(_startTime + (_marker select 0) - serverTime);
 				
 				if (_timeLeft < 0) then {
 					
