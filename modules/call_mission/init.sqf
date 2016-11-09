@@ -132,7 +132,7 @@ FNC_RegisterMissionCall = {
 		["_callID", "", [""]],
 		["_callSide", sideUnknown, [sideUnknown]],
 		["_callName", "", [""]],
-		["_callArgs", [], [[]]]
+		["_callArgs", "", [""]]
 	];
 
 	FW_MissionCalls set [count FW_MissionCalls, [_callID, _callSide, _callName, _callArgs]];
