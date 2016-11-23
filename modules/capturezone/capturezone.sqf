@@ -15,7 +15,7 @@ _colors = _this select 1;
 _intervall = _this select 2;
 _messages = _this select 3;
 _markerCount = [_marker,[]];
-
+CZMARKERCOLLECTION pushBack ["NONE",_marker,false];
 _countforwins = 0;
 {
 	_markerCount select 1 set [count (_markerCount select 1) ,[_x ,0,_wins select _countforwins]]; //side,count,win
