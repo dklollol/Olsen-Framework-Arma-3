@@ -8,16 +8,10 @@ if !(markerType NAME == "") then { \
 	_temp call FNC_DebugMessage; \
 };
 
-if (isServer) then {
-    [] spawn {
-        waitUntil {time > 0};
-        FW_setup_start_time = serverTime;
-        publicVariable "FW_setup_start_time";
-    };
-};
-
-if (!isServer) then {
+if (!isDedicated) then {
 	
+	private ["_markers", "_pos", "_timeLeft", "_string", "_displayed"];
+
 	_markers = [];
 
 	#include "settings.sqf"
@@ -26,13 +20,8 @@ if (!isServer) then {
 	
 		[_markers] spawn {
 			
-            private ["_pos", "_timeLeft", "_string"];
-            params ["_markers"];
-            
-            waitUntil {!isNil "FW_setup_start_time"};
-            _startTime = FW_setup_start_time;
-            
 			_marker = [];
+			_displayed = false;
 			
 			{
 				if (((_x select 0) == (side player)) && [(vehicle player), (_x select 2)] call FNC_InArea) then {
@@ -45,7 +34,7 @@ if (!isServer) then {
 					
 				};
 				
-			} forEach _markers;
+			} forEach (_this select 0);
 			
 			_pos = getPosATL (vehicle player);
 			
@@ -63,7 +52,7 @@ if (!isServer) then {
 					
 				};
 				
-				_timeLeft = round(_startTime + (_marker select 0) - serverTime);
+				_timeLeft = round((_marker select 0) - time);
 				
 				if (_timeLeft < 0) then {
 					
@@ -71,19 +60,14 @@ if (!isServer) then {
 					
 				};
 				
-				_string = "Time remaining: %1:%2";
-				
-				if (_timeLeft % 60 < 10) then {
-					
-					_string = "Time remaining: %1:0%2";
-					
+				if (_timeLeft > 0 && !_displayed) then {
+					_displayed = true;
+					missionNamespace setVariable ["FW_ST_TimeLeft", _timeLeft];
+					cutRsc ["RscSetupTimer", "PLAIN", 0.5, false];
 				};
-				
-				hintSilent format [_string, floor(_timeLeft / 60), _timeLeft % 60];
 				
 				if (_timeLeft == 0) then {
 				
-					hint "Setup timer expired";
 					(_marker select 1) setMarkerAlphaLocal 0;
 					_marker = [];
 					
