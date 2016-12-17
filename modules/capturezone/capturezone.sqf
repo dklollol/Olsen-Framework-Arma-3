@@ -33,6 +33,8 @@ _timer = 0;
 _oldOwner = ["temp",0,9999];
 sleep(1);
 _run = true;
+
+_contester = "NONE";
 while{_run} do
 {
 	
@@ -82,127 +84,94 @@ while{_run} do
 		{
 			case "WEST":
 			{
-				if(_update) then
-				{
-					if(_oldOwner select 0 != "CONTESTED") then
+					
+					_mes = _messages select 0;
+					//this is for ContestedZone so the timer doesn't reset
+					//can probaply be done better
+					if(_contester != "WEST") then
 					{
 						_timer = time;
-						
+						_contester = "WEST";
 					};
-					_mes = _messages select 0;
-					
 					[-1, {hintSilent _this},_mes] call CBA_fnc_globalExecute;
 					[-1, {(_this select 0) setMarkerColor (_this select 1)}, [_marker,_colors select 0]] call CBA_fnc_globalExecute;
-					;
-					_updateContested  = true;
-					_update = false;
-					_updateUncontested = true;
-				};
 		
 			};
 			case "EAST":
 			{
-				if(_update) then
-				{
 					_mes = _messages select 1;
-					
+					//this is for ContestedZone so the timer doesn't reset
+					//can probaply be done better
+					if(_contester != "EAST") then
+					{
+						_timer = time;
+						_contester = "EAST";
+					};
 					[-1, {hintSilent _this},_mes] call CBA_fnc_globalExecute;
 					[-1, {(_this select 0) setMarkerColor (_this select 1)}, [_marker,_colors select 1]] call CBA_fnc_globalExecute;
-					if(_oldOwner select 0 != "CONTESTED") then
-					{
-						_timer = time;		
-					};
-					_updateContested  = true;
-					_update = false;
-					_updateUncontested = true;
-				};
 			
 			};
 			case "GUER":
 			{
-				if(_update) then
-				{
 					_mes = _messages select 2;
-					
-					[-1, {hintSilent _this},_mes] call CBA_fnc_globalExecute;
-					[-1, {(_this select 0) setMarkerColor (_this select 1)}, [_marker,_colors select 2]] call CBA_fnc_globalExecute;
-					if(_oldOwner select 0 != "CONTESTED") then
+					//this is for ContestedZone so the timer doesn't reset
+					//can probaply be done better
+					if(_contester != "GUER") then
 					{
 						_timer = time;
-						
+						_contester = "GUER";
 					};
-					_updateContested  = true;
-					_update = false;
-					_updateUncontested = true;
-				};
+					[-1, {hintSilent _this},_mes] call CBA_fnc_globalExecute;
+					[-1, {(_this select 0) setMarkerColor (_this select 1)}, [_marker,_colors select 2]] call CBA_fnc_globalExecute;
+					
 		
 			};
 			case "RESISTANCE":
 			{
-				if(_update) then
-				{
 					_mes = _messages select 2;
-					
-					[-1, {hintSilent _this},_mes] call CBA_fnc_globalExecute;
-					[-1, {(_this select 0) setMarkerColor (_this select 1)}, [_marker,_colors select 2]] call CBA_fnc_globalExecute;
-					if(_oldOwner select 0 != "CONTESTED") then
+					//this is for ContestedZone so the timer doesn't reset
+					//can probaply be done better
+					if(_contester != "RESISTANCE") then
 					{
 						_timer = time;
-						
+						_contester = "RESISTANCE";
 					};
-					_updateContested  = true;
-					_update = false;
-					_updateUncontested = true;
-				};
-		
+					[-1, {hintSilent _this},_mes] call CBA_fnc_globalExecute;
+					[-1, {(_this select 0) setMarkerColor (_this select 1)}, [_marker,_colors select 2]] call CBA_fnc_globalExecute;
+					
 			};
 			case "CIVILIAN":
 			{
-				if(_update) then
-				{
 					_mes = _messages select 3;
-					
-					[-1, {hintSilent _this},_mes] call CBA_fnc_globalExecute;
-					[-1, {(_this select 0) setMarkerColor (_this select 1)}, [_marker,_colors select 3]] call CBA_fnc_globalExecute;
-					if(_oldOwner select 0 != "CONTESTED") then
+					//this is for ContestedZone so the timer doesn't reset
+					//can probaply be done better
+					if(_contester != "CIVILIAN") then
 					{
 						_timer = time;
-						
+						_contester = "CIVILIAN";
 					};
-					_updateContested  = true;
-					_update = false;
-					_updateUncontested = true;
+					[-1, {hintSilent _this},_mes] call CBA_fnc_globalExecute;
+					[-1, {(_this select 0) setMarkerColor (_this select 1)}, [_marker,_colors select 3]] call CBA_fnc_globalExecute;
 					
-				};
-			
 			};
 			case "UNCONTESTED":
 			{
-				if(_updateUncontested) then
-				{
-					_mes = _messages select 5;
-					
 					[-1, {hintSilent _this},_mes] call CBA_fnc_globalExecute;
 					[-1, {(_this select 0) setMarkerColor (_this select 1)}, [_marker,_colors select 5]] call CBA_fnc_globalExecute;
 					sleep(_intervall);
-					_updateUncontested = false;
-					_update = true;
-					_updateContested  = true;
-				}
+					_timer = time;
+					_contester = NONE;
 			};
 			case "CONTESTED":
 			{
-				if(_updateContested) then
-				{
-					_mes = _messages select 4;
-					
-					[-1, {hintSilent _this},_mes] call CBA_fnc_globalExecute;
-					[-1, {(_this select 0) setMarkerColor (_this select 1)}, [_marker,_colors select 4]] call CBA_fnc_globalExecute;
-					_updateContested  = false;
-					_update = true;
-					_updateUncontested = true;
-				};
-				_timer = _timer + _delta;
+					if(_currentOwner select 0) != (_oldOwner select 0) then
+					{
+						_mes = _messages select 4;
+						[-1, {hintSilent _this},_mes] call CBA_fnc_globalExecute;
+						[-1, {(_this select 0) setMarkerColor (_this select 1)}, [_marker,_colors select 4]] call CBA_fnc_globalExecute;
+
+					};
+					_timer = _timer + _delta;
 			};
 		};
 	};
