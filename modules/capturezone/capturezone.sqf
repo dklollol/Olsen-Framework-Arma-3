@@ -18,7 +18,7 @@ _markerCount = [_marker,[]];
 CZMARKERCOLLECTION pushBack ["NONE",_marker,false];
 _countforwins = 0;
 {
-	_markerCount select 1 set [count (_markerCount select 1) ,[_x ,0,_wins select _countforwins]]; //side,count,win
+	(_markerCount select 1) pushBack [_x ,0,_wins select _countforwins]; //side,count,win
 	_countforwins = _countforwins + 1;
 }forEach _sides;
 //special format [_marker,[[_side,count,win],[_side,count,win]]];
@@ -38,14 +38,13 @@ _contester = "NONE";
 while{_run} do
 {
 	
-	start = time;
+	_start = time;
 	_delta = _start - _end;
 	//count all units in area n special format [_marker,[[_side,count,win],[_side,count,win]]];
-	_countforwins = 0;
+	
 	{
-		_markerCount select 1 set [_countforwins,[_x,0,((_markerCount select 1) select _countforwins) select 2]]; //side,count,win
-		_countforwins = _countforwins + 1;
-	}forEach _sides;
+		_x set [1,0];
+	}forEach (_markerCount select 1);
 	
 	{
 		_unit = _x;
@@ -156,11 +155,12 @@ while{_run} do
 			};
 			case "UNCONTESTED":
 			{
+					_mes = _messages select 5;
 					[-1, {hintSilent _this},_mes] call CBA_fnc_globalExecute;
 					[-1, {(_this select 0) setMarkerColor (_this select 1)}, [_marker,_colors select 5]] call CBA_fnc_globalExecute;
 					sleep(_intervall);
 					_timer = time;
-					_contester = NONE;
+					_contester = "NONE";
 			};
 			case "CONTESTED":
 			{
