@@ -37,22 +37,22 @@ _run = true;
 _contester = "NONE";
 while{_run} do
 {
-	
+
 	_start = time;
 	_delta = _start - _end;
 	//count all units in area n special format [_marker,[[_side,count,win],[_side,count,win]]];
-	
+
 	{
 		_x set [1,0];
 	}forEach (_markerCount select 1);
-	
+
 	{
 		_unit = _x;
 
 		if([_unit,_markerCount select 0] call FNC_InArea && alive _unit) then
 		{
 			{
-			
+
 				if(side _unit == _x select 0) then
 				{
 					_x set [1,(_x select 1) + 1] ;
@@ -61,12 +61,12 @@ while{_run} do
 		};
 	}forEach allUnits;
 	_currentOwner = ["UNCONTESTED",0,9999];
-	{	
-		
+	{
+
 		if(_x select 1 > _currentOwner select 1) then
 		{
 			_currentOwner = [str (_x select 0),_x select 1,_x select 2];
-		
+
 		}
 		else
 		{
@@ -83,7 +83,7 @@ while{_run} do
 		{
 			case "WEST":
 			{
-					
+
 					_mes = _messages select 0;
 					//this is for ContestedZone so the timer doesn't reset
 					//can probaply be done better
@@ -94,7 +94,7 @@ while{_run} do
 					};
 					[-1, {hintSilent _this},_mes] call CBA_fnc_globalExecute;
 					[-1, {(_this select 0) setMarkerColor (_this select 1)}, [_marker,_colors select 0]] call CBA_fnc_globalExecute;
-		
+
 			};
 			case "EAST":
 			{
@@ -108,7 +108,7 @@ while{_run} do
 					};
 					[-1, {hintSilent _this},_mes] call CBA_fnc_globalExecute;
 					[-1, {(_this select 0) setMarkerColor (_this select 1)}, [_marker,_colors select 1]] call CBA_fnc_globalExecute;
-			
+
 			};
 			case "GUER":
 			{
@@ -122,8 +122,8 @@ while{_run} do
 					};
 					[-1, {hintSilent _this},_mes] call CBA_fnc_globalExecute;
 					[-1, {(_this select 0) setMarkerColor (_this select 1)}, [_marker,_colors select 2]] call CBA_fnc_globalExecute;
-					
-		
+
+
 			};
 			case "RESISTANCE":
 			{
@@ -137,7 +137,7 @@ while{_run} do
 					};
 					[-1, {hintSilent _this},_mes] call CBA_fnc_globalExecute;
 					[-1, {(_this select 0) setMarkerColor (_this select 1)}, [_marker,_colors select 2]] call CBA_fnc_globalExecute;
-					
+
 			};
 			case "CIVILIAN":
 			{
@@ -151,7 +151,7 @@ while{_run} do
 					};
 					[-1, {hintSilent _this},_mes] call CBA_fnc_globalExecute;
 					[-1, {(_this select 0) setMarkerColor (_this select 1)}, [_marker,_colors select 3]] call CBA_fnc_globalExecute;
-					
+
 			};
 			case "UNCONTESTED":
 			{
@@ -164,7 +164,7 @@ while{_run} do
 			};
 			case "CONTESTED":
 			{
-					if(_currentOwner select 0) != (_oldOwner select 0) then
+					if((_currentOwner select 0) != (_oldOwner select 0)) then
 					{
 						_mes = _messages select 4;
 						[-1, {hintSilent _this},_mes] call CBA_fnc_globalExecute;
@@ -176,8 +176,8 @@ while{_run} do
 		};
 	};
 	_countforwins = 0;
-	{			
-		if(_marker  == _x select 1) then 
+	{
+		if(_marker  == _x select 1) then
 		{
 			if((time - _timer) >= _currentOwner select 2) then
 			{
