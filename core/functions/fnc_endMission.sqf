@@ -33,5 +33,5 @@ if (time > 0) then {
     ["FW_EndMission", [_scenario, FW_TimeLimit, FW_Teams]] call CBA_fnc_globalEvent;
     
 } else {
-    "End Conditions have just been triggered. Mission is broken!" remoteExec ["systemChat", 0, false];
+    "End Conditions have just been triggered. Mission will have to be ended manually." remoteExec ["systemChat", 0, false];
 };

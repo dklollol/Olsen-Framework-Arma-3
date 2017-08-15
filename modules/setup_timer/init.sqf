@@ -8,6 +8,14 @@ if !(markerType NAME == "") then { \
 	_temp call FNC_DebugMessage; \
 };
 
+if (isServer) then {
+    [] spawn {
+        waitUntil {time > 0};
+        FW_setup_start_time = serverTime;
+        publicVariable "FW_setup_start_time";
+    };
+};
+
 if (!isDedicated) then {
 	
 	private ["_markers", "_pos", "_timeLeft", "_string", "_displayed"];
@@ -22,7 +30,10 @@ if (!isDedicated) then {
 			
 			_marker = [];
 			_displayed = false;
-			
+            
+			waitUntil {!isNil "FW_setup_start_time"};
+            _startTime = FW_setup_start_time;
+            
 			{
 				if (((_x select 0) == (side player)) && [(vehicle player), (_x select 2)] call FNC_InArea) then {
 				
@@ -52,7 +63,7 @@ if (!isDedicated) then {
 					
 				};
 				
-				_timeLeft = round((_marker select 0) - time);
+				_timeLeft = round(_startTime + (_marker select 0) - serverTime);
 				
 				if (_timeLeft < 0) then {
 					
