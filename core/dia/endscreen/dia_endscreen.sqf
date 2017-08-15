@@ -1,5 +1,3 @@
-disableUserInput true;
-
 createDialog "DIA_ENDSCREEN";
 _dia = 300;
 _bg = 3000;
@@ -7,9 +5,7 @@ _endTitle = 3001;
 _left = 3002;
 _right = 3003;
 
-_scenario = _this select 0;
-_timeLimt = _this select 1;
-_teams = _this select 2;
+params ["_scenario", "_timeLimit", "_teams"];
 
 {
 	
@@ -17,18 +13,23 @@ _teams = _this select 2;
 	
 } forEach vehicles;
 
+[] spawn {
+
+    sleep 4;
+    {
+
+        _x enableSimulation false;
+        removeAllWeapons _x;
+
+    } forEach allPlayers;
+};
+
 _leftText = "";
 _rightText = "";
 _textSide = 0;
 {
-	
-	_name = _x select 0;
-	_side = _x select 1;
-	_type = _x select 2;
-	_start = _x select 3;
-	_current = _x select 4;
-	_disabled = _x select 5;
-	_destroyed = _x select 6;
+
+    _x params ["_name", "_side", "_type", "_start", "_current", "_disabled", "_destroyed"];
 	
 	_temp = format ["%1<br />Casualties: %2 out of %3<br />", _name, (_start - _current), _start];
 
@@ -73,17 +74,17 @@ _textSide = 0;
 
 _endTitleText = _scenario;
 
-if (_timeLimt != 0) then {
+if (_timeLimit != 0) then {
 
 	_time = ceil(time / 60);
 
-	if (_time >= _timeLimt) then {
+	if (_time >= _timeLimit) then {
 		
-		_time = _timeLimt;
+		_time = _timeLimit;
 		
 	};
 
-	_timeLimitText = format ["Mission duration: %1 out of %2 minutes", _time, _timeLimt];
+	_timeLimitText = format ["Mission duration: %1 out of %2 minutes", _time, _timeLimit];
 
 	_endTitleText = format ["%1<br />%2", _scenario, _timeLimitText];
 	
@@ -100,6 +101,5 @@ for "_x" from 1 to 120 do {
 	
 };
 
-sleep (15);
-disableUserInput false;
+sleep (10);
 endMission "END1";

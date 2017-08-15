@@ -10,7 +10,7 @@ if !(markerType NAME == "") then { \
 
 if (!isDedicated) then {
 	
-	private ["_markers", "_pos", "_timeLeft", "_string"];
+	private ["_markers", "_pos", "_timeLeft", "_string", "_displayed"];
 
 	_markers = [];
 
@@ -21,6 +21,7 @@ if (!isDedicated) then {
 		[_markers] spawn {
 			
 			_marker = [];
+			_displayed = false;
 			
 			{
 				if (((_x select 0) == (side player)) && [(vehicle player), (_x select 2)] call FNC_InArea) then {
@@ -59,19 +60,14 @@ if (!isDedicated) then {
 					
 				};
 				
-				_string = "Time remaining: %1:%2";
-				
-				if (_timeLeft % 60 < 10) then {
-					
-					_string = "Time remaining: %1:0%2";
-					
+				if (_timeLeft > 0 && !_displayed) then {
+					_displayed = true;
+					missionNamespace setVariable ["FW_ST_TimeLeft", _timeLeft];
+					cutRsc ["RscSetupTimer", "PLAIN", 0.5, false];
 				};
-				
-				hintSilent format [_string, floor(_timeLeft / 60), _timeLeft % 60];
 				
 				if (_timeLeft == 0) then {
 				
-					hint "Setup timer expired";
 					(_marker select 1) setMarkerAlphaLocal 0;
 					_marker = [];
 					

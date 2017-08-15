@@ -8,6 +8,8 @@
 	disabledAI = 1; //disabledAI does so not slotted units do not spawn as ai
 	respawnButton = 1; //Disables the respawn button
 	respawnDialog = 0; //Disables the score screen while respawning
+    respawnTemplates[] = {"Base"}; //Disables respawn countdown
+    enableDebugConsole = 1; //Only for logged-in admins
 
 	class Extended_PreInit_EventHandlers {
 		

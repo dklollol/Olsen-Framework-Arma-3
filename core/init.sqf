@@ -1,4 +1,28 @@
-#include "functions.sqf" //DO NOT REMOVE
+PREP(getTeamVariable);
+PREP(setTeamVariable);
+PREP(eventKilled);
+PREP(eventPlayerSpawned);
+PREP(eventSpawned);
+PREP(eventRespawned);
+PREP(eventDisconnect);
+PREP(trackUnit);
+PREP(untrackUnit);
+PREP(StartingCount);
+PREP(stackNames);
+PREP(getDamagedAssets);
+PREP(createRespawnMarker);
+PREP(inArea);
+PREP(areaCount);
+PREP(endMission);
+PREP(casualtyPercentage);
+PREP(casualtyCount);
+PREP(alive);
+PREP(hasEmptyPositions);
+PREP(inVehicle);
+PREP(addTeam);
+PREP(spectateCheck);
+PREP(spectatePrep);
+PREP(countTeam);
 
 enableSaving [false, false];
 
@@ -15,8 +39,9 @@ if (isServer) then {
 	FW_EventPlayerSpawnedHandle = ["FW_PlayerSpawned", {_this call FNC_EventPlayerSpawned;}] call CBA_fnc_addEventHandler;
 	FW_EventRespawnedHandle = addMissionEventHandler ["EntityRespawned", {_this call FNC_EventRespawned;}];
 	FW_EventKilledHandle = addMissionEventHandler ["EntityKilled", {_this call FNC_EventKilled;}];
-	FW_EventDisconnectHandle = addMissionEventHandler ["HandleDisconnect", {_this call FNC_EventDisconnect;}];
 	
+	FW_EventDisconnectHandle = addMissionEventHandler ["HandleDisconnect", {_this call FNC_EventDisconnect;}];
+
 };
 
 if (!isDedicated) then {
@@ -52,7 +77,7 @@ if (!isDedicated) then {
 	
 	//Makes the player go into spectator mode when dead or respawn if he has respawn tickets
 	FW_KilledEh = player addEventHandler ["Killed", {"" spawn FNC_SpectateCheck;}];
-	FW_RespawnEh = player addEventHandler ["Respawn", {"" call FNC_SpectatePrep;}];
+	FW_RespawnEh = player addEventHandler ["Respawn", {_this call FNC_SpectatePrep;}];
 	
 	//Various settings
 	player addRating 100000; //Makes sure ai doesnt turn hostile when teamkilling

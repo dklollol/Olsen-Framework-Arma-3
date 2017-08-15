@@ -9,7 +9,7 @@
 
 #define uniform \
 	["rhs_uniform_FROG01_d"] call FNC_AddItem; \
-	["tin_backpack_kitbag_tan"] call FNC_AddItem; \
+	["rhsusf_assault_eagleaiii_coy"] call FNC_AddItem; \
 	["rhsusf_lwh_helmet_marpatd", "rhsusf_lwh_helmet_marpatd_ess", "rhsusf_lwh_helmet_marpatd_headset"] call FNC_AddItemRandom;
 	
 //["rhs_uniform_FROG01_wd"] call FNC_AddItem; Woodland Cammo
@@ -53,8 +53,8 @@ case (package + "SL"): {
 	["rhs_mag_m67", 2] call FNC_AddItem; //Frag grenade
 	
 	["rhs_weap_m4_carryhandle"] call FNC_AddItem; //Primary rifle
-	["tb_acc_compM4"] call FNC_AddItem; //Red dot sight
-	
+	["rhsusf_acc_compm4"] call FNC_AddItem; //Red dot sight
+
 };
 
 case (package + "TL"): {
@@ -79,7 +79,7 @@ case (package + "TL"): {
 	["rhs_mag_m18_red", 2] call FNC_AddItem; //Red Smoke
 	
 	["rhs_weap_m4_m203S"] call FNC_AddItem; //Primary rifle
-	["tb_acc_compM4"] call FNC_AddItem; //Red dot sight
+	["rhsusf_acc_compm4"] call FNC_AddItem; //Red dot sight
 	
 };
 
@@ -97,7 +97,7 @@ case (package + "AR"): {
 	["rhs_200rnd_556x45_M_SAW", 3] call FNC_AddItem; //Magazines
 	
 	["rhs_weap_m249_pip_usmc"] call FNC_AddItem; //Primary rifle
-	["tb_acc_compM4"] call FNC_AddItem; //Red dot sight
+	["rhsusf_acc_compm4"] call FNC_AddItem; //Red dot sight
 	["ACE_SpareBarrel", 1] call FNC_AddItem;  // Spare Barrel
 	
 };
@@ -116,7 +116,7 @@ case (package + "RFAT"): {
 	["rhs_mag_30Rnd_556x45_M855A1_Stanag", 11] call FNC_AddItem; //Magazines
 	
 	["rhs_weap_m4_carryhandle"] call FNC_AddItem; //Primary rifle
-	["tb_acc_compM4"] call FNC_AddItem; //Red dot sight
+	["rhsusf_acc_compm4"] call FNC_AddItem; //Red dot sight
 	
 	["rhs_weap_M136_hedp"] call FNC_AddItem; //Anti tank launcher
 	
@@ -136,7 +136,7 @@ case (package + "RF"): {
 	["rhs_mag_30Rnd_556x45_M855A1_Stanag", 11] call FNC_AddItem; //Magazines
 	
 	["rhs_weap_m4_carryhandle"] call FNC_AddItem; //Primary rifle
-	["tb_acc_compM4"] call FNC_AddItem; //Red dot sight
+	["rhsusf_acc_compm4"] call FNC_AddItem; //Red dot sight
 	
 	["rhs_200rnd_556x45_M_SAW", 1] call FNC_AddItem; //Spare AR ammo
 	
@@ -155,7 +155,7 @@ case (package + "MD"): {
 	["rhs_mag_30Rnd_556x45_M855A1_Stanag", 11] call FNC_AddItem; //Magazines
 	
 	["rhs_weap_m4_carryhandle"] call FNC_AddItem; //Primary rifle
-	["tb_acc_compM4"] call FNC_AddItem; //Red dot sight
+	["rhsusf_acc_compm4"] call FNC_AddItem; //Red dot sight
 	
 	//Extra Medic Supplies
 	["ACE_fieldDressing", 15] call FNC_AddItem;
