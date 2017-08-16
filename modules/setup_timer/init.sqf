@@ -39,7 +39,7 @@ if (!isDedicated) then {
             _startTime = FW_setup_start_time;
             //we are checking for a bug described on serverTime wiki page
             //bugged value is usually around 400 000
-            if (abs (FW_setup_start_time - serverTime) > 10) then { 
+            if (abs (FW_setup_start_time - serverTime) > 300) then { 
                 _startTime = serverTime;
                 FW_setup_start_time = serverTime; //client time is used instead, according to wiki it's always correct
                 //we send it across network. Possible issue: multiple clients send it at the same time
