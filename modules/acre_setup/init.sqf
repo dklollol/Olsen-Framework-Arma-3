@@ -70,6 +70,8 @@ if(!isDedicated) then {
             ["ACRE_PRC117F", _preset ] call acre_api_fnc_setPreset;
             ["ACRE_PRC152", _preset ] call acre_api_fnc_setPreset;
             ["ACRE_PRC148", _preset ] call acre_api_fnc_setPreset;
+            ["ACRE_SEM52SL", _preset ] call acre_api_fnc_setPreset;
+            ["ACRE_SEM70", _preset ] call acre_api_fnc_setPreset;
         };
 
         if (FW_enable_babel) then {
