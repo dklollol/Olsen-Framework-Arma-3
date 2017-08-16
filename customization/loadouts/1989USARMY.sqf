@@ -1,3 +1,5 @@
+//AUTHOR: SgtDeadly12
+//
 //[this, "1989USARMY_RF"] call FNC_GearScript;
 //[this, "1989USARMY_RFAT"] call FNC_GearScript;
 //[this, "1989USARMY_SL"] call FNC_GearScript;
