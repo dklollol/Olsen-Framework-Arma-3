@@ -3,7 +3,7 @@
 //Example:
 //#include "start_text\root.sqf"
 
-//Enabled modules by default, disabled them by adding // in front.
+//Enabled modules by default, disable them by adding // in front.
 
 #include "anti_nd\root.sqf"
 #include "auto_track_assets\root.sqf"
@@ -18,25 +18,25 @@
 
 //#include "a3_endscreen\root.sqf"
 //#include "acre_setup\root.sqf"
+//#include "ai_behaviour\root.sqf"
 //#include "ai_drivers\root.sqf"
-//#include "aiBehaviour\root.sqf"
-//#include "aiLink\root.sqf"
-//#include "aiskill\root.sqf"
-//#include "ambientAnimation\root.sqf"
-//#include "ambientEffects\root.sqf"
+//#include "ai_link\root.sqf"
+//#include "ai_skill\root.sqf"
+//#include "ambient_animation\root.sqf"
+//#include "ambient_effects\root.sqf"
 //#include "ao_limit\root.sqf"
 //#include "building_replacer\root.sqf"
 //#include "call_mission\root.sqf"
-//#include "capturezone\root.sqf"
+//#include "capture_zone\root.sqf"
 //#include "cover_map\root.sqf"
 //#include "env_parameters\root.sqf"
 //#include "extract\root.sqf"
 //#include "hostage\root.sqf"
 //#include "marker_control\root.sqf"
-//#include "medicalSettings\root.sqf"
+//#include "medical_settings\root.sqf"
 //#include "plank\root.sqf"
 //#include "setup_timer\root.sqf"
-//#include "shotCount\root.sqf"
+//#include "shot_count\root.sqf"
 //#include "start_in_parachute\root.sqf"
 //#include "start_on_team_color\root.sqf"
 //#include "start_text\root.sqf"
