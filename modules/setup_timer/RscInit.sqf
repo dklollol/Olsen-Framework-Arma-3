@@ -10,7 +10,7 @@ FNC_SetupTimerInit = {
 		_ctrlTitleBG = _display displayCtrl 1002;
 		_ctrlTime = _display displayCtrl 1003;
 
-		_endTime = time + (missionNamespace getVariable ["FW_ST_TimeLeft", 0]);
+		_endTime = serverTime + (missionNamespace getVariable ["FW_ST_TimeLeft", 0]);
 		_nextBeep = _endTime - 10;
 
 		_break = false;
@@ -23,7 +23,7 @@ FNC_SetupTimerInit = {
 			};
 
 			private "_timeLeft";
-			_timeLeft = _endTime - time;
+			_timeLeft = _endTime - serverTime;
 
 			_colorSet = ["IGUI","TEXT_RGB"];
 			if (_timeLeft <= 30) then {

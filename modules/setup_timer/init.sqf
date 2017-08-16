@@ -8,6 +8,10 @@ if !(markerType NAME == "") then { \
 	_temp call FNC_DebugMessage; \
 };
 
+if (!isMultiplayer) exitWith {
+    "Setup Timer: Singleplayer session detected, this module will function only in multiplayer." call FNC_DebugMessage;
+};
+
 if (isServer) then {
     [] spawn {
         waitUntil {time > 0};
