@@ -25,7 +25,6 @@
 //#include "ambient_animation\root.sqf"
 //#include "ambient_effects\root.sqf"
 //#include "ao_limit\root.sqf"
-//#include "building_replacer\root.sqf"
 //#include "call_mission\root.sqf"
 //#include "capture_zone\root.sqf"
 //#include "cover_map\root.sqf"
