@@ -19,6 +19,8 @@ if (time > 0) then {
 
     FW_MissionEnded = true;
 
+    if (!isNil "aCount_endCount") then {call aCount_endCount};
+    
     {
 
         private _team = (_x select 0);
