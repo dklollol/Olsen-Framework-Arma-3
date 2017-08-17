@@ -21,7 +21,7 @@
 		aCount_762BLU = 0;
 		aCount_762RBLU = 0;
 		aCount_762AKBLU = 0;
-		aCount_8MMBLU = 0;
+		aCount_792MMBLU = 0;
 		aCount_45BLU = 0;
 		aCount_545BLU = 0;
 		aCount_40MMBLU = 0;
@@ -39,7 +39,7 @@
 		aCount_762RED = 0;
 		aCount_762RRED = 0;
 		aCount_762AKRED = 0;
-		aCount_8MMRED = 0;
+		aCount_792MMRED = 0;
 		aCount_45RED = 0;
 		aCount_545RED = 0;
 		aCount_40MMRED = 0;
@@ -88,7 +88,7 @@
 						case "B_762x51_Tracer_Red": 				{ aCount_762BLU = aCount_762BLU + 1; };
 						case "HLC_762x51_MK316_20in": 				{ aCount_762BLU = aCount_762BLU + 1; };
 						
-						case "rhs_ammo_792x57_Ball": 				{ aCount_8MMBLU = aCount_8MMBLU + 1; };
+						case "rhs_ammo_792x57_Ball": 				{ aCount_792MMBLU = aCount_792MMBLU + 1; };
 
 						case "rhs_B_762x54_Ball": 					{ aCount_762RBLU = aCount_762RBLU + 1; };
 						case "rhs_B_762x39_Ball": 					{ aCount_762AKBLU = aCount_762AKBLU + 1; };
@@ -144,7 +144,7 @@
 						case "B_762x51_Tracer_Red": 				{ aCount_762RED = aCount_762RED + 1; };
 						case "HLC_762x51_MK316_20in": 				{ aCount_762RED = aCount_762RED + 1; };
 						
-						case "rhs_ammo_792x57_Ball": 				{ aCount_8MMRED = aCount_8MMRED + 1; };
+						case "rhs_ammo_792x57_Ball": 				{ aCount_792MMRED = aCount_792MMRED + 1; };
 
 						case "rhs_B_762x54_Ball": 					{ aCount_762RRED = aCount_762RRED + 1; };
 						case "rhs_B_762x39_Ball": 					{ aCount_762AKRED = aCount_762AKRED + 1; };
@@ -200,7 +200,7 @@
 			if (aCount_762BLU > 0) then { _munitionsBLU set [count _munitionsBLU,[aCount_762BLU,"7.62x51"]]; };
 			if (aCount_762RBLU > 0) then { _munitionsBLU set [count _munitionsBLU,[aCount_762RBLU,"7.62x54R"]]; };
 			if (aCount_762AKBLU > 0) then { _munitionsBLU set [count _munitionsBLU,[aCount_762AKBLU,"7.62x39"]]; };
-			if (aCount_8MMBLU > 0) then { _munitionsRED set [count _munitionsRED,[aCount_8MMBLU,"8mm Mauser"]]; };
+			if (aCount_792MMBLU > 0) then { _munitionsRED set [count _munitionsBLU,[aCount_792MMBLU,"7.92x57 Mauser"]]; };
 			if (aCount_45BLU > 0) then { _munitionsBLU set [count _munitionsBLU,[aCount_45BLU,".45 ACP"]]; };
 			if (aCount_545BLU > 0) then { _munitionsBLU set [count _munitionsBLU,[aCount_545BLU,"5.45x39"]]; };
 			if (aCount_40MMBLU > 0) then { _munitionsBLU set [count _munitionsBLU,[aCount_40MMBLU,"40MM Grenades"]]; };
@@ -208,7 +208,7 @@
 			if (aCount_SMOKEBLU > 0) then { _munitionsBLU set [count _munitionsBLU,[aCount_SMOKEBLU,"Smoke Grenades"]]; };
 			if (aCount_CHEMBLU > 0) then { _munitionsBLU set [count _munitionsBLU,[aCount_CHEMBLU,"Chemlights"]]; };
 			if (aCount_KPVTBLU > 0) then { _munitionsBLU set [count _munitionsBLU,[aCount_KPVTBLU,"14.5x114"]]; };
-			if (aCount_DSHKMBLU > 0) then { _munitionsBLU set [count _munitionsBLU,[aCount_DSHKMBLU,"12.7x108"]]; };
+			if (aCount_DSHKMBLU > 0) then { _munitionsBLU set [count _munitionsBLU,[aCoun792_DSHKMBLU,"12.7x108"]]; };
 			if (aCount_25MMBLU > 0) then { _munitionsBLU set [count _munitionsBLU,[aCount_25MMBLU,"25x137"]]; };
 			if (aCount_TOWBLU > 0) then { _munitionsBLU set [count _munitionsBLU,[aCount_TOWBLU,"TOW Missile"]]; };
 			if (aCount_LATBLU > 0) then { _munitionsBLU set [count _munitionsBLU,[aCount_LATBLU,"LAT"]]; };
@@ -219,7 +219,7 @@
 			if (aCount_762RED > 0) then { _munitionsRED set [count _munitionsRED,[aCount_762RED,"7.62x51"]]; };
 			if (aCount_762RRED > 0) then { _munitionsRED set [count _munitionsRED,[aCount_762RRED,"7.62x54R"]]; };
 			if (aCount_762AKRED > 0) then { _munitionsRED set [count _munitionsRED,[aCount_762AKRED,"7.62x39"]]; };
-			if (aCount_8MMRED > 0) then { _munitionsRED set [count _munitionsRED,[aCount_8MMRED,"8mm Mauser"]]; };
+			if (aCount_792MMRED > 0) then { _munitionsRED set [count _munitionsRED,[aCount_792MMRED,"7.92x57 Mauser"]]; };
 			if (aCount_45RED > 0) then { _munitionsRED set [count _munitionsRED,[aCount_45RED,".45 ACP"]]; };
 			if (aCount_545RED > 0) then { _munitionsRED set [count _munitionsRED,[aCount_545RED,"5.45x39"]]; };
 			if (aCount_40MMRED > 0) then { _munitionsRED set [count _munitionsRED,[aCount_40MMRED,"40MM Grenades"]]; };
