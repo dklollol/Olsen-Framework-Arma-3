@@ -25,9 +25,6 @@
 		aCount_45BLU = 0;
 		aCount_545BLU = 0;
 		aCount_40MMBLU = 0;
-		aCount_GRENBLU = 0;
-		aCount_SMOKEBLU = 0;
-		aCount_CHEMBLU = 0;
 		aCount_KPVTBLU = 0;
 		aCount_DSHKMBLU = 0;
 		aCount_25MMBLU = 0;
@@ -43,9 +40,6 @@
 		aCount_45RED = 0;
 		aCount_545RED = 0;
 		aCount_40MMRED = 0;
-		aCount_GRENRED = 0;
-		aCount_SMOKERED = 0;
-		aCount_CHEMRED = 0;
 		aCount_KPVTRED = 0;
 		aCount_DSHKMRED = 0;
 		aCount_25MMRED = 0;
@@ -103,18 +97,6 @@
 						case "rhsusf_40mm_HEDP": 					{ aCount_40MMBLU = aCount_40MMBLU + 1; };
 						case "rhs_40mm_smoke_white": 				{ aCount_40MMBLU = aCount_40MMBLU + 1; };
 
-						case "rhs_ammo_m67": 						{ aCount_GRENBLU = aCount_GRENBLU + 1; };
-						case "rhs_ammo_rgn": 						{ aCount_GRENBLU = aCount_GRENBLU + 1; };
-						case "rhs_ammo_rgd5": 						{ aCount_GRENBLU = aCount_GRENBLU + 1; };
-
-						case "SmokeShell": 							{ aCount_SMOKEBLU = aCount_SMOKEBLU + 1; };
-						case "SmokeShellGreen": 					{ aCount_SMOKEBLU = aCount_SMOKEBLU + 1; };
-						case "SmokeShellRed": 						{ aCount_SMOKEBLU = aCount_SMOKEBLU + 1; };
-						case "rhs_ammo_nspd": 						{ aCount_SMOKEBLU = aCount_SMOKEBLU + 1; };
-						case "rhs_ammo_rdg2_white": 				{ aCount_SMOKEBLU = aCount_SMOKEBLU + 1; };
-
-						case "Chemlight_yellow": 					{ aCount_CHEMBLU = aCount_CHEMBLU + 1; };
-
 						case "rhs_ammo_145x115mm": 					{ aCount_KPVTBLU = aCount_KPVTBLU + 1; };
 
 						case "rhs_ammo_127x108mm": 					{ aCount_DSHKMBLU = aCount_DSHKMBLU + 1; };
@@ -158,18 +140,6 @@
 						case "rhsusf_40mm_HE": 						{ aCount_40MMRED = aCount_40MMRED + 1; };
 						case "rhsusf_40mm_HEDP": 					{ aCount_40MMRED = aCount_40MMRED + 1; };
 						case "rhs_40mm_smoke_white": 				{ aCount_40MMRED = aCount_40MMRED + 1; };
-						
-						case "rhs_ammo_m67": 						{ aCount_GRENRED = aCount_GRENRED + 1; };
-						case "rhs_ammo_rgn": 						{ aCount_GRENRED = aCount_GRENRED + 1; };
-						case "rhs_ammo_rgd5": 						{ aCount_GRENRED = aCount_GRENRED + 1; };
-
-						case "SmokeShell": 							{ aCount_SMOKERED = aCount_SMOKERED + 1; };
-						case "SmokeShellGreen": 					{ aCount_SMOKERED = aCount_SMOKERED + 1; };
-						case "SmokeShellRed": 						{ aCount_SMOKERED = aCount_SMOKERED + 1; };
-						case "rhs_ammo_nspd": 						{ aCount_SMOKERED = aCount_SMOKERED + 1; };
-						case "rhs_ammo_rdg2_white": 				{ aCount_SMOKERED = aCount_SMOKERED + 1; };										
-
-						case "Chemlight_yellow": 					{ aCount_CHEMRED = aCount_CHEMRED + 1; };
 
 						case "rhs_ammo_145x115mm": 					{ aCount_KPVTRED = aCount_KPVTRED + 1; };
 
@@ -204,9 +174,6 @@
 			if (aCount_45BLU > 0) then { _munitionsBLU set [count _munitionsBLU,[aCount_45BLU,".45 ACP"]]; };
 			if (aCount_545BLU > 0) then { _munitionsBLU set [count _munitionsBLU,[aCount_545BLU,"5.45x39"]]; };
 			if (aCount_40MMBLU > 0) then { _munitionsBLU set [count _munitionsBLU,[aCount_40MMBLU,"40MM Grenades"]]; };
-			if (aCount_GRENBLU > 0) then { _munitionsBLU set [count _munitionsBLU,[aCount_GRENBLU,"Hand Grenades"]]; };
-			if (aCount_SMOKEBLU > 0) then { _munitionsBLU set [count _munitionsBLU,[aCount_SMOKEBLU,"Smoke Grenades"]]; };
-			if (aCount_CHEMBLU > 0) then { _munitionsBLU set [count _munitionsBLU,[aCount_CHEMBLU,"Chemlights"]]; };
 			if (aCount_KPVTBLU > 0) then { _munitionsBLU set [count _munitionsBLU,[aCount_KPVTBLU,"14.5x114"]]; };
 			if (aCount_DSHKMBLU > 0) then { _munitionsBLU set [count _munitionsBLU,[aCoun792_DSHKMBLU,"12.7x108"]]; };
 			if (aCount_25MMBLU > 0) then { _munitionsBLU set [count _munitionsBLU,[aCount_25MMBLU,"25x137"]]; };
@@ -223,9 +190,6 @@
 			if (aCount_45RED > 0) then { _munitionsRED set [count _munitionsRED,[aCount_45RED,".45 ACP"]]; };
 			if (aCount_545RED > 0) then { _munitionsRED set [count _munitionsRED,[aCount_545RED,"5.45x39"]]; };
 			if (aCount_40MMRED > 0) then { _munitionsRED set [count _munitionsRED,[aCount_40MMRED,"40MM Grenades"]]; };
-			if (aCount_GRENRED > 0) then { _munitionsRED set [count _munitionsRED,[aCount_GRENRED,"Hand Grenades"]]; };
-			if (aCount_SMOKERED > 0) then { _munitionsRED set [count _munitionsRED,[aCount_SMOKERED,"Smoke Grenades"]]; };
-			if (aCount_CHEMRED > 0) then { _munitionsRED set [count _munitionsRED,[aCount_CHEMRED,"Chemlights"]]; };
 			if (aCount_KPVTRED > 0) then { _munitionsRED set [count _munitionsRED,[aCount_KPVTRED,"14.5x114"]]; };
 			if (aCount_DSHKMRED > 0) then { _munitionsRED set [count _munitionsRED,[aCount_DSHKMRED,"12.7x108"]]; };
 			if (aCount_25MMRED > 0) then { _munitionsRED set [count _munitionsRED,[aCount_25MMRED,"25x137"]]; };
