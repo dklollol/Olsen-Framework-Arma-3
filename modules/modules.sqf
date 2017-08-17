@@ -5,6 +5,7 @@
 
 //Enabled modules by default, disable them by adding // in front.
 
+#include "acre_setup\root.sqf"
 #include "anti_nd\root.sqf"
 #include "auto_track_assets\root.sqf"
 #include "disconnect_control\root.sqf"
@@ -17,7 +18,6 @@
 //!!Some of them require changing settings in their settings.sqf file!!
 
 //#include "a3_endscreen\root.sqf"
-//#include "acre_setup\root.sqf"
 //#include "ai_behaviour\root.sqf"
 //#include "ai_drivers\root.sqf"
 //#include "ai_link\root.sqf"
@@ -31,6 +31,7 @@
 //#include "env_parameters\root.sqf"
 //#include "extract\root.sqf"
 //#include "hostage\root.sqf"
+//#include "in_game_briefing_utilities\root.sqf"
 //#include "marker_control\root.sqf"
 //#include "medical_settings\root.sqf"
 //#include "plank\root.sqf"

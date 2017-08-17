@@ -1,0 +1,1 @@
+//Adds access for logged-in admin to self-interaction menu that contains various options.
