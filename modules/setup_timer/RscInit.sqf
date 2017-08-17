@@ -17,7 +17,7 @@ FNC_SetupTimerInit = {
 
 		while {true} do {
 
-			if (time >= _nextBeep) then {
+			if (serverTime >= _nextBeep) then {
 				_nextBeep = _nextBeep + 1;
 				playSound "Beep_Target";
 			};
