@@ -10,7 +10,7 @@
     </a>
 </p>
 
-**Olsen Framework** is an efficient and modular mission making framework designed to help create large scale Arma 3 scenarios.
+**Olsen Framework** is an efficient and modular mission making framework designed to help create large scale, high quality Arma 3 scenarios. Originally designed for [United Operations](http://unitedoperations.net/), but due to it's modular nature and high flexibility, it can be used in different types of communities and servers.
 
 To learn more, visit [our wiki](https://github.com/dklollol/Olsen-Framework-Arma-3/wiki).
 
