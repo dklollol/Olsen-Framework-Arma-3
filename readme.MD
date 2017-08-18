@@ -9,8 +9,11 @@
         <img src="https://img.shields.io/github/issues-raw/dklollol/Olsen-Framework-Arma-3.svg?label=Issues" alt="Olsen Framework Issues">
     </a>
 </p>
+
 **Olsen Framework** is an efficient and modular mission making framework designed to help create large scale Arma 3 scenarios.
 
-For information on how to make a mission read [this guide](https://github.com/dklollol/Olsen-Framework-Arma-3/wiki/Making-your-first-mission)
+To learn more, visit [our wiki](https://github.com/dklollol/Olsen-Framework-Arma-3/wiki).
 
-[Functions documentation](https://github.com/dklollol/Olsen-Framework-Arma-3/wiki/Framework-functions)
+For information on how to make a mission read [this guide](https://github.com/dklollol/Olsen-Framework-Arma-3/wiki/Making-your-first-mission).
+
+For help in writing your own module, visit [functions documentation](https://github.com/dklollol/Olsen-Framework-Arma-3/wiki/Framework-functions) and [modules page](https://github.com/dklollol/Olsen-Framework-Arma-3/wiki/Modules).
