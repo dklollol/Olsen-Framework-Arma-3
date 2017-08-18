@@ -8,8 +8,8 @@
     <a href="https://github.com/dklollol/Olsen-Framework-Arma-3/issues">
         <img src="https://img.shields.io/github/issues-raw/dklollol/Olsen-Framework-Arma-3.svg?label=Issues" alt="Olsen Framework Issues">
     </a>
-    <a href="http://forums.unitedoperations.net">
-        <img src="https://img.shields.io/badge/UO-Thread-lightgrey.svg/?colorA=B19E71" alt="BIF Thread">
+    <a href="http://forums.unitedoperations.net/index.php/topic/27450-olsen-framework-infodiscussion-thread/">
+        <img src="https://img.shields.io/badge/UO-Thread-lightgrey.svg?colorA=B19E71" alt="UO Thread">
     </a>
 </p>
 
