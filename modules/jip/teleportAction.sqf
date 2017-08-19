@@ -52,4 +52,8 @@ if (!isNull(_target)) then {
 
 	player removeAction _id;
 
+} else {
+
+    cutText ["Something went wrong, target doesn't exist.", 'PLAIN DOWN'];
+
 };

@@ -25,6 +25,8 @@ if (_unit getVariable ["FW_Tracked", false]) then {
 
                 _x set [3, _total - 1];
                 _x set [4, _current - 1];
+                DEBUG_LOG("Event Disconnected: " + str _unit);
+                
                 _unit setVariable ["FW_Dead", true, true];
             };
 

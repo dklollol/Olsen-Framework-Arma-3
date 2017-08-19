@@ -1,8 +1,8 @@
 
 ace_medical_medicSetting_SurgicalKit = 2;	//2 Doctor, 1 Medic, 0 Normal
 ace_medical_consumeItem_SurgicalKit = 0;	//0 Keep, 1 Consume
-ace_medical_useLocation_SurgicalKit = 0;
-ace_medical_useCondition_SurgicalKit = 1;
+ace_medical_useLocation_SurgicalKit = 0;    //0 anywhere, 1 vehicle, 2 facility, 3 vehicleAndFacility
+ace_medical_useCondition_SurgicalKit = 1;   //0 anytime, 1 stable
 
 //functions:
 /*
