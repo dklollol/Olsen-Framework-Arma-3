@@ -31,14 +31,19 @@ if(!isDedicated) then {
             private _v = 0.7;
             switch (FW_Acre_Volume_Value) do {
                 case -2: {_v = 0.1;}; 
-                case -1: {_v = 0.4;}; 
-                case 0: {_v = 0.7;}; 
-                case 1: {_v = 1.0;}; 
-                case 2: {_v = 1.3;}; 
-                default {_v = 0.7;}; 
+                case -1: {_v = 0.2;}; 
+                case 0: {_v = 0.4;}; 
+                case 1: {_v = 0.7;}; 
+                case 2: {_v = 1.0;}; 
+                default {_v = 0.4;}; 
             };
             [_v] call acre_api_fnc_setSelectableVoiceCurve;
             acre_sys_gui_VolumeControl_Level = FW_Acre_Volume_Value;
+            
+            [] spawn {
+                sleep 1;
+                acre_sys_gui_VolumeControl_Level = FW_Acre_Volume_Value;
+            };
         };
         
         
@@ -70,6 +75,8 @@ if(!isDedicated) then {
             ["ACRE_PRC117F", _preset ] call acre_api_fnc_setPreset;
             ["ACRE_PRC152", _preset ] call acre_api_fnc_setPreset;
             ["ACRE_PRC148", _preset ] call acre_api_fnc_setPreset;
+            ["ACRE_SEM52SL", _preset ] call acre_api_fnc_setPreset;
+            ["ACRE_SEM70", _preset ] call acre_api_fnc_setPreset;
         };
 
         if (FW_enable_babel) then {

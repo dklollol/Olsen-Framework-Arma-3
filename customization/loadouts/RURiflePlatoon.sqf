@@ -1,3 +1,5 @@
+//AUTHOR: Olsen
+//
 //[this, "RURiflePlatoon_SL"] call FNC_GearScript;
 //[this, "RURiflePlatoon_TL"] call FNC_GearScript;
 //[this, "RURiflePlatoon_AR"] call FNC_GearScript;

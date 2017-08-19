@@ -161,13 +161,6 @@ FW_languages_babel = [
   Direct speech slider
   ACRE2 has a built in direct speech slider allowing you to determine how far your voice in direct speech should travel. The system has five states and by default starts in the middle state. The below table contains an approximated table with empirical testing by Bullhorn.
   
-  Volume state: -1 | Loud (m): 1  | Quiet (m): 2  | Barely audible (m): 13
-  Volume state: -2 | Loud (m): 3  | Quiet (m): 15 | Barely audible (m): 55
-  Volume state: 0  | Loud (m): 8  | Quiet (m): 30 | Barely audible (m): 100
-  Volume state: -1 | Loud (m): 12 | Quiet (m): 45 | Barely audible (m): 145
-  Volume state: -2 | Loud (m): 15 | Quiet (m): 55 | Barely audible (m): 196
-  
-  
   Volume state  |  Loud (m)  |  Quiet (m)  |  Barely audible (m)
   -2            |  1         |  2          |  13
   -1            |  3         |  15         |  55

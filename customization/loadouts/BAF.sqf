@@ -1,3 +1,5 @@
+//AUTHOR: Gibfender
+//
 //[this, "BAF_PL"] call FNC_GearScript;
 //[this, "BAF_PSG"] call FNC_GearScript;
 //[this, "BAF_RTO"] call FNC_GearScript;

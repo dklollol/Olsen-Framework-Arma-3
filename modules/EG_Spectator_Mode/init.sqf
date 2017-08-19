@@ -1,4 +1,4 @@
-["EG Spectator Mode", "Replaces the Olsen Framework spectator script with the Vanilla Spectator.", "BI &amp; Perfk"] call FNC_RegisterModule;
+["EG Spectator Mode", "Replaces the Olsen Framework spectator script with the Vanilla Spectator.", "BI, Perfk &amp; BlackHawk"] call FNC_RegisterModule;
 
 #define DEBUG_MSG(MSG)
 //systemchat MSG;\
@@ -221,7 +221,7 @@ if (!isDedicated) then {
 				player setVariable ["FW_Spectating", true, true];
 				[true] call acre_api_fnc_setSpectator;
 				
-				//we set default pos in case all methods fail and we and up with 0,0,0
+				//we set default pos in case all methods fail and we end up with 0,0,0
 				_pos = [2000, 2000, 100];
 				_dir = 0;
 				
@@ -320,7 +320,7 @@ if (!isDedicated) then {
 										drawLine3D [[(_u select 0)+0.01, (_u select 1)-0.01, (_u select 2)+0.01], [(_k select 0)+0.01, (_k select 1)-0.01, (_k select 2)+0.01], [1,0,0,1]];
 									};
 									if (!isNull killcam_killer) then {
-										drawIcon3D [killcam_texture, [1,0,0,1], [eyePos killcam_killer select 0, eyePos killcam_killer select 1, (ASLtoAGL eyePos killcam_killer select 2) + 0.4], 0.7, 0.7, 0, "killer", 1, 0.04, "PuristaMedium"];
+										drawIcon3D [killcam_texture, [1,0,0,1], [eyePos killcam_killer select 0, eyePos killcam_killer select 1, (ASLtoAGL eyePos killcam_killer select 2) + 0.4], 0.7, 0.7, 0, "killer: " + name killcam_killer, 1, 0.04, "PuristaMedium"];
 									};
 								}
 								else {

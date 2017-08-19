@@ -1,3 +1,5 @@
+//AUTHOR: Olsen
+//
 //[this, "USMCRiflePlatoon_SL"] call FNC_GearScript;
 //[this, "USMCRiflePlatoon_TL"] call FNC_GearScript;
 //[this, "USMCRiflePlatoon_AR"] call FNC_GearScript;

@@ -17,7 +17,7 @@ private _unit = _this select 0;
 if (_unit getVariable ["FW_Tracked", false]) then {
 
     {
-        params ["", "_side", "_type", "_total", "_current"];
+        _x params ["", "_side", "_type", "_total", "_current"];
 
         if (_unit getVariable "FW_Side" == _side) exitWith {
 
@@ -25,7 +25,7 @@ if (_unit getVariable ["FW_Tracked", false]) then {
 
                 _x set [3, _total - 1];
                 _x set [4, _current - 1];
-
+                _unit setVariable ["FW_Dead", true, true];
             };
 
         };

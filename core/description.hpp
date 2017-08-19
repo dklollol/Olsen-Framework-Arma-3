@@ -10,6 +10,7 @@
 	respawnDialog = 0; //Disables the score screen while respawning
     respawnTemplates[] = {"Base"}; //Disables respawn countdown
     enableDebugConsole = 1; //Only for logged-in admins
+	enableTargetDebug = 1; //Enable CBA Target Debugging
 
 	class Extended_PreInit_EventHandlers {
 		

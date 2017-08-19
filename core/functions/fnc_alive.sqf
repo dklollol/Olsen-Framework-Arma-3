@@ -14,4 +14,4 @@
 
 private _unit = _this;
 
-(alive _unit) && !(_unit getVariable ["FW_Dead", false]) && !(_unit getVariable ["ACE_isUnconscious", false])
+(alive _unit) && !(_unit getVariable ["FW_Dead", false])

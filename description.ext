@@ -24,6 +24,39 @@ class rscTitles {
 };
 
 #undef description_titles
+#define description_notifications
+	
+class CfgNotifications {
+
+	#include "core\description.hpp" //DO NOT REMOVE
+	#include "modules\modules.sqf" //DO NOT REMOVE
+
+};
+
+#undef description_notifications
+
+#define description_sounds
+	
+class CfgSounds {
+
+	#include "core\description.hpp" //DO NOT REMOVE
+	#include "modules\modules.sqf" //DO NOT REMOVE
+
+};
+
+#undef description_sounds
+
+#define description_insignia
+	
+class CfgUnitInsignia {
+
+	#include "core\description.hpp" //DO NOT REMOVE
+	#include "modules\modules.sqf" //DO NOT REMOVE
+
+};
+
+#undef description_insignia
+
 #define description_params
 
 class Params {
@@ -32,3 +65,5 @@ class Params {
 	#include "modules\modules.sqf" //DO NOT REMOVE
 	
 };
+
+#undef description_params
