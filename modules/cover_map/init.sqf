@@ -2,7 +2,7 @@
 
 #include "settings.sqf"
 
-#define S 10000
+#define S 20000
 #define BS 50
 
 if (!isDedicated) then {
