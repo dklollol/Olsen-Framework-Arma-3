@@ -16,6 +16,8 @@ private _unit = _this;
 
 if (_unit getVariable ["FW_Tracked", false]) then {
 
+    _unit setVariable ["FW_HasDied", false]; //we will use this variable to make sure killed eventHandler doesn't fire twice
+
     {
         _x params ["", "_side", "_type", "_total", "_current"];
 

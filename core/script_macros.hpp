@@ -5,5 +5,3 @@
 #define FUNC(var1) DOUBLES(FNC,var1)
 
 #define PREP(fncName) FUNC(fncName) = compile preprocessFileLineNumbers QUOTE(core\functions\DOUBLES(fnc,fncName).sqf)
-
-#define DEBUG_LOG(var1) diag_log var1
