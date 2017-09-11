@@ -25,7 +25,7 @@ if (isServer) then
 	aCount_classNames = [];
 	aCount_getDisplayName =
 	{
-			private["_className","_displayName","_foundClass"];
+			private["_className","_displayName","_foundClass","_ret"];
 			_className = _this;
 			_ret = "Error";
 			_foundClass = aCount_classNames find _className;
@@ -44,18 +44,22 @@ if (isServer) then
 			_ret
 	};
 
-		aCount_addEH = {	//If units are spawned, this should be run on them: ["aCount_event_addEH", UNIT] call CBA_fnc_serverEvent;
+		aCount_addEH =
+		{	//If units are spawned, this should be run on them: ["aCount_event_addEH", UNIT] call CBA_fnc_serverEvent;
 			_obj = param [0];
 
 			_obj setVariable ["aCount_originalSide",side _obj,false];
 
-			if (_obj isKindOf "Man") then {
+			if (_obj isKindOf "Man") then
+			{
 				_obj addEventHandler ["fired", {[side ( _this select 0),(_this select 5) call aCount_getDisplayName] call aCount_shotCount;}];
 				_obj setVariable ["aCount_firedEh", true, false];
 			};
 
-			if (((_obj isKindOf "Land") && !(_obj isKindOf "Man")) || (_obj isKindOf "Air") || (_obj isKindOf "Ship")) then {
-				if (count crew _obj > 0) then {
+			if (((_obj isKindOf "Land") && !(_obj isKindOf "Man")) || (_obj isKindOf "Air") || (_obj isKindOf "Ship")) then
+			{
+				if (count crew _obj > 0) then
+				 {
 					{
 						_x setVariable ["aCount_firedEh", true, false];
 						_x setVariable ["aCount_originalSide",side _obj,false];
@@ -139,9 +143,9 @@ if (isServer) then
 			_this spawn
 			{
 
-				_arrayBLU = _this select 0;
-				_arrayRED = _this select 1;
-				_arrayRES = _this select 2;
+				_arrayBLU = param [0];
+				_arrayRED = param [1];
+				_arrayRES = param [2];
 				aCount_textBLU = "BLUFOR Munitions Expended:<br/>";
 				aCount_textRED = "REDFOR Munitions Expended:<br/>";
 				aCount_textRES = "RESISTANCE Munitions Expended:<br/>";
