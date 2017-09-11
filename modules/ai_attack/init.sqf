@@ -137,7 +137,8 @@ FNC_AtkStart =
 					for "_i" from 0 to _ammountToSpawn do
 					{
 					    _unitToSpawn = _units call BIS_fnc_selectRandom;
-							_new = _newGroup createUnit [_unitToSpawn select 0,([[[_grpPos,5]],[]] call BIS_fnc_randomPos), [], 0, "NONE"];
+							_new = [_newGroup,_unitToSpawn select 0,([[[_grpPos,5]],[]] call BIS_fnc_randomPos)] call FNC_spawnAI;
+							
 							if( count _unitToSpawn >= 2) then
 							{
 
