@@ -3,7 +3,6 @@
 
 /*
 Author:		Sacher
-
 How to Use:
 Place down a unit and name it. Give him waypoints on how you want the ai to attack. Then register the path to the attack system use ["Path Identifier as String",unit which has the waypoints] call FNC_AtkRegisterPath;
 On mission start the path will be cached and the ai unit deleted;

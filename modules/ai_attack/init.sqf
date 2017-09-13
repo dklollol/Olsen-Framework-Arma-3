@@ -46,8 +46,6 @@ FNC_AtkSpawnCustomUnit =
 		_new setSkill (_unitToSpawn select 2);
 	};
 	_unitsSpawned pushBack _new;
-	_new call FNC_TrackUnit;
-
 	_new
 };
 FNC_AtkRegisterUnit =
@@ -301,7 +299,7 @@ FNC_AtkVehicleStart =
 				_newGroup 	= createGroup _side;
 
 				 _unitToSpawn = _units call BIS_fnc_selectRandom;
-				 _veh = [(_unitToSpawn select 0), _grpPos] call FNC_spawnVehicle;
+				 _veh = [(_unitToSpawn select 0), _grpPos,_side] call FNC_spawnVehicle;
 				 _crew = _unitToSpawn select 1;
 
 				 if(count _crew >= 1) then
@@ -310,6 +308,7 @@ FNC_AtkVehicleStart =
 						_new moveInDriver _veh;
 						_new assignAsDriver _veh;
 				 };
+
 				 if(count _crew >= 2) then
 				 {
 						_new = [_newGroup,_grpPos, _crew select 1] call FNC_AtkSpawnCustomUnit;
