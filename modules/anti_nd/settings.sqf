@@ -2,7 +2,7 @@
 // You can make this work either on distance away from spawn location or time elapsed since mission start.
 // Time:
 // Time is recommended for defense mission.
-#define ANTI_ND_TIME 30 // in seconds.
+#define ANTI_ND_TIME 6 // in seconds.
 
 // Distance:
 // Distance is recommended for regular assault missions.
