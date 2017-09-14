@@ -83,9 +83,9 @@ Params:
   cleanUp - bool - true if bodies should be removed
 
 //Example
-["path1",inf1,"",0.8] call FNC_AtkRegisterPath;
-["path2",inf2,"",0.8] call FNC_AtkRegisterPath;
-["path3",inf3,"",0.8] call FNC_AtkRegisterPath;
+["path1",inf1] call FNC_AtkRegisterPath;
+["path2",inf2] call FNC_AtkRegisterPath;
+["path3",inf3] call FNC_AtkRegisterPath;
 
 
 ["Ins_Rif","rhsgref_nat_rifleman","",0.8] call FNC_AtkRegisterUnit;
