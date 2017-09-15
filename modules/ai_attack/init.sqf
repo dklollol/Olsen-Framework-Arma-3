@@ -63,7 +63,7 @@ FNC_AtkRegisterVehicle =
 
 };
 //example ["Ins_Rif","O_Soldier_F","Ins_Rif"] call FNC_AtkRegisterUnit; [name,soldierclass,gearscript];
-FNC_AtkStart =
+FNC_AtkRandomStart =
 {
 	ATKcachedAttacks pushBack (_this select 0);
 	_handle = _this spawn
@@ -164,6 +164,127 @@ FNC_AtkStart =
 							[_newGroup,_grpPos,_units call BIS_fnc_selectRandom] call FNC_AtkSpawnCustomUnit;
 							sleep 0.25;
 					};
+					{
+						_wp = _newGroup addWaypoint [(_x select 5), 0];
+						_wp setWaypointType (_x select 0);
+						_wp setWaypointTimeout (_x select 1);
+						_wp setWaypointStatements (_x select 2);
+						_wp setWaypointSpeed (_x select 3);
+						_wp setWaypointScript (_x select 4);
+						_wp setWaypointHousePosition (_x select 6);
+						_wp setWaypointFormation (_x select 7);
+						_wp setWaypointCombatMode (_x select 8);
+						_wp setWaypointBehaviour (_x select 9);
+						_wp setWaypointCompletionRadius (_x select 10);
+					} forEach _grpPath;
+					sleep 1;
+			};
+				sleep(_spawnDelay);
+		};
+
+	};
+	ATKcachedAttacks pushBack _handle;
+
+};
+
+FNC_AtkStart =
+{
+	ATKcachedAttacks pushBack (_this select 0);
+	_handle = _this spawn
+	{
+		private["_paths","_units","_side","_minSpawn", "_maxSpawn","_maxAmmount","_delay","_spawnDelay","_shouldClean","_unitsSpawned","_found"];
+
+		_paths = [];
+		_units = [];
+		_side = _this select 3;
+		_minSpawn = _this select 4;
+		_maxSpawn = _this select 5;
+		_delay = _this select 6;
+		_spawnDelay = _this select 7;
+		_shouldClean =_this select 8;
+
+		{
+				_found = ATKcachedPaths find _x;
+				if(_found < 0) then
+				{
+					_temp = format ["AI Attack module:<br></br>Warning path ""%1"", in file ""modules\ai_attack\settings.sqf"" does not exist.", _x];
+					_temp call FNC_DebugMessage;
+				}
+				else
+				{
+						_paths pushBack (ATKcachedPaths select (_found + 1));
+				};
+		}forEach (_this select 1);
+
+		{
+				_found = ATKcachedUnits find _x;
+				if(_found < 0) then
+				{
+					_temp = format ["AI Attack module:<br></br>Warning unit ""%1"", in file ""modules\ai_attack\settings.sqf"" does not exist.", _x];
+					_temp call FNC_DebugMessage;
+				}
+				else
+				{
+						_units pushBack (ATKcachedUnits select (_found + 1));
+				};
+		}forEach ( _this select 2);
+
+
+		//internal vars;
+
+		_unitsSpawned = [];
+		sleep _delay ;
+		//do some checks
+		if(count _paths <= 0) then
+		{
+				_temp = format ["AI Attack module:<br></br>Warning no paths in Attack, in file ""modules\ai_attack\settings.sqf"" "];
+				_temp call FNC_DebugMessage;
+		};
+		{
+			if(count _x <= 0) then
+			{
+					_temp = format ["AI Attack module:<br></br>Warning paths with no wayPoints specified in Attack, in file ""modules\ai_attack\settings.sqf"" "];
+					_temp call FNC_DebugMessage;
+			};
+		}forEach _paths;
+
+		if(count _units <= 0) then
+		{
+				_temp = format ["AI Attack module:<br></br>Warning no units in Attack, in file ""modules\ai_attack\settings.sqf"" "];
+				_temp call FNC_DebugMessage;
+		};
+
+		while{true} do
+		{
+			//cleanup all dead
+
+				{
+					if (!alive _x && !isNull _x) then
+					{
+						_unitsSpawned = _unitsSpawned - [_x];
+						if(_shouldClean)	then {deleteVehicle _x;};
+
+					};
+				} forEach _unitsSpawned;
+
+
+			{
+				if (count units _x < 1) then {deleteGroup _x};
+			} forEach allGroups;
+
+			_ammountToSpawn = floor(random (_maxSpawn -_minSpawn)) + _minSpawn;
+			for "_i" from 0 to _ammountToSpawn do
+			{
+
+					//select a Path
+					_grpPath = _paths call BIS_fnc_selectRandom;
+					_grpPos		= _grpPath select 0 select 5;
+					_newGroup 	= createGroup _side;
+
+					{
+							[_newGroup,_grpPos,_x] call FNC_AtkSpawnCustomUnit;
+							sleep 0.25;
+					}forEach _units;
 					{
 						_wp = _newGroup addWaypoint [(_x select 5), 0];
 						_wp setWaypointType (_x select 0);
