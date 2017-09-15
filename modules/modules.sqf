@@ -31,6 +31,7 @@
 //#include "cover_map\root.sqf"
 //#include "env_parameters\root.sqf"
 //#include "extract\root.sqf"
+//#include "firemission\root.sqf"
 //#include "hostage\root.sqf"
 //#include "in_game_briefing_utilities\root.sqf"
 //#include "marker_control\root.sqf"
