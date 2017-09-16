@@ -10,6 +10,15 @@
 #define OBSACCURACY 100
 #define OBSSPEED 30
 
+FNC_AddEventHandler =
+{
+	if(!((_this) getVariable ["ArtHasEventHandler",false])) then
+	{
+			(_this) addeventhandler ["fired", {(_this select 0) setvehicleammo 1}];
+			(_this) setVariable ["ArtHasEventHandler",true];
+	};
+
+};
 FNC_SetArtillerySkill =
 {
 		//TODO do some value checking
@@ -56,6 +65,7 @@ FNC_PointFireMission =
 	{
 		private _unit = _this select 0;
 		_unit setVariable ["isInAFiremission",true];
+		_unit call FNC_AddEventHandler;
 		private	_target = _this select 1;
 		private	_dispersion = _this select 2;
 		private	_burstCount = _this select 3;
@@ -100,6 +110,7 @@ _handle = _this spawn
 {
 		private _unit = _this select 0;
 		_unit setVariable ["isInAFiremission",true];
+		_unit call FNC_AddEventHandler;
 		private _startPoint = _this select 1;
 		private _endPoint = _this select 2;
 		private	_burstCount = _this select 3;
@@ -147,6 +158,7 @@ _handle = _this spawn
 {
 		private _unit = _this select 0;
 		_unit setVariable ["isInAFiremission",true];
+		_unit call FNC_AddEventHandler;
 		private _startPoint = _this select 1;
 		private _endPoint = _this select 2;
 		private	_burstCount = _this select 3;
@@ -204,6 +216,7 @@ _handle = _this spawn
 {
 	private _unit = _this select 0;
 	_unit setVariable ["isInAFiremission",true];
+	_unit call FNC_AddEventHandler;
 	private	_target = _this select 1;
 	private	_innerRadius = _this select 2;
 	private	_outerRadius = _this select 3;
@@ -252,6 +265,7 @@ _handle = _this spawn
 {
 		private _unit = _this select 0;
 		_unit setVariable ["isInAFiremission",true];
+		_unit call FNC_AddEventHandler;
 		private	_targetMarker = _this select 1;
 		private	_burstCount = _this select 2;
 		private	_burstSize = _this select 3;
@@ -298,6 +312,7 @@ _handle = _this spawn
 
 		{
 				_x setVariable ["isInAFiremission",true];
+				_x call FNC_AddEventHandler;
 		}forEach _unit;
 		private _startPoint = _this select 1;
 		private _endPoint = _this select 2;
