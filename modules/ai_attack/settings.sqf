@@ -1,37 +1,4 @@
-["infpath1",inf1] call FNC_AtkRegisterPath;
-["infpath2",inf2] call FNC_AtkRegisterPath;
-["infpath3",inf3] call FNC_AtkRegisterPath;
-["infpath4",inf4] call FNC_AtkRegisterPath;
-["infpath5",inf5] call FNC_AtkRegisterPath;
-["infpath6",inf6] call FNC_AtkRegisterPath;
-["infpath7",inf7] call FNC_AtkRegisterPath;
 
-["vehpath1",veh1] call FNC_AtkRegisterPath;
-["vehpath2",veh2] call FNC_AtkRegisterPath;
-["vehpath3",veh3] call FNC_AtkRegisterPath;
-["vehpath4",veh4] call FNC_AtkRegisterPath;
-
-
-["Rus_Rif","rhs_msv_emr_RShG2","",0.8] call FNC_AtkRegisterUnit;
-["Rus_Gren","rhs_msv_emr_grenadier","",0.8] call FNC_AtkRegisterUnit;
-["Rus_At","rhs_msv_emr_at","",0.8] call FNC_AtkRegisterUnit;
-["Rus_Rif2","rhs_msv_emr_arifleman","",0.8] call FNC_AtkRegisterUnit;
-["Rus_RPG","rhs_msv_emr_grenadier_rpg","",0.8] call FNC_AtkRegisterUnit;
-["Rus_MG","rhs_msv_emr_machinegunner","",0.8] call FNC_AtkRegisterUnit;
-["Rus_Crew","rhs_msv_emr_armoredcrew","",0.8] call FNC_AtkRegisterUnit;
-
-
-["BMP1","rhs_bmp1p_msv",["Rus_Crew","Rus_Crew","Rus_Crew"]]  call FNC_AtkRegisterVehicle;
-["BTR70","rhs_btr70_msv",["Rus_Crew","Rus_Crew","Rus_Crew"]]  call FNC_AtkRegisterVehicle;
-["BTR80","rhs_btr80_msv",["Rus_Crew","Rus_Crew","Rus_Crew"]]  call FNC_AtkRegisterVehicle;
-["GAZZU23","rhs_gaz66_zu23_msv",["Rus_Crew","Rus_Crew","Rus_Crew"]]  call FNC_AtkRegisterVehicle;
-["BRDM2","rhsgref_BRDM2_msv",["Rus_Crew","Rus_Crew"]]  call FNC_AtkRegisterVehicle;
-["URALZU23","RHS_Ural_Zu23_MSV_01",["Rus_Crew","Rus_Crew","Rus_Crew"]]  call FNC_AtkRegisterVehicle;
-["UAZDS","rhsgref_cdf_reg_uaz_dshkm",["Rus_Crew","Rus_Crew"]]  call FNC_AtkRegisterVehicle;
-["UAZSPG","rhsgref_cdf_reg_uaz_spg9",["Rus_Crew","Rus_Crew"]]  call FNC_AtkRegisterVehicle;
-
-["Attack1",["infpath1","infpath2","infpath3","infpath4","infpath5","infpath6","infpath7"],["Rus_Rif","Rus_Gren","Rus_At","Rus_Rif2","Rus_RPG","Rus_MG"],east,5,8,75,10,180,true] call FNC_AtkRandomStart;
-["VehicleAttack1",["vehpath1","vehpath2","vehpath3","vehpath4"],["BMP1","BTR70","BTR80","GAZZU23","BRDM2","URALZU23","UAZDS","UAZSPG"],east,2,5,10,360,true] call FNC_AtkVehicleStart;
 
 
 /*

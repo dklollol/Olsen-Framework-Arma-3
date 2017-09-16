@@ -1,4 +1,5 @@
 
+
 /*
 
 
@@ -105,8 +106,8 @@ minSpottedDistance - integer - range in m of how close spotting need to be to be
 roundtype -integer- ammunition used (getArtilleryAmmo [_unit] select _roundType)
 
 RegisterObserver:
-Example:  [obs1,[arty11,arty12,arty13,arty14],1,300,1000,10,5,10,300,0] call FNC_RegisterForwardObserver;
-[observer,batteries,knowledgerequired,minRange,viewRange,burstCount,roundsPerBurst,burstwaittime,minSpottedDistance,dispersion] call FNC_RegisterForwardObserver;
+[obs1,[arty11,arty12,arty13,arty14],1,300,1000,10,5,10,300,150,0] call FNC_RegisterForwardObserver;
+[observer,batteries,knowledgerequired,minRange,viewRange,burstCount,roundsPerBurst,burstwaittime,minSpottedDistance,dispersion,roundType] call FNC_RegisterForwardObserver;
 observer - obj - unit which observers;
 batteries - Array Obj- artillery guns observer has access to;
 knowledgerequired - integer (0,4) - https://community.bistudio.com/wiki/knowsAbout
@@ -115,8 +116,9 @@ viewRange -integer- max range the unit can know
 burstCount -integer - number of bursts
 roundsPerBurst - integer - number of rounds per burst
 burstWaitTime -integer - downtime between bursts
+dispersion - integer - dispersion in meters
 minSpottedDistance - integer - range in m of how close spotting need to be to be accepted
-roundtype - integer - ammunition used (getArtilleryAmmo [_unit] select _roundType)
+roundTpe - integer - ammunition used (getArtilleryAmmo [_unit] select _roundType)
 
 
 
@@ -144,5 +146,5 @@ Example:
 [arty5,"artytarget1",10,5,20,100,0]   call FNC_MarkerFireMission;
 [[arty6,arty7,arty8,arty9,arty10],getPos gameLogic7,getPos gameLogic8,200,10,5,20,100,0]   call FNC_CurtainFireMission;
 
-[obs1,[arty11,arty12,arty13,arty14],1,300,1000,10,5,10,300,0] call FNC_RegisterForwardObserver;
+[obs1,[arty11,arty12,arty13,arty14],1,300,1000,10,5,10,300,150,0] call FNC_RegisterForwardObserver;
 */
