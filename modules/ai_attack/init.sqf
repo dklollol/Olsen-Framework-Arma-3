@@ -485,6 +485,19 @@ FNC_AtkStopAttack =
 	};
 
 };
+
+
+_strengthParam = ["AIAttackStrength",90] call BIS_fnc_getParamValue;
+_skillParam = (["AIAttackSkill",70] call BIS_fnc_getParamValue) / 100;
+_cleanUpParam = ["AIAttackCleanUp",1] call BIS_fnc_getParamValue;
+_prepParam = ["AIAttackPrepTime",5] call BIS_fnc_getParamValue;
+
+
+AIAttackStrength_Param = _strengthParam;
+AIAttackSkill_Param = _skillParam;
+AIAttackCleanUp_Param = _cleanUpParam;
+AIAttackPrepTime_Param = _prepParam;
+
 //expected [paths aviable,units aviable,min ammount of Units spawned, max ammount of units spawned,max ammount of units in the field,delay from mission start,delay between spawns,should clean]
 if (isServer) then
 {

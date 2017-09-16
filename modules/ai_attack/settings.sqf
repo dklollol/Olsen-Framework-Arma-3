@@ -1,8 +1,24 @@
 
-
-
 /*
 Author:		Sacher
+
+Mission Parameters:
+See params.cpp for clear definition
+https://community.bistudio.com/wiki/Arma_3_Mission_Parameters
+
+4 Params are preset:
+AIAttackStrength_Param
+AIAttackSkill_Param
+AIAttackCleanUp_Param
+AIAttackPrepTime_Param
+
+These are sqf variables so you can just use them like this:
+["Attack1",["infpath1"],["Rus_MG"],east,5,8,AIAttackStrength_Param,AIAttackPrepTime_Param,180,AIAttackCleanUp_Param] call FNC_AtkRandomStart;
+["Rus_Crew","rhs_msv_emr_armoredcrew","",AIAttackSkill_Param] call FNC_AtkRegisterUnit;
+
+For changes edit the params.cpp file
+For adding additional custom parameters follow the same schema as the params.cpp file and the init.sqf at the bottom (Or consult Sacher).
+
 How to Use:
 Place down a unit and name it. Give him waypoints on how you want the ai to attack. Then register the path to the attack system use ["Path Identifier as String",unit which has the waypoints] call FNC_AtkRegisterPath;
 On mission start the path will be cached and the ai unit deleted;
@@ -113,13 +129,13 @@ Params:
 ["vehpath4",veh4] call FNC_AtkRegisterPath;
 
 
-["Rus_Rif","rhs_msv_emr_RShG2","",0.8] call FNC_AtkRegisterUnit;
-["Rus_Gren","rhs_msv_emr_grenadier","",0.8] call FNC_AtkRegisterUnit;
-["Rus_At","rhs_msv_emr_at","",0.8] call FNC_AtkRegisterUnit;
-["Rus_Rif2","rhs_msv_emr_arifleman","",0.8] call FNC_AtkRegisterUnit;
-["Rus_RPG","rhs_msv_emr_grenadier_rpg","",0.8] call FNC_AtkRegisterUnit;
-["Rus_MG","rhs_msv_emr_machinegunner","",0.8] call FNC_AtkRegisterUnit;
-["Rus_Crew","rhs_msv_emr_armoredcrew","",0.8] call FNC_AtkRegisterUnit;
+["Rus_Rif","rhs_msv_emr_RShG2","",AIAttackSkill_Param] call FNC_AtkRegisterUnit;
+["Rus_Gren","rhs_msv_emr_grenadier","",AIAttackSkill_Param] call FNC_AtkRegisterUnit;
+["Rus_At","rhs_msv_emr_at","",AIAttackSkill_Param] call FNC_AtkRegisterUnit;
+["Rus_Rif2","rhs_msv_emr_arifleman","",AIAttackSkill_Param] call FNC_AtkRegisterUnit;
+["Rus_RPG","rhs_msv_emr_grenadier_rpg","",AIAttackSkill_Param] call FNC_AtkRegisterUnit;
+["Rus_MG","rhs_msv_emr_machinegunner","",AIAttackSkill_Param] call FNC_AtkRegisterUnit;
+["Rus_Crew","rhs_msv_emr_armoredcrew","",AIAttackSkill_Param] call FNC_AtkRegisterUnit;
 
 
 ["BMP1","rhs_bmp1p_msv",["Rus_Crew","Rus_Crew","Rus_Crew"]]  call FNC_AtkRegisterVehicle;
@@ -131,8 +147,11 @@ Params:
 ["UAZDS","rhsgref_cdf_reg_uaz_dshkm",["Rus_Crew","Rus_Crew"]]  call FNC_AtkRegisterVehicle;
 ["UAZSPG","rhsgref_cdf_reg_uaz_spg9",["Rus_Crew","Rus_Crew"]]  call FNC_AtkRegisterVehicle;
 
-["Attack1",["infpath1","infpath2","infpath3","infpath4","infpath5","infpath6","infpath7"],["Rus_Rif","Rus_Gren","Rus_At","Rus_Rif2","Rus_RPG","Rus_MG"],east,5,8,75,10,180,true] call FNC_AtkRandomStart;
-["VehicleAttack1",["vehpath1","vehpath2","vehpath3","vehpath4"],["BMP1","BTR70","BTR80","GAZZU23","BRDM2","URALZU23","UAZDS","UAZSPG"],east,2,5,10,360,true] call FNC_AtkVehicleStart;
+["Attack1",["infpath1","infpath2","infpath3","infpath4","infpath5","infpath6","infpath7"],["Rus_Rif","Rus_Gren","Rus_At","Rus_Rif2","Rus_RPG","Rus_MG"],east,5,8,AIAttackStrength_Param,AIAttackPrepTime_Param * 60,180,AIAttackCleanUp_Param] call FNC_AtkRandomStart;
+["VehicleAttack1",["vehpath1","vehpath2","vehpath3","vehpath4"],["BMP1","BTR70","BTR80","GAZZU23","BRDM2","URALZU23","UAZDS","UAZSPG"],east,2,5,(AIAttackPrepTime_Param * 1.5) * 60,360,AIAttackCleanUp_Param] call FNC_AtkVehicleStart;
+
+//extend the timelimit because variable prep time
+FW_TimeLimit = FW_TimeLimit + AIAttackPrepTime_Param;
 
 
 
