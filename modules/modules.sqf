@@ -18,6 +18,7 @@
 //!!Some of them require changing settings in their settings.sqf file!!
 
 //#include "a3_endscreen\root.sqf"
+//#include "aceMedical\root.sqf"
 //#include "ai_attack\root.sqf"
 //#include "ai_behaviour\root.sqf"
 //#include "ai_drivers\root.sqf"
