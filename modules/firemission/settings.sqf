@@ -1,12 +1,22 @@
 
+[arty1,1,0,300,4,3,"TestArty1",true] call FNC_SetArtilleryData;
+[arty1,getPos gameLogic1,200,999,5,10,100,0]   call FNC_PointFireMission;
+[arty2,1,0,300,4,3,"M109 Test",true] call FNC_SetArtilleryData;
+[arty2,getPos gameLogic2,200,999,5,10,100,0]   call FNC_PointFireMission;
+[arty3,1,0,300,4,3,"M109 Test",false] call FNC_SetArtilleryData;
+[arty4,1,0,300,4,3,"M109A6 Test",false] call FNC_SetArtilleryData;
+{
+        [_x,[arty3,arty4]] call FNC_ArtMakePlayerObserver;
+}forEach allPlayers;
+
 
 /*
 
 
 
-SetArtillerySkill:
-Example: [arty1,1,0,300,4,3] call FNC_SetArtillerySkill;
-[unit,fireRate,accuracy,spottingAccuracy,aimtime,calculationtime]  call FNC_SetArtillerySkill;
+SetArtilleryData:
+Example: [arty1,1,0,300,4,3,"",true] call FNC_SetArtilleryData;
+[unit,fireRate,accuracy,spottingAccuracy,aimtime,calculationtime,unlimitedAmmo]  call FNC_SetArtilleryData;
 Params:
 unit -Object- unit of which the skills should change;
 fireRate - float(1,) - fireRate modifiers for bursts. Weapon reloadtime * fireRate for waititme between bursts, min 1;
@@ -14,6 +24,9 @@ accuracy - integer - accuracy of shots in meters;
 spottingAccuracy - integer - accuracy of spotting rounds in meters;
 aimtime - integer - time between recaluclations in seconds;
 calculationtime - integer - time to calculate a firing solution before firing spotting rounds;
+customName - String - name for the player Observer in his gui;
+unlimitedAmmo - bool - true for unlimitedAmmo
+Notes: put -1 for default
 
 SetObserverSkill:
 Example: [obs1,0,0] call FNC_SetObserverSkill;
@@ -29,12 +42,12 @@ Example: [arty1,getPos gameLogic1,200,10,5,10,100,0]   call FNC_PointFireMission
 Params:
 unit - Object- artillery vehicle;
 position -Vector- center of firemission
-dispersion -integer - dispersion per burst in meter
+dispersion -integer - dispersion of the fire mission
 burstCount -integer - number of bursts
 roundsPerBurst - integer - number of rounds per burst
 burstWaitTime -integer - downtime between bursts
 minSpottedDistance - integer - range in m of how close spotting need to be to be accepted
-roundtype -integer- ammunition used (getArtilleryAmmo [_unit] select _roundType)
+roundtype -integer- ammunition used ((magazinesAmmo _actualGunUnit) select _roundType)
 
 LineFiremission:
 
@@ -48,7 +61,7 @@ segments -integer - number of bursts
 roundsPerSegment - integer - number of rounds per segment
 waitTimePerSegment -integer - downtime between segments
 minSpottedDistance - integer - range in m of how close spotting need to be to be accepted
-roundtype -integer- ammunition used (getArtilleryAmmo [_unit] select _roundType)
+roundtype -integer- ammunition used ((magazinesAmmo _actualGunUnit) select _roundType)
 
 BracketFiremission:
 Example:[arty2,getPos gameLogic2,getPos gameLogic3,10,2,10,100,0]  call FNC_BracketFireMission;
@@ -61,7 +74,7 @@ segments -integer - number of bursts
 roundsPerSegment - integer - number of rounds per segment
 waitTimePerSegment -integer - downtime between segments
 minSpottedDistance - integer - range in m of how close spotting need to be to be accepted
-roundtype -integer- ammunition used (getArtilleryAmmo [_unit] select _roundType)
+roundtype -integer- ammunition used ((magazinesAmmo _actualGunUnit) select _roundType)
 
 Notes: Artillery will fire alternating between end and start towards the center
 
@@ -77,7 +90,7 @@ burstCount -integer - number of bursts
 roundsPerBurst - integer - number of rounds per burst
 burstWaitTime -integer - downtime between bursts
 minSpottedDistance - integer - range in m of how close spotting need to be to be accepted
-roundtype -integer- ammunition used (getArtilleryAmmo [_unit] select _roundType)
+roundtype -integer- ammunition used ((magazinesAmmo _actualGunUnit) select _roundType)
 
 MarkerFiremission
 Example: [arty5,"artytarget1",10,5,20,100,0]   call FNC_MarkerFireMission;
@@ -89,7 +102,33 @@ burstCount -integer - number of bursts
 roundsPerBurst - integer - number of rounds per burst
 burstWaitTime -integer - downtime between bursts
 minSpottedDistance - integer - range in m of how close spotting need to be to be accepted
-roundtype -integer- ammunition used (getArtilleryAmmo [_unit] select _roundType)
+roundtype -integer- ammunition used ((magazinesAmmo _actualGunUnit) select _roundType)
+
+PointMarkerFiremission
+Example: [arty5,"artytarget1",10,5,20,100,0]   call FNC_MPointMarkerFiremission;
+[unit,marker,dispersion,burstCount,roundsPerBurst,burstWaitTime,minSpottedDistance,roundtype]   call FNC_PointMarkerFiremission;
+Params:
+unit - Object- artillery vehicle;
+marker - String - markername of where artillery should hit
+dispersion -integer - dispersion of the fire mission
+burstCount -integer - number of bursts
+roundsPerBurst - integer - number of rounds per burst
+burstWaitTime -integer - downtime between bursts
+minSpottedDistance - integer - range in m of how close spotting need to be to be accepted
+roundtype -integer- ammunition used ((magazinesAmmo _actualGunUnit) select _roundType)
+
+DynamicMarkerFiremission
+Example: [arty5,"artytarget1",10,5,20,100,0]   call FNC_DynamicMarkerFiremission;
+[unit,marker,dispersion,burstCount,roundsPerBurst,burstWaitTime,minSpottedDistance,roundtype]   call FNC_DynamicMarkerFiremission;
+Params:
+unit - Object- artillery vehicle;
+marker - String - ingame text of the marker of where to hit and not the variable name
+dispersion -integer - dispersion of the fire mission
+burstCount -integer - number of bursts
+roundsPerBurst - integer - number of rounds per burst
+burstWaitTime -integer - downtime between bursts
+minSpottedDistance - integer - range in m of how close spotting need to be to be accepted
+roundtype -integer- ammunition used ((magazinesAmmo _actualGunUnit) select _roundType)
 
 CurtainFiremission:
 Example: [[arty6,arty7,arty8,arty9,arty10],getPos gameLogic7,getPos gameLogic8,200,10,5,20,100,0]   call FNC_CurtainFireMission;
@@ -103,7 +142,7 @@ segments -integer - number of bursts
 roundsPerSegment - integer - number of rounds per segment
 waitTimePerSegment -integer - downtime between segments
 minSpottedDistance - integer - range in m of how close spotting need to be to be accepted
-roundtype -integer- ammunition used (getArtilleryAmmo [_unit] select _roundType)
+roundtype -integer- ammunition used ((magazinesAmmo _actualGunUnit) select _roundType)
 
 RegisterObserver:
 [obs1,[arty11,arty12,arty13,arty14],1,300,1000,10,5,10,300,150,0] call FNC_RegisterForwardObserver;
@@ -118,25 +157,24 @@ roundsPerBurst - integer - number of rounds per burst
 burstWaitTime -integer - downtime between bursts
 dispersion - integer - dispersion in meters
 minSpottedDistance - integer - range in m of how close spotting need to be to be accepted
-roundTpe - integer - ammunition used (getArtilleryAmmo [_unit] select _roundType)
-
+roundTpe - integer - ammunition used ((magazinesAmmo _actualGunUnit) select _roundType)
 
 
 Example:
-[arty1,1,0,300,4,3] call FNC_SetArtillerySkill;
-[arty2,1,0,300,4,3] call FNC_SetArtillerySkill;
-[arty3,1,0,300,4,3] call FNC_SetArtillerySkill;
-[arty4,1,0,300,4,3] call FNC_SetArtillerySkill;
-[arty5,1,0,300,4,3] call FNC_SetArtillerySkill;
-[arty6,1,0,300,4,3] call FNC_SetArtillerySkill;
-[arty7,1,0,300,4,3] call FNC_SetArtillerySkill;
-[arty8,1,0,300,4,3] call FNC_SetArtillerySkill;
-[arty9,1,0,300,4,3] call FNC_SetArtillerySkill;
-[arty10,1,0,300,4,3] call FNC_SetArtillerySkill;
-[arty11,1,0,300,4,3] call FNC_SetArtillerySkill;
-[arty12,1,0,300,4,3] call FNC_SetArtillerySkill;
-[arty13,1,0,300,4,3] call FNC_SetArtillerySkill;
-[arty14,1,0,300,4,3] call FNC_SetArtillerySkill;
+[arty1,1,0,300,4,3] call FNC_SetArtilleryData;
+[arty2,1,0,300,4,3] call FNC_SetArtilleryData;
+[arty3,1,0,300,4,3] call FNC_SetArtilleryData;
+[arty4,1,0,300,4,3] call FNC_SetArtilleryData;
+[arty5,1,0,300,4,3] call FNC_SetArtilleryData;
+[arty6,1,0,300,4,3] call FNC_SetArtilleryData;
+[arty7,1,0,300,4,3] call FNC_SetArtilleryData;
+[arty8,1,0,300,4,3] call FNC_SetArtilleryData;
+[arty9,1,0,300,4,3] call FNC_SetArtilleryData;
+[arty10,1,0,300,4,3] call FNC_SetArtilleryData;
+[arty11,1,0,300,4,3] call FNC_SetArtilleryData;
+[arty12,1,0,300,4,3] call FNC_SetArtilleryData;
+[arty13,1,0,300,4,3] call FNC_SetArtilleryData;
+[arty14,1,0,300,4,3] call FNC_SetArtilleryData;
 [obs1,0,0] call FNC_SetObserverSkill;
 
 [arty1,getPos gameLogic1,200,10,5,10,100,0]   call FNC_PointFireMission;
