@@ -54,9 +54,9 @@ FNC_DIA_MarkerFiremissionFire =
 						if(_spotting < 0) then {hint "Spotting distance is not a number";}
 						else
 						{
-							hint (([_selectedUnit,_grid call CBA_fnc_mapGridToPos,_dispersion,_burstNumber,_burstRounds,_burstDelay,_spotting,_selectedAmmo] call FNC_GetMarkerFiremissionText)
+							hint (([_selectedUnit,[_grid,true] call CBA_fnc_mapGridToPos,_dispersion,_burstNumber,_burstRounds,_burstDelay,_spotting,_selectedAmmo] call FNC_GetMarkerFiremissionText)
 								+ "Requested by:" + (name player));
-							[-1, {_this call FNC_DIA_Server_MarkerFiremissionFire;}, [player,_selectedUnit,_selectedAmmo,_grid,_dispersion,_burstNumber,_burstRounds,_burstDelay,_spotting]] call CBA_fnc_globalExecute;
+							["CallMarkerFiremission",  [player,_selectedUnit,_selectedAmmo,_grid,_dispersion,_burstNumber,_burstRounds,_burstDelay,_spotting]] call CBA_fnc_serverEvent;
 							[] call FNC_DIA_MarkerFiremissionCloseDialog;
 						};
 					};
@@ -83,8 +83,8 @@ FNC_DIA_Server_MarkerFiremissionFire =
 
 
 	[_selectedUnit,_requester] call FNC_SetArtyCaller;
-	[_selectedUnit,_grid call CBA_fnc_mapGridToPos,_dispersion,_burstNumber,_burstRounds,_burstDelay,_spotting,_selectedAmmo]   call FNC_MarkerFireMission;
+	[_selectedUnit,[_grid,true] call CBA_fnc_mapGridToPos,_dispersion,_burstNumber,_burstRounds,_burstDelay,_spotting,_selectedAmmo]   call FNC_MarkerFiremission;
 
 
-;
 };
+if(isServer) then {_id = ["CallMarkerFiremission", {_this call FNC_DIA_Server_MarkerFiremissionFire;}] call CBA_fnc_addEventHandler;};

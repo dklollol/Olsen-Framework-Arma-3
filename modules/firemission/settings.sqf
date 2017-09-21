@@ -1,13 +1,19 @@
 
 [arty1,1,0,300,4,3,"TestArty1",true] call FNC_SetArtilleryData;
-[arty1,getPos gameLogic1,200,999,5,10,100,0]   call FNC_PointFireMission;
+[arty1,getPos gameLogic1,200,999,5,10,100,0]   call FNC_PointFiremission;
 [arty2,1,0,300,4,3,"M109 Test",true] call FNC_SetArtilleryData;
-[arty2,getPos gameLogic2,200,999,5,10,100,0]   call FNC_PointFireMission;
-[arty3,1,0,300,4,3,"M109 Test",false] call FNC_SetArtilleryData;
-[arty4,1,0,300,4,3,"M109A6 Test",false] call FNC_SetArtilleryData;
+[arty2,getPos gameLogic2,200,999,5,10,100,0]   call FNC_PointFiremission;
+
+
+private _art = [arty3,arty4,arty5,arty6,arty7,arty8,arty9,arty10];
 {
-        [_x,[arty3,arty4]] call FNC_ArtMakePlayerObserver;
-}forEach allPlayers;
+    [_x,1,0,300,4,3,"M109" + str (floor random 1000 ),false] call FNC_SetArtilleryData;
+}forEach _art;
+[test1,_art] call FNC_ArtMakePlayerObserver;
+[test2,_art] call FNC_ArtMakePlayerObserver;
+[test3,_art] call FNC_ArtMakePlayerObserver;
+[test4,_art] call FNC_ArtMakePlayerObserver;
+
 
 
 /*
@@ -37,8 +43,8 @@ accuracy - integer - accuracy of position estimation in meters
 speed - integer - time to estimate position of target
 
 PointFiremission:
-Example: [arty1,getPos gameLogic1,200,10,5,10,100,0]   call FNC_PointFireMission;
-[unit,position,dispersion,burstCount,roundsPerBurst,burstWaitTime,minSpottedDistance,roundtype]   call FNC_PointFireMission;
+Example: [arty1,getPos gameLogic1,200,10,5,10,100,0]   call FNC_PointFiremission;
+[unit,position,dispersion,burstCount,roundsPerBurst,burstWaitTime,minSpottedDistance,roundtype]   call FNC_PointFiremission;
 Params:
 unit - Object- artillery vehicle;
 position -Vector- center of firemission
@@ -51,8 +57,8 @@ roundtype -integer- ammunition used ((magazinesAmmo _actualGunUnit) select _roun
 
 LineFiremission:
 
-Example: [arty2,getPos gameLogic2,getPos gameLogic3,10,2,10,100,0]   call FNC_LineFireMission;
-[unit,startPoint,endPoint,segments,roundsPerSegment,waitTimePerSegment,minSpottedDistance,roundtype]   call FNC_LineFireMission;
+Example: [arty2,getPos gameLogic2,getPos gameLogic3,10,2,10,100,0]   call FNC_LineFiremission;
+[unit,startPoint,endPoint,segments,roundsPerSegment,waitTimePerSegment,minSpottedDistance,roundtype]   call FNC_LineFiremission;
 Params:
 unit - Object- artillery vehicle;
 startPoint - Vector - start of line
@@ -64,8 +70,8 @@ minSpottedDistance - integer - range in m of how close spotting need to be to be
 roundtype -integer- ammunition used ((magazinesAmmo _actualGunUnit) select _roundType)
 
 BracketFiremission:
-Example:[arty2,getPos gameLogic2,getPos gameLogic3,10,2,10,100,0]  call FNC_BracketFireMission;
-[unit,startPoint,endPoint,segments,roundsPerSegment,waitTimePerSegment,minSpottedDistance,roundtype]   call FNC_BracketFireMission;
+Example:[arty2,getPos gameLogic2,getPos gameLogic3,10,2,10,100,0]  call FNC_BracketFiremission;
+[unit,startPoint,endPoint,segments,roundsPerSegment,waitTimePerSegment,minSpottedDistance,roundtype]   call FNC_BracketFiremission;
 Params:
 unit - Object- artillery vehicle;
 startPoint - Vector - start of line
@@ -79,8 +85,8 @@ roundtype -integer- ammunition used ((magazinesAmmo _actualGunUnit) select _roun
 Notes: Artillery will fire alternating between end and start towards the center
 
 DonutFiremission
-Example: [arty4,getPos gameLogic6,200,400,10,5,20,100,0]   call FNC_DonutFireMission;
-[unit,position,innerRadius,outRadius,burstCount,roundsPerBurst,burstWaitTime,minSpottedDistance,roundtype]   call FNC_DonutFireMission;
+Example: [arty4,getPos gameLogic6,200,400,10,5,20,100,0]   call FNC_DonutFiremission;
+[unit,position,innerRadius,outRadius,burstCount,roundsPerBurst,burstWaitTime,minSpottedDistance,roundtype]   call FNC_DonutFiremission;
 Params:
 unit - Object- artillery vehicle;
 position -Vector- center of firemission
@@ -93,8 +99,8 @@ minSpottedDistance - integer - range in m of how close spotting need to be to be
 roundtype -integer- ammunition used ((magazinesAmmo _actualGunUnit) select _roundType)
 
 MarkerFiremission
-Example: [arty5,"artytarget1",10,5,20,100,0]   call FNC_MarkerFireMission;
-[unit,marker,burstCount,roundsPerBurst,burstWaitTime,minSpottedDistance,roundtype]   call FNC_PointFireMission;
+Example: [arty5,"artytarget1",10,5,20,100,0]   call FNC_MarkerFiremission;
+[unit,marker,burstCount,roundsPerBurst,burstWaitTime,minSpottedDistance,roundtype]   call FNC_PointFiremission;
 Params:
 unit - Object- artillery vehicle;
 marker - String - markername of where artillery should hit
@@ -131,8 +137,8 @@ minSpottedDistance - integer - range in m of how close spotting need to be to be
 roundtype -integer- ammunition used ((magazinesAmmo _actualGunUnit) select _roundType)
 
 CurtainFiremission:
-Example: [[arty6,arty7,arty8,arty9,arty10],getPos gameLogic7,getPos gameLogic8,200,10,5,20,100,0]   call FNC_CurtainFireMission;
-[units,,startPoint,endPoint,width,segments,roundsPerSegment,waitTimePerSegment,minSpottedDistance,roundtype]   call FNC_CurtainFireMission;
+Example: [[arty6,arty7,arty8,arty9,arty10],getPos gameLogic7,getPos gameLogic8,200,10,5,20,100,0]   call FNC_CurtainFiremission;
+[units,,startPoint,endPoint,width,segments,roundsPerSegment,waitTimePerSegment,minSpottedDistance,roundtype]   call FNC_CurtainFiremission;
 Params:
 unit -Array Object- artillery vehicles for mission;
 startPoint - Vector - start of line
@@ -177,12 +183,12 @@ Example:
 [arty14,1,0,300,4,3] call FNC_SetArtilleryData;
 [obs1,0,0] call FNC_SetObserverSkill;
 
-[arty1,getPos gameLogic1,200,10,5,10,100,0]   call FNC_PointFireMission;
-[arty2,getPos gameLogic2,getPos gameLogic3,10,2,10,100,0]   call FNC_LineFireMission;
-[arty3,getPos gameLogic4,getPos gameLogic5,10,5,20,100,0]   call FNC_BracketFireMission;
-[arty4,getPos gameLogic6,200,400,10,5,20,100,0]   call FNC_DonutFireMission;
-[arty5,"artytarget1",10,5,20,100,0]   call FNC_MarkerFireMission;
-[[arty6,arty7,arty8,arty9,arty10],getPos gameLogic7,getPos gameLogic8,200,10,5,20,100,0]   call FNC_CurtainFireMission;
+[arty1,getPos gameLogic1,200,10,5,10,100,0]   call FNC_PointFiremission;
+[arty2,getPos gameLogic2,getPos gameLogic3,10,2,10,100,0]   call FNC_LineFiremission;
+[arty3,getPos gameLogic4,getPos gameLogic5,10,5,20,100,0]   call FNC_BracketFiremission;
+[arty4,getPos gameLogic6,200,400,10,5,20,100,0]   call FNC_DonutFiremission;
+[arty5,"artytarget1",10,5,20,100,0]   call FNC_MarkerFiremission;
+[[arty6,arty7,arty8,arty9,arty10],getPos gameLogic7,getPos gameLogic8,200,10,5,20,100,0]   call FNC_CurtainFiremission;
 
 [obs1,[arty11,arty12,arty13,arty14],1,300,1000,10,5,10,300,150,0] call FNC_RegisterForwardObserver;
 */

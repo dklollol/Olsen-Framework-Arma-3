@@ -50,9 +50,9 @@ FNC_DIA_BracketFiremissionFire =
 					if(_spotting < 0) then {hint "Spotting distance is not a number";}
 					else
 					{
-						hint (([_selectedUnit,_startGrid call CBA_fnc_mapGridToPos,_endGrid call CBA_fnc_mapGridToPos,_burstNumber,_burstRounds,_burstDelay,_spotting,_selectedAmmo] call FNC_GetBracketFiremissionText)
+						hint (([_selectedUnit,[_startGrid,true] call CBA_fnc_mapGridToPos,[_endGrid,true] call CBA_fnc_mapGridToPos,_burstNumber,_burstRounds,_burstDelay,_spotting,_selectedAmmo] call FNC_GetBracketFiremissionText)
 							+ "Requested by:" + (name player));
-						[-1, {_this call FNC_DIA_Server_BracketFiremissionFire;}, [player,_selectedUnit,_selectedAmmo,_startGrid,_endGrid,_burstNumber,_burstRounds,_burstDelay,_spotting]] call CBA_fnc_globalExecute;
+						["CallDonutFiremission", [player,_selectedUnit,_selectedAmmo,_startGrid,_endGrid,_burstNumber,_burstRounds,_burstDelay,_spotting]] call CBA_fnc_serverEvent;
 						[] call FNC_DIA_BracketFiremissionCloseDialog;
 					};
 				};
@@ -78,8 +78,9 @@ FNC_DIA_Server_BracketFiremissionFire =
 	_spotting =  _this select 8;
 
 	[_selectedUnit,_requester] call FNC_SetArtyCaller;
-	[_selectedUnit,_startGrid call CBA_fnc_mapGridToPos,_endGrid call CBA_fnc_mapGridToPos,_burstNumber,_burstRounds,_burstDelay,_spotting,_selectedAmmo]   call FNC_BracketFireMission;
+	[_selectedUnit,[_startGrid,true] call CBA_fnc_mapGridToPos,[_endGrid,true] call CBA_fnc_mapGridToPos,_burstNumber,_burstRounds,_burstDelay,_spotting,_selectedAmmo]   call FNC_BracketFiremission;
 
 
 
 };
+if(isServer) then {_id = ["CallDonutFiremission", {_this call FNC_DIA_Server_LineFiremissionFire;}] call CBA_fnc_addEventHandler;};

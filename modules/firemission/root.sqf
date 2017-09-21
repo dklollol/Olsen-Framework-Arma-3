@@ -10,4 +10,6 @@
 		#include "Dia_BracketFiremission.hpp"
 		#include "Dia_DonutFiremission.hpp"
 		#include "Dia_MarkerFiremission.hpp"
+		#include "Dia_GridSpottingFiremission.hpp"
+		#include "Dia_PolarSpottingFiremission.hpp"
 #endif

@@ -51,9 +51,9 @@ FNC_DIA_LineFiremissionFire =
 					if(_spotting < 0) then {hint "Spotting distance is not a number";}
 					else
 					{
-						hint (([_selectedUnit,_startGrid call CBA_fnc_mapGridToPos,_endGrid call CBA_fnc_mapGridToPos,_burstNumber,_burstRounds,_burstDelay,_spotting,_selectedAmmo] call FNC_GetLineFiremissionText)
+						hint (([_selectedUnit,[_startGrid,true] call CBA_fnc_mapGridToPos,[_endGrid,true] call CBA_fnc_mapGridToPos,_burstNumber,_burstRounds,_burstDelay,_spotting,_selectedAmmo] call FNC_GetLineFiremissionText)
 							+ "Requested by:" + (name player));
-						[-1, {_this call FNC_DIA_Server_LineFiremissionFire;}, [player,_selectedUnit,_selectedAmmo,_startGrid,_endGrid,_burstNumber,_burstRounds,_burstDelay,_spotting]] call CBA_fnc_globalExecute;
+							["CallLineFiremission", [player,_selectedUnit,_selectedAmmo,_startGrid,_endGrid,_burstNumber,_burstRounds,_burstDelay,_spotting]] call CBA_fnc_serverEvent;
 						[] call FNC_DIA_LineFiremissionCloseDialog;
 					};
 				};
@@ -79,8 +79,8 @@ FNC_DIA_Server_LineFiremissionFire =
 	_spotting =  _this select 8;
 
 	[_unit,_requester] call FNC_SetArtyCaller;
-	[_selectedUnit,_startGrid call CBA_fnc_mapGridToPos,_endGrid call CBA_fnc_mapGridToPos,_burstNumber,_burstRounds,_burstDelay,_spotting,_selectedAmmo]   call FNC_LineFireMission;
+	[_selectedUnit,[_startGrid,true] call CBA_fnc_mapGridToPos,[_endGrid,true] call CBA_fnc_mapGridToPos,_burstNumber,_burstRounds,_burstDelay,_spotting,_selectedAmmo]   call FNC_LineFiremission;
 
 
-;
 };
+if(isServer) then {_id = ["CallLineFiremission", {_this call FNC_DIA_Server_LineFiremissionFire;}] call CBA_fnc_addEventHandler;};

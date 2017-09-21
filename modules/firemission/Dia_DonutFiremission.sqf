@@ -60,7 +60,7 @@ FNC_DIA_DonutFiremissionFire =
 							{
 								hint (([_selectedUnit,_grid call CBA_fnc_mapGridToPos,_innerRadius,_outerRadius,_burstNumber,_burstRounds,_burstDelay,_spotting,_selectedAmmo] call FNC_GetDonutFiremissionText)
 									+ "Requested by:" + (name player));
-								[-1, {_this call FNC_DIA_Server_DonutFiremissionFire;}, [player,_selectedUnit,_selectedAmmo,_grid,_innerRadius,_outerRadius,_burstNumber,_burstRounds,_burstDelay,_spotting]] call CBA_fnc_globalExecute;
+									["CallDonutFiremission", [player,_selectedUnit,_selectedAmmo,_grid,_innerRadius,_outerRadius,_burstNumber,_burstRounds,_burstDelay,_spotting]] call CBA_fnc_serverEvent;
 								[] call FNC_DIA_DonutFiremissionCloseDialog;
 							};
 						};
@@ -89,8 +89,9 @@ FNC_DIA_Server_DonutFiremissionFire =
 	_spotting =  _this select 9;
 
 	[_selectedUnit,_requester] call FNC_SetArtyCaller;
-	[_selectedUnit ,_grid call CBA_fnc_mapGridToPos,_innerRadius,_outerRadius,_burstNumber,_burstRounds,_burstDelay,_spotting,_selectedAmmo]   call FNC_DonutFireMission;
+	[_selectedUnit ,[_grid,true] call CBA_fnc_mapGridToPos,_innerRadius,_outerRadius,_burstNumber,_burstRounds,_burstDelay,_spotting,_selectedAmmo]   call FNC_DonutFiremission;
 
 
-;
 };
+
+if(isServer) then {_id = ["CallDonutFiremission", {_this call FNC_DIA_Server_LineFiremissionFire;}] call CBA_fnc_addEventHandler;};

@@ -54,11 +54,12 @@ FNC_DIA_PointFiremissionFire =
 						if(_spotting < 0) then {hint "Spotting distance is not a number";}
 						else
 						{
-							hint (([_selectedUnit,_grid call CBA_fnc_mapGridToPos,_dispersion,_burstNumber,_burstRounds,_burstDelay,_spotting,_selectedAmmo] call FNC_GetPointFiremissionText)
+							hint (([_selectedUnit,[_grid,true] call CBA_fnc_mapGridToPos,_dispersion,_burstNumber,_burstRounds,_burstDelay,_spotting,_selectedAmmo] call FNC_GetPointFiremissionText)
 								+ "Requested by: " + (name player));
 
-							[-1, {_this call FNC_DIA_Server_PointFiremissionFire;}, [player,_selectedUnit,_selectedAmmo,_grid,_dispersion,_burstNumber,_burstRounds,_burstDelay,_spotting]] call CBA_fnc_globalExecute;
+							["CallPointFiremission", [player,_selectedUnit,_selectedAmmo,_grid,_dispersion,_burstNumber,_burstRounds,_burstDelay,_spotting]] call CBA_fnc_serverEvent;
 							[] call FNC_DIA_PointFiremissionCloseDialog;
+
 						};
 					};
 				};
@@ -84,8 +85,8 @@ FNC_DIA_Server_PointFiremissionFire =
 	private _guns = _requester getVariable ["PlayerArtilleryGuns",[]];
 
 	[_selectedUnit,_requester] call FNC_SetArtyCaller;
-	[_selectedUnit,_grid call CBA_fnc_mapGridToPos,_dispersion,_burstNumber,_burstRounds,_burstDelay,_spotting,_selectedAmmo]   call FNC_PointFireMission;
+	[_selectedUnit,[_grid,true] call CBA_fnc_mapGridToPos,_dispersion,_burstNumber,_burstRounds,_burstDelay,_spotting,_selectedAmmo]   call FNC_PointFiremission;
 
-
-;
 };
+
+if(isServer) then {_id = ["CallPointFiremission", {_this call FNC_DIA_Server_PointFiremissionFire;}] call CBA_fnc_addEventHandler;};

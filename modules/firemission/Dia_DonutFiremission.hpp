@@ -203,7 +203,7 @@ class DIA_DONUTFIREMISSION
 	};
 	class DFM_BURSTNUMBEREDIT: RscEdit
 	{
-		idc = DFM_DIA_IDC_BURSTROUNDS;
+		idc = DFM_DIA_IDC_BURSTNUMBER;
 		text = ""; //--- ToDo: Localize;
 		x = (ARTIWIDTHMAINSPACE + ARTILAYOUTWIDTHSPACE) * safezoneW + safezoneX;
 		y = (ARTIHEIGHTMAINSPACE + ARTILAYOUTHEIGHTSPACE * 6) * safezoneH + safezoneY;
