@@ -1,7 +1,4 @@
 
-#include "defs.hpp"
-#include "Dia_Global.sqf"
-
 FNC_DIA_BracketFiremissionOpenDialog =
 {
 	_ok = createDialog "DIA_BracketFiremission";
@@ -29,7 +26,8 @@ FNC_DIA_BracketFiremissionFire =
 			_usableGuns pushBack _x;
 		};
 	}forEach _guns;
-	_selectedUnit = lbCurSel BFM_DIA_IDC_GUNSELECT;
+	_selectedUnit = objNull;
+	 if((count _usableGuns) > 0) then { _selectedUnit = (_usableGuns select (lbCurSel BFM_DIA_IDC_GUNSELECT));};
 	_selectedAmmo = lbCurSel BFM_DIA_IDC_SHELLSELECT;
 	_startGrid = 	ctrlText BFM_DIA_IDC_STARTGRID;
 	_endGrid =  ctrlText BFM_DIA_IDC_ENDGRID;
@@ -37,7 +35,9 @@ FNC_DIA_BracketFiremissionFire =
 	_burstRounds = (ctrlText BFM_DIA_IDC_BURSTROUNDS) call BIS_fnc_parseNumber;
 	_burstDelay = (ctrlText BFM_DIA_IDC_BURSTDELAY) call BIS_fnc_parseNumber;
 	_spotting =  (ctrlText BFM_DIA_IDC_SPOTTING) call BIS_fnc_parseNumber;
-
+		if(_selectedUnit isEqualTo objNull) then  {hint "No Arty selected/aviable";}
+	else
+	{
 		if(_burstNumber < 0) then {hint "Burst number is not a number";}
 		else
 		{
@@ -50,7 +50,8 @@ FNC_DIA_BracketFiremissionFire =
 					if(_spotting < 0) then {hint "Spotting distance is not a number";}
 					else
 					{
-						hint "Artilly is being fired";
+						hint (([_selectedUnit,_startGrid call CBA_fnc_mapGridToPos,_endGrid call CBA_fnc_mapGridToPos,_burstNumber,_burstRounds,_burstDelay,_spotting,_selectedAmmo] call FNC_GetBracketFiremissionText)
+							+ "Requested by:" + (name player));
 						[-1, {_this call FNC_DIA_Server_BracketFiremissionFire;}, [player,_selectedUnit,_selectedAmmo,_startGrid,_endGrid,_burstNumber,_burstRounds,_burstDelay,_spotting]] call CBA_fnc_globalExecute;
 						[] call FNC_DIA_BracketFiremissionCloseDialog;
 					};
@@ -59,7 +60,7 @@ FNC_DIA_BracketFiremissionFire =
 		};
 
 
-
+	};
 
 
 };
@@ -75,17 +76,10 @@ FNC_DIA_Server_BracketFiremissionFire =
 	_burstRounds = _this select 6;
 	_burstDelay = _this select 7;
 	_spotting =  _this select 8;
-	_guns = _requester getVariable ["PlayerArtilleryGuns",[]];
-	_usableGuns = [];
-	{
-		if(alive _x && !(_x getVariable ["isInAFiremission",false])) then
-		{
-			_usableGuns pushBack _x;
-		};
-	}forEach _guns;
 
-	[_usableGuns select _selectedUnit,_startGrid call CBA_fnc_mapGridToPos,_endGrid call CBA_fnc_mapGridToPos,_burstNumber,_burstRounds,_burstDelay,_spotting,_selectedAmmo]   call FNC_BracketFireMission;
+	[_selectedUnit,_requester] call FNC_SetArtyCaller;
+	[_selectedUnit,_startGrid call CBA_fnc_mapGridToPos,_endGrid call CBA_fnc_mapGridToPos,_burstNumber,_burstRounds,_burstDelay,_spotting,_selectedAmmo]   call FNC_BracketFireMission;
 
 
-;
+
 };

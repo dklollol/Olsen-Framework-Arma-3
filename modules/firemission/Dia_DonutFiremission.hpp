@@ -3,31 +3,31 @@
 ////////////////////////////////////////////////////////
 
 #include "defs.hpp"
-class DIA_BRACKETFIREMISSION
+class DIA_DONUTFIREMISSION
 {
-	idd = BFM_DIA_IDD_DISPLAY;
+	idd = DFM_DIA_IDD_DISPLAY;
 	movingEnable = false;
 	enableSimulation = true;
-	 scriptName = "Dialog_BracketFiremission";
+	 scriptName = "Dialog_DonutFiremission";
 	controlsBackground[] = {};
 	objects[] = {};
-	controls[] = {BFM_BACKGROUND,BFM_DESCRIPTIONTEXT,BFM_SELECTEDGUN,BFM_SELECTEDSHELLTEXT,BFM_STARTGRID,BFM_ENDGRID,BFM_BURSTNUMBERTEXT,BFM_BURSTROUNDSTEXT,
-		BFM_DELAYTEXT,BFM_SPOTDISTTEXT,BFM_SELECTEDGUNEDIT,BFM_SELECTEDSHELLEDIT,BFM_STARTGRIDEDIT,
-		BFM_ENDGRIDEDIT,BFM_BURSTNUMBEREDIT,BFM_BURSTROUNDSEDIT,BFM_BURSTDELAYEDIT,BFM_SPOTTINGDISTANCEDIT,BFM_FIREBUTTON,BFM_CANCELBUTTON};
-		class BFM_BACKGROUND: RscText
+	controls[] = {DFM_BACKGROUND,DFM_DESCRIPTIONTEXT,DFM_SELECTEDGUNTEXT,DFM_SELECTEDSHELLTEXT,DFM_GRIDTEXT,DFM_INNERRADIUSTEXT,DFM_OUTERRADIUSTEXT,DFM_BURSTNUMBERTEXT,DFM_BURSTROUNDSTEXT,
+		DFM_DELAYTEXT,DFM_SPOTDISTTEXT,DFM_SELECTEDGUNEDIT,
+		DFM_SELECTEDSHELLEDIT,DFM_GRIDEDIT,DFM_INNERRADIUSEDIT,DFM_OUTERRADIUSEDIT,DFM_BURSTNUMBEREDIT,DFM_BURSTROUNDSEDIT,DFM_BURSTDELAYEDIT,DFM_SPOTTINGDISTANCEDIT,DFM_FIREBUTTON,DFM_CANCELBUTTON};
+		class DFM_BACKGROUND: RscText
 		{
 			idc = -1;
 			x = ARTIWIDTHMAINSPACE * safezoneW + safezoneX - ARTIBORDERTHICKNESS;
 			y = (ARTIHEIGHTMAINSPACE + ARTILAYOUTHEIGHTSPACE * 0) * safezoneH + safezoneY - ARTIBORDERTHICKNESS;
 			w =  ( ARTILAYOUTWIDTH +  ARTILAYOUTWIDTHSPACE) *  safezoneW  + ARTIBORDERTHICKNESS * 2 ;
-			h = ARTILAYOUTHEIGHTSPACE * 10 * safezoneH + ARTIBORDERTHICKNESS * 2 ;
+			h = ARTILAYOUTHEIGHTSPACE * 11 * safezoneH + ARTIBORDERTHICKNESS * 2 ;
 			shadow = 0;
 			colorBackground[] = {0.65,0.65,0.65,0.7};
 		};
-		class BFM_DESCRIPTIONTEXT: RscText
+		class DFM_DESCRIPTIONTEXT: RscText
 		{
 			idc = -1;
-			text = "Bracket Firemission"; //--- ToDo: Localize;
+			text = "Donut Firemission"; //--- ToDo: Localize;
 
 			x = ARTIWIDTHMAINSPACE * safezoneW + safezoneX;
 			y = (ARTIHEIGHTMAINSPACE + ARTILAYOUTHEIGHTSPACE * 0) * safezoneH + safezoneY;
@@ -36,7 +36,7 @@ class DIA_BRACKETFIREMISSION
 			colorText[] = {0,0,0,1};
 			shadow = 0;
 		};
-	class BFM_SELECTEDGUN: RscText
+	class DFM_SELECTEDGUNTEXT: RscText
 	{
 		idc = -1;
 		text = "Selected gun:"; //--- ToDo: Localize;
@@ -48,7 +48,7 @@ class DIA_BRACKETFIREMISSION
 		colorText[] = {0,0,0,1};
 		shadow = 0;
 	};
-	class BFM_SELECTEDSHELLTEXT: RscText
+	class DFM_SELECTEDSHELLTEXT: RscText
 	{
 		idc = -1;
 		text = "Aviable ammunition:"; //--- ToDo: Localize;
@@ -59,10 +59,10 @@ class DIA_BRACKETFIREMISSION
 		colorText[] = {0,0,0,1};
 		shadow = 0;
 	};
-	class BFM_STARTGRID: RscText
+	class DFM_GRIDTEXT: RscText
 	{
 		idc = -1;
-		text = "Start Grid:"; //--- ToDo: Localize;
+		text = "Targetgrid:"; //--- ToDo: Localize;
 		x = ARTIWIDTHMAINSPACE * safezoneW + safezoneX;
 		y = (ARTIHEIGHTMAINSPACE + ARTILAYOUTHEIGHTSPACE * 3) * safezoneH + safezoneY;
 		w = ARTILAYOUTWIDTH * safezoneW;
@@ -70,10 +70,10 @@ class DIA_BRACKETFIREMISSION
 		colorText[] = {0,0,0,1};
 		shadow = 0;
 	};
-	class BFM_ENDGRID: RscText
+	class DFM_INNERRADIUSTEXT: RscText
 	{
 		idc = -1;
-		text = "End Grid:"; //--- ToDo: Localize;
+		text = "Inner radius:"; //--- ToDo: Localize;
 		x = ARTIWIDTHMAINSPACE * safezoneW + safezoneX;
 		y = (ARTIHEIGHTMAINSPACE + ARTILAYOUTHEIGHTSPACE * 4) * safezoneH + safezoneY;
 		w = ARTILAYOUTWIDTH * safezoneW;
@@ -81,10 +81,10 @@ class DIA_BRACKETFIREMISSION
 		colorText[] = {0,0,0,1};
 		shadow = 0;
 	};
-	class BFM_BURSTNUMBERTEXT: RscText
+	class DFM_OUTERRADIUSTEXT: RscText
 	{
 		idc = -1;
-		text = "Number of bursts:"; //--- ToDo: Localize;
+		text = "Outer radius:"; //--- ToDo: Localize;
 		x = ARTIWIDTHMAINSPACE * safezoneW + safezoneX;
 		y = (ARTIHEIGHTMAINSPACE + ARTILAYOUTHEIGHTSPACE * 5) * safezoneH + safezoneY;
 		w = ARTILAYOUTWIDTH * safezoneW;
@@ -92,10 +92,10 @@ class DIA_BRACKETFIREMISSION
 		colorText[] = {0,0,0,1};
 		shadow = 0;
 	};
-	class BFM_BURSTROUNDSTEXT: RscText
+	class DFM_BURSTNUMBERTEXT: RscText
 	{
 		idc = -1;
-		text = "Number of rounds per burst:"; //--- ToDo: Localize;
+		text = "Number of bursts:"; //--- ToDo: Localize;
 		x = ARTIWIDTHMAINSPACE * safezoneW + safezoneX;
 		y = (ARTIHEIGHTMAINSPACE + ARTILAYOUTHEIGHTSPACE * 6) * safezoneH + safezoneY;
 		w = ARTILAYOUTWIDTH * safezoneW;
@@ -103,10 +103,10 @@ class DIA_BRACKETFIREMISSION
 		colorText[] = {0,0,0,1};
 		shadow = 0;
 	};
-	class BFM_DELAYTEXT: RscText
+	class DFM_BURSTROUNDSTEXT: RscText
 	{
 		idc = -1;
-		text = "Delay between bursts:"; //--- ToDo: Localize;
+		text = "Number of rounds per burst:"; //--- ToDo: Localize;
 		x = ARTIWIDTHMAINSPACE * safezoneW + safezoneX;
 		y = (ARTIHEIGHTMAINSPACE + ARTILAYOUTHEIGHTSPACE * 7) * safezoneH + safezoneY;
 		w = ARTILAYOUTWIDTH * safezoneW;
@@ -114,10 +114,10 @@ class DIA_BRACKETFIREMISSION
 		colorText[] = {0,0,0,1};
 		shadow = 0;
 	};
-	class BFM_SPOTDISTTEXT: RscText
+	class DFM_DELAYTEXT: RscText
 	{
 		idc = -1;
-		text = "Minimum spotting round distance:"; //--- ToDo: Localize;
+		text = "Delay between bursts:"; //--- ToDo: Localize;
 		x = ARTIWIDTHMAINSPACE * safezoneW + safezoneX;
 		y = (ARTIHEIGHTMAINSPACE + ARTILAYOUTHEIGHTSPACE * 8) * safezoneH + safezoneY;
 		w = ARTILAYOUTWIDTH * safezoneW;
@@ -125,20 +125,30 @@ class DIA_BRACKETFIREMISSION
 		colorText[] = {0,0,0,1};
 		shadow = 0;
 	};
-	class BFM_FIREBUTTON: RscButton
+	class DFM_SPOTDISTTEXT: RscText
 	{
 		idc = -1;
-		text = "Fire Artillery"; //--- ToDo: Localize;
+		text = "Minimum spotting round distance:"; //--- ToDo: Localize;
 		x = ARTIWIDTHMAINSPACE * safezoneW + safezoneX;
 		y = (ARTIHEIGHTMAINSPACE + ARTILAYOUTHEIGHTSPACE * 9) * safezoneH + safezoneY;
 		w = ARTILAYOUTWIDTH * safezoneW;
 		h = ARTILAYOUTHEIGHT * safezoneH;
-
-			onMouseButtonDown = "[] call FNC_DIA_BracketFiremissionFire;";
+		colorText[] = {0,0,0,1};
+		shadow = 0;
 	};
-	class BFM_SELECTEDGUNEDIT: RscListbox
+	class DFM_FIREBUTTON: RscButton
 	{
-		idc = BFM_DIA_IDC_GUNSELECT;
+		idc = 1430;
+		text = "Fire Artillery"; //--- ToDo: Localize;
+		x = ARTIWIDTHMAINSPACE * safezoneW + safezoneX;
+		y = (ARTIHEIGHTMAINSPACE + ARTILAYOUTHEIGHTSPACE * 10) * safezoneH + safezoneY;
+		w = ARTILAYOUTWIDTH * safezoneW;
+		h = ARTILAYOUTHEIGHT * safezoneH;
+			onMouseButtonDown = "[] call FNC_DIA_DonutFiremissionFire;";
+	};
+	class DFM_SELECTEDGUNEDIT: RscListbox
+	{
+		idc = DFM_DIA_IDC_GUNSELECT;
 		text = ""; //--- ToDo: Localize;
 		x = (ARTIWIDTHMAINSPACE + ARTILAYOUTWIDTHSPACE) * safezoneW + safezoneX;
 		y = (ARTIHEIGHTMAINSPACE + ARTILAYOUTHEIGHTSPACE * 1) * safezoneH + safezoneY;
@@ -147,20 +157,20 @@ class DIA_BRACKETFIREMISSION
 		//colorText[] = {0,1,1,1};
 		//colorBackground[] = {1,1,1,1};
 		//colorActive[] = {0,1,0,1};
-		onLBSelChanged = "(_this select 1) call FNC_DIA_BracketFiremissionSetArtillery;"
+		onLBSelChanged = "(_this select 1) call FNC_DIA_DonutFiremissionSetArtillery;"
 	};
-	class BFM_SELECTEDSHELLEDIT: RscListbox
+	class DFM_SELECTEDSHELLEDIT: RscListbox
 	{
-		idc = BFM_DIA_IDC_SHELLSELECT;
+		idc = DFM_DIA_IDC_SHELLSELECT;
 		text = ""; //--- ToDo: Localize;
 		x = (ARTIWIDTHMAINSPACE + ARTILAYOUTWIDTHSPACE) * safezoneW + safezoneX;
 		y = (ARTIHEIGHTMAINSPACE + ARTILAYOUTHEIGHTSPACE * 2) * safezoneH + safezoneY;
 		w = ARTILAYOUTWIDTH * safezoneW;
 		h = ARTILAYOUTHEIGHT * safezoneH;
 	};
-	class BFM_STARTGRIDEDIT: RscEdit
+	class DFM_GRIDEDIT: RscEdit
 	{
-		idc = DLM_DIA_IDC_STARTGRID;
+		idc = DFM_DIA_IDC_GRID;
 		text = ""; //--- ToDo: Localize;
 		x = (ARTIWIDTHMAINSPACE + ARTILAYOUTWIDTHSPACE) * safezoneW + safezoneX;
 		y = (ARTIHEIGHTMAINSPACE + ARTILAYOUTHEIGHTSPACE * 3) * safezoneH + safezoneY;
@@ -169,9 +179,9 @@ class DIA_BRACKETFIREMISSION
 		colorText[] = {0,0,0,1};
 		shadow = 0;
 	};
-	class BFM_ENDGRIDEDIT: RscEdit
+	class DFM_INNERRADIUSEDIT: RscEdit
 	{
-		idc = DLM_DIA_IDC_ENDGRID;
+		idc = DFM_DIA_IDC_INNERRADIUS;
 		text = ""; //--- ToDo: Localize;
 		x = (ARTIWIDTHMAINSPACE + ARTILAYOUTWIDTHSPACE) * safezoneW + safezoneX;
 		y = (ARTIHEIGHTMAINSPACE + ARTILAYOUTHEIGHTSPACE * 4) * safezoneH + safezoneY;
@@ -180,9 +190,9 @@ class DIA_BRACKETFIREMISSION
 		colorText[] = {0,0,0,1};
 		shadow = 0;
 	};
-	class BFM_BURSTNUMBEREDIT: RscEdit
+	class DFM_OUTERRADIUSEDIT: RscEdit
 	{
-		idc = BFM_DIA_IDC_BURSTNUMBER;
+		idc = DFM_DIA_IDC_OUTERRADIUS;
 		text = ""; //--- ToDo: Localize;
 		x = (ARTIWIDTHMAINSPACE + ARTILAYOUTWIDTHSPACE) * safezoneW + safezoneX;
 		y = (ARTIHEIGHTMAINSPACE + ARTILAYOUTHEIGHTSPACE * 5) * safezoneH + safezoneY;
@@ -191,9 +201,9 @@ class DIA_BRACKETFIREMISSION
 		colorText[] = {0,0,0,1};
 		shadow = 0;
 	};
-	class BFM_BURSTROUNDSEDIT: RscEdit
+	class DFM_BURSTNUMBEREDIT: RscEdit
 	{
-		idc = BFM_DIA_IDC_BURSTROUNDS;
+		idc = DFM_DIA_IDC_BURSTROUNDS;
 		text = ""; //--- ToDo: Localize;
 		x = (ARTIWIDTHMAINSPACE + ARTILAYOUTWIDTHSPACE) * safezoneW + safezoneX;
 		y = (ARTIHEIGHTMAINSPACE + ARTILAYOUTHEIGHTSPACE * 6) * safezoneH + safezoneY;
@@ -202,9 +212,9 @@ class DIA_BRACKETFIREMISSION
 		colorText[] = {0,0,0,1};
 		shadow = 0;
 	};
-	class BFM_BURSTDELAYEDIT: RscEdit
+	class DFM_BURSTROUNDSEDIT: RscEdit
 	{
-		idc = BFM_DIA_IDC_BURSTDELAY;
+		idc = DFM_DIA_IDC_BURSTROUNDS;
 		text = ""; //--- ToDo: Localize;
 		x = (ARTIWIDTHMAINSPACE + ARTILAYOUTWIDTHSPACE) * safezoneW + safezoneX;
 		y = (ARTIHEIGHTMAINSPACE + ARTILAYOUTHEIGHTSPACE * 7) * safezoneH + safezoneY;
@@ -213,9 +223,9 @@ class DIA_BRACKETFIREMISSION
 		colorText[] = {0,0,0,1};
 		shadow = 0;
 	};
-	class BFM_SPOTTINGDISTANCEDIT: RscEdit
+	class DFM_BURSTDELAYEDIT: RscEdit
 	{
-		idc = BFM_DIA_IDC_SPOTTING;
+		idc = DFM_DIA_IDC_BURSTDELAY;
 		text = ""; //--- ToDo: Localize;
 		x = (ARTIWIDTHMAINSPACE + ARTILAYOUTWIDTHSPACE) * safezoneW + safezoneX;
 		y = (ARTIHEIGHTMAINSPACE + ARTILAYOUTHEIGHTSPACE * 8) * safezoneH + safezoneY;
@@ -224,16 +234,27 @@ class DIA_BRACKETFIREMISSION
 		colorText[] = {0,0,0,1};
 		shadow = 0;
 	};
-	class BFM_CANCELBUTTON: RscButton
+	class DFM_SPOTTINGDISTANCEDIT: RscEdit
 	{
-		idc = 1600;
-		text = "Cancel"; //--- ToDo: Localize;
+		idc = DFM_DIA_IDC_SPOTTING;
+		text = ""; //--- ToDo: Localize;
 		x = (ARTIWIDTHMAINSPACE + ARTILAYOUTWIDTHSPACE) * safezoneW + safezoneX;
 		y = (ARTIHEIGHTMAINSPACE + ARTILAYOUTHEIGHTSPACE * 9) * safezoneH + safezoneY;
 		w = ARTILAYOUTWIDTH * safezoneW;
 		h = ARTILAYOUTHEIGHT * safezoneH;
+		colorText[] = {0,0,0,1};
+		shadow = 0;
+	};
+	class DFM_CANCELBUTTON: RscButton
+	{
+		idc = 1600;
+		text = "Cancel"; //--- ToDo: Localize;
+		x = (ARTIWIDTHMAINSPACE + ARTILAYOUTWIDTHSPACE) * safezoneW + safezoneX;
+		y = (ARTIHEIGHTMAINSPACE + ARTILAYOUTHEIGHTSPACE * 10) * safezoneH + safezoneY;
+		w = ARTILAYOUTWIDTH * safezoneW;
+		h = ARTILAYOUTHEIGHT * safezoneH;
 
-			onMouseButtonDown = "[] call FNC_DIA_BracketFiremissionCloseDialog;";
+			onMouseButtonDown = "[] call FNC_DIA_DonutFiremissionCloseDialog;";
 	};
 };
 
