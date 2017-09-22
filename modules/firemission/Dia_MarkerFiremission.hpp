@@ -159,7 +159,7 @@ class DIA_MARKERFIREMISSION
 		//colorText[] = {0,1,1,1};
 		//
 		shadow = 0;
-		onLBSelChanged = "(_this select 1) call FNC_DIA_MarkerFiremissionSetArtillery;"
+		onLBSelChanged = "(_this select 1) call FNC_DIA_MarkerFiremissionSetArtillery;";
 	};
 	class MFM_SELECTEDSHELLEDIT: RscListbox
 	{

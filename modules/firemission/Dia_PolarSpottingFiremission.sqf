@@ -36,8 +36,10 @@ private	_usableGuns = [];
 	if(_selectedUnit isEqualTo objNull) then  {hint "No Arty selected/aviable";}
 	else
 	{
+		private _round =  ((_selectedUnit call FNC_GetArtyAmmo) select _selectedAmmo) select 0;
 		hint (([_selectedUnit,[_grid,true] call CBA_fnc_mapGridToPos,_mils,_distance,_selectedAmmo] call FNC_GetPolarSpottingFiremissionText)
-								+ "Requested by: " + (name player));
+								+ "Requested by: " + (name player)
+								+ "\nETA: " + str (round ((_selectedUnit call FNC_GetArtyAimTime) + ([_selectedUnit,[_grid,true] call CBA_fnc_mapGridToPos,_round] call FNC_GetArtyEta))) + " s");
 		["CallPolarSpotting", [player,_selectedUnit,_grid,_mils,_distance,_selectedAmmo]] call CBA_fnc_serverEvent;
 		[] call FNC_DIA_PolarSpottingFiremissionCloseDialog;
 

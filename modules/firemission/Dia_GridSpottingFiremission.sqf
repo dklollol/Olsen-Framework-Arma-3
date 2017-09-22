@@ -31,11 +31,14 @@ FNC_DIA_GridSpottingFiremissionFire =
 	 if((count _usableGuns) > 0) then { _selectedUnit = (_usableGuns select (lbCurSel GSFM_DIA_IDC_GUNSELECT));};
 	private _selectedAmmo = lbCurSel GSFM_DIA_IDC_SHELLSELECT;
 	private _grid = 	ctrlText GSFM_DIA_IDC_GRID;
+	private _pos = [_grid,true] call CBA_fnc_mapGridToPos;
 	if(_selectedUnit isEqualTo objNull) then  {hint "No Arty selected/aviable";}
 	else
 	{
-		hint (([_selectedUnit,[_grid,true] call CBA_fnc_mapGridToPos,_selectedAmmo] call FNC_GetGridSpottingFiremissionText)
-								+ "Requested by: " + (name player));
+		private _round =  ((_selectedUnit call FNC_GetArtyAmmo) select _selectedAmmo) select 0;
+		hint (([_selectedUnit,_pos,_selectedAmmo] call FNC_GetGridSpottingFiremissionText)
+								+ "Requested by: " + (name player)
+								+ "\nETA: " + str (round ((_selectedUnit call FNC_GetArtyAimTime) + ([_selectedUnit,_pos,_round] call FNC_GetArtyEta))) + " s");
 					["CallGridSpottingFiremission", [player,_selectedUnit,_grid,_selectedAmmo]] call CBA_fnc_serverEvent;
 		[] call FNC_DIA_GridSpottingFiremissionCloseDialog;
 
@@ -57,4 +60,4 @@ FNC_DIA_Server_GridSpottingFiremissionFire =
 	[_selectedUnit,[_grid,true] call CBA_fnc_mapGridToPos,_selectedAmmo]   call FNC_GridSpottingFiremission;
 
 };
-if(isServer) then {_id = ["CallGridSpottingFiremission", {_this call FNC_DIA_Server_LineFiremissionFire;}] call CBA_fnc_addEventHandler;};
+if(isServer) then {_id = ["CallGridSpottingFiremission", {_this call FNC_DIA_Server_GridSpottingFiremissionFire;}] call CBA_fnc_addEventHandler;};

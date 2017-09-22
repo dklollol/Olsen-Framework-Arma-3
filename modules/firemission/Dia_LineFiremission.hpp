@@ -154,7 +154,7 @@ class DIA_LINEFIREMISSION
 		//colorText[] = {0,1,1,1};
 		//colorBackground[] = {1,1,1,1};
 		//colorActive[] = {0,1,0,1};
-		onLBSelChanged = "(_this select 1) call FNC_DIA_LineFiremissionSetArtillery;"
+		onLBSelChanged = "(_this select 1) call FNC_DIA_LineFiremissionSetArtillery;";
 	};
 	class LFM_SELECTEDSHELLEDIT: RscListbox
 	{
@@ -167,7 +167,7 @@ class DIA_LINEFIREMISSION
 	};
 	class LFM_STARTGRIDEDIT: RscEdit
 	{
-		idc = DLM_DIA_IDC_STARTGRID;
+		idc = LFM_DIA_IDC_STARTGRID;
 		text = ""; //--- ToDo: Localize;
 		x = (ARTIWIDTHMAINSPACE + ARTILAYOUTWIDTHSPACE) * safezoneW + safezoneX;
 		y = (ARTIHEIGHTMAINSPACE + ARTILAYOUTHEIGHTSPACE * 3) * safezoneH + safezoneY;
@@ -179,7 +179,7 @@ class DIA_LINEFIREMISSION
 	};
 	class LFM_ENDGRIDEDIT: RscEdit
 	{
-		idc = DLM_DIA_IDC_ENDGRID;
+		idc = LFM_DIA_IDC_ENDGRID;
 		text = ""; //--- ToDo: Localize;
 		x = (ARTIWIDTHMAINSPACE + ARTILAYOUTWIDTHSPACE) * safezoneW + safezoneX;
 		y = (ARTIHEIGHTMAINSPACE + ARTILAYOUTHEIGHTSPACE * 4) * safezoneH + safezoneY;

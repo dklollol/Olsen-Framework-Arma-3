@@ -97,7 +97,7 @@ class DIA_GRIDSPOTTINGFIREMISSION
 		//colorText[] = {0,1,1,1};
 		//
 		shadow = 0;
-		onLBSelChanged = "(_this select 1) call FNC_DIA_GridSpottingFiremissionSetArtillery;"
+		onLBSelChanged = "(_this select 1) call FNC_DIA_GridSpottingFiremissionSetArtillery;";
 	};
 	class GSFM_SELECTEDSHELLEDIT: RscListbox
 	{

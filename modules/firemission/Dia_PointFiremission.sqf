@@ -36,35 +36,25 @@ FNC_DIA_PointFiremissionFire =
 	_burstRounds = (ctrlText PFM_DIA_IDC_BURSTROUNDS) call BIS_fnc_parseNumber;
 	_burstDelay = (ctrlText PFM_DIA_IDC_BURSTDELAY) call BIS_fnc_parseNumber;
 	_spotting =  (ctrlText PFM_DIA_IDC_SPOTTING) call BIS_fnc_parseNumber;
-	if(_selectedUnit isEqualTo objNull) then  {hint "No Arty selected/aviable";}
-	else
+
+	_inputIsCorrect = true;
+	_inputIsCorrect = _inputIsCorrect && [_selectedUnit,"No Arty selected/aviable"] call FNC_InputIsUnit;
+	_inputIsCorrect = _inputIsCorrect && [_dispersion,"Dispersion is not a number"] call FNC_InputIsNumber;
+	_inputIsCorrect = _inputIsCorrect && [_burstNumber,"Burst number is not a number"] call FNC_InputIsNumber;
+	_inputIsCorrect = _inputIsCorrect && [_burstRounds,"Burst rounds is not a number"] call FNC_InputIsNumber;
+	_inputIsCorrect = _inputIsCorrect && [_burstDelay,"Burst delay is not a number"] call FNC_InputIsNumber;
+	_inputIsCorrect = _inputIsCorrect && [_spotting,"Spotting distance is not a number"] call FNC_InputIsNumber;
+
+	if(_inputIsCorrect) then
 	{
-		if(_dispersion < 0) then {hint "Dispersion is not a number";}
-		else
-		{
-			if(_burstNumber < 0) then {hint "Burst number is not a number";}
-			else
-			{
-				if(_burstRounds < 0) then {hint "Burst rounds is not a number";}
-				else
-				{
-					if(_burstDelay < 0) then {hint "Burst delay is not a number";}
-					else
-					{
-						if(_spotting < 0) then {hint "Spotting distance is not a number";}
-						else
-						{
+							private _round =  ((_selectedUnit call FNC_GetArtyAmmo) select _selectedAmmo) select 0;
 							hint (([_selectedUnit,[_grid,true] call CBA_fnc_mapGridToPos,_dispersion,_burstNumber,_burstRounds,_burstDelay,_spotting,_selectedAmmo] call FNC_GetPointFiremissionText)
-								+ "Requested by: " + (name player));
+								+ "Requested by: " + (name player)
+								+ "\nETA: " + str (round ((_selectedUnit call FNC_GetArtyAimTime) + ([_selectedUnit,[_grid,true] call CBA_fnc_mapGridToPos,_round] call FNC_GetArtyEta)))  + " s");
 
 							["CallPointFiremission", [player,_selectedUnit,_selectedAmmo,_grid,_dispersion,_burstNumber,_burstRounds,_burstDelay,_spotting]] call CBA_fnc_serverEvent;
 							[] call FNC_DIA_PointFiremissionCloseDialog;
 
-						};
-					};
-				};
-			};
-		};
 	};
 
 

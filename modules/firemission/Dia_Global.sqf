@@ -1,6 +1,43 @@
 
 #include "defs.hpp"
 
+FNC_FindMarkerOnMap =
+{
+	private _marker = "";
+	{
+		if((markerText (_x))  == _this) then
+		{
+			_marker = _x;
+		};
+	}
+	forEach allMapMarkers;
+	_marker;
+};
+
+FNC_InputIsNumber =
+{
+	private _value = _this select 0;
+	private _errorText = _this select 1;
+	private _ret = true;
+	if(_value < 0) then
+	{
+		hint _errorText;
+		_ret = false;
+	};
+	_ret
+};
+FNC_InputIsUnit =
+{
+	private _value = _this select 0;
+	private _errorText = _this select 1;
+	private _ret = true;
+	if(_value isEqualTo objNull) then
+	{
+		hint _errorText;
+		_ret = false;
+	};
+	_ret
+};
 FNC_GetCompleteInfoText =
 {
 	private _unit = _this;

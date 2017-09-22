@@ -159,7 +159,7 @@ class DIA_POINTFIREMISSION
 		//colorText[] = {0,1,1,1};
 		//
 		shadow = 0;
-		onLBSelChanged = "(_this select 1) call FNC_DIA_PointFiremissionSetArtillery;"
+		onLBSelChanged = "(_this select 1) call FNC_DIA_PointFiremissionSetArtillery;";
 	};
 	class PFM_SELECTEDSHELLEDIT: RscListbox
 	{

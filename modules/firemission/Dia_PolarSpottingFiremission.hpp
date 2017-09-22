@@ -121,7 +121,7 @@ class DIA_POLARSPOTTINGFIREMISSION
 		//colorText[] = {0,1,1,1};
 		//
 		shadow = 0;
-		onLBSelChanged = "(_this select 1) call FNC_DIA_PolarSpottingFiremissionSetArtillery;"
+		onLBSelChanged = "(_this select 1) call FNC_DIA_PolarSpottingFiremissionSetArtillery;";
 	};
 	class PSFM_SELECTEDSHELLEDIT: RscListbox
 	{

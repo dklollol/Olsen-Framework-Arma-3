@@ -12,4 +12,5 @@
 		#include "Dia_MarkerFiremission.hpp"
 		#include "Dia_GridSpottingFiremission.hpp"
 		#include "Dia_PolarSpottingFiremission.hpp"
+		#include "Dia_PolarFiremission.hpp"
 #endif

@@ -1,24 +1,13 @@
-
-[arty1,1,0,300,4,3,"TestArty1",true] call FNC_SetArtilleryData;
-[arty1,getPos gameLogic1,200,999,5,10,100,0]   call FNC_PointFiremission;
-[arty2,1,0,300,4,3,"M109 Test",true] call FNC_SetArtilleryData;
-[arty2,getPos gameLogic2,200,999,5,10,100,0]   call FNC_PointFiremission;
-
-
-private _art = [arty3,arty4,arty5,arty6,arty7,arty8,arty9,arty10];
-{
-    [_x,1,0,300,4,3,"M109" + str (floor random 1000 ),false] call FNC_SetArtilleryData;
-}forEach _art;
-[test1,_art] call FNC_ArtMakePlayerObserver;
-[test2,_art] call FNC_ArtMakePlayerObserver;
-[test3,_art] call FNC_ArtMakePlayerObserver;
-[test4,_art] call FNC_ArtMakePlayerObserver;
-
-
-
 /*
 
+Make Player Observer
+Example: [test1,[m109]] call FNC_ArtMakePlayerObserver;
+[unit,guns] call FNC_ArtMakePlayerObserver;
+Params:
+unit - obj - unit which should become fo;
+guns - Array Object > aviable guns to the fo
 
+Notes:
 
 SetArtilleryData:
 Example: [arty1,1,0,300,4,3,"",true] call FNC_SetArtilleryData;
@@ -103,6 +92,18 @@ Example: [arty5,"artytarget1",10,5,20,100,0]   call FNC_MarkerFiremission;
 [unit,marker,burstCount,roundsPerBurst,burstWaitTime,minSpottedDistance,roundtype]   call FNC_PointFiremission;
 Params:
 unit - Object- artillery vehicle;
+marker - String - markername in which artillery should hit (rectangle or circle)
+burstCount -integer - number of bursts
+roundsPerBurst - integer - number of rounds per burst
+burstWaitTime -integer - downtime between bursts
+minSpottedDistance - integer - range in m of how close spotting need to be to be accepted
+roundtype -integer- ammunition used ((magazinesAmmo _actualGunUnit) select _roundType)
+
+PointmarkerFiremission
+Example: [arty5,"artytarget1",10,5,20,100,0]   call FNC_PointMarkerFiremission;
+[unit,marker,burstCount,roundsPerBurst,burstWaitTime,minSpottedDistance,roundtype]   call FNC_PointFiremission;
+Params:
+unit - Object- artillery vehicle;
 marker - String - markername of where artillery should hit
 burstCount -integer - number of bursts
 roundsPerBurst - integer - number of rounds per burst
@@ -110,18 +111,7 @@ burstWaitTime -integer - downtime between bursts
 minSpottedDistance - integer - range in m of how close spotting need to be to be accepted
 roundtype -integer- ammunition used ((magazinesAmmo _actualGunUnit) select _roundType)
 
-PointMarkerFiremission
-Example: [arty5,"artytarget1",10,5,20,100,0]   call FNC_MPointMarkerFiremission;
-[unit,marker,dispersion,burstCount,roundsPerBurst,burstWaitTime,minSpottedDistance,roundtype]   call FNC_PointMarkerFiremission;
-Params:
-unit - Object- artillery vehicle;
-marker - String - markername of where artillery should hit
-dispersion -integer - dispersion of the fire mission
-burstCount -integer - number of bursts
-roundsPerBurst - integer - number of rounds per burst
-burstWaitTime -integer - downtime between bursts
-minSpottedDistance - integer - range in m of how close spotting need to be to be accepted
-roundtype -integer- ammunition used ((magazinesAmmo _actualGunUnit) select _roundType)
+
 
 DynamicMarkerFiremission
 Example: [arty5,"artytarget1",10,5,20,100,0]   call FNC_DynamicMarkerFiremission;
@@ -167,28 +157,18 @@ roundTpe - integer - ammunition used ((magazinesAmmo _actualGunUnit) select _rou
 
 
 Example:
-[arty1,1,0,300,4,3] call FNC_SetArtilleryData;
-[arty2,1,0,300,4,3] call FNC_SetArtilleryData;
-[arty3,1,0,300,4,3] call FNC_SetArtilleryData;
-[arty4,1,0,300,4,3] call FNC_SetArtilleryData;
-[arty5,1,0,300,4,3] call FNC_SetArtilleryData;
-[arty6,1,0,300,4,3] call FNC_SetArtilleryData;
-[arty7,1,0,300,4,3] call FNC_SetArtilleryData;
-[arty8,1,0,300,4,3] call FNC_SetArtilleryData;
-[arty9,1,0,300,4,3] call FNC_SetArtilleryData;
-[arty10,1,0,300,4,3] call FNC_SetArtilleryData;
-[arty11,1,0,300,4,3] call FNC_SetArtilleryData;
-[arty12,1,0,300,4,3] call FNC_SetArtilleryData;
-[arty13,1,0,300,4,3] call FNC_SetArtilleryData;
-[arty14,1,0,300,4,3] call FNC_SetArtilleryData;
-[obs1,0,0] call FNC_SetObserverSkill;
+[arty1,1,0,300,4,3,"TestArty1",true] call FNC_SetArtilleryData;
+[arty1,getPos gameLogic1,200,999,5,10,100,0]   call FNC_PointFiremission;
+[arty2,1,0,300,4,3,"M109 Test",true] call FNC_SetArtilleryData;
+[arty2,getPos gameLogic2,200,999,5,10,100,0]   call FNC_PointFiremission;
 
-[arty1,getPos gameLogic1,200,10,5,10,100,0]   call FNC_PointFiremission;
-[arty2,getPos gameLogic2,getPos gameLogic3,10,2,10,100,0]   call FNC_LineFiremission;
-[arty3,getPos gameLogic4,getPos gameLogic5,10,5,20,100,0]   call FNC_BracketFiremission;
-[arty4,getPos gameLogic6,200,400,10,5,20,100,0]   call FNC_DonutFiremission;
-[arty5,"artytarget1",10,5,20,100,0]   call FNC_MarkerFiremission;
-[[arty6,arty7,arty8,arty9,arty10],getPos gameLogic7,getPos gameLogic8,200,10,5,20,100,0]   call FNC_CurtainFiremission;
 
-[obs1,[arty11,arty12,arty13,arty14],1,300,1000,10,5,10,300,150,0] call FNC_RegisterForwardObserver;
+private _art = [arty3,arty4,arty5,arty6,arty7,arty8,arty9,arty10];
+{
+    [_x,1,0,300,4,3,"M109" + str (floor random 1000 ),false] call FNC_SetArtilleryData;
+}forEach _art;
+[test1,_art] call FNC_ArtMakePlayerObserver;
+[test2,_art] call FNC_ArtMakePlayerObserver;
+[test3,_art] call FNC_ArtMakePlayerObserver;
+[test4,_art] call FNC_ArtMakePlayerObserver;
 */

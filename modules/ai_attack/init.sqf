@@ -78,7 +78,8 @@ FNC_AtkRandomStart =
 		_maxAmmount = _this select 6;
 		_delay = _this select 7;
 		_spawnDelay = _this select 8;
-		_shouldClean =_this select 9;
+		_shouldClean = true;
+		if((_this select 9) == 0) then {_shouldClean = false; };
 
 		{
 				_found = ATKcachedPaths find _x;

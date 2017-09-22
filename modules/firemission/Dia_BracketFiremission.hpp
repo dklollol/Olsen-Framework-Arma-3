@@ -147,7 +147,7 @@ class DIA_BRACKETFIREMISSION
 		//colorText[] = {0,1,1,1};
 		//colorBackground[] = {1,1,1,1};
 		//colorActive[] = {0,1,0,1};
-		onLBSelChanged = "(_this select 1) call FNC_DIA_BracketFiremissionSetArtillery;"
+		onLBSelChanged = "(_this select 1) call FNC_DIA_BracketFiremissionSetArtillery;";
 	};
 	class BFM_SELECTEDSHELLEDIT: RscListbox
 	{
@@ -160,7 +160,7 @@ class DIA_BRACKETFIREMISSION
 	};
 	class BFM_STARTGRIDEDIT: RscEdit
 	{
-		idc = DLM_DIA_IDC_STARTGRID;
+		idc = BFM_DIA_IDC_STARTGRID;
 		text = ""; //--- ToDo: Localize;
 		x = (ARTIWIDTHMAINSPACE + ARTILAYOUTWIDTHSPACE) * safezoneW + safezoneX;
 		y = (ARTIHEIGHTMAINSPACE + ARTILAYOUTHEIGHTSPACE * 3) * safezoneH + safezoneY;
@@ -171,7 +171,7 @@ class DIA_BRACKETFIREMISSION
 	};
 	class BFM_ENDGRIDEDIT: RscEdit
 	{
-		idc = DLM_DIA_IDC_ENDGRID;
+		idc = BFM_DIA_IDC_ENDGRID;
 		text = ""; //--- ToDo: Localize;
 		x = (ARTIWIDTHMAINSPACE + ARTILAYOUTWIDTHSPACE) * safezoneW + safezoneX;
 		y = (ARTIHEIGHTMAINSPACE + ARTILAYOUTHEIGHTSPACE * 4) * safezoneH + safezoneY;
