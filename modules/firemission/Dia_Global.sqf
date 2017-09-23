@@ -1,6 +1,14 @@
 
 #include "defs.hpp"
 
+FNC_SendArtyHint =
+{
+	_unit = _this select 0;
+	_text = _this select 1;
+	["Event_ArtyReceiveHint", _text, _unit] call CBA_fnc_targetEvent;
+};
+
+
 FNC_FindMarkerOnMap =
 {
 	private _marker = "";
@@ -43,7 +51,7 @@ FNC_GetCompleteInfoText =
 	private _unit = _this;
 	private _rounds = _unit call FNC_GetArtyFiremissionRoundsRequired;
 	private _callerName = _unit call FNC_GetArtyCallerText;
-	private _fireMissionText =_unit getVariable ["ArtyFiremissionText","Error"];
+	private _fireMissionText =_unit getVariable [VAR_SART_ARTFMTEXT,"Error"];
 	private _ret = _fireMissionText +"Rounds fired: " + (str (_rounds select 0)) + "/" + (str (_rounds select 1)) + "\nRequested by: " + (_unit call FNC_GetArtyCallerText);
 	_ret;
 };
@@ -52,26 +60,26 @@ FNC_SetArtyReadyStatus =
 	private _unit = _this select 0;
 	private _isFiring = _this select 1;
 
-	_unit setVariable ["isInAFiremission",_isFiring,true];
+	_unit setVariable [VAR_SART_ARTINFIREMISSION,_isFiring,true];
 	["Event_ArtyIsReady", [_unit,_isFiring]] call CBA_fnc_globalEvent;
 };
 FNC_GetArtyFiremissionRoundsRequired =
 {
 	private _unit = _this;
-	private _ret = _unit getVariable ["ArtyFiremissionRoundsFired",[0,0]];
+	private _ret = _unit getVariable [VAR_SART_ARTROUNDSFIRED,[0,0]];
 	_ret
 };
 FNC_GetArtyAimTime =
 {
 	private _unit = _this;
-	private _ret = ((_unit getVariable ["ArtAimSpeed",MEANAIMTIME]) + 1);
+	private _ret = ((_unit getVariable [VAR_SART_ARTAIMSPEED,MEANAIMTIME]) + 1);
 	_ret
 };
 
 FNC_GetArtyCalcTime =
 {
 	private _unit = _this;
-	private _ret = ((_unit getVariable ["ArtCalcSpeed",MEANAIMTIME]) + 1);
+	private _ret = ((_unit getVariable [VAR_SART_ARTCALCSPEED,MEANCALCULATIONTIME]) + 1);
 	_ret
 };
 
@@ -88,14 +96,14 @@ FNC_SetArtyFiremissionRoundsRequired =
 	private _unit = _this select 0;
 	private _roundsFired = _this select 1;
 	private _roundsRequired = _this select 2;
-	_unit setVariable ["ArtyFiremissionRoundsFired",[_roundsFired,_roundsRequired],true];
+	_unit setVariable [VAR_SART_ARTROUNDSFIRED,[_roundsFired,_roundsRequired],true];
 
 };
 
 FNC_GetArtyCaller =
 {
 	private _unit = _this;
-	private _callerUnit = _unit getVariable ["ArtyCaller",objNull];
+	private _callerUnit = _unit getVariable [VAR_SART_CALLER,objNull];
 	_callerUnit
 };
 FNC_GetArtyCallerText =
@@ -114,13 +122,13 @@ FNC_SetArtyCaller =
 {
 	private _unit = _this select 0;
 	private _caller = _this select 1;
-	_unit setVariable ["ArtyCaller",_caller,true];
+	_unit setVariable [VAR_SART_CALLER,_caller,true];
 };
 
 FNC_GetArtyDisplayName =
 {
 	private _unit = _this;
-	private	_text = _unit getVariable ["ArtCustomName",""];
+	private	_text = _unit getVariable [VAR_SART_ARTCUSTOMNAME,""];
 	if(_text == "") then { _text = getText (configfile / "CfgVehicles" /  typeOf(_unit) / "displayName") };
 	_text
 };
@@ -154,10 +162,10 @@ FNC_ArtLoadAviableArtilleries =
 {
 			private _id = _this select 0;
 			private _shellSelect = _this select 1;
-			private _guns = player getVariable ["PlayerArtilleryGuns",[]];
+			private _guns = player getVariable [VAR_SART_OBSGUNS,[]];
 			private _usableGuns = [];
 			{
-				if(alive _x && !(_x getVariable ["isInAFiremission",false])) then
+				if(alive _x && !(_x getVariable [VAR_SART_ARTINFIREMISSION,false])) then
 				{
 					_usableGuns pushBack _x;
 				};
@@ -177,10 +185,10 @@ FNC_ArtSetArtillery =
 	private _gun = _this select 1;
 	if(_gun >= 0) then
 	{
-		_guns = player getVariable ["PlayerArtilleryGuns",[]];
+		_guns = player getVariable [VAR_SART_OBSGUNS,[]];
 		_usableGuns = [];
 		{
-			if(alive _x && !(_x getVariable ["isInAFiremission",false])) then
+			if(alive _x && !(_x getVariable [VAR_SART_ARTINFIREMISSION,false])) then
 			{
 				_usableGuns pushBack _x;
 			};

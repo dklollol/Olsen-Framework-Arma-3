@@ -19,10 +19,10 @@ FNC_DIA_GridSpottingFiremissionCloseDialog =
 
 FNC_DIA_GridSpottingFiremissionFire =
 {
-	private _guns = player getVariable ["PlayerArtilleryGuns",[]];
+	private _guns = player getVariable [VAR_SART_OBSGUNS,[]];
 	private _usableGuns = [];
 	{
-		if(alive _x && !(_x getVariable ["isInAFiremission",false])) then
+		if(alive _x && !(_x getVariable [VAR_SART_ARTINFIREMISSION,false])) then
 		{
 			_usableGuns pushBack _x;
 		};
@@ -54,7 +54,7 @@ FNC_DIA_Server_GridSpottingFiremissionFire =
 	private	_selectedUnit = _this select 1;
 	private _grid = _this select 2;
 	private _selectedAmmo = _this select 3;
-	private _guns = _requester getVariable ["PlayerArtilleryGuns",[]];
+	private _guns = _requester getVariable [VAR_SART_OBSGUNS,[]];
 
 	[_selectedUnit,_requester] call FNC_SetArtyCaller;
 	[_selectedUnit,[_grid,true] call CBA_fnc_mapGridToPos,_selectedAmmo]   call FNC_GridSpottingFiremission;

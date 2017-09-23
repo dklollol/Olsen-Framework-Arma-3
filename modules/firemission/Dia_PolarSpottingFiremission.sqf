@@ -19,10 +19,10 @@ FNC_DIA_PolarSpottingFiremissionCloseDialog =
 
 FNC_DIA_PolarSpottingFiremissionFire =
 {
-	private _guns = player getVariable ["PlayerArtilleryGuns",[]];
+	private _guns = player getVariable [VAR_SART_OBSGUNS,[]];
 private	_usableGuns = [];
 	{
-		if(alive _x && !(_x getVariable ["isInAFiremission",false])) then
+		if(alive _x && !(_x getVariable [VAR_SART_ARTINFIREMISSION,false])) then
 		{
 			_usableGuns pushBack _x;
 		};
@@ -58,7 +58,7 @@ FNC_DIA_Server_PolarSpottingFiremissionFire =
 	private _distance = _this select 4;
 	private	_roundType = _this select 5;
 
-	private _guns = _requester getVariable ["PlayerArtilleryGuns",[]];
+	private _guns = _requester getVariable [VAR_SART_OBSGUNS,[]];
 
 	[_selectedUnit,_requester] call FNC_SetArtyCaller;
 	[_selectedUnit,[_callGrid,true] call CBA_fnc_mapGridToPos,_mils,_distance,_roundType]   call FNC_PolarSpottingFiremission;

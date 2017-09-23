@@ -7,10 +7,10 @@
 
 FNC_AddEventHandler =
 {
-	if(!((_this) getVariable ["ArtHasEventHandler",false])) then
+	if(!((_this) getVariable [VAR_SART_ARTHASEH,false])) then
 	{
 			(_this) addeventhandler ["fired", {(_this select 0) setvehicleammo 1}];
-			(_this) setVariable ["ArtHasEventHandler",true];
+			(_this) setVariable [VAR_SART_ARTHASEH,true];
 	};
 
 };
@@ -28,13 +28,13 @@ FNC_SetArtilleryData =
 		private _calcSpeed = if((_this select 5) < 0) then {MEANCALCULATIONTIME } else { _this select 5 };;
 		private _customName = _this select 6;
 		private _unlimitedAmmo = _this select 7;
-		_unit setVariable ["ArtFireRate",_fireRate];
-		_unit setVariable ["ArtAccuracy",_accuracy];
-		_unit setVariable ["ArtSpottingAccuracy",_spottingAccuracy];
-		_unit setVariable ["ArtAimSpeed",_aimSpeed];
-		_unit setVariable ["ArtCalcSpeed",_calcSpeed];
-		_unit setVariable ["ArtCustomName",_customName,true];
-		_unit setVariable ["ArtUnlimitedAmmo",_unlimitedAmmo];
+		_unit setVariable [VAR_SART_ARTFIRERATE,_fireRate];
+		_unit setVariable [VAR_SART_ARTACCURACY,_accuracy];
+		_unit setVariable [VAR_SART_ARTSPOTACCURACY,_spottingAccuracy];
+		_unit setVariable [VAR_SART_ARTAIMSPEED,_aimSpeed];
+		_unit setVariable [VAR_SART_ARTCALCSPEED,_calcSpeed];
+		_unit setVariable [VAR_SART_ARTCUSTOMNAME,_customName,true];
+		_unit setVariable [VAR_SART_ARTAMMO,_unlimitedAmmo];
 		if(_unlimitedAmmo) then {_unit call FNC_AddEventHandler;};
 
 
@@ -43,12 +43,12 @@ FNC_GetArtillerySkill =
 {
 		_unit = _this select 0;
 		skills = [];
-		skills pushBack (_unit getVariable ["ArtFireRate",MEANFIRERATE]);
-		skills pushBack (_unit getVariable ["ArtAccuracy",MEANPlOTTEDACCURACY]);
-		skills pushBack (_unit getVariable ["ArtSpottingAccuracy",MEANSPOTTINGACCURACY]);
-		skills pushBack (_unit getVariable ["ArtAimSpeed",MEANAIMTIME]);
-		skills pushBack (_unit getVariable ["ArtCalcSpeed",MEANCALCULATIONTIME]);
-		skills pushBack (_unit getVariable ["ArtCustomName",""]);
+		skills pushBack (_unit getVariable [VAR_SART_ARTFIRERATE,MEANFIRERATE]);
+		skills pushBack (_unit getVariable [VAR_SART_ARTACCURACY,MEANPlOTTEDACCURACY]);
+		skills pushBack (_unit getVariable [VAR_SART_ARTSPOTACCURACY,MEANSPOTTINGACCURACY]);
+		skills pushBack (_unit getVariable [VAR_SART_ARTAIMSPEED,MEANAIMTIME]);
+		skills pushBack (_unit getVariable [VAR_SART_ARTCALCSPEED,MEANCALCULATIONTIME]);
+		skills pushBack (_unit getVariable [VAR_SART_ARTCUSTOMNAME,""]);
 		skills
 };
 
@@ -106,13 +106,13 @@ FNC_PolarSpottingFiremission =
 		[_unit , true] call FNC_SetArtyReadyStatus;
 
 		private	_rounds = ((_unit call FNC_GetArtyAmmo) select _roundType);
-		_unit setVariable ["ArtyFiremissionText",_this call FNC_GetPolarSpottingMissionText,true];
+		_unit setVariable [VAR_SART_ARTFMTEXT,_this call FNC_GetPolarSpottingMissionText,true];
 
 		sleep((_unit call FNC_GetArtyAimTime));
-		_randomPos = [[[_target, _unit getVariable ["ArtSpottingAccuracy",MEANSPOTTINGACCURACY]]],[]] call BIS_fnc_randomPos;
+		_randomPos = [[[_target, _unit getVariable [VAR_SART_ARTSPOTACCURACY,MEANSPOTTINGACCURACY]]],[]] call BIS_fnc_randomPos;
 			_eta = [_unit,_randomPos, ((_unit call FNC_GetArtyAmmo) select _roundType) select 0] call FNC_GetArtyEta;
 		_unit commandArtilleryFire [_randomPos,  ((_unit call FNC_GetArtyAmmo) select _roundType) select 0, 1];
-		_waitTime = (_fireRate * (_unit getVariable ["ArtFireRate",MEANFIRERATE]));
+		_waitTime = (_fireRate * (_unit getVariable [VAR_SART_ARTFIRERATE,MEANFIRERATE]));
 		sleep(_waitTime);
 		[_unit,objNULL] call FNC_SetArtyCaller;
 		[_unit, false] call FNC_SetArtyReadyStatus;
@@ -143,13 +143,13 @@ FNC_GridSpottingFiremission =
 		[_unit , true] call FNC_SetArtyReadyStatus;
 
 		private	_rounds = ((_unit call FNC_GetArtyAmmo) select _roundType);
-		_unit setVariable ["ArtyFiremissionText",_this call FNC_GetGridSpottingFiremissionText,true];
+		_unit setVariable [VAR_SART_ARTFMTEXT,_this call FNC_GetGridSpottingFiremissionText,true];
 
 		sleep((_unit call FNC_GetArtyAimTime));
-		private _randomPos = [[[_target, _unit getVariable ["ArtSpottingAccuracy",MEANSPOTTINGACCURACY]]],[]] call BIS_fnc_randomPos;
+		private _randomPos = [[[_target, _unit getVariable [VAR_SART_ARTSPOTACCURACY,MEANSPOTTINGACCURACY]]],[]] call BIS_fnc_randomPos;
 		private _eta = [_unit,_randomPos, ((_unit call FNC_GetArtyAmmo) select _roundType) select 0] call FNC_GetArtyEta;
 		_unit commandArtilleryFire [_randomPos,  ((_unit call FNC_GetArtyAmmo) select _roundType) select 0, 1];
-		private _waitTime = (_fireRate * (_unit getVariable ["ArtFireRate",MEANFIRERATE]));
+		private _waitTime = (_fireRate * (_unit getVariable [VAR_SART_ARTFIRERATE,MEANFIRERATE]));
 		sleep(_waitTime);
 		[_unit,objNULL] call FNC_SetArtyCaller;
 		[_unit, false] call FNC_SetArtyReadyStatus;
@@ -253,22 +253,71 @@ FNC_InternalSpottingFiremission =
 {
 	private _unit = _this select 0;
 	private	_target = _this select 1;
-	private	_roundType = _this select 2;
+	private	_roundClassName = _this select 2;
 	sleep((_unit call FNC_GetArtyAimTime));
 	private	_dis = 1000;
-	private	_tempAcc = (_unit getVariable ["ArtSpottingAccuracy",MEANSPOTTINGACCURACY]) + 1;
+	private	_tempAcc = (_unit getVariable [VAR_SART_ARTSPOTACCURACY,MEANSPOTTINGACCURACY]) + 1;
 	while{(_dis >_minSpottedDistance && SPOTTINGROUNDSREQUIRED  )} do
 	{
 				_randomPos = [[[_target, _tempAcc]],[]] call BIS_fnc_randomPos;
 				_dis = _randomPos distance2D _target;
-					_eta = [_unit,_randomPos, ((_unit call FNC_GetArtyAmmo) select _roundType) select 0] call FNC_GetArtyEta;
-				_unit commandArtilleryFire [_randomPos,  ((_unit call FNC_GetArtyAmmo) select _roundType) select 0, 1];
-				_waitTime = (_fireRate * (_unit getVariable ["ArtFireRate",MEANFIRERATE])) max _eta;
-				sleep(_waitTime max ((_unit getVariable ["ArtAimSpeed",MEANAIMTIME]) + 1));
+					_eta = [_unit,_randomPos, _roundClassName] call FNC_GetArtyEta;
+				_unit commandArtilleryFire [_randomPos,  _roundClassName, 1];
+				_waitTime = (_fireRate * (_unit getVariable [VAR_SART_ARTFIRERATE,MEANFIRERATE])) max _eta;
+				sleep(_waitTime max ((_unit getVariable [VAR_SART_ARTAIMSPEED,MEANAIMTIME]) + 1));
 				_tempAcc = [_dis,_tempAcc] call FNC_GetNewAccuracy;
 
 	};
 };
+FNC_InternalRepackArtilleryMagazines =
+{
+	private _unit = _this;
+	private _ammo = _unit call FNC_GetArtyAmmo;
+	{_unit removeMagazine _x} forEach (magazines _unit);
+	{
+		_count  = _x select 1;
+		_classNam = _x select 0;
+		_maxAmmo = getNumber(configFile >> "CfgMagazines" >> _classNam >> "count");
+		while{_count > 0} do
+		{
+			if(_count >= _maxAmmo) then
+			{
+					_unit addMagazine [_classNam,_maxAmmo];
+			}
+			else
+			{
+					_unit addMagazine [_classNam,_count];
+			};
+			_count = _count - _maxAmmo;
+		};
+	}forEach _ammo;
+};
+FNC_InternalFiremission =
+{
+	private	_unit = _this select 0;
+	private	_target = _this select 1;
+	private	_dispersion = _this select 2;
+	private	_burstSize = _this select 3;
+	private	_roundClassName = _this select 4;
+	_unit call FNC_InternalRepackArtilleryMagazines;
+	private _hasAmmunition = false;
+	{
+		if(_x select 0 == _roundClassName) then
+		{
+				_hasAmmunition = true;
+				_burstSize = _burstSize min (_x select 1);
+		};
+	}forEach (_unit call FNC_GetArtyAmmo);
+	if(_hasAmmunition) then
+	{
+		_randomPos = [[[_target, _dispersion]],[]] call BIS_fnc_randomPos;
+		_randomPos =	[[[_randomPos, _unit getVariable[VAR_SART_ARTACCURACY,MEANPlOTTEDACCURACY]]],[]] call BIS_fnc_randomPos;
+		_unit commandArtilleryFire [_randomPos,  _roundClassName, _burstSize];
+	};
+
+};
+
+
 FNC_PointFiremission =
 {
 	_handle = _this spawn
@@ -282,27 +331,25 @@ FNC_PointFiremission =
 		private	_minSpottedDistance = _this select 6;
 		private	_roundType = _this select 7;
 		private	_fireRate = _unit call FNC_ArtGetFireRate;
-
+		private _roundClassName = ((_unit call FNC_GetArtyAmmo) select _roundType) select 0 ;
 
 		[_unit , true] call FNC_SetArtyReadyStatus;
-		_unit setVariable ["ArtyFiremissionText",_this call FNC_GetPointFiremissionText,true];
+		_unit setVariable [VAR_SART_ARTFMTEXT,_this call FNC_GetPointFiremissionText,true];
 		[_unit, 0,_burstCount * _burstSize] call FNC_SetArtyFiremissionRoundsRequired;
 			//calculateFiremission
-		[_unit,_target,_roundType ] call FNC_InternalSpottingFiremission;
-		sleep( (_unit getVariable ["ArtCalcSpeed",MEANCALCULATIONTIME]) + 1);
+		[_unit,_target,((_unit call FNC_GetArtyAmmo) select _roundType) select 0 ] call FNC_InternalSpottingFiremission;
+		sleep( (_unit getVariable [VAR_SART_ARTCALCSPEED,MEANCALCULATIONTIME]) + 1);
 		for "_i" from 0 to _burstCount do
 		{
-				_randomPos = [[[_target, _dispersion]],[]] call BIS_fnc_randomPos;
-				_randomPos =	[[[_randomPos, MEANPlOTTEDACCURACY]],[]] call BIS_fnc_randomPos;
-		  		_unit commandArtilleryFire [_randomPos,  ((_unit call FNC_GetArtyAmmo) select _roundType) select 0, _burstSize];
-				[_unit, ((_unit getVariable ["ArtyFiremissionRoundsFired",[0,0]]) select 0) + _burstSize,_burstCount * _burstSize] call FNC_SetArtyFiremissionRoundsRequired;
-			  	sleep(((_fireRate * (_unit getVariable ["ArtFireRate",MEANFIRERATE]) ) * _burstSize) max _burstWait);
+				[_unit,_target,_dispersion,_burstSize,_roundClassName] call FNC_InternalFiremission;
+				[_unit, ((_unit getVariable [VAR_SART_ARTROUNDSFIRED,[0,0]]) select 0) + _burstSize,_burstCount * _burstSize] call FNC_SetArtyFiremissionRoundsRequired;
+			  	sleep(((_fireRate * (_unit getVariable [VAR_SART_ARTFIRERATE,MEANFIRERATE]) ) * _burstSize) max _burstWait);
 		};
 		[_unit,objNULL] call FNC_SetArtyCaller;
 		[_unit, false] call FNC_SetArtyReadyStatus;
 		[_unit, 0,0] call FNC_SetArtyFiremissionRoundsRequired;
 	};
-		(_this select 0) setVariable ["FiremissionHandle",_handle,true];
+		(_this select 0) setVariable [VAR_SART_FMHANDLE,_handle,true];
 };
 FNC_GetLineFiremissionText =
 {
@@ -347,29 +394,28 @@ FNC_LineFiremission =
 		private	_minSpottedDistance = _this select 6;
 		private	_roundType = _this select 7;
 		private	_fireRate = _unit call FNC_ArtGetFireRate;
+		private _roundClassName = ((_unit call FNC_GetArtyAmmo) select _roundType) select 0 ;
 
 		[_unit, 0,_burstCount * _burstSize] call FNC_SetArtyFiremissionRoundsRequired;
 		[_unit , true] call FNC_SetArtyReadyStatus;
-		_unit setVariable ["ArtyFiremissionText",_this call FNC_GetLineFiremissionText,true];
-		[_unit,_startPoint,_roundType ] call FNC_InternalSpottingFiremission;
+		_unit setVariable [VAR_SART_ARTFMTEXT,_this call FNC_GetLineFiremissionText,true];
+		[_unit,_startPoint,_roundClassName ] call FNC_InternalSpottingFiremission;
 		//spotting rounds finished
 		sleep( _unit call FNC_GetArtyCalcTime);
 	  	private	_dir = _endPoint vectorDiff  _startPoint;
 		_dir = _dir vectorMultiply (1 /_burstCount);
-		private _dispersion = MEANPlOTTEDACCURACY * (_unit getVariable ["ArtAccuracy",MEANPlOTTEDACCURACY]) + 1;
 		for "_i" from 0 to _burstCount do
 		{
 
-			_randomPos = [[[_startPoint vectorAdd (_dir vectorMultiply _i),_dispersion ]],[]] call BIS_fnc_randomPos;
-				_unit commandArtilleryFire [_randomPos,  ((_unit call FNC_GetArtyAmmo) select _roundType) select 0, _burstSize];
-				[_unit, ((_unit getVariable ["ArtyFiremissionRoundsFired",[0,0]]) select 0) + _burstSize,_burstCount * _burstSize] call FNC_SetArtyFiremissionRoundsRequired;
-				sleep(((_fireRate * (_unit getVariable ["ArtFireRate",MEANFIRERATE]) ) * _burstSize) max _burstWait);
+			[_unit,_startPoint vectorAdd (_dir vectorMultiply _i),0,_burstSize,_roundClassName] call FNC_InternalFiremission;
+			[_unit, ((_unit getVariable [VAR_SART_ARTROUNDSFIRED,[0,0]]) select 0) + _burstSize,_burstCount * _burstSize] call FNC_SetArtyFiremissionRoundsRequired;
+			sleep(((_fireRate * (_unit getVariable [VAR_SART_ARTFIRERATE,MEANFIRERATE]) ) * _burstSize) max _burstWait);
 		};
 		[_unit, false] call FNC_SetArtyReadyStatus;
 		[_unit,objNULL] call FNC_SetArtyCaller;
 		[_unit, 0,0] call FNC_SetArtyFiremissionRoundsRequired;
 	};
-	(_this select 0) setVariable ["FiremissionHandle",_handle,true];
+	(_this select 0) setVariable [VAR_SART_FMHANDLE,_handle,true];
 };
 FNC_GetBracketFiremissionText =
 {
@@ -413,41 +459,40 @@ FNC_BracketFiremission =
 		private	_minSpottedDistance = _this select 6;
 		private	_roundType = _this select 7;
 		private	_fireRate = _unit call FNC_ArtGetFireRate;
+		private _roundClassName = ((_unit call FNC_GetArtyAmmo) select _roundType) select 0 ;
 
 		[_unit , true] call FNC_SetArtyReadyStatus;
-		_unit setVariable ["ArtyFiremissionText",_this call FNC_GetPointFiremissionText,true];
+		_unit setVariable [VAR_SART_ARTFMTEXT,_this call FNC_GetPointFiremissionText,true];
 		[_unit, 0,_burstCount * _burstSize] call FNC_SetArtyFiremissionRoundsRequired;
-		[_unit,_startPoint,_roundType ] call FNC_InternalSpottingFiremission;
+		[_unit,_startPoint,_roundClassName ] call FNC_InternalSpottingFiremission;
 		//spotting rounds finished
-		sleep( (_unit getVariable ["ArtCalcSpeed",MEANCALCULATIONTIME]) + 1);
+		sleep( (_unit getVariable [VAR_SART_ARTCALCSPEED,MEANCALCULATIONTIME]) + 1);
 		private	_dir = _endPoint vectorDiff  _startPoint;
 		_dir = _dir vectorMultiply (1 /_burstCount);
-		private _dispersion = MEANPlOTTEDACCURACY * (_unit getVariable ["ArtAccuracy",MEANPlOTTEDACCURACY]) + 1;
 		private _isForward = true;
 		for "_i" from 0 to _burstCount do
 		{
 			if(_isForward) then
 			{
-					_randomPos = [[[_startPoint vectorAdd (_dir vectorMultiply (_i / 2)),_dispersion ]],[]] call BIS_fnc_randomPos;
-					_unit commandArtilleryFire [_randomPos,  ((_unit call FNC_GetArtyAmmo) select _roundType) select 0, _burstSize];
-					[_unit, ((_unit getVariable ["ArtyFiremissionRoundsFired",[0,0]]) select 0) + _burstSize,_burstCount * _burstSize] call FNC_SetArtyFiremissionRoundsRequired;
+					[_unit,_startPoint vectorAdd (_dir vectorMultiply (_i / 2)),0,_burstSize,_roundClassName] call FNC_InternalFiremission;
+					[_unit, ((_unit getVariable [VAR_SART_ARTROUNDSFIRED,[0,0]]) select 0) + _burstSize,_burstCount * _burstSize] call FNC_SetArtyFiremissionRoundsRequired;
 					_isForward = false;
 			}
 			else
 			{
-					_randomPos = [[[_startPoint vectorAdd (_dir vectorMultiply ((_burstCount - _i) / 2)),_dispersion ]],[]] call BIS_fnc_randomPos;
-					_unit commandArtilleryFire [_randomPos,  ((_unit call FNC_GetArtyAmmo) select _roundType) select 0, _burstSize];
-					[_unit, ((_unit getVariable ["ArtyFiremissionRoundsFired",[0,0]]) select 0) + _burstSize,_burstCount * _burstSize] call FNC_SetArtyFiremissionRoundsRequired;
+
+					[_unit,_startPoint vectorAdd (_dir vectorMultiply ((_burstCount - _i) / 2)),0,_burstSize,_roundClassName] call FNC_InternalFiremission;
+					[_unit, ((_unit getVariable [VAR_SART_ARTROUNDSFIRED,[0,0]]) select 0) + _burstSize,_burstCount * _burstSize] call FNC_SetArtyFiremissionRoundsRequired;
 					_isForward = true;
 			};
 
-					sleep(((_fireRate * (_unit getVariable ["ArtFireRate",MEANFIRERATE]) ) * _burstSize) max _burstWait);
+					sleep(((_fireRate * (_unit getVariable [VAR_SART_ARTFIRERATE,MEANFIRERATE]) ) * _burstSize) max _burstWait);
 		};
 		[_unit,objNULL] call FNC_SetArtyCaller;
 		[_unit, false] call FNC_SetArtyReadyStatus;
 		[_unit, 0,0] call FNC_SetArtyFiremissionRoundsRequired;
 	};
-	(_this select 0) setVariable ["FiremissionHandle",_handle,true];
+	(_this select 0) setVariable [VAR_SART_FMHANDLE,_handle,true];
 };
 FNC_GetDonutFiremissionText =
 {
@@ -495,28 +540,30 @@ FNC_DonutFiremission =
 			private	_burstWait = _this select 6;
 			private	_minSpottedDistance = _this select 7;
 			private	_roundType = _this select 8;
-
+			private _roundClassName = ((_unit call FNC_GetArtyAmmo) select _roundType) select 0 ;
 			private	_fireRate = _unit call FNC_ArtGetFireRate;
+
 			[_unit , true] call FNC_SetArtyReadyStatus;
-			_unit setVariable ["ArtyFiremissionText",_this call FNC_GetPointFiremissionText,true];
+			_unit setVariable [VAR_SART_ARTFMTEXT,_this call FNC_GetPointFiremissionText,true];
 			[_unit, 0,_burstCount * _burstSize] call FNC_SetArtyFiremissionRoundsRequired;
-			[_unit,_target,_roundType ] call FNC_InternalSpottingFiremission;
+			[_unit,_target,_roundClassName ] call FNC_InternalSpottingFiremission;
 				//spotting rounds finished
-				sleep( (_unit getVariable ["ArtCalcSpeed",MEANCALCULATIONTIME]) + 1);
+				sleep( (_unit getVariable [VAR_SART_ARTCALCSPEED,MEANCALCULATIONTIME]) + 1);
 				for "_i" from 0 to _burstCount do
 				{
+
+
 						_randomPos = [[[_target, _outerRadius]],[[_target, _innerRadius]]] call BIS_fnc_randomPos;
-						_randomPos =	[[[_randomPos, MEANPlOTTEDACCURACY]],[]] call BIS_fnc_randomPos;
-						_unit commandArtilleryFire [_randomPos,  ((_unit call FNC_GetArtyAmmo) select _roundType) select 0, _burstSize];
-						[_unit, ((_unit getVariable ["ArtyFiremissionRoundsFired",[0,0]]) select 0) + _burstSize,_burstCount * _burstSize] call FNC_SetArtyFiremissionRoundsRequired;
-						sleep(((_fireRate * (_unit getVariable ["ArtFireRate",MEANFIRERATE]) ) * _burstSize) max _burstWait);
+						[_unit,_randomPos,0,_burstSize,_roundClassName] call FNC_InternalFiremission;
+						[_unit, ((_unit getVariable [VAR_SART_ARTROUNDSFIRED,[0,0]]) select 0) + _burstSize,_burstCount * _burstSize] call FNC_SetArtyFiremissionRoundsRequired;
+						sleep(((_fireRate * (_unit getVariable [VAR_SART_ARTFIRERATE,MEANFIRERATE]) ) * _burstSize) max _burstWait);
 				};
 				[_unit,objNULL] call FNC_SetArtyCaller;
 				[_unit, false] call FNC_SetArtyReadyStatus;
 				[_unit, 0,0] call FNC_SetArtyFiremissionRoundsRequired;
 		};
 
-		(_this select 0) setVariable ["FiremissionHandle",_handle,true];
+		(_this select 0) setVariable [VAR_SART_FMHANDLE,_handle,true];
 	};
 };
 
@@ -563,29 +610,28 @@ FNC_MarkerFiremission =
 				private	_minSpottedDistance = _this select 5;
 				private	_roundType = _this select 6;
 				private	_fireRate = _unit call FNC_ArtGetFireRate;
-
+				private _roundClassName = ((_unit call FNC_GetArtyAmmo) select _roundType) select 0 ;
 				[_unit , true] call FNC_SetArtyReadyStatus;
-				_unit setVariable ["ArtyFiremissionText",_this call FNC_GetPointFiremissionText,true];
+				_unit setVariable [VAR_SART_ARTFMTEXT,_this call FNC_GetPointFiremissionText,true];
 				[_unit, 0,_burstCount * _burstSize] call FNC_SetArtyFiremissionRoundsRequired;
 
 					//calculateFiremission
-					[_unit,_targetMarker,_roundType ] call FNC_InternalSpottingFiremission;
+					[_unit,_targetMarker,_roundClassName ] call FNC_InternalSpottingFiremission;
 					//spotting rounds finished
-					sleep( (_unit getVariable ["ArtCalcSpeed",MEANCALCULATIONTIME]) + 1);
+					sleep( (_unit getVariable [VAR_SART_ARTCALCSPEED,MEANCALCULATIONTIME]) + 1);
 					for "_i" from 0 to _burstCount do
 					{
 							_randomPos = [[_targetMarker],[]] call BIS_fnc_randomPos;
-							_randomPos =	[[[_randomPos, MEANPlOTTEDACCURACY]],[]] call BIS_fnc_randomPos;
-							_unit commandArtilleryFire [_randomPos,  ((_unit call FNC_GetArtyAmmo) select _roundType) select 0, _burstSize];
-								[_unit, ((_unit getVariable ["ArtyFiremissionRoundsFired",[0,0]]) select 0) + _burstSize,_burstCount * _burstSize] call FNC_SetArtyFiremissionRoundsRequired;
-							sleep(((_fireRate * (_unit getVariable ["ArtFireRate",MEANFIRERATE]) ) * _burstSize) max _burstWait);
+							[_unit,_randomPos,0,_burstSize,_roundClassName] call FNC_InternalFiremission;
+								[_unit, ((_unit getVariable [VAR_SART_ARTROUNDSFIRED,[0,0]]) select 0) + _burstSize,_burstCount * _burstSize] call FNC_SetArtyFiremissionRoundsRequired;
+							sleep(((_fireRate * (_unit getVariable [VAR_SART_ARTFIRERATE,MEANFIRERATE]) ) * _burstSize) max _burstWait);
 					};
 
 					[_unit, false] call FNC_SetArtyReadyStatus;
 					[_unit,objNULL] call FNC_SetArtyCaller;
 					[_unit, 0,0] call FNC_SetArtyFiremissionRoundsRequired;
 		};
-		(_this select 0) setVariable ["FiremissionHandle",_handle,true];
+		(_this select 0) setVariable [VAR_SART_FMHANDLE,_handle,true];
 	};
 
 };
@@ -652,7 +698,7 @@ _handle = _this spawn
 		{
 			_tempArray = _this;
 			_tempArray set [0,_x];
-			_x setVariable ["ArtyFiremissionText",_tempArray call FNC_GetCurtainFiremissionText,true];
+			_x setVariable [VAR_SART_ARTFMTEXT,_tempArray call FNC_GetCurtainFiremissionText,true];
 				[_x , true] call FNC_SetArtyReadyStatus;
 		}forEach _unit;
 		private _startPoint = _this select 1;
@@ -664,16 +710,16 @@ _handle = _this spawn
 		private	_minSpottedDistance = _this select 7;
 
 		private	_roundType = _this select 8;
-
+		private _roundClassName = ((_unit call FNC_GetArtyAmmo) select _roundType) select 0 ;
 		{
 			[_x , true] call FNC_SetArtyReadyStatus;
-			_x setVariable ["ArtyFiremissionText",_this call FNC_GetPointFiremissionText,true];
+			_x setVariable [VAR_SART_ARTFMTEXT,_this call FNC_GetPointFiremissionText,true];
 			[_x, 0,_burstCount * _burstSize] call FNC_SetArtyFiremissionRoundsRequired;
 		}forEach _unit;
 		private	_fireRate = [];
 		sleep((_unit call FNC_GetArtyAimTime));
 		private	_dis = 1000;
-		private	_tempAcc = ((_unit select 0) getVariable ["ArtSpottingAccuracy",MEANSPOTTINGACCURACY]) + 1;
+		private	_tempAcc = ((_unit select 0) getVariable [VAR_SART_ARTSPOTACCURACY,MEANSPOTTINGACCURACY]) + 1;
 		private	_dir = _endPoint vectorDiff  _startPoint;
 		_dir = _dir vectorMultiply (1 /_burstCount);
 
@@ -688,22 +734,20 @@ _handle = _this spawn
 				_fireRate pushBack (_x call FNC_ArtGetFireRate);
 				_tempCount = _tempCount + 1;
 		}forEach _unit;
-		[_unit,_startPoint,_roundType ] call FNC_InternalSpottingFiremission;
+		[_unit,_startPoint,_roundClassName ] call FNC_InternalSpottingFiremission;
 		//spotting rounds finished
 
 
-		sleep( (_unit getVariable ["ArtCalcSpeed",MEANCALCULATIONTIME]) + 1);
+		sleep( (_unit getVariable [VAR_SART_ARTCALCSPEED,MEANCALCULATIONTIME]) + 1);
 		for "_i" from 0 to _burstCount do
 		{
 				_row = 0;
 				{
-						private _dispersion = MEANPlOTTEDACCURACY * (_x getVariable ["ArtAccuracy",MEANPlOTTEDACCURACY]) + 1;
-						_randomPos = [[[(_startingSpots select _row) vectorAdd (_dir vectorMultiply _i),_dispersion ]],[]] call BIS_fnc_randomPos;
-						_x commandArtilleryFire [_randomPos, (((_x select 0) call FNC_GetArtyAmmo) select _roundType) select 0, _burstSize];
-						[_x, ((_x getVariable ["ArtyFiremissionRoundsFired",[0,0]]) select 1) + _burstSize,_burstCount * _burstSize] call FNC_SetArtyFiremissionRoundsRequired;
+						[_unit,(_startingSpots select _row) vectorAdd (_dir vectorMultiply _i),0,_burstSize,_roundClassName] call FNC_InternalFiremission;
+						[_x, ((_x getVariable [VAR_SART_ARTROUNDSFIRED,[0,0]]) select 1) + _burstSize,_burstCount * _burstSize] call FNC_SetArtyFiremissionRoundsRequired;
 						_row = _row + 1;
 				}forEach _unit;
-					sleep((((_fireRate select 0) * ((_unit select 0) getVariable ["ArtFireRate",MEANFIRERATE]) ) * _burstSize) max _burstWait);
+					sleep((((_fireRate select 0) * ((_unit select 0) getVariable [VAR_SART_ARTFIRERATE,MEANFIRERATE]) ) * _burstSize) max _burstWait);
 		};
 		{
 				[_x, 0,0] call FNC_SetArtyFiremissionRoundsRequired;
@@ -712,7 +756,7 @@ _handle = _this spawn
 		}forEach _unit;
 	};
 	{
-		_x setVariable ["FiremissionHandle",_handle,true];
+		_x setVariable [VAR_SART_FMHANDLE,_handle,true];
 	}forEach (_this select 0);
 };
 
@@ -756,18 +800,18 @@ if (isServer) then
 								};
 							}forEach _currentShotTargets;
 
-							if((_observer knowsAbout  _target >= _minimumKnowledge) && (_distance2DToClosestFiremission > _minRange)) then
+							if((_observer knowsAbout  _target >= _minimumKnowledge) && (_distance2DToClosestFiremission > _minRange) && (((getPosATL _target) select 2) < 10 ) ) then
 							{
 									//we know enough about it
 									//calculate position
-									_pos = [[[_target,(_observer getVariable ["ObserverAccuracy",OBSACCURACY]) * (_target distance2D _observer) /  _range ]],[]] call BIS_fnc_randomPos;
-									sleep(_observer getVariable ["ObserverSpeed",OBSSPEED]);
+									_pos = [[[_target,(_observer getVariable [VAR_SART_OBSACCURACY,OBSACCURACY]) * (_target distance2D _observer) /  _range ]],[]] call BIS_fnc_randomPos;
+									sleep(_observer getVariable [VAR_SART_OBSSPEED,OBSSPEED]);
 									if(alive _observer) then
 									{
 										_hasFired = false;
 										//fire a firemission
 										{
-												if((!(_x getVariable ["isInAFiremission",false])) && !(_hasFired) ) then
+												if((!(_x getVariable [VAR_SART_ARTINFIREMISSION,false])) && !(_hasFired) ) then
 												{
 														_currentShotTargets pushBack [_x,_pos];
 														[_x,_pos,_standardDispersion,_standardRoundCount,_standardRoundBurst,_standardRoundBurstWait,_minSpottedDistance,_standardRound] call FNC_PointFiremission;
@@ -786,7 +830,7 @@ if (isServer) then
 			sleep(5);
 			_tempAdd = [];
 			{
-					if((_x select 0) getVariable ["isInAFiremission",false]) then
+					if((_x select 0) getVariable [VAR_SART_ARTINFIREMISSION,false]) then
 					{
 							_tempAdd pushBack (_x);
 					};
@@ -794,7 +838,7 @@ if (isServer) then
 			_currentShotTargets = _tempAdd;
 		};
 	};
-		(_this select 0) setVariable ["FiremissionHandle",_handle,true];
+		(_this select 0) setVariable [VAR_SART_FMHANDLE,_handle,true];
 };
 };
 FNC_SetObserverSkill =
@@ -802,15 +846,15 @@ FNC_SetObserverSkill =
 		private _unit  = _this select 0;
 		private _accuracy = _this select 1;
 		private _speed = _this select 2;
-		_unit setVariable ["ObserverAccuracy",_accuracy];
-		_unit setVariable ["ObserverSpeed",_speed];
+		_unit setVariable [VAR_SART_OBSACCURACY,_accuracy];
+		_unit setVariable [VAR_SART_OBSSPEED,_speed];
 };
 FNC_GetObserverSkill =
 {
 		private _unit  = _this select 0;
 		private _ret = [];
-		_ret pushBack (_unit getVariable ["ObserverAccuracy",OBSACCURACY]);
-		_ret pushBack (_unit getVariable ["ObserverSpeed",OBSSPEED]);
+		_ret pushBack (_unit getVariable [VAR_SART_OBSACCURACY,OBSACCURACY]);
+		_ret pushBack (_unit getVariable [VAR_SART_OBSSPEED,OBSSPEED]);
 		_ret
 };
 
@@ -834,7 +878,7 @@ FNC_StopArtillery =
 	{
 			[_this , false] call FNC_SetArtyReadyStatus;
 			[_this , false] call FNC_SetArtyReadyStatus;
-			terminate (_this getVariable ["FiremissionHandle",scriptNULL]);
+			terminate (_this getVariable [VAR_SART_FMHANDLE,scriptNULL]);
 
 	};
 };
@@ -845,7 +889,7 @@ FNC_ArtMakePlayerObserver =
 	{
 		private _unit = _this select 0;
 		private	_guns = _this select 1;
-		_unit setVariable ["PlayerArtilleryGuns",_guns,true];
+		_unit setVariable [VAR_SART_OBSGUNS,_guns,true];
 		serverObservers pushBack _unit;
 		serverObservers pushBack _guns;
 		publicVariable "serverObservers";
@@ -857,7 +901,7 @@ FNC_ClientAddAceArtilleryOption =
 
 	private["_unit","_guns"];
 	_guns = _this;
-	_action = ["Artillery_Menu", "Artillery Menu", "", {true}, {(count (player getVariable ["PlayerArtilleryGuns",[]])) > 0}] call ace_interact_menu_fnc_createAction;
+	_action = ["Artillery_Menu", "Artillery Menu", "", {true}, {(count (player getVariable [VAR_SART_OBSGUNS,[]])) > 0}] call ace_interact_menu_fnc_createAction;
 	[player, 1, ["ACE_SelfActions"], _action] call ace_interact_menu_fnc_addActionToObject;
 
 
@@ -900,14 +944,14 @@ FNC_ClientAddAceArtilleryOption =
 	{
 		_artyName =_x call FNC_GetArtyDisplayName;
 		_text = ("Stop " + _artyName);
-		_action = ["Stop",_text , "", {(_this select 2) call FNC_StopArtilleryClient; }, { (alive (_this select 2) && ((_this select 2) getVariable ["isInAFiremission",false]))},{},_x] call ace_interact_menu_fnc_createAction;
+		_action = ["Stop",_text , "", {(_this select 2) call FNC_StopArtilleryClient; }, { (alive (_this select 2) && ((_this select 2) getVariable [VAR_SART_ARTINFIREMISSION,false]))},{},_x] call ace_interact_menu_fnc_createAction;
 		[player, 1, ["ACE_SelfActions","Artillery_Menu","StopFiremission"], _action] call ace_interact_menu_fnc_addActionToObject;
 	}forEach _guns;
 
 	{
 		_artyName =_x call FNC_GetArtyDisplayName;
 		_text = ("Info " + _artyName);
-		_action = ["Info",_text , "",{hint ((_this select 2) call FNC_GetCompleteInfoText); }, { (alive (_this select 2) && ((_this select 2) getVariable ["isInAFiremission",false]))},{},_x] call ace_interact_menu_fnc_createAction;
+		_action = ["Info",_text , "",{hint ((_this select 2) call FNC_GetCompleteInfoText); }, { (alive (_this select 2) && ((_this select 2) getVariable [VAR_SART_ARTINFIREMISSION,false]))},{},_x] call ace_interact_menu_fnc_createAction;
 		[player, 1, ["ACE_SelfActions","Artillery_Menu","FiremissionInformation"], _action] call ace_interact_menu_fnc_addActionToObject;
 	}forEach _guns;
 
@@ -943,4 +987,5 @@ _found = serverObservers find player;
 if(_found >= 0 ) then
 {
 	(serverObservers select (_found +1)) call FNC_ClientAddAceArtilleryOption;
+	_id = ["Event_ArtyReceiveHint", {hint _this;}] call CBA_fnc_addEventHandler;
 };

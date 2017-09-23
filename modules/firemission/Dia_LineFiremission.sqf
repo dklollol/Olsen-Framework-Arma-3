@@ -19,10 +19,10 @@ FNC_DIA_LineFiremissionCloseDialog =
 
 FNC_DIA_LineFiremissionFire =
 {
-	_guns = player getVariable ["PlayerArtilleryGuns",[]];
+	_guns = player getVariable [VAR_SART_OBSGUNS,[]];
 	_usableGuns = [];
 	{
-		if(alive _x && !(_x getVariable ["isInAFiremission",false])) then
+		if(alive _x && !(_x getVariable [VAR_SART_ARTINFIREMISSION,false])) then
 		{
 			_usableGuns pushBack _x;
 		};
