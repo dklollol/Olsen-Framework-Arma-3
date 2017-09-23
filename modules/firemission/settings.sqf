@@ -5,7 +5,7 @@ Example: [test1,[m109]] call FNC_ArtMakePlayerObserver;
 [unit,guns] call FNC_ArtMakePlayerObserver;
 Params:
 unit - obj - unit which should become fo;
-guns - Array Object > aviable guns to the fo
+guns - Array Object - aviable guns to the fo
 
 Notes:
 
@@ -14,12 +14,12 @@ Example: [arty1,1,0,300,4,3,"",true] call FNC_SetArtilleryData;
 [unit,fireRate,accuracy,spottingAccuracy,aimtime,calculationtime,unlimitedAmmo]  call FNC_SetArtilleryData;
 Params:
 unit -Object- unit of which the skills should change;
-fireRate - float(1,) - fireRate modifiers for bursts. Weapon reloadtime * fireRate for waititme between bursts, min 1;
-accuracy - integer - accuracy of shots in meters;
-spottingAccuracy - integer - accuracy of spotting rounds in meters;
-aimtime - integer - time between recaluclations in seconds;
-calculationtime - integer - time to calculate a firing solution before firing spotting rounds;
-customName - String - name for the player Observer in his gui;
+fireRate - float(1,) - fireRate modifiers for bursts. Weapon reloadtime * fireRate for waititme between bursts, min 1
+accuracy - integer - accuracy of shots in meters
+spottingAccuracy - integer - accuracy of spotting rounds in meters
+aimtime - integer - time between recaluclations in seconds
+calculationtime - integer - time to calculate a firing solution before firing spotting rounds
+customName - String - name for the player Observer in his gui
 unlimitedAmmo - bool - true for unlimitedAmmo
 Notes: put -1 for default
 
@@ -27,7 +27,7 @@ SetObserverSkill:
 Example: [obs1,0,0] call FNC_SetObserverSkill;
 [unit,accuracy,speed] call FNC_SetObserverSkill;
 Params:
-unit -Object- unit of which the skills should change;
+unit -Object- unit of which the skills should change
 accuracy - integer - accuracy of position estimation in meters
 speed - integer - time to estimate position of target
 
