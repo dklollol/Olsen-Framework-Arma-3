@@ -1,14 +1,30 @@
 
 #include "defs.hpp"
 
+FNC_IsArtyAviable =
+{
+	private _unit = _this;
+	private _ret = (alive (_unit) && !((_unit) getVariable [VAR_SART_ARTINFIREMISSION,false]) && ((_unit) getVariable [VAR_SART_IsAviable,true]));
+	_ret;
+
+};
+
+FNC_SetArtyAviable =
+{
+	(_this select 0 ) setVariable [VAR_SART_IsAviable,_this select 1,true];
+};
 FNC_SendArtyHint =
 {
-	_unit = _this select 0;
-	_text = _this select 1;
+	private  _unit = _this select 0;
+	private  _text = _this select 1;
 	["Event_ArtyReceiveHint", _text, _unit] call CBA_fnc_targetEvent;
 };
 
-
+FNC_SendArtyHintGlobal =
+{
+	_text = _this;
+	["Event_ArtyReceiveHint", _text] call CBA_fnc_globalEvent;
+};
 FNC_FindMarkerOnMap =
 {
 	private _marker = "";
@@ -165,7 +181,7 @@ FNC_ArtLoadAviableArtilleries =
 			private _guns = player getVariable [VAR_SART_OBSGUNS,[]];
 			private _usableGuns = [];
 			{
-				if(alive _x && !(_x getVariable [VAR_SART_ARTINFIREMISSION,false])) then
+				if(_x call FNC_IsArtyAviable) then
 				{
 					_usableGuns pushBack _x;
 				};
@@ -188,7 +204,7 @@ FNC_ArtSetArtillery =
 		_guns = player getVariable [VAR_SART_OBSGUNS,[]];
 		_usableGuns = [];
 		{
-			if(alive _x && !(_x getVariable [VAR_SART_ARTINFIREMISSION,false])) then
+			if(_x call FNC_IsArtyAviable) then
 			{
 				_usableGuns pushBack _x;
 			};

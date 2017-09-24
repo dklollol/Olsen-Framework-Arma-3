@@ -22,7 +22,7 @@ FNC_DIA_LineFiremissionFire =
 	_guns = player getVariable [VAR_SART_OBSGUNS,[]];
 	_usableGuns = [];
 	{
-		if(alive _x && !(_x getVariable [VAR_SART_ARTINFIREMISSION,false])) then
+		if(_x call FNC_IsArtyAviable) then
 		{
 			_usableGuns pushBack _x;
 		};

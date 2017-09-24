@@ -4,13 +4,24 @@
 
 
 #endif
+
 #ifdef description
-		#include "Dia_PointFiremission.hpp"
-		#include "Dia_LineFiremission.hpp"
-		#include "Dia_BracketFiremission.hpp"
-		#include "Dia_DonutFiremission.hpp"
-		#include "Dia_MarkerFiremission.hpp"
-		#include "Dia_GridSpottingFiremission.hpp"
-		#include "Dia_PolarSpottingFiremission.hpp"
-		#include "Dia_PolarFiremission.hpp"
+		#include "Dia\Dia_PointFiremission.hpp"
+		#include "Dia\Dia_LineFiremission.hpp"
+		#include "Dia\Dia_BracketFiremission.hpp"
+		#include "Dia\Dia_DonutFiremission.hpp"
+		#include "Dia\Dia_MarkerFiremission.hpp"
+		#include "Dia\Dia_GridSpottingFiremission.hpp"
+		#include "Dia\Dia_PolarSpottingFiremission.hpp"
+		#include "Dia\Dia_PolarFiremission.hpp"
+
+
+#endif
+
+
+#ifdef preinit
+
+#include "FNC_ArtMakePlayerObserver.sqf"
+
+
 #endif

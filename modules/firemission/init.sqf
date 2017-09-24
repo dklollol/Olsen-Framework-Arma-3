@@ -2,8 +2,7 @@
 
 //to say the truth, this code is a goddamm mess
 
-#include "Dia_Global.sqf"
-#include "defs.hpp"
+#include "Dia\Dia_Global.sqf"
 
 FNC_AddEventHandler =
 {
@@ -883,109 +882,102 @@ FNC_StopArtillery =
 	};
 };
 
-FNC_ArtMakePlayerObserver =
-{
-	if (isServer) then
-	{
-		private _unit = _this select 0;
-		private	_guns = _this select 1;
-		_unit setVariable [VAR_SART_OBSGUNS,_guns,true];
-		serverObservers pushBack _unit;
-		serverObservers pushBack _guns;
-		publicVariable "serverObservers";
-	};
-};
+
+
 
 FNC_ClientAddAceArtilleryOption =
 {
 
 	private["_unit","_guns"];
 	_guns = _this;
-	_action = ["Artillery_Menu", "Artillery Menu", "", {true}, {(count (player getVariable [VAR_SART_OBSGUNS,[]])) > 0}] call ace_interact_menu_fnc_createAction;
-	[player, 1, ["ACE_SelfActions"], _action] call ace_interact_menu_fnc_addActionToObject;
 
-
-	_action = ["Artillery_Call_Menu", "Call Firemission", "", {true}, {true}] call ace_interact_menu_fnc_createAction;
-	[player, 1, ["ACE_SelfActions","Artillery_Menu"], _action] call ace_interact_menu_fnc_addActionToObject;
-
-	_action = ["PointFiremission", "Point Firemission", "", {[] call FNC_DIA_PointFiremissionOpenDialog;}, {true}] call ace_interact_menu_fnc_createAction;
-	[player, 1, ["ACE_SelfActions","Artillery_Menu","Artillery_Call_Menu"], _action] call ace_interact_menu_fnc_addActionToObject;
-
-	_action = ["LineFiremission", "Line Firemission", "", {[] call FNC_DIA_LineFiremissionOpenDialog;}, {true}] call ace_interact_menu_fnc_createAction;
-	[player, 1, ["ACE_SelfActions","Artillery_Menu","Artillery_Call_Menu"], _action] call ace_interact_menu_fnc_addActionToObject;
-
-	_action = ["BracketFiremission", "Bracket Firemission", "", {[] call FNC_DIA_BracketFiremissionOpenDialog;}, {true}] call ace_interact_menu_fnc_createAction;
-	[player, 1, ["ACE_SelfActions","Artillery_Menu","Artillery_Call_Menu"], _action] call ace_interact_menu_fnc_addActionToObject;
-
-	_action = ["DonutFiremission", "Donut Firemission", "", {[] call FNC_DIA_DonutFiremissionOpenDialog;}, {true}] call ace_interact_menu_fnc_createAction;
-	[player, 1, ["ACE_SelfActions","Artillery_Menu","Artillery_Call_Menu"], _action] call ace_interact_menu_fnc_addActionToObject;
-
-	_action = ["MarkerFiremission", "Marker Firemission", "", {[] call FNC_DIA_MarkerFiremissionOpenDialog;}, {true}] call ace_interact_menu_fnc_createAction;
-	[player, 1, ["ACE_SelfActions","Artillery_Menu","Artillery_Call_Menu"], _action] call ace_interact_menu_fnc_addActionToObject;
-
-	_action = ["PolarFiremission", "Polar Firemission", "", {[] call FNC_DIA_PolarFiremissionOpenDialog;}, {true}] call ace_interact_menu_fnc_createAction;
-	[player, 1, ["ACE_SelfActions","Artillery_Menu","Artillery_Call_Menu"], _action] call ace_interact_menu_fnc_addActionToObject;
-
-	_action = ["SpottingFiremission", "Call Spotting Round", "", {true}, {true}] call ace_interact_menu_fnc_createAction;
-	[player, 1, ["ACE_SelfActions","Artillery_Menu"], _action] call ace_interact_menu_fnc_addActionToObject;
-
-
-	_action = ["SpottingFiremission", "Polar Spotting Round", "", {[] call FNC_DIA_PolarSpottingFiremissionOpenDialog;}, {true}] call ace_interact_menu_fnc_createAction;
-	[player, 1, ["ACE_SelfActions","Artillery_Menu","SpottingFiremission"], _action] call ace_interact_menu_fnc_addActionToObject;
-
-	_action = ["SpottingFiremission", "Grid Spotting Round", "", {[] call FNC_DIA_GridSpottingFiremissionOpenDialog;}, {true}] call ace_interact_menu_fnc_createAction;
-	[player, 1, ["ACE_SelfActions","Artillery_Menu","SpottingFiremission"], _action] call ace_interact_menu_fnc_addActionToObject;
-
-	_action = ["FiremissionInformation", "Firemission Information", "", {true}, {true}] call ace_interact_menu_fnc_createAction;
-	[player, 1, ["ACE_SelfActions","Artillery_Menu"], _action] call ace_interact_menu_fnc_addActionToObject;
-
-	_action = ["StopFiremission", "Stop Firemissions", "", {true}, {true}] call ace_interact_menu_fnc_createAction;
-	[player, 1, ["ACE_SelfActions","Artillery_Menu"], _action] call ace_interact_menu_fnc_addActionToObject;
+	if(!(player getVariable [VAR_SART_PLAYERRECEIVEDGUNS,false])) then
 	{
-		_artyName =_x call FNC_GetArtyDisplayName;
-		_text = ("Stop " + _artyName);
-		_action = ["Stop",_text , "", {(_this select 2) call FNC_StopArtilleryClient; }, { (alive (_this select 2) && ((_this select 2) getVariable [VAR_SART_ARTINFIREMISSION,false]))},{},_x] call ace_interact_menu_fnc_createAction;
-		[player, 1, ["ACE_SelfActions","Artillery_Menu","StopFiremission"], _action] call ace_interact_menu_fnc_addActionToObject;
-	}forEach _guns;
+		_action = ["Artillery_Menu", "Artillery Menu", "", {true}, {(count (player getVariable [VAR_SART_OBSGUNS,[]])) > 0}] call ace_interact_menu_fnc_createAction;
+		[player, 1, ["ACE_SelfActions"], _action] call ace_interact_menu_fnc_addActionToObject;
 
-	{
-		_artyName =_x call FNC_GetArtyDisplayName;
-		_text = ("Info " + _artyName);
-		_action = ["Info",_text , "",{hint ((_this select 2) call FNC_GetCompleteInfoText); }, { (alive (_this select 2) && ((_this select 2) getVariable [VAR_SART_ARTINFIREMISSION,false]))},{},_x] call ace_interact_menu_fnc_createAction;
-		[player, 1, ["ACE_SelfActions","Artillery_Menu","FiremissionInformation"], _action] call ace_interact_menu_fnc_addActionToObject;
-	}forEach _guns;
 
-	_id = ["Event_ArtyIsReady",
-	{
-		[PFM_DIA_IDC_GUNSELECT] call FNC_ArtLoadAviableArtilleries;
-		[LFM_DIA_IDC_GUNSELECT] call FNC_ArtLoadAviableArtilleries;
-		[BFM_DIA_IDC_GUNSELECT] call FNC_ArtLoadAviableArtilleries;
-		[DFM_DIA_IDC_GUNSELECT] call FNC_ArtLoadAviableArtilleries;
-		[MFM_DIA_IDC_GUNSELECT] call FNC_ArtLoadAviableArtilleries;
-		[PSFM_DIA_IDC_GUNSELECT] call FNC_ArtLoadAviableArtilleries;
-		[GSFM_DIA_IDC_GUNSELECT] call FNC_ArtLoadAviableArtilleries;
-	}] call CBA_fnc_addEventHandler;
+		_action = ["Artillery_Call_Menu", "Call Firemission", "", {true}, {true}] call ace_interact_menu_fnc_createAction;
+		[player, 1, ["ACE_SelfActions","Artillery_Menu"], _action] call ace_interact_menu_fnc_addActionToObject;
+
+		_action = ["PointFiremission", "Point Firemission", "", {[] call FNC_DIA_PointFiremissionOpenDialog;}, {true}] call ace_interact_menu_fnc_createAction;
+		[player, 1, ["ACE_SelfActions","Artillery_Menu","Artillery_Call_Menu"], _action] call ace_interact_menu_fnc_addActionToObject;
+
+		_action = ["LineFiremission", "Line Firemission", "", {[] call FNC_DIA_LineFiremissionOpenDialog;}, {true}] call ace_interact_menu_fnc_createAction;
+		[player, 1, ["ACE_SelfActions","Artillery_Menu","Artillery_Call_Menu"], _action] call ace_interact_menu_fnc_addActionToObject;
+
+		_action = ["BracketFiremission", "Bracket Firemission", "", {[] call FNC_DIA_BracketFiremissionOpenDialog;}, {true}] call ace_interact_menu_fnc_createAction;
+		[player, 1, ["ACE_SelfActions","Artillery_Menu","Artillery_Call_Menu"], _action] call ace_interact_menu_fnc_addActionToObject;
+
+		_action = ["DonutFiremission", "Donut Firemission", "", {[] call FNC_DIA_DonutFiremissionOpenDialog;}, {true}] call ace_interact_menu_fnc_createAction;
+		[player, 1, ["ACE_SelfActions","Artillery_Menu","Artillery_Call_Menu"], _action] call ace_interact_menu_fnc_addActionToObject;
+
+		_action = ["MarkerFiremission", "Marker Firemission", "", {[] call FNC_DIA_MarkerFiremissionOpenDialog;}, {true}] call ace_interact_menu_fnc_createAction;
+		[player, 1, ["ACE_SelfActions","Artillery_Menu","Artillery_Call_Menu"], _action] call ace_interact_menu_fnc_addActionToObject;
+
+		_action = ["PolarFiremission", "Polar Firemission", "", {[] call FNC_DIA_PolarFiremissionOpenDialog;}, {true}] call ace_interact_menu_fnc_createAction;
+		[player, 1, ["ACE_SelfActions","Artillery_Menu","Artillery_Call_Menu"], _action] call ace_interact_menu_fnc_addActionToObject;
+
+		_action = ["SpottingFiremission", "Call Spotting Round", "", {true}, {true}] call ace_interact_menu_fnc_createAction;
+		[player, 1, ["ACE_SelfActions","Artillery_Menu"], _action] call ace_interact_menu_fnc_addActionToObject;
+
+
+		_action = ["SpottingFiremission", "Polar Spotting Round", "", {[] call FNC_DIA_PolarSpottingFiremissionOpenDialog;}, {true}] call ace_interact_menu_fnc_createAction;
+		[player, 1, ["ACE_SelfActions","Artillery_Menu","SpottingFiremission"], _action] call ace_interact_menu_fnc_addActionToObject;
+
+		_action = ["SpottingFiremission", "Grid Spotting Round", "", {[] call FNC_DIA_GridSpottingFiremissionOpenDialog;}, {true}] call ace_interact_menu_fnc_createAction;
+		[player, 1, ["ACE_SelfActions","Artillery_Menu","SpottingFiremission"], _action] call ace_interact_menu_fnc_addActionToObject;
+
+		_action = ["FiremissionInformation", "Firemission Information", "", {true}, {true}] call ace_interact_menu_fnc_createAction;
+		[player, 1, ["ACE_SelfActions","Artillery_Menu"], _action] call ace_interact_menu_fnc_addActionToObject;
+
+		_action = ["StopFiremission", "Stop Firemissions", "", {true}, {true}] call ace_interact_menu_fnc_createAction;
+		[player, 1, ["ACE_SelfActions","Artillery_Menu"], _action] call ace_interact_menu_fnc_addActionToObject;
+		{
+			_artyName =_x call FNC_GetArtyDisplayName;
+			_text = ("Stop " + _artyName);
+			_action = ["Stop",_text , "", {(_this select 2) call FNC_StopArtilleryClient; }, {!(( _this select 2) call FNC_IsArtyAviable)},{},_x] call ace_interact_menu_fnc_createAction;
+			[player, 1, ["ACE_SelfActions","Artillery_Menu","StopFiremission"], _action] call ace_interact_menu_fnc_addActionToObject;
+		}forEach _guns;
+
+		{
+			_artyName =_x call FNC_GetArtyDisplayName;
+			_text = ("Info " + _artyName);
+			_action = ["Info",_text , "",{hint ((_this select 2) call FNC_GetCompleteInfoText); }, { !((_this select 2) call FNC_IsArtyAviable)},{},_x] call ace_interact_menu_fnc_createAction;
+			[player, 1, ["ACE_SelfActions","Artillery_Menu","FiremissionInformation"], _action] call ace_interact_menu_fnc_addActionToObject;
+		}forEach _guns;
+
+		_id = ["Event_ArtyIsReady",
+		{
+			[PFM_DIA_IDC_GUNSELECT] call FNC_ArtLoadAviableArtilleries;
+			[LFM_DIA_IDC_GUNSELECT] call FNC_ArtLoadAviableArtilleries;
+			[BFM_DIA_IDC_GUNSELECT] call FNC_ArtLoadAviableArtilleries;
+			[DFM_DIA_IDC_GUNSELECT] call FNC_ArtLoadAviableArtilleries;
+			[MFM_DIA_IDC_GUNSELECT] call FNC_ArtLoadAviableArtilleries;
+			[PSFM_DIA_IDC_GUNSELECT] call FNC_ArtLoadAviableArtilleries;
+			[GSFM_DIA_IDC_GUNSELECT] call FNC_ArtLoadAviableArtilleries;
+		}] call CBA_fnc_addEventHandler;
+		player setVariable [VAR_SART_PLAYERRECEIVEDGUNS,true,true];
+	};
+
 };
 
-#include "Dia_PointFiremission.sqf"
-#include "Dia_LineFiremission.sqf"
-#include "Dia_BracketFiremission.sqf"
-#include "Dia_DonutFiremission.sqf"
-#include "Dia_MarkerFiremission.sqf"
-#include "Dia_GridSpottingFiremission.sqf"
-#include "Dia_PolarSpottingFiremission.sqf"
-#include "Dia_PolarFiremission.sqf"
+#include "Dia\Dia_PointFiremission.sqf"
+#include "Dia\Dia_LineFiremission.sqf"
+#include "Dia\Dia_BracketFiremission.sqf"
+#include "Dia\Dia_DonutFiremission.sqf"
+#include "Dia\Dia_MarkerFiremission.sqf"
+#include "Dia\Dia_GridSpottingFiremission.sqf"
+#include "Dia\Dia_PolarSpottingFiremission.sqf"
+#include "Dia\Dia_PolarFiremission.sqf"
 //expected [paths aviable,units aviable,min ammount of Units spawned, max ammount of units spawned,max ammount of units in the field,delay from mission start,delay between spawns,should clean]
 
 if(isServer) then
 {
-	serverObservers = [];
+
 	#include "settings.sqf"
+	_id = ["Event_ArtPlayerJipped", {_this call FNC_ArtMakePlayerObserverServer}] call CBA_fnc_addEventHandler;
 };
-waitUntil{player == player};
-_found = serverObservers find player;
-if(_found >= 0 ) then
-{
-	(serverObservers select (_found +1)) call FNC_ClientAddAceArtilleryOption;
-	_id = ["Event_ArtyReceiveHint", {hint _this;}] call CBA_fnc_addEventHandler;
-};
+
+_id = ["Event_ArtyReceiveHint", {hint _this;}] call CBA_fnc_addEventHandler;
+_id = ["Event_ReceiveFoGuns", {_this call FNC_ClientAddAceArtilleryOption}] call CBA_fnc_addEventHandler;

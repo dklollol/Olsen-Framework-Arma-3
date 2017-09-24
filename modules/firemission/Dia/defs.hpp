@@ -26,12 +26,15 @@
 #define VAR_SART_ARTROUNDSFIRED "SArtFiremissionRoundsFired"
 #define VAR_SART_FMHANDLE "SArtFiremissionHandle"
 #define VAR_SART_CALLER "SArtCaller"
+#define VAR_SART_IsAviable "SArtReady"
+
 
 #define VAR_SART_OBSACCURACY "SObserverAccuracy"
 #define VAR_SART_OBSSPEED "SObserverSpeed"
 
 #define VAR_SART_OBSGUNS "SPlayerArtilleryGuns"
-
+#define VAR_SART_PLAYERRECEIVEDGUNS "SPlayerReceived"
+#define VAR_SART_PLAYERACEOPTIONS "SPlayerAceOptions"
 
 
 
