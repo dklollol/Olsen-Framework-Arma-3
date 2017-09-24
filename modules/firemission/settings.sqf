@@ -1,3 +1,4 @@
+
 /*
 
 Notes: to get ammo of artillery unit use
@@ -8,7 +9,7 @@ Make Player Observer
 Example: [test1,[m109]] call FNC_ArtMakePlayerObserver;
 [unit,guns] call FNC_ArtMakePlayerObserver;
 Params:
-unit - obj - unit which should become fo;
+unit - obj - unit which should become fo
 guns - Array Object - aviable guns to the fo
 
 Notes: if you want jip compatibility and no script errors put this in the init of the unit. this has to be done because arma is a mysterious beast
@@ -24,7 +25,7 @@ fireRate - float(1,) - fireRate modifiers for bursts. Weapon reloadtime * fireRa
 accuracy - integer - accuracy of shots in meters
 spottingAccuracy - integer - accuracy of spotting rounds in meters
 aimtime - integer - time between recaluclations in seconds
-calculationtime - integer - time to calculate a firing solution before firing spotting rounds
+calculationtime - integer - time to calculate a firing solution before after firing spotting rounds
 customName - String - name for the player Observer in his gui
 unlimitedAmmo - bool - true for unlimitedAmmo
 Notes: put -1 for default
@@ -37,6 +38,21 @@ unit -Object- unit of which the skills should change
 accuracy - integer - accuracy of position estimation in meters
 speed - integer - time to estimate position of target
 
+PolarFiremission:
+Example: [arty1,getPos player,3230,500,200,10,5,10,100,0]   call FNC_PointFiremission;
+[unit,position,mils,distance,dispersion,burstCount,roundsPerBurst,burstWaitTime,minSpottedDistance,roundtype]   call FNC_PointFiremission;
+Params:
+unit - Object- artillery vehicle;
+position -Vector- grid of caller
+mils - integer - Mils from caller
+distance - integer - range from caller
+dispersion -integer - dispersion of the fire mission
+burstCount -integer - number of bursts
+roundsPerBurst - integer - number of rounds per burst
+burstWaitTime -integer - downtime between bursts
+minSpottedDistance - integer - range in m of how close spotting need to be to be accepted
+roundtype -integer- ammunition index from FNC_GetAmmoDisplayNameAndIndex
+
 PointFiremission:
 Example: [arty1,getPos gameLogic1,200,10,5,10,100,0]   call FNC_PointFiremission;
 [unit,position,dispersion,burstCount,roundsPerBurst,burstWaitTime,minSpottedDistance,roundtype]   call FNC_PointFiremission;
@@ -48,7 +64,7 @@ burstCount -integer - number of bursts
 roundsPerBurst - integer - number of rounds per burst
 burstWaitTime -integer - downtime between bursts
 minSpottedDistance - integer - range in m of how close spotting need to be to be accepted
-roundtype -integer- ammunition used ((magazinesAmmo _actualGunUnit) select _roundType)
+roundtype -integer- ammunition index from FNC_GetAmmoDisplayNameAndIndex
 
 LineFiremission:
 
@@ -62,7 +78,7 @@ segments -integer - number of bursts
 roundsPerSegment - integer - number of rounds per segment
 waitTimePerSegment -integer - downtime between segments
 minSpottedDistance - integer - range in m of how close spotting need to be to be accepted
-roundtype -integer- ammunition used ((magazinesAmmo _actualGunUnit) select _roundType)
+roundtype -integer- ammunition index from FNC_GetAmmoDisplayNameAndIndex
 
 BracketFiremission:
 Example:[arty2,getPos gameLogic2,getPos gameLogic3,10,2,10,100,0]  call FNC_BracketFiremission;
@@ -75,7 +91,7 @@ segments -integer - number of bursts
 roundsPerSegment - integer - number of rounds per segment
 waitTimePerSegment -integer - downtime between segments
 minSpottedDistance - integer - range in m of how close spotting need to be to be accepted
-roundtype -integer- ammunition used ((magazinesAmmo _actualGunUnit) select _roundType)
+roundtype -integer- ammunition index from FNC_GetAmmoDisplayNameAndIndex
 
 Notes: Artillery will fire alternating between end and start towards the center
 
@@ -91,7 +107,7 @@ burstCount -integer - number of bursts
 roundsPerBurst - integer - number of rounds per burst
 burstWaitTime -integer - downtime between bursts
 minSpottedDistance - integer - range in m of how close spotting need to be to be accepted
-roundtype -integer- ammunition used ((magazinesAmmo _actualGunUnit) select _roundType)
+roundtype -integer- ammunition index from FNC_GetAmmoDisplayNameAndIndex
 
 MarkerFiremission
 Example: [arty5,"artytarget1",10,5,20,100,0]   call FNC_MarkerFiremission;
@@ -103,7 +119,7 @@ burstCount -integer - number of bursts
 roundsPerBurst - integer - number of rounds per burst
 burstWaitTime -integer - downtime between bursts
 minSpottedDistance - integer - range in m of how close spotting need to be to be accepted
-roundtype -integer- ammunition used ((magazinesAmmo _actualGunUnit) select _roundType)
+roundtype -integer- ammunition index from FNC_GetAmmoDisplayNameAndIndex
 
 PointmarkerFiremission
 Example: [arty5,"artytarget1",10,5,20,100,0]   call FNC_PointMarkerFiremission;
@@ -115,7 +131,7 @@ burstCount -integer - number of bursts
 roundsPerBurst - integer - number of rounds per burst
 burstWaitTime -integer - downtime between bursts
 minSpottedDistance - integer - range in m of how close spotting need to be to be accepted
-roundtype -integer- ammunition used ((magazinesAmmo _actualGunUnit) select _roundType)
+roundtype -integer- ammunition index from FNC_GetAmmoDisplayNameAndIndex
 
 
 
@@ -130,7 +146,7 @@ burstCount -integer - number of bursts
 roundsPerBurst - integer - number of rounds per burst
 burstWaitTime -integer - downtime between bursts
 minSpottedDistance - integer - range in m of how close spotting need to be to be accepted
-roundtype -integer- ammunition used ((magazinesAmmo _actualGunUnit) select _roundType)
+roundtype -integer- ammunition index from FNC_GetAmmoDisplayNameAndIndex
 
 CurtainFiremission:
 Example: [[arty6,arty7,arty8,arty9,arty10],getPos gameLogic7,getPos gameLogic8,200,10,5,20,100,0]   call FNC_CurtainFiremission;
@@ -144,7 +160,7 @@ segments -integer - number of bursts
 roundsPerSegment - integer - number of rounds per segment
 waitTimePerSegment -integer - downtime between segments
 minSpottedDistance - integer - range in m of how close spotting need to be to be accepted
-roundtype -integer- ammunition used ((magazinesAmmo _actualGunUnit) select _roundType)
+roundtype -integer- ammunition index from FNC_GetAmmoDisplayNameAndIndex
 
 RegisterObserver:
 [obs1,[arty11,arty12,arty13,arty14],1,300,1000,10,5,10,300,150,0] call FNC_RegisterForwardObserver;
@@ -159,7 +175,7 @@ roundsPerBurst - integer - number of rounds per burst
 burstWaitTime -integer - downtime between bursts
 dispersion - integer - dispersion in meters
 minSpottedDistance - integer - range in m of how close spotting need to be to be accepted
-roundTpe - integer - ammunition used ((magazinesAmmo _actualGunUnit) select _roundType)
+roundTpe - integer - ammunition index from FNC_GetAmmoDisplayNameAndIndex
 
 
 Example:

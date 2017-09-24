@@ -148,12 +148,33 @@ FNC_GetArtyDisplayName =
 	if(_text == "") then { _text = getText (configfile / "CfgVehicles" /  typeOf(_unit) / "displayName") };
 	_text
 };
-
+FNC_GetAmmoDisplayNameAndIndex =
+{
+	private _unit =_this;
+	private _ret = [];
+	private _possibleMags = getArray (configfile >> "CfgWeapons">>  (((_unit) weaponsTurret [0]) select 0) >> "magazines");
+	{
+		_ret pushBack [_forEachIndex,_x,getText (configfile >> "CfgMagazines">>  _x >> "displayName")];
+	}forEach _possibleMags;
+	_ret
+};
+FNC_GetArtyIndexAmmoClassname =
+{
+		private _unit =_this select 0;
+		private _index =_this select 1;
+		private _ret = ((_unit call FNC_GetArtyAmmo) select _index) select 0;
+		_ret
+};
 FNC_GetArtyAmmo =
 {
 	private _unit =_this;
 	private _ammo = magazinesAmmo _unit;
 	private _ret = [];
+	private _possibleMags = getArray (configfile >> "CfgWeapons">>  (((_unit) weaponsTurret [0]) select 0) >> "magazines");
+	{
+		_ret pushBack [_x,0];
+	}forEach _possibleMags;
+
 	{
 		_check = _x;
 		_found = false;
@@ -167,7 +188,7 @@ FNC_GetArtyAmmo =
 		}forEach _ret;
 		if(!_found) then
 		{
-			_ret pushBack [_x select 0,_x select 1];
+			hint "GetArtyAmmo Error";
 		};
 
 	}forEach _ammo;
