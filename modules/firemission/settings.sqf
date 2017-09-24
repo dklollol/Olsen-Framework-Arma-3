@@ -1,13 +1,19 @@
 /*
 
+Notes: to get ammo of artillery unit use
+hint (unit call FNC_GetAmmoDisplayNameAndIndex); I use a special system to ignore magazines and keep the indexes aligned
+it will display the list of ammo as array [index,className,displayName];
 Make Player Observer
+
 Example: [test1,[m109]] call FNC_ArtMakePlayerObserver;
 [unit,guns] call FNC_ArtMakePlayerObserver;
 Params:
 unit - obj - unit which should become fo;
 guns - Array Object - aviable guns to the fo
 
-Notes:
+Notes: if you want jip compatibility and no script errors put this in the init of the unit. this has to be done because arma is a mysterious beast
+[this,[arty1,arty2]] call FNC_ArtMakePlayerObserver;
+Right now you cannot change the artilleries a unit has because of certain ace issues but you can disable the gun with [gun,isAviable] call FNC_SetArtyAviable; isAviable = false if you want it not be used
 
 SetArtilleryData:
 Example: [arty1,1,0,300,4,3,"",true] call FNC_SetArtilleryData;
@@ -163,12 +169,8 @@ Example:
 [arty2,getPos gameLogic2,200,999,5,10,100,0]   call FNC_PointFiremission;
 
 
-private _art = [arty3,arty4,arty5,arty6,arty7,arty8,arty9,arty10];
+art = [arty3,arty4,arty5,arty6,arty7,arty8,arty9,arty10];
 {
     [_x,1,0,300,4,3,"M109" + str (floor random 1000 ),false] call FNC_SetArtilleryData;
-}forEach _art;
-[test1,_art] call FNC_ArtMakePlayerObserver;
-[test2,_art] call FNC_ArtMakePlayerObserver;
-[test3,_art] call FNC_ArtMakePlayerObserver;
-[test4,_art] call FNC_ArtMakePlayerObserver;
+}forEach art;
 */
