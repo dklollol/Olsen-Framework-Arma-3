@@ -1,6 +1,6 @@
 ["AI skill", "Allows the mission maker to change the subskills of ai", "Sacher"] call FNC_RegisterModule;
 
-FNC_setAISkill = 
+FNC_setAISkill =
 {
 
 	private ["_aiskill", "_value","_condition","_aiskillstring","_conditions"];
@@ -10,7 +10,7 @@ FNC_setAISkill =
 						"aimingaccuracy",
 						"aimingshake",
 						"spottime",
-						"spotdistance",
+						"reloadspeed",
 						"commanding",
 						"general",
 						"courage"];
@@ -18,7 +18,7 @@ FNC_setAISkill =
 	if(count _this < 2) then
 	{
 		_temp = format ["AI skill module:<br></br>Array in file ""modules\aiskill\settings.sqf"" is wrong."];
-		_temp call FNC_DebugMessage; 
+		_temp call FNC_DebugMessage;
 	}
 	else
 	{
@@ -39,7 +39,7 @@ FNC_setAISkill =
 			_deletefirsttwo = [_aiskill,_value];
 			_conditions = _conditions - _deletefirsttwo;
 		};
-		
+
 		_isstringcorrect = false;
 		{
 			if(_aiskill ==_x) then
@@ -59,7 +59,7 @@ FNC_setAISkill =
 					{
 						case "Distance":
 						{
-							if(_unit distance (_x select 2) <= (_x select 1)) then 
+							if(_unit distance (_x select 2) <= (_x select 1)) then
 							{
 								_condition = true;
 								_conditionCheck set [count _conditionCheck,true];
@@ -145,23 +145,23 @@ FNC_setAISkill =
 			}forEach allUnits;
 
 		}
-		else 
-		{  
+		else
+		{
 			if(_value < 0.2 || _value > 1) then
 			{
 				_temp = format ["AI skill module:<br></br>Warning AI-Skill-Value ""%1"", in file ""modules\aiskill\settings.sqf"" , is wrong.", _value];
-				_temp call FNC_DebugMessage; 
+				_temp call FNC_DebugMessage;
 			};
 			if(!(_isstringcorrect)) then
 			{
-				_temp = format ["AI skill module:<br></br>Warning AI-skillstring ""%1"", in file ""modules\aiskill\settings.sqf"" , does not exist.", _aiskill]; 
-				_temp call FNC_DebugMessage; 
+				_temp = format ["AI skill module:<br></br>Warning AI-skillstring ""%1"", in file ""modules\aiskill\settings.sqf"" , does not exist.", _aiskill];
+				_temp call FNC_DebugMessage;
 			};
 		};
 	};
 };
 
-if (isServer) then 
+if (isServer) then
 {
-	#include "settings.sqf"	
+	#include "settings.sqf"
 };
