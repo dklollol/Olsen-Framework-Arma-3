@@ -18,10 +18,10 @@
 
 #define package "1989USARMY_"
 
-#define uniform \  //Standard Uniform
+#define uniform \
 	["usm_bdu_w"] call FNC_AddItem;
 	
-#define IFAK \ //Standard Med Loadout
+#define IFAK \
 	["ACE_fieldDressing", 3, "uniform"] call FNC_AddItem; \
 	["ACE_elasticBandage", 3, "uniform"] call FNC_AddItem; \
 	["ACE_packingBandage", 3, "uniform"] call FNC_AddItem; \
@@ -30,7 +30,7 @@
 	["ACE_epinephrine", 1, "vest"] call FNC_AddItem; \
 	["ACE_tourniquet", 1, "vest"] call FNC_AddItem;
 	
-#define items \ //Standard Equipment
+#define items \
 	["ItemMap"] call FNC_AddItem; \
 	["ItemCompass"] call FNC_AddItem; \
 	["ItemWatch"] call FNC_AddItem; \

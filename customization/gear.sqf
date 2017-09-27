@@ -18,5 +18,5 @@ switch (_type) do {
     //#include "loadouts\BAF.sqf"
     //#include "loadouts\1989USARMY.sqf"
     //#include "loadouts\1989VDV.sqf"
-	
+	//#include "loadouts\2000MSV.sqf"
 };
