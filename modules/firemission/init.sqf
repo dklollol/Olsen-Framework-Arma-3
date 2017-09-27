@@ -105,7 +105,7 @@ FNC_PolarSpottingFiremission =
 		[_unit , true] call FNC_SetArtyReadyStatus;
 
 		private	_rounds = ((_unit call FNC_GetArtyAmmo) select _roundType);
-		_unit setVariable [VAR_SART_ARTFMTEXT,_this call FNC_GetPolarSpottingMissionText,true];
+		_unit setVariable [VAR_SART_ARTFMTEXT,_this call FNC_GetPolarSpottingFiremissionText,true];
 
 		sleep((_unit call FNC_GetArtyAimTime));
 		_randomPos = [[[_target, _unit getVariable [VAR_SART_ARTSPOTACCURACY,MEANSPOTTINGACCURACY]]],[]] call BIS_fnc_randomPos;
@@ -216,7 +216,7 @@ FNC_PolarFiremission =
 	private	_degrees = MILSPERROUND / _mils * 360.0;
 	private _dir = [cos _degrees,sin _degrees,0];
 
-	[_unit,_loc vectorAdd (_dir vectorMultiply _distance),_dispersion,_burstCount,_burstSize,_burstWait,_roundType] call FNC_PointFiremission;
+	[_unit,_loc vectorAdd (_dir vectorMultiply _distance),_dispersion,_burstCount,_burstSize,_burstWait,_minSpottedDistance,_roundType] call FNC_PointFiremission;
  };
 FNC_GetPointFiremissionText =
 {
@@ -336,7 +336,7 @@ FNC_PointFiremission =
 		_unit setVariable [VAR_SART_ARTFMTEXT,_this call FNC_GetPointFiremissionText,true];
 		[_unit, 0,_burstCount * _burstSize] call FNC_SetArtyFiremissionRoundsRequired;
 			//calculateFiremission
-		[_unit,_target,((_unit call FNC_GetArtyAmmo) select _roundType) select 0 ] call FNC_InternalSpottingFiremission;
+		[_unit,_target,_roundClassName ] call FNC_InternalSpottingFiremission;
 		sleep( (_unit getVariable [VAR_SART_ARTCALCSPEED,MEANCALCULATIONTIME]) + 1);
 		for "_i" from 0 to _burstCount do
 		{
@@ -543,7 +543,7 @@ FNC_DonutFiremission =
 			private	_fireRate = _unit call FNC_ArtGetFireRate;
 
 			[_unit , true] call FNC_SetArtyReadyStatus;
-			_unit setVariable [VAR_SART_ARTFMTEXT,_this call FNC_GetPointFiremissionText,true];
+			_unit setVariable [VAR_SART_ARTFMTEXT,_this call FNC_GetDonutFiremissionText,true];
 			[_unit, 0,_burstCount * _burstSize] call FNC_SetArtyFiremissionRoundsRequired;
 			[_unit,_target,_roundClassName ] call FNC_InternalSpottingFiremission;
 				//spotting rounds finished

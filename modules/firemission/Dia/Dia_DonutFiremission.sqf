@@ -40,12 +40,12 @@ FNC_DIA_DonutFiremissionFire =
 	_inputIsCorrect = true;
 	_inputIsCorrect = _inputIsCorrect && [_selectedUnit,"No Arty selected/aviable"] call FNC_InputIsUnit;
 	_inputIsCorrect = _inputIsCorrect && [_innerRadius,"Inner radius is not a number"] call FNC_InputIsNumber;
-	_inputIsCorrect = _inputIsCorrect && [_innerRadius,"Outer radius is not a number"] call FNC_InputIsNumber;
+	_inputIsCorrect = _inputIsCorrect && [_outerRadius,"Outer radius is not a number"] call FNC_InputIsNumber;
 	_inputIsCorrect = _inputIsCorrect && [_burstNumber,"Burst number is not a number"] call FNC_InputIsNumber;
 	_inputIsCorrect = _inputIsCorrect && [_burstRounds,"Burst rounds is not a number"] call FNC_InputIsNumber;
 	_inputIsCorrect = _inputIsCorrect && [_burstDelay,"Burst delay is not a number"] call FNC_InputIsNumber;
 	_inputIsCorrect = _inputIsCorrect && [_spotting,"Spotting distance is not a number"] call FNC_InputIsNumber;
-
+	if(_innerRadius > _outerRadius) then {_inputIsCorrect = false;hint "Inner Radius bigger than outer."};
 	if(_inputIsCorrect ) then
 	{
 

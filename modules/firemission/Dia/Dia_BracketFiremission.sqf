@@ -12,7 +12,7 @@ FNC_DIA_BracketFiremissionSetArtillery =
 
 FNC_DIA_BracketFiremissionCloseDialog =
 {
-	_ok = closeDialog DLM_DIA_IDD_DISPLAY;
+	_ok = closeDialog BFM_DIA_IDD_DISPLAY;
 
 };
 

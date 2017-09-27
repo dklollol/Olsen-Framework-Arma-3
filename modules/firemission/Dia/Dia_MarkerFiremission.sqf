@@ -45,7 +45,8 @@ FNC_DIA_MarkerFiremissionFire =
 	_inputIsCorrect = _inputIsCorrect && [_burstDelay,"Burst delay is not a number"] call FNC_InputIsNumber;
 	_inputIsCorrect = _inputIsCorrect && [_spotting,"Spotting distance is not a number"] call FNC_InputIsNumber;
 	private _marker = _name call FNC_FindMarkerOnMap;
-	if(_inputIsCorrect && _marker != "") then
+	if(_marker == "") then { _inputIsCorrect = false;hint "marker does not exist";	};
+	if(_inputIsCorrect) then
 	{
 
 							private _round =  ((_selectedUnit call FNC_GetArtyAmmo) select _selectedAmmo) select 0;

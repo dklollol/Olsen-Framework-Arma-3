@@ -147,7 +147,7 @@ class DIA_POLARSPOTTINGFIREMISSION
 	};
 	class PSFM_MILSEDIT: RscEdit
 	{
-		idc = PSFM_DIA_IDC_GRID;
+		idc = PSFM_DIA_IDC_MILS;
 		text = ""; //--- ToDo: Localize;
 		x = (ARTIWIDTHMAINSPACE + ARTILAYOUTWIDTHSPACE) * safezoneW + safezoneX;
 		y = (ARTIHEIGHTMAINSPACE + ARTILAYOUTHEIGHTSPACE * 4) * safezoneH + safezoneY;
@@ -159,7 +159,7 @@ class DIA_POLARSPOTTINGFIREMISSION
 	};
 	class PSFM_DISTANCEEDIT: RscEdit
 	{
-		idc = PSFM_DIA_IDC_GRID;
+		idc = PSFM_DIA_IDC_DISTANCE;
 		text = ""; //--- ToDo: Localize;
 		x = (ARTIWIDTHMAINSPACE + ARTILAYOUTWIDTHSPACE) * safezoneW + safezoneX;
 		y = (ARTIHEIGHTMAINSPACE + ARTILAYOUTHEIGHTSPACE * 5) * safezoneH + safezoneY;

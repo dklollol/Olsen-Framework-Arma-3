@@ -33,8 +33,7 @@ FNC_FindMarkerOnMap =
 		{
 			_marker = _x;
 		};
-	}
-	forEach allMapMarkers;
+	}forEach allMapMarkers;
 	_marker;
 };
 
