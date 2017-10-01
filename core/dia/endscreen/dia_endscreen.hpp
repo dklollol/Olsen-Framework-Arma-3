@@ -12,9 +12,9 @@ class DIA_ENDSCREEN {
 	class BACKGROUND: RscBackground
 	{
 		idc = 3000;
-		x = -1;
+		x = -2;
 		y = -1;
-		w = 4;
+		w = 5;
 		h = 4;
 	};
 	class TEXT_TITLE: RscStructuredText
@@ -48,7 +48,7 @@ class DIA_ENDSCREEN {
 		y = 0.6 * safezoneH + safezoneY;
 		w = 0.8 * safezoneW;
 		h = 0.5 * safezoneH;
-	};	
+	};
 	class TEXT_BOTTOM_RIGHT: RscStructuredText
 	{
 		idc = 3005;
