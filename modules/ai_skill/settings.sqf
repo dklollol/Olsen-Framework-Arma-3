@@ -6,7 +6,7 @@
 
 //Description: 	With this module you can change the sub-skills of the ai. Sub-skills are normally defined by the missions unit skill slider.
 //				With this module you can setup 3 kinds of Conditions for changing the skill of the AI. You can chain Conditions together.
-//Comments: VALUE needs to be between 0.2 and 1 to function correctly			
+//Comments: VALUE needs to be between 0.2 and 1 to function correctly
 //			You have to play around with the Values
 //			On larger Missions don't go ham on Conditions since they have to be checked for every AI.
 //			Normally up to 3 is acceptable for most missions
@@ -51,7 +51,7 @@
 
 
 //AISKILLSTRINGS:
-//"aimingspeed"				Affects how well the AI can lead a target
+//"aimingaccuracy" 			Affects how well the AI can lead a target
 //							Affects how accurately the AI estimate range and calculates bullet drop
 //							Affects how well the AI compensates for weapon dispersion
 //							Affects how much the AI will know to compensate for recoil (Higher value = more controlled fire)
@@ -59,7 +59,7 @@
 
 //"aimingshake" 			Affects how steadily the AI can hold a weapon (Higher value = less weapon sway)
 
-//"aimingaccuracy" 			Affects how quickly the AI can rotate and stabilize its aim (Higher value = faster, less error)
+//"aimingspeed"		       Affects how quickly the AI can rotate and stabilize its aim (Higher value = faster, less error)
 
 //"commanding" 				Affects how quickly recognized targets are shared with the group (Higher value = faster reporting)
 
