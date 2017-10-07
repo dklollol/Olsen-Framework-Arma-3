@@ -44,7 +44,7 @@ class DIA_ENDSCREEN {
 	class TEXT_BOTTOM_LEFT: RscStructuredText
 	{
 		idc = 3004;
-		x = 0.2375 * safezoneW + safezoneX;
+		x = 0.25 * safezoneW + safezoneX;
 		y = 0.6 * safezoneH + safezoneY;
 		w = 0.8 * safezoneW;
 		h = 0.5 * safezoneH;
