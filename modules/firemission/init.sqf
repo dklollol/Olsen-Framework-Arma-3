@@ -773,10 +773,10 @@ if (isServer) then
 		private _minimumKnowledge = _this select 2;
 		private _minRange = _this select 3;
 		private _range = _this select 4;
-		private _standardRoundCount = _this select 5;
-		private _standardRoundBurst = _this select 6;
-		private _standardRoundBurstWait = _this select 7;
-		private _standardDispersion = _this select 8;
+		private _standardDispersion = _this select 5;
+		private _standardRoundCount = _this select 6;
+		private _standardRoundBurst = _this select 7;
+		private _standardRoundBurstWait = _this select 8;
 		private _minSpottedDistance = _this select 9;
 		private _standardRound = _this select 10;
 		private _obsSide = side _observer;
