@@ -3,7 +3,7 @@
 </p>
 <p align="center">
     <a href="https://github.com/dklollol/Olsen-Framework-Arma-3/releases/latest">
-        <img src="https://img.shields.io/badge/Version-3.3.0-blue.svg" alt="Olsen Framework Version">
+        <img src="https://img.shields.io/badge/Version-3.3.1-blue.svg" alt="Olsen Framework Version">
     </a>
     <a href="https://github.com/dklollol/Olsen-Framework-Arma-3/issues">
         <img src="https://img.shields.io/github/issues-raw/dklollol/Olsen-Framework-Arma-3.svg?label=Issues" alt="Olsen Framework Issues">

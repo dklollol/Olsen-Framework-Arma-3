@@ -14,10 +14,10 @@
 
 #define package "1989VDV_"
 
-#define uniform \ //Standard Uniform
+#define uniform \
 	["rhsgref_uniform_ttsko_forest"] call FNC_AddItem;
 	
-#define IFAK \ //Standard Med Loadout
+#define IFAK \
 	["ACE_fieldDressing", 3, "uniform"] call FNC_AddItem; \
 	["ACE_elasticBandage", 3, "uniform"] call FNC_AddItem; \
 	["ACE_packingBandage", 3, "uniform"] call FNC_AddItem; \
@@ -26,7 +26,7 @@
 	["ACE_epinephrine", 1, "uniform"] call FNC_AddItem; \
 	["ACE_tourniquet", 1, "uniform"] call FNC_AddItem;
 	
-#define items \ //Standard Equipment
+#define items \
 	["ItemMap"] call FNC_AddItem; \
 	["ItemCompass"] call FNC_AddItem; \
 	["ItemWatch"] call FNC_AddItem; \
@@ -95,8 +95,7 @@ case (package + "AR"): { //Automatic Rifleman
 	["rhs_45Rnd_545X39_7N10_AK",5,"backpack"] call FNC_AddItem; //Magazines
 	["rhs_45Rnd_545X39_AK_Green",2,"backpack"] call FNC_AddItem; //Tracer Magazines
 	
-	["rhs_weap_ak74"] call FNC_AddItem; //Primary Rifle
-	_unit addPrimaryWeaponItem "rhs_acc_dtk1983"; //Flash Hider
+	["hlc_rifle_rpk"] call FNC_AddItem;//Primary Rifle
 
 };
 	

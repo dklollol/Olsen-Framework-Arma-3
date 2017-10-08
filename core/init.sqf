@@ -25,6 +25,8 @@ PREP(spectatePrep);
 PREP(countTeam);
 PREP(spawnAI);
 PREP(spawnVehicle);
+PREP(hasExtracted);
+
 enableSaving [false, false];
 
 if (isServer) then {
