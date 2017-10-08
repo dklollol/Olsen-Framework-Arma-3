@@ -15,21 +15,22 @@
  * Public: Yes
  */
 
-params ["_team", "", [""],
-    "_marker", "", [""],
-    "_ratio", 1, [0]
+params [["_team", "", [""]],
+    ["_marker", "", [""]],
+    ["_ratio", 1, [0]]
 ];
-
+private _side = [_team, 1] call FNC_getTeamVariable;
 private _count = {
-    [[_team, 1] call FNC_getTeamVariable, _marker] call FNC_inArea;
+    side _x == _side && [_x, _marker] call FNC_inArea
 } count allUnits;
 
-if (_count > _ratio * [_team, 4] call FNC_getTeamVariable) then {
+private _result = false;
+if (_count >= _ratio * ([_team, 4] call FNC_getTeamVariable)) then {
     if (!isNil "FW_hasDeparted" && {FW_hasDeparted}) then {
-        true
+        _result = true;
     };
 }
 else {
     FW_hasDeparted = true;
 };
-false
+_result
