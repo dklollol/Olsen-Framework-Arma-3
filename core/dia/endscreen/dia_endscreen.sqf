@@ -5,7 +5,8 @@ _endTitle = 3001;
 _left = 3002;
 _right = 3003;
 _bottomLeft = 3004;
-_bottomRight = 3005;
+_bottomMiddle = 3005;
+_bottomRight = 3006;
 
 params ["_scenario", "_timeLimit", "_teams"];
 
@@ -29,6 +30,7 @@ params ["_scenario", "_timeLimit", "_teams"];
 _leftText = "";
 _rightText = "";
 _bottomTextLeft = "";
+_bottomTextMiddle = "";
 _bottomTextRight = "";
 _textSide = 0;
 {
@@ -94,15 +96,17 @@ if (_timeLimit != 0) then {
 
 };
 
-if (!isNil "aCount_textBLU" && !isNil "aCount_textRED") then {
+if (!isNil "aCount_textBLU" && !isNil "aCount_textRED" && !isNil "aCount_textRES") then {
 	_bottomTextLeft = format["%1",aCount_textBLU];
-	_bottomTextRight = format["%1",aCount_textRED];
+	_bottomTextMiddle = format["%1",aCount_textRED];
+	_bottomTextRight = format["%1",aCount_textRES];
 };
 
 ((findDisplay _dia) displayCtrl _endTitle) ctrlSetStructuredText parseText _endTitleText;
 ((findDisplay _dia) displayCtrl _left) ctrlSetStructuredText parseText _leftText;
 ((findDisplay _dia) displayCtrl _right) ctrlSetStructuredText parseText _rightText;
 ((findDisplay _dia) displayCtrl _bottomLeft) ctrlSetStructuredText parseText _bottomTextLeft;
+((findDisplay _dia) displayCtrl _bottomMiddle) ctrlSetStructuredText parseText _bottomTextMiddle;
 ((findDisplay _dia) displayCtrl _bottomRight) ctrlSetStructuredText parseText _bottomTextRight;
 
 for "_x" from 1 to 120 do {
