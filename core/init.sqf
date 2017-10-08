@@ -23,6 +23,7 @@ PREP(addTeam);
 PREP(spectateCheck);
 PREP(spectatePrep);
 PREP(countTeam);
+PREP(hasExtracted);
 
 enableSaving [false, false];
 
