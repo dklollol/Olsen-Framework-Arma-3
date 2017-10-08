@@ -1,22 +1,22 @@
 ["Auto Track Assets", "Automatically runs FNC_TrackAsset on AI vehicles.", "Starfox64"] call FNC_RegisterModule;
 
 if (isServer) then {
-	
+
 	FNC_TrackAssetArea = {
-		
+
 		private ["_marker", "_team", "_vehicle", "_vehCfg"];
-		
+
 		_marker = _this select 0;
 		_team = _this select 1;
-		
+
 		{
-			
+
 			_vehicle = _x;
-			
+
 			if ([_vehicle, _marker] call FNC_InArea) then {
-				
+
 				{
-					
+
 					if ((_x select 0) == _team) exitWith {
 
 						_vehCfg = (configFile >> "CfgVehicles" >> (typeOf _vehicle));
@@ -28,13 +28,13 @@ if (isServer) then {
 						};
 
 					};
-					
+
 				} forEach FW_Teams;
-				
+
 			};
-			
+
 		} forEach vehicles;
-		
+
 	};
 
 	[] spawn {
@@ -72,7 +72,7 @@ if (isServer) then {
 			};
 
 		} forEach vehicles;
-		
+
 		#include "settings.sqf"
 
 	};

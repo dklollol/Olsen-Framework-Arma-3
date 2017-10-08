@@ -7,7 +7,7 @@ class DIA_ENDSCREEN {
 	enableSimulation = true;
 	controlsBackground[] = {BACKGROUND};
 	objects[] = {};
-	controls[] = {TEXT_TITLE, TEXT_LEFT, TEXT_RIGHT, TEXT_BOTTOM_LEFT, TEXT_BOTTOM_RIGHT};
+	controls[] = {TEXT_TITLE, TEXT_LEFT, TEXT_RIGHT, TEXT_BOTTOM_LEFT,TEXT_BOTTOM_MIDDLE, TEXT_BOTTOM_RIGHT};
 
 	class BACKGROUND: RscBackground
 	{
@@ -44,15 +44,23 @@ class DIA_ENDSCREEN {
 	class TEXT_BOTTOM_LEFT: RscStructuredText
 	{
 		idc = 3004;
-		x = 0.2375 * safezoneW + safezoneX;
+		x = 0.25 * safezoneW + safezoneX;
 		y = 0.6 * safezoneH + safezoneY;
 		w = 0.8 * safezoneW;
 		h = 0.5 * safezoneH;
-	};	
-	class TEXT_BOTTOM_RIGHT: RscStructuredText
+	};
+	class TEXT_BOTTOM_MIDDLE: RscStructuredText
 	{
 		idc = 3005;
 		x = 0.5 * safezoneW + safezoneX;
+		y = 0.6 * safezoneH + safezoneY;
+		w = 0.8 * safezoneW;
+		h = 0.5 * safezoneH;
+	};
+	class TEXT_BOTTOM_RIGHT: RscStructuredText
+	{
+		idc = 3006;
+		x = 0.75 * safezoneW + safezoneX;
 		y = 0.6 * safezoneH + safezoneY;
 		w = 0.8 * safezoneW;
 		h = 0.5 * safezoneH;

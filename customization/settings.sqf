@@ -1,5 +1,3 @@
-asr_ai3_main_setskills = 0; //Stops ASR from changing the skill of the AI
-
 if (isServer) then { //This scope is only for the server
 
 	setViewDistance 2500; //View distance for the server (the ai's)
