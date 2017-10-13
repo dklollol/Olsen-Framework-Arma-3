@@ -9,35 +9,38 @@
 
 #define package "RURiflePlatoon_"
 
-#define uniform \
-	["rhs_uniform_vdv_emr_des"] call FNC_AddItem; \
-	["rhs_assault_umbts"] call FNC_AddItem; \
+SET_GROUP(uniform)
+	["rhs_uniform_vdv_emr_des"] call FNC_AddItem;
+	["rhs_assault_umbts"] call FNC_AddItem;
 	["rhs_6b28"] call FNC_AddItemRandom;
+END_GROUP;
 	
-#define IFAK \
-	["ACE_fieldDressing", 6, "uniform"] call FNC_AddItem; \
-	["ACE_elasticBandage", 6, "uniform"] call FNC_AddItem; \
-	["ACE_packingBandage", 6, "uniform"] call FNC_AddItem; \
-	["ACE_quikclot", 6, "uniform"] call FNC_AddItem; \
-	["ACE_morphine", 1, "uniform"] call FNC_AddItem; \
-	["ACE_epinephrine", 1, "uniform"] call FNC_AddItem; \
+SET_GROUP(IFAK)
+	["ACE_fieldDressing", 6, "uniform"] call FNC_AddItem;
+	["ACE_elasticBandage", 6, "uniform"] call FNC_AddItem;
+	["ACE_packingBandage", 6, "uniform"] call FNC_AddItem;
+	["ACE_quikclot", 6, "uniform"] call FNC_AddItem;
+	["ACE_morphine", 1, "uniform"] call FNC_AddItem;
+	["ACE_epinephrine", 1, "uniform"] call FNC_AddItem;
 	["ACE_tourniquet", 1, "uniform"] call FNC_AddItem;
+END_GROUP;
 	
-#define items \
-	["ACRE_PRC343", 1] call FNC_AddItem; \
-	["ItemMap"] call FNC_AddItem; \
-	["ItemCompass"] call FNC_AddItem; \
-	["ItemWatch"] call FNC_AddItem; \
-	["ACE_MapTools"] call FNC_AddItem; \
+SET_GROUP(items)
+	["ACRE_PRC343", 1] call FNC_AddItem;
+	["ItemMap"] call FNC_AddItem;
+	["ItemCompass"] call FNC_AddItem;
+	["ItemWatch"] call FNC_AddItem;
+	["ACE_MapTools"] call FNC_AddItem;
 	["ACE_earplugs"] call FNC_AddItem;
+END_GROUP;
 	
 case (package + "SL"): {
 	
 	["rhs_6b23_digi_6sh92_headset_mapcase"] call FNC_AddItem; //Vest
 	
-	uniform;
-	IFAK;
-	items;
+	ADD_GROUP(uniform);
+	ADD_GROUP(IFAK);
+	ADD_GROUP(items);
 	
 	["Binocular"] call FNC_AddItem;
 	
@@ -59,9 +62,9 @@ case (package + "TL"): {
 	
 	["rhs_6b23_digi_6sh92_radio"] call FNC_AddItem;  //Vest
 	
-	uniform;
-	IFAK;
-	items;
+	ADD_GROUP(uniform);
+	ADD_GROUP(IFAK);
+	ADD_GROUP(items);
 	
 	["rhs_30Rnd_545x39_7N10_AK", 11] call FNC_AddItem; //Magazines
 	["rhs_30Rnd_545x39_AK_green", 2] call FNC_AddItem; //Magazines
@@ -82,9 +85,9 @@ case (package + "AR"): {
 	
 	["rhs_6b23_digi_6sh92"] call FNC_AddItem;  //Vest
 	
-	uniform;
-	IFAK;
-	items;
+	ADD_GROUP(uniform);
+	ADD_GROUP(IFAK);
+	ADD_GROUP(items);
 	
 	["rhs_mag_rdg2_white", 2] call FNC_AddItem; //White smoke
 	["rhs_mag_rgd5", 2] call FNC_AddItem; //Frag grenade
@@ -101,9 +104,9 @@ case (package + "RFAT"): {
 	
 	["rhs_6b23_digi_6sh92"] call FNC_AddItem;  //Vest
 	
-	uniform;
-	IFAK;
-	items;
+	ADD_GROUP(uniform);
+	ADD_GROUP(IFAK);
+	ADD_GROUP(items);
 	
 	["rhs_mag_rdg2_white", 2] call FNC_AddItem; //White smoke
 	["rhs_mag_rgd5", 2] call FNC_AddItem; //Frag grenade
@@ -121,9 +124,9 @@ case (package + "RF"): {
 	
 	["rhs_6b23_digi_6sh92"] call FNC_AddItem;  //Vest
 	
-	uniform;
-	IFAK;
-	items;
+	ADD_GROUP(uniform);
+	ADD_GROUP(IFAK);
+	ADD_GROUP(items);
 	
 	["rhs_mag_rdg2_white", 2] call FNC_AddItem; //White smoke
 	["rhs_mag_rgd5", 2] call FNC_AddItem; //Frag grenade
@@ -141,9 +144,9 @@ case (package + "MD"): {
 	
 	["rhs_6b23_digi_6sh92"] call FNC_AddItem;  //Vest
 	
-	uniform;
-	IFAK;
-	items;
+	ADD_GROUP(uniform);
+	ADD_GROUP(IFAK);
+	ADD_GROUP(items);
 	
 	["rhs_mag_rdg2_white", 4] call FNC_AddItem; //White smoke
 	
