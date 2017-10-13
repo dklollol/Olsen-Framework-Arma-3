@@ -18,6 +18,10 @@
 
 #define package "1989USARMY_"
 
+SET_GROUP(uniform)
+    ["usm_bdu_w"] call FNC_AddItem;
+END_GROUP;
+
 #define uniform \
 	["usm_bdu_w"] call FNC_AddItem;
 	
@@ -43,7 +47,7 @@ case (package + "RF"): { //Rifleman
 	
 	["usm_helmet_pasgt_w","usm_helmet_pasgt_g_w"] call FNC_AddItemRandom; //Helmets
 	
-	uniform;
+	ADD_GROUP(uniform);
 	IFAK;
 	items;
 	
