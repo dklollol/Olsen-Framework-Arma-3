@@ -8,7 +8,9 @@ if !(markerType NAME == "") then { \
 	_temp call FNC_DebugMessage; \
 };
 
-if (!isMultiplayer) exitWith {
+private _aborted = false;
+if (!isMultiplayer) then {
+    _aborted = true;
     "Setup Timer: Singleplayer session detected, this module will function only in multiplayer." call FNC_DebugMessage;
 };
 
@@ -20,7 +22,7 @@ if (isServer) then {
     };
 };
 
-if (!isDedicated) then {
+if (!isDedicated && !_aborted) then {
 	
 	private ["_markers", "_pos", "_timeLeft", "_string", "_displayed"];
 
