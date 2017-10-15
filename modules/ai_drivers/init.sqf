@@ -77,7 +77,7 @@ private _action = ["ai_driver","Add/Remove AI driver","",{
 {
     vehicle _player == _target
 }] call ace_interact_menu_fnc_createAction;
-systemchat str _action;
+
 {
     [_x, 1, ["ACE_SelfActions"], _action] call ace_interact_menu_fnc_addActionToObject;
     //_x addAction ["Add/Remove AI driver", {_this remoteExecCall ["aidrivers_toggle", 2, false];}, [], 0, false, true, "", "vehicle _this == _target"];
