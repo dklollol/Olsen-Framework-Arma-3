@@ -1,6 +1,6 @@
-class RscSetupTimer
+class RscAOLimit
 {
-	onLoad="_this call FNC_SetupTimerInit;";
+	onLoad="_this call FNC_DisplayAOLimitWarning;";
 	idd=-1;
 	duration=1200;
 	movingEnable=0;
@@ -18,13 +18,13 @@ class RscSetupTimer
 			idc=1002;
 			x="13.5 * (((safezoneW / safezoneH) min 1.2) / 40) + (safezoneX + (safezoneW - ((safezoneW / safezoneH) min 1.2))/2)";
 			y="30.7 * ((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) + (safezoneY + (safezoneH - (((safezoneW / safezoneH) min 1.2) / 1.2))/2)";
-			w="13 * (((safezoneW / safezoneH) min 1.2) / 40)";
+			w="12 * (((safezoneW / safezoneH) min 1.2) / 40)";
 			h="1.5 *((((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
 			style=0;
 			type = 0;
 			shadow=1;
 			colorShadow[]={0,0,0,0.5};
-			text="Setup Timer";
+			text="AO Limit";
 			font="PuristaMedium";
 			SizeEx="(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
 			colorText[]={1,1,1,1};
@@ -38,14 +38,14 @@ class RscSetupTimer
 			idc=1001;
 			x="13.5 * (((safezoneW / safezoneH) min 1.2) / 40) + (safezoneX + (safezoneW - ((safezoneW / safezoneH) min 1.2))/2)";
 			y="30.7 * ((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) + (safezoneY + (safezoneH - (((safezoneW / safezoneH) min 1.2) / 1.2))/2)";
-			w="13 * (((safezoneW / safezoneH) min 1.2) / 40)";
+			w="12 * (((safezoneW / safezoneH) min 1.2) / 40)";
 			h="1.5 * ((((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
 			colorBackground[]={0,0,0,0.5};
 			style=0;
 			type = 0;
 			shadow=1;
 			colorShadow[]={0,0,0,0.5};
-			text="Setup Timer";
+			text="AO Limit";
 			font="PuristaMedium";
 			SizeEx="(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
 			colorText[]={1,1,1,1};
@@ -58,7 +58,7 @@ class RscSetupTimer
 		{
 			idc=1003;
 			text="  --:--.---";
-			x="19 * (((safezoneW / safezoneH) min 1.2) / 40) + (safezoneX + (safezoneW - ((safezoneW / safezoneH) min 1.2))/2)";
+			x="18 * (((safezoneW / safezoneH) min 1.2) / 40) + (safezoneX + (safezoneW - ((safezoneW / safezoneH) min 1.2))/2)";
 			y="30.6 * ((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) + (safezoneY + (safezoneH - (((safezoneW / safezoneH) min 1.2) / 1.2))/2)";
 			w="7 * (((safezoneW / safezoneH) min 1.2) / 40)";
 			h="1.5 * ((((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
