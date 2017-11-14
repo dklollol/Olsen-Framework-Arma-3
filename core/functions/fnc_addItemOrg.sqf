@@ -160,39 +160,27 @@ for "_x" from 1 to _amount do {
         if (!_succes && _type in ["AccessoryMuzzle", "AccessoryPointer", "AccessorySights", "AccessoryBipod"]) then {
 
             if ([primaryWeapon _unit, _item] call FNC_CanAttachItem) then {
-
                 if (!(_type in primaryWeaponItems _unit)) then {
-
                     _unit addPrimaryWeaponItem _item;
-
                     _succes = true;
-
                 };
-
-            };
-
-            if ([handgunWeapon _unit, _item] call FNC_CanAttachItem) then {
-
-                if (!(_type in handgunItems _unit)) then {
-
-                    _unit addHandgunItem _item;
-
-                    _succes = true;
-
-                };
-            };
-
-            if ([secondaryWeapon _unit, _item] call FNC_CanAttachItem) then {
-
-                if (!(_type in secondaryWeaponItems _unit)) then {
-
-                    _unit addSecondaryWeaponItem _item;
-
-                    _succes = true;
-
-                };
-
-            };
+            }
+            else {
+                if ([handgunWeapon _unit, _item] call FNC_CanAttachItem) then {
+                    if (!(_type in handgunItems _unit)) then {
+                        _unit addHandgunItem _item;
+                        _succes = true;
+                    };
+                }
+                else {
+                    if ([secondaryWeapon _unit, _item] call FNC_CanAttachItem) then {
+                        if (!(_type in secondaryWeaponItems _unit)) then {
+                            _unit addSecondaryWeaponItem _item;
+                            _succes = true;
+                        };
+                    };
+                }
+            }
         };
 
     } else {
@@ -203,7 +191,7 @@ for "_x" from 1 to _amount do {
 
                 case "backpack": {
 
-                    if (_unit canAddItemToBackpack _item) then {
+                    if (_unit canAddItemToBackpack _item || FW_enableOverfill) then {
 
                         _unit addItemToBackpack _item;
 
@@ -214,7 +202,7 @@ for "_x" from 1 to _amount do {
 
                 case "vest": {
 
-                    if (_unit canAddItemToVest _item) then {
+                    if (_unit canAddItemToVest _item || FW_enableOverfill) then {
 
                         _unit addItemToVest _item;
 
@@ -225,7 +213,7 @@ for "_x" from 1 to _amount do {
 
                 case "uniform": {
 
-                    if (_unit canAddItemToUniform _item) then {
+                    if (_unit canAddItemToUniform _item || FW_enableOverfill) then {
 
                         _unit addItemToUniform _item;
 
@@ -245,7 +233,7 @@ for "_x" from 1 to _amount do {
 
     if (!_succes) then {
 
-        if (_unit canAdd _item && _type != "Backpack") then {
+        if ((_unit canAdd _item && _type != "Backpack") || FW_enableOverfill) then {
 
             _unit addItem _item;
 

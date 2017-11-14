@@ -8,6 +8,7 @@
 
 //when set to false, facewear types that are whitelisted will not be removed
 FW_force_remove_facewear = false;
+FW_enableOverfill = false;
 
 _unit call FNC_RemoveAllGear;
 
