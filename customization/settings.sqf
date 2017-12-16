@@ -1,3 +1,6 @@
+//ace_cookoff_enable = false; //this disables cookoff fire effect
+//ace_cookoff_ammoCookoffDuration = 0; //this disables secondary explosions
+
 if (isServer) then { //This scope is only for the server
 
 	setViewDistance 2500; //View distance for the server (the ai's)
@@ -17,6 +20,8 @@ if (!isDedicated) then { //This scope is only for the player
 	FW_DebugMessagesEnabled = true;//Only disable debug messages when the mission is released
 
 	setViewDistance 2500; //View distance for the player
+
+	//call FNC_forceTerrainGrid; //uncomment this to force high terrain setting. This will prevent faraway objects from appearing as floating.
 	
 	switch (side player) do { //Checks what team the player is on
 

@@ -5,6 +5,7 @@ PREP(eventPlayerSpawned);
 PREP(eventSpawned);
 PREP(eventRespawned);
 PREP(eventDisconnect);
+PREP(forceTerrainGrid);
 PREP(trackUnit);
 PREP(untrackUnit);
 PREP(StartingCount);
@@ -33,8 +34,8 @@ if (isServer) then {
 
 	"west" call FNC_CreateRespawnMarker;
 	"east" call FNC_CreateRespawnMarker;
-	"guerrila" call FNC_CreateRespawnMarker;
-	"civilian" call FNC_CreateRespawnMarker;
+	"guer" call FNC_CreateRespawnMarker;
+	"civ" call FNC_CreateRespawnMarker;
 
 	FW_Teams = []; //DO NOT REMOVE
 	FW_MissionEnded = false; //Mission has not ended

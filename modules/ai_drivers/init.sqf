@@ -47,6 +47,8 @@ aidrivers_createUnit = {
     _target setVariable ["aidrivers_driver", _unit];
     
     _unit moveInDriver _target;
+
+    _unit setBehaviour "COMBAT";
     
     doStop _unit;
     
