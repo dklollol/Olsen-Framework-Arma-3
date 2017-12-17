@@ -77,7 +77,7 @@ private _action = ["ai_driver","Add/Remove AI driver","",{
     [_target, _player] remoteExecCall ["aidrivers_toggle", 2, false];
 },
 {
-    vehicle _player == _target && (_player == commander _target || _player == gunner _target)
+    vehicle _player == _target && ((assignedVehicleRole _player) select 0) == "Turret"
 }] call ace_interact_menu_fnc_createAction;
 
 {
