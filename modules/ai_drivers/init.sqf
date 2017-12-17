@@ -18,13 +18,21 @@ aidrivers_removeUnit = {
     
     if (!isNull _driver) then {
         deleteVehicle _driver;
+        private _handle = _target getVariable ["aidrivers_pfhID", -1];
+        if (_handle != -1) then {
+            [_handle] call CBA_fnc_removePerFrameHandler;
+        };
     };
+
 };
 
 aidrivers_createUnit = {
     params ["_target", "_caller"];
     
     if (!isNull driver _target) exitWith {};
+    private _turret = (assignedVehicleRole _player) select 1;
+    _caller moveInDriver _target;
+    _caller moveInTurret [_target, _turret];
     
     private _class = "B_Soldier_F";
     if (side _caller == EAST) then {
@@ -33,48 +41,47 @@ aidrivers_createUnit = {
     if (side _caller == INDEPENDENT) then {
         _class = "I_Soldier_F";
     };
-    
-    _unit = group _caller createUnit [_class, [0,0,0], [], 0, "CAN_COLLIDE"];
+
+    _unit = createAgent [_class, [0,0,0], [], 0, "CAN_COLLIDE"];
+
     removeAllWeapons _unit;
     removeUniform _unit;
     removeVest _unit;
     removeHeadgear _unit;
+    removeGoggles _unit;
     
     _unit forceAddUniform uniform _caller;
     _unit addVest vest _caller;
     _unit addHeadGear headGear _caller;
     
     _target setVariable ["aidrivers_driver", _unit];
-    
-    _unit moveInDriver _target;
 
+    _unit moveInDriver _target;
     _unit setBehaviour "COMBAT";
     
     doStop _unit;
-    
-    [{vehicle (_this select 0) != _this select 0}, {
-        [{
-            _this select 0 params ["_unit", "_target", "_caller", "_id2", "_stopped"];
+    [{vehicle (_this select 0) != _this select 0}, { //waiting for spawned unit to get into vehicle
+        private _pfhID = [{
+            _this select 0 params ["_unit", "_target", "_caller"];
 
             private _handle = _this select 1;
             if (vehicle _caller != _target) then {
                 _unit disableAI "PATH";
                 doStop _unit;
-                _stopped = true;
             } else {
                 _unit enableAI "PATH";
             };
             if (!alive _target || !alive _caller || !alive _unit || (vehicle _unit) != _target || (driver _target) != _unit) then {
                 [_target, _caller] call aidrivers_removeUnit;
-                [_handle] call CBA_fnc_removePerFrameHandler;
             };
         }, 1, _this] call CBA_fnc_addPerFrameHandler;
-    }, [_unit, _target, _caller, _id2, false]] call CBA_fnc_WaitUntilAndExecute;
-    
+        (_this select 1) setVariable ["aidrivers_pfhID", _pfhID];
+    }, [_unit, _target, _caller]] call CBA_fnc_WaitUntilAndExecute;
+
 };
 
 private _action = ["ai_driver","Add/Remove AI driver","",{
-    [_target, _player] remoteExecCall ["aidrivers_toggle", 2, false];
+    [_target, _player] call aidrivers_toggle;
 },
 {
     vehicle _player == _target && ((assignedVehicleRole _player) select 0) == "Turret"
@@ -82,5 +89,4 @@ private _action = ["ai_driver","Add/Remove AI driver","",{
 
 {
     [_x, 1, ["ACE_SelfActions"], _action] call ace_interact_menu_fnc_addActionToObject;
-    //_x addAction ["Add/Remove AI driver", {_this remoteExecCall ["aidrivers_toggle", 2, false];}, [], 0, false, true, "", "vehicle _this == _target"];
 } foreach VEHS;
