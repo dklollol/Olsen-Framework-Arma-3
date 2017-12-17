@@ -1,24 +1,24 @@
 
 //Example:["east",[west,east],[300,10]] call FNC_setCaptureZone;
-//Author:        Sacher
+//Author:		Sacher
 
-//Definition:    [MARKERNAME,[SIDES],[WINS]] call FNC_setCaptureZone;
+//Definition:	[MARKERNAME,[SIDES],[WINS]] call FNC_setCaptureZone;
 
-//                
-//Description:     This will make a rectangle or eliptical Marker into a capturezone.
+//				
+//Description: 	This will make a rectangle or eliptical Marker into a capturezone.
 
-//                 MARKERNAME is Name of marker in quotes
-//                SIDES is an array of the sides which can capture the zone
-//                Example: [west,east,civilian] 
-//                Default: all sides
-//                WIN has the same layout as SIDES basically 
-//                SIDES = [west,east,civilian] --> WIN = [time for west,time for east,time for civilian];
-//                SIDES = [resistance,east,west] --> WIN = [time for resistance,time for east,time for west];
-//                Default is 300 for every side.
+// 				MARKERNAME is Name of marker in quotes
+//				SIDES is an array of the sides which can capture the zone
+//				Example: [west,east,civilian] 
+//				Default: all sides
+//				WIN has the same layout as SIDES basically 
+//				SIDES = [west,east,civilian] --> WIN = [time for west,time for east,time for civilian];
+//				SIDES = [resistance,east,west] --> WIN = [time for resistance,time for east,time for west];
+//				Default is 300 for every side.
 
 //Comments: In endConditions.sqf add MARKERNAMEINQUOTES call FNC_isCaptured;
-//            will return "EAST","WEST","CIVILIAN","RESISTANCE","NONE" depending on who captured it
-//             Example:if("EAST" == "marker" call FNC_isCaptured) exitWith {};
+//			will return "EAST","WEST","CIVILIAN","RESISTANCE","NONE" depending on who captured it
+// 			Example:if("EAST" == "marker" call FNC_isCaptured) exitWith {};
 //Additional:
 // SECONDS call FNC_setIntervall;
 // time between checks if people have entered the capturezone

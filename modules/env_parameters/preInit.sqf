@@ -3,12 +3,12 @@
 #include "settings.sqf"
 
 if (isMultiplayer) then {
-    
-    private ["_TimeParam", "_WeatherParam", "_WindParam", "_FogParam", "_date", "_overcast", "_wind", "_fog"];
+	
+	private ["_TimeParam", "_WeatherParam", "_WindParam", "_FogParam", "_date", "_overcast", "_wind", "_fog"];
 
-    if (isServer) then {
-        
-        _TimeParam = "TimeOfDay" call BIS_fnc_getParamValue;
+	if (isServer) then {
+		
+		_TimeParam = "TimeOfDay" call BIS_fnc_getParamValue;
         
         private _t = -1;
         
@@ -44,66 +44,66 @@ if (isMultiplayer) then {
         if (_t != -1) then {
             _t = [floor _t, floor ((_t % 1) * 60)];
 
-            _date = date;
-            _date set [3, _t select 0];
-            _date set [4, _t select 1];
-            [_date] call BIS_fnc_setDate;
-            
-        };
-    };
+			_date = date;
+			_date set [3, _t select 0];
+			_date set [4, _t select 1];
+			[_date] call BIS_fnc_setDate;
+			
+		};
+	};
 
-    _WeatherParam = "Weather" call BIS_fnc_getParamValue;
+	_WeatherParam = "Weather" call BIS_fnc_getParamValue;
 
-    if (_WeatherParam != -1) then {
-        
-        _overcast = _WeatherParam;
+	if (_WeatherParam != -1) then {
+		
+		_overcast = _WeatherParam;
         if (_overcast == -10) then {
             _overcast = random 10;
         };
-        0 setOvercast (_overcast / 10);
+		0 setOvercast (_overcast / 10);
 
-    };
+	};
 
-    _WindParam = "Wind" call BIS_fnc_getParamValue;
+	_WindParam = "Wind" call BIS_fnc_getParamValue;
 
-    if (_WindParam != -1) then {
-        
-        _wind = _WindParam;
+	if (_WindParam != -1) then {
+		
+		_wind = _WindParam;
         if (_wind == -10) then {
             _wind = random 10;
         };
-        0 setWindStr (_wind / 10);
+		0 setWindStr (_wind / 10);
 
-        if ((_wind / 10) * 1.25 > 1) then {
+		if ((_wind / 10) * 1.25 > 1) then {
 
-            0 setGusts 1;
+			0 setGusts 1;
 
-        } else {
+		} else {
 
-            0 setGusts ((_wind / 10) * 1.25);
+			0 setGusts ((_wind / 10) * 1.25);
 
-        };
-    };
+		};
+	};
 
-    _FogParam = "Fog" call BIS_fnc_getParamValue;
+	_FogParam = "Fog" call BIS_fnc_getParamValue;
 
-    if (_FogParam != -1) then {
+	if (_FogParam != -1) then {
         
         if (_FogParam == -10) then {
             _FogParam = (floor random [0, 10, 30]) / 10;
         };
         
-        if (defaultFogType) then {
-            _fog = _FogParam;
-            0 setFog (_fog / 3.2);
-        }
-        else {
-            _fog = (fogArrays select _FogParam);
-            if (count _fog == 0) then {
-                _fog = [0,0,0];
-            };
-            0 setFog _fog;
-        };
-        
-    };
+		if (defaultFogType) then {
+			_fog = _FogParam;
+			0 setFog (_fog / 3.2);
+		}
+		else {
+			_fog = (fogArrays select _FogParam);
+			if (count _fog == 0) then {
+				_fog = [0,0,0];
+			};
+			0 setFog _fog;
+		};
+		
+	};
 };

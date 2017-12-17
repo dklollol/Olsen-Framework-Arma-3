@@ -8,9 +8,9 @@
 //
 // Example:
 // if (hostage1 call FNC_IsRescued && hostage2 call FNC_IsRescued) exitWith {
-//        "Hostages Rescued" call FNC_EndMission;
+//		"Hostages Rescued" call FNC_EndMission;
 // };
 //
 // if (!alive hostage1 && !alive hostage2) exitWith {
-//        "Hostages Killed" call FNC_EndMission;
+//		"Hostages Killed" call FNC_EndMission;
 // };
