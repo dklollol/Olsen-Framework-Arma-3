@@ -24,7 +24,7 @@ if (!isDedicated) then {
 
     _day = format ["%1th", date select 2];
 
-    if (date select 2 < 4 || date select 2 > 20) then {
+    if (((date select 2) mod 10) < 4) then {
 
         switch ((date select 2) mod 10) do {
 
