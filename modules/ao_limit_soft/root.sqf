@@ -1,23 +1,23 @@
 #ifdef framework
-	
-	#include "init.sqf"
-	
+    
+    #include "init.sqf"
+    
 #endif
 
 #ifdef preinit
 
-	#include "RscInit.sqf"
+    #include "RscInit.sqf"
 
 #endif
 
 #ifdef description_titles
 
-	#include "RscAOLimit.hpp"
+    #include "RscAOLimit.hpp"
 
 #endif
 
 #ifdef description_notifications
 
-	#include "CfgNotifications.hpp"
+    #include "CfgNotifications.hpp"
 
 #endif

@@ -37,7 +37,7 @@ ENDTAB;
 }; //End of west case
 
 }; //End of switch
-	
+    
 NEWTAB("VI. Mission notes:") //This is shown for everyone
 //Text goes here
 ENDTAB;

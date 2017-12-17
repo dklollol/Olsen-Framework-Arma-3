@@ -9,49 +9,49 @@ Be careful, it only takes one click to end the mission!<br/>
 
 if (({(_x select 1) == side player} count FW_MissionCalls) > 0) then {
 
-	_html = _html + "<font size='18'>Call Mission Options</font><br/>";
+    _html = _html + "<font size='18'>Call Mission Options</font><br/>";
 
-	for "_i" from 0 to count FW_MissionCalls -1 do {
+    for "_i" from 0 to count FW_MissionCalls -1 do {
 
-		_option = FW_MissionCalls select _i;
+        _option = FW_MissionCalls select _i;
 
-		if ((_option select 1) == side player) then {
+        if ((_option select 1) == side player) then {
 
-			_html = _html + "<execute expression='[""" + (_option select 0) + """, false] call FNC_CallMissionReq;'>" + (_option select 2) + "</execute>";
+            _html = _html + "<execute expression='[""" + (_option select 0) + """, false] call FNC_CallMissionReq;'>" + (_option select 2) + "</execute>";
 
-			if (_i < count FW_MissionCalls) then {
+            if (_i < count FW_MissionCalls) then {
 
-				_html = _html + "<br/>";
+                _html = _html + "<br/>";
 
-			};
+            };
 
-		};
+        };
 
-	};
+    };
 
 };
 
 if (({(_x select 1) == sideUnknown} count FW_MissionCalls) > 0) then {
 
-	_html = _html + "<br/><br/><font size='18'>Call Mission Admin Options</font><br/>";
+    _html = _html + "<br/><br/><font size='18'>Call Mission Admin Options</font><br/>";
 
-	for "_i" from 0 to count FW_MissionCalls -1 do {
+    for "_i" from 0 to count FW_MissionCalls -1 do {
 
-		_option = FW_MissionCalls select _i;
+        _option = FW_MissionCalls select _i;
 
-		if ((_option select 1) == sideUnknown) then {
+        if ((_option select 1) == sideUnknown) then {
 
-			_html = _html + "<execute expression='[""" + (_option select 0) + """, true] call FNC_CallMissionReq;'>" + (_option select 2) + "</execute>";
+            _html = _html + "<execute expression='[""" + (_option select 0) + """, true] call FNC_CallMissionReq;'>" + (_option select 2) + "</execute>";
 
-			if (_i < count FW_MissionCalls) then {
+            if (_i < count FW_MissionCalls) then {
 
-				_html = _html + "<br/>";
+                _html = _html + "<br/>";
 
-			};
+            };
 
-		};
+        };
 
-	};
+    };
 
 };
 

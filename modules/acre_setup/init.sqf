@@ -18,10 +18,10 @@ if (isServer && FW_enable_channel_names) then {
 };
 
 if(!isDedicated) then {
-	[] spawn {
-		waitUntil { !isNull acre_player };
+    [] spawn {
+        waitUntil { !isNull acre_player };
 
-		private _side = side player;
+        private _side = side player;
         private _customSide = (player getVariable ["FW_CustomScramble", nil]);
 
         if (!isNil "FW_Acre_Volume_Value") then {
@@ -109,7 +109,7 @@ if(!isDedicated) then {
                 [_radioID, _spatial] call acre_api_fnc_setRadioSpatial;
             };
         } foreach _channels;
-		
-	};
+        
+    };
     
 };

@@ -3,11 +3,11 @@ _targets = [];
 
 {
 
-	if ((side player) == (side _x) && (leader _x == _x)) then {
+    if ((side player) == (side _x) && (leader _x == _x)) then {
 
-		_targets set [count _targets, _x];
+        _targets set [count _targets, _x];
 
-	};
+    };
 
 } forEach playableUnits;
 

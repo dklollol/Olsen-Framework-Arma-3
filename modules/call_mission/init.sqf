@@ -5,148 +5,148 @@ FW_COC = [];
 
 if (isServer) then {
 
-	FNC_CallMission = {
+    FNC_CallMission = {
 
-		params [
-			["_player", objNull, [objNull]],
-			["_callID", "", [""]]
-		];
+        params [
+            ["_player", objNull, [objNull]],
+            ["_callID", "", [""]]
+        ];
 
-		{
+        {
 
-			if ((_x select 1) == sideUnknown && (_x select 0) == _callID) exitWith {
+            if ((_x select 1) == sideUnknown && (_x select 0) == _callID) exitWith {
 
-				["Calling mission...", "hint", _player] call BIS_fnc_MP;
-				(_x select 3) call FNC_EndMission;
+                ["Calling mission...", "hint", _player] call BIS_fnc_MP;
+                (_x select 3) call FNC_EndMission;
 
-			};
+            };
 
-			if ((_x select 0) == _callID) exitWith {
+            if ((_x select 0) == _callID) exitWith {
 
 
-				if (_player getVariable ["FW_IsCO", false]) then {
+                if (_player getVariable ["FW_IsCO", false]) then {
 
-					["Calling mission...", "hint", _player] call BIS_fnc_MP;
-					(_x select 3) call FNC_EndMission;
+                    ["Calling mission...", "hint", _player] call BIS_fnc_MP;
+                    (_x select 3) call FNC_EndMission;
 
-				} else {
-					["You must be the CO to call this mission.", "hint", _player] call BIS_fnc_MP;
-				};
+                } else {
+                    ["You must be the CO to call this mission.", "hint", _player] call BIS_fnc_MP;
+                };
 
-			};
+            };
 
-		} forEach FW_MissionCalls;
+        } forEach FW_MissionCalls;
 
-	};
+    };
 
-	FW_CallMissionEh = ["frameworkCallMission", {_this spawn FNC_CallMission;}] call CBA_fnc_addEventHandler;
+    FW_CallMissionEh = ["frameworkCallMission", {_this spawn FNC_CallMission;}] call CBA_fnc_addEventHandler;
 
-	[] spawn {
+    [] spawn {
 
-		private ["_coc", "_groupID", "_group", "_found"];
+        private ["_coc", "_groupID", "_group", "_found"];
 
-		while {true} do {
-			{
+        while {true} do {
+            {
 
-				_coc = _x;
-				_found = false;
+                _coc = _x;
+                _found = false;
 
-				{
+                {
 
-					_groupID = _x;
+                    _groupID = _x;
 
-					if (_found) exitWith {};
+                    if (_found) exitWith {};
 
-						{
+                        {
 
-							_group = _x;
+                            _group = _x;
 
-							if (_group != grpNull && (groupID _group) == _groupID && (side leader _group) == (_coc select 0)) exitWith {
+                            if (_group != grpNull && (groupID _group) == _groupID && (side leader _group) == (_coc select 0)) exitWith {
 
-								if !((leader _group) getVariable ["FW_IsCO", false]) then {
+                                if !((leader _group) getVariable ["FW_IsCO", false]) then {
 
-									(leader _group) setVariable ["FW_IsCO", true, false];
+                                    (leader _group) setVariable ["FW_IsCO", true, false];
 
-									{
+                                    {
 
-										if (((side _x) == (side leader _group)) && _x != (leader _group)) then {
-											_x setVariable ["FW_IsCO", false, false];
-										};
+                                        if (((side _x) == (side leader _group)) && _x != (leader _group)) then {
+                                            _x setVariable ["FW_IsCO", false, false];
+                                        };
 
-									} forEach playableUnits;
-								};
+                                    } forEach playableUnits;
+                                };
 
-								_found = true;
+                                _found = true;
 
-							};
+                            };
 
-						} forEach allGroups;
+                        } forEach allGroups;
 
-				} forEach (_coc select 1);
+                } forEach (_coc select 1);
 
-			} forEach FW_COC;
+            } forEach FW_COC;
 
-			sleep(60);
-		};
-	};
+            sleep(60);
+        };
+    };
 
 };
 
 if (!isDedicated) then {
 
-	FW_IsAdmin = false;
+    FW_IsAdmin = false;
 
-	[] spawn {
-		waituntil {!isnull (finddisplay 46)};
+    [] spawn {
+        waituntil {!isnull (finddisplay 46)};
 
-		// serverCommandAvailable must be executed from a UI Eh.
-		(findDisplay 46) displayAddEventHandler ["MouseMoving", {
-			if (serverCommandAvailable "#kick") then {
-				FW_IsAdmin = true;
-			} else {
-				FW_IsAdmin = false;
-			};
-		}];
-	};
+        // serverCommandAvailable must be executed from a UI Eh.
+        (findDisplay 46) displayAddEventHandler ["MouseMoving", {
+            if (serverCommandAvailable "#kick") then {
+                FW_IsAdmin = true;
+            } else {
+                FW_IsAdmin = false;
+            };
+        }];
+    };
 
-	FNC_CallMissionReq = {
+    FNC_CallMissionReq = {
 
-		params [
-			["_callID", "", [""]],
-			["_reqAdmin", false, [false]]
-		];
+        params [
+            ["_callID", "", [""]],
+            ["_reqAdmin", false, [false]]
+        ];
 
-		if (_reqAdmin && !FW_IsAdmin) exitWith {
-			hint "Only server admins may use this feature!";
-		};
+        if (_reqAdmin && !FW_IsAdmin) exitWith {
+            hint "Only server admins may use this feature!";
+        };
 
-		["frameworkCallMission", [player, _callID]] call CBA_fnc_globalEvent;
+        ["frameworkCallMission", [player, _callID]] call CBA_fnc_globalEvent;
 
-	};
+    };
 
 };
 
 FNC_RegisterMissionCall = {
 
-	params [
-		["_callID", "", [""]],
-		["_callSide", sideUnknown, [sideUnknown]],
-		["_callName", "", [""]],
-		["_callArgs", [], [[]]]
-	];
+    params [
+        ["_callID", "", [""]],
+        ["_callSide", sideUnknown, [sideUnknown]],
+        ["_callName", "", [""]],
+        ["_callArgs", [], [[]]]
+    ];
 
-	FW_MissionCalls set [count FW_MissionCalls, [_callID, _callSide, _callName, _callArgs]];
+    FW_MissionCalls set [count FW_MissionCalls, [_callID, _callSide, _callName, _callArgs]];
 
 };
 
 FNC_RegisterCOC = {
 
-	params [
-		["_side", sideUnknown, [sideUnknown]],
-		["_coc", [], [[]]]
-	];
+    params [
+        ["_side", sideUnknown, [sideUnknown]],
+        ["_coc", [], [[]]]
+    ];
 
-	FW_COC set [count FW_COC, [_side, _coc]];
+    FW_COC set [count FW_COC, [_side, _coc]];
 
 };
 
@@ -159,8 +159,8 @@ FNC_RegisterCOC = {
 #include "settings.sqf"
 
 if (!isDedicated) then {
-	[] spawn {
-		sleep (0.1);
-		#include "menu.sqf"
-	};
+    [] spawn {
+        sleep (0.1);
+        #include "menu.sqf"
+    };
 };

@@ -1,10 +1,10 @@
 FNC_SetTeamColor = {
 
-	params [
-		["_unit", objNull, [objNull]],
-		["_color", "", [""]]
-	];
+    params [
+        ["_unit", objNull, [objNull]],
+        ["_color", "", [""]]
+    ];
 
-	_unit setVariable ["FW_TeamColor", _color, false];
+    _unit setVariable ["FW_TeamColor", _color, false];
 
 };

@@ -1,5 +1,5 @@
 #ifdef framework
 
-	#include "init.sqf"
+    #include "init.sqf"
 
 #endif

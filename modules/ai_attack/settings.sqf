@@ -1,6 +1,6 @@
 
 /*
-Author:		Sacher
+Author:        Sacher
 
 Mission Parameters:
 See params.cpp for clear definition

@@ -1,17 +1,17 @@
 #ifdef preinit
-	
-	#include "preinit.sqf"
-	
+    
+    #include "preinit.sqf"
+    
 #endif
 
 #ifdef framework
 
-	#include "init.sqf"
+    #include "init.sqf"
 
 #endif
 
 #ifdef description_params
 
-	#include "params.hpp"
+    #include "params.hpp"
 
 #endif

@@ -2,79 +2,79 @@
 
 if (isServer) then {
 
-	FNC_TrackAssetArea = {
+    FNC_TrackAssetArea = {
 
-		private ["_marker", "_team", "_vehicle", "_vehCfg"];
+        private ["_marker", "_team", "_vehicle", "_vehCfg"];
 
-		_marker = _this select 0;
-		_team = _this select 1;
+        _marker = _this select 0;
+        _team = _this select 1;
 
-		{
+        {
 
-			_vehicle = _x;
+            _vehicle = _x;
 
-			if ([_vehicle, _marker] call FNC_InArea) then {
+            if ([_vehicle, _marker] call FNC_InArea) then {
 
-				{
+                {
 
-					if ((_x select 0) == _team) exitWith {
+                    if ((_x select 0) == _team) exitWith {
 
-						_vehCfg = (configFile >> "CfgVehicles" >> (typeOf _vehicle));
+                        _vehCfg = (configFile >> "CfgVehicles" >> (typeOf _vehicle));
 
-						if (isText(_vehCfg >> "displayName")) then {
+                        if (isText(_vehCfg >> "displayName")) then {
 
-							[_vehicle, getText(_vehCfg >> "displayName"), _team] call FNC_TrackAsset;
+                            [_vehicle, getText(_vehCfg >> "displayName"), _team] call FNC_TrackAsset;
 
-						};
+                        };
 
-					};
+                    };
 
-				} forEach FW_Teams;
+                } forEach FW_Teams;
 
-			};
+            };
 
-		} forEach vehicles;
+        } forEach vehicles;
 
-	};
+    };
 
-	[] spawn {
+    [] spawn {
 
-		private ["_vehicle", "_vehCfg"];
+        private ["_vehicle", "_vehCfg"];
 
-		sleep(1);
+        sleep(1);
 
-		{
+        {
 
-			_vehicle = _x;
+            _vehicle = _x;
 
-			if (!isPlayer _vehicle && side _vehicle != civilian) then {
+            if (!isPlayer _vehicle && side _vehicle != civilian) then {
 
-				if (_vehicle getVariable ["FW_AssetName", ""] == "") then {
+                if (_vehicle getVariable ["FW_AssetName", ""] == "") then {
 
-					{
+                    {
 
-						if (_x select 1 == side _vehicle) exitWith {
+                        if (_x select 1 == side _vehicle) exitWith {
 
-							_vehCfg = (configFile >> "CfgVehicles" >> (typeOf _vehicle));
+                            _vehCfg = (configFile >> "CfgVehicles" >> (typeOf _vehicle));
 
-							if (isText(_vehCfg >> "displayName")) then {
+                            if (isText(_vehCfg >> "displayName")) then {
 
-								[_vehicle, getText(_vehCfg >> "displayName"), _x select 0] call FNC_TrackAsset;
+                                [_vehicle, getText(_vehCfg >> "displayName"), _x select 0] call FNC_TrackAsset;
 
-							};
+                            };
 
-						};
+                        };
 
-					} forEach FW_Teams;
+                    } forEach FW_Teams;
 
-				};
+                };
 
-			};
+            };
 
-		} forEach vehicles;
+        } forEach vehicles;
 
-		#include "settings.sqf"
+        #include "settings.sqf"
 
-	};
+    };
 
 };

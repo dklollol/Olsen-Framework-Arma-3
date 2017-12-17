@@ -7,5 +7,5 @@
 #include "settings.sqf"
 
 if (!hasInterface) then {
-	[{call tin_aiLink},[],tin_aiLink_startDelay] call CBA_fnc_waitAndExecute;
+    [{call tin_aiLink},[],tin_aiLink_startDelay] call CBA_fnc_waitAndExecute;
 };

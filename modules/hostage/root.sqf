@@ -1,11 +1,11 @@
 #ifdef preinit
 
-	#include "preinit.sqf"
+    #include "preinit.sqf"
 
 #endif
 
 #ifdef framework
 
-	#include "init.sqf"
+    #include "init.sqf"
 
 #endif

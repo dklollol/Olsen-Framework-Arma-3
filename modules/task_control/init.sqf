@@ -3,7 +3,7 @@
 //private ["_month", "_hour", "_min", "_startTextArray", "_line", "_unparsedText"];
 
 if (isServer) then {
-	serverTaskArray = [];
+    serverTaskArray = [];
 };
 
 #define ADDTASK(TARGET, DESTINATION, TITLE, DESCRIPTION, WPTITLE) \
@@ -28,5 +28,5 @@ if (isServer) then {
 [TITLE] call FNC_REMOVETASK;
 
 if (isServer) then {
-	#include "settings.sqf"
+    #include "settings.sqf"
 };

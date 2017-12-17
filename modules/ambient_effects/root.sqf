@@ -1,17 +1,17 @@
 #ifdef preinit
 
-	#include "preInit.sqf"
+    #include "preInit.sqf"
 
 #endif
 
 #ifdef description_sounds
 
-	#include "sounds.hpp"
+    #include "sounds.hpp"
 
 #endif
 
 #ifdef framework
 
-	#include "init.sqf"
+    #include "init.sqf"
 
 #endif

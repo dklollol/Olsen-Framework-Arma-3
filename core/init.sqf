@@ -32,59 +32,59 @@ enableSaving [false, false];
 
 if (isServer) then {
 
-	"west" call FNC_CreateRespawnMarker;
-	"east" call FNC_CreateRespawnMarker;
-	"guer" call FNC_CreateRespawnMarker;
-	"civ" call FNC_CreateRespawnMarker;
+    "west" call FNC_CreateRespawnMarker;
+    "east" call FNC_CreateRespawnMarker;
+    "guer" call FNC_CreateRespawnMarker;
+    "civ" call FNC_CreateRespawnMarker;
 
-	FW_Teams = []; //DO NOT REMOVE
-	FW_MissionEnded = false; //Mission has not ended
+    FW_Teams = []; //DO NOT REMOVE
+    FW_MissionEnded = false; //Mission has not ended
 
-	FW_EventPlayerSpawnedHandle = ["FW_PlayerSpawned", {_this call FNC_EventPlayerSpawned;}] call CBA_fnc_addEventHandler;
-	FW_EventRespawnedHandle = addMissionEventHandler ["EntityRespawned", {_this call FNC_EventRespawned;}];
-	FW_EventKilledHandle = addMissionEventHandler ["EntityKilled", {_this call FNC_EventKilled;}];
+    FW_EventPlayerSpawnedHandle = ["FW_PlayerSpawned", {_this call FNC_EventPlayerSpawned;}] call CBA_fnc_addEventHandler;
+    FW_EventRespawnedHandle = addMissionEventHandler ["EntityRespawned", {_this call FNC_EventRespawned;}];
+    FW_EventKilledHandle = addMissionEventHandler ["EntityKilled", {_this call FNC_EventKilled;}];
 
-	FW_EventDisconnectHandle = addMissionEventHandler ["HandleDisconnect", {_this call FNC_EventDisconnect;}];
+    FW_EventDisconnectHandle = addMissionEventHandler ["HandleDisconnect", {_this call FNC_EventDisconnect;}];
 
 };
 
 if (!isDedicated) then {
 
-	//Anything done using "player" must be past this line for JIP compatibility
-	waitUntil {!(isNull player)};
+    //Anything done using "player" must be past this line for JIP compatibility
+    waitUntil {!(isNull player)};
 
-	if (!isServer) then {
+    if (!isServer) then {
 
-		//Tells the server the player has spawned
-		["FW_PlayerSpawned", player] call CBA_fnc_serverEvent;
+        //Tells the server the player has spawned
+        ["FW_PlayerSpawned", player] call CBA_fnc_serverEvent;
 
-	};
+    };
 
-	//"FW_EndMission" player event sends the received variables to the end screen
-	FW_EndMissionEh = ["FW_EndMission", {_this execVM "core\dia\endscreen\dia_endscreen.sqf";}] call CBA_fnc_addEventHandler;
+    //"FW_EndMission" player event sends the received variables to the end screen
+    FW_EndMissionEh = ["FW_EndMission", {_this execVM "core\dia\endscreen\dia_endscreen.sqf";}] call CBA_fnc_addEventHandler;
 
-	//Various settings
-	enableEngineArtillery false; //Disable Arma 3 artillery computer
-	enableRadio false; //Disable Arma 3 regular radio
-	enableSentences false; //Disable Arma 3 regular radio chatter
-	0 fadeRadio 0; //Lower radio volume to 0
+    //Various settings
+    enableEngineArtillery false; //Disable Arma 3 artillery computer
+    enableRadio false; //Disable Arma 3 regular radio
+    enableSentences false; //Disable Arma 3 regular radio chatter
+    0 fadeRadio 0; //Lower radio volume to 0
 
-	//Creates the briefing notes for the player
-	"" call FNC_Briefing;
-	"" call FNC_Menu;
+    //Creates the briefing notes for the player
+    "" call FNC_Briefing;
+    "" call FNC_Menu;
 
-	FW_RespawnTickets = 0; //Initialize respawn tickets to 0
+    FW_RespawnTickets = 0; //Initialize respawn tickets to 0
 
-	player setVariable ["FW_Dead", false, true]; //Tells the framework the player is alive
-	player setVariable ["FW_Spectating", false, true]; //Player is not spectating
-	player setVariable ["FW_Body", player, true]; //Remembers his old body for spectating his dead body
+    player setVariable ["FW_Dead", false, true]; //Tells the framework the player is alive
+    player setVariable ["FW_Spectating", false, true]; //Player is not spectating
+    player setVariable ["FW_Body", player, true]; //Remembers his old body for spectating his dead body
 
-	//Makes the player go into spectator mode when dead or respawn if he has respawn tickets
-	FW_KilledEh = player addEventHandler ["Killed", {"" spawn FNC_SpectateCheck;}];
-	FW_RespawnEh = player addEventHandler ["Respawn", {_this call FNC_SpectatePrep;}];
+    //Makes the player go into spectator mode when dead or respawn if he has respawn tickets
+    FW_KilledEh = player addEventHandler ["Killed", {"" spawn FNC_SpectateCheck;}];
+    FW_RespawnEh = player addEventHandler ["Respawn", {_this call FNC_SpectatePrep;}];
 
-	//Various settings
-	player addRating 100000; //Makes sure ai doesnt turn hostile when teamkilling
-	player setVariable ["BIS_noCoreConversations", true]; //Disable scroll wheel conversations
+    //Various settings
+    player addRating 100000; //Makes sure ai doesnt turn hostile when teamkilling
+    player setVariable ["BIS_noCoreConversations", true]; //Disable scroll wheel conversations
 
 };

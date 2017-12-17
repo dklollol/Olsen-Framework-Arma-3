@@ -15,8 +15,8 @@
 
 plank_deploy_fortData = [
 
-	// Action text                      |  Classname                            |  Distance     |  Direction     |  Direction Range  |  Code
-	//--------------------------------------------------------------------------------------------------------------------------------------
-	["Small Trench",                        "Fort_EnvelopeSmall",               	6,              0,                360,            {}]
+    // Action text                      |  Classname                            |  Distance     |  Direction     |  Direction Range  |  Code
+    //--------------------------------------------------------------------------------------------------------------------------------------
+    ["Small Trench",                        "Fort_EnvelopeSmall",                   6,              0,                360,            {}]
 
 ];
