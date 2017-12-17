@@ -22,8 +22,9 @@ aidrivers_removeUnit = {
         if (_handle != -1) then {
             [_handle] call CBA_fnc_removePerFrameHandler;
         };
+        _target removeEventHandler ["getIn", _target getVariable ["aidrivers_getInID", -1]];
     };
-
+    hint "Driver removed";
 };
 
 aidrivers_createUnit = {
@@ -60,6 +61,16 @@ aidrivers_createUnit = {
     _unit setBehaviour "COMBAT";
     
     doStop _unit;
+
+    private _getInID = _target addEventHandler ["GetIn", {
+        params ["_vehicle", "_position", "_unit"];
+        if (!isNull (_target getVariable ["aidrivers_driver", objNull])) then {
+            (_target getVariable ["aidrivers_driver", objNull]) setDamage 1;
+            hint "Existing AI driver has been removed";
+        };
+    }];
+    _target setVariable ["aidrivers_getInID", _getInID];
+
     [{vehicle (_this select 0) != _this select 0}, { //waiting for spawned unit to get into vehicle
         private _pfhID = [{
             _this select 0 params ["_unit", "_target", "_caller"];
@@ -77,6 +88,8 @@ aidrivers_createUnit = {
         }, 1, _this] call CBA_fnc_addPerFrameHandler;
         (_this select 1) setVariable ["aidrivers_pfhID", _pfhID];
     }, [_unit, _target, _caller]] call CBA_fnc_WaitUntilAndExecute;
+
+    hint "Driver added";
 
 };
 
