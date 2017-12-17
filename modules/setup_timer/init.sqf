@@ -10,16 +10,16 @@ if !(markerType NAME == "") then { \
 
 private _aborted = false;
 if (!isMultiplayer) then {
-    _aborted = true;
-    "Setup Timer: Singleplayer session detected, this module will function only in multiplayer." call FNC_DebugMessage;
+	_aborted = true;
+	"Setup Timer: Singleplayer session detected, this module will function only in multiplayer." call FNC_DebugMessage;
 };
 
 if (isServer) then {
-    [] spawn {
-        waitUntil {time > 0};
-        FW_setup_start_time = serverTime;
-        publicVariable "FW_setup_start_time";
-    };
+	[] spawn {
+		waitUntil {time > 0};
+		FW_setup_start_time = serverTime;
+		publicVariable "FW_setup_start_time";
+	};
 };
 
 if (!isDedicated && !_aborted) then {
@@ -36,20 +36,20 @@ if (!isDedicated && !_aborted) then {
 			
 			_marker = [];
 			_displayed = false;
-            
+			
 			waitUntil {!isNil "FW_setup_start_time"};
-            _startTime = FW_setup_start_time;
-            //we are checking for a bug described on serverTime wiki page
-            //bugged value is usually around 400 000
-            if (abs (FW_setup_start_time - serverTime) > 100000) then { 
-                _startTime = serverTime;
-                FW_setup_start_time = serverTime; //client time is used instead, according to wiki it's always correct
-                //we send it across network. Possible issue: multiple clients send it at the same time
-                //and increase network traffic. Shouldn't be too bad because data is small.
-                publicVariable "FW_setup_start_time";
-                systemchat "Setup Timer: Detected desynchronized server and client clock, using client's time instead.";
-            };
-            
+			_startTime = FW_setup_start_time;
+			//we are checking for a bug described on serverTime wiki page
+			//bugged value is usually around 400 000
+			if (abs (FW_setup_start_time - serverTime) > 100000) then { 
+				_startTime = serverTime;
+				FW_setup_start_time = serverTime; //client time is used instead, according to wiki it's always correct
+				//we send it across network. Possible issue: multiple clients send it at the same time
+				//and increase network traffic. Shouldn't be too bad because data is small.
+				publicVariable "FW_setup_start_time";
+				systemchat "Setup Timer: Detected desynchronized server and client clock, using client's time instead.";
+			};
+			
 			{
 				if (((_x select 0) == (side player)) && [(vehicle player), (_x select 2)] call FNC_InArea) then {
 				

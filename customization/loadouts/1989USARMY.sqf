@@ -19,7 +19,7 @@
 #define package "1989USARMY_"
 
 SET_GROUP(uniform)
-    ["usm_bdu_w"] call FNC_AddItem;
+	["usm_bdu_w"] call FNC_AddItem;
 END_GROUP;
 	
 SET_GROUP(IFAK)
@@ -31,7 +31,7 @@ SET_GROUP(IFAK)
 	["ACE_epinephrine", 1, "vest"] call FNC_AddItem;
 	["ACE_tourniquet", 1, "vest"] call FNC_AddItem;
 END_GROUP;
-    
+	
 SET_GROUP(items)
 	["ItemMap"] call FNC_AddItem;
 	["ItemCompass"] call FNC_AddItem;

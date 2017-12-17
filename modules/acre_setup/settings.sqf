@@ -42,42 +42,42 @@ FW_enable_channel_names = false;
 //don't change "label" value!
 
 FW_ChannelNames = [
-    [//WEST - USE SIDE SETTINGS ONLY IF SCRAMBLE IS ON
-        ["1", "label", "PLTNET 1"],
-        ["2", "label", "PLTNET 2"],
-        ["3", "label", "PLTNET 3"],
-        ["4", "label", "PLTNET 4"],
-        ["5", "label", "COY"],
-        ["6", "label", "CAS"],
-        ["7", "label", "FIRES"]
-    ],
-    [//EAST
-        ["1", "label", "PLTNET 1"],
-        ["2", "label", "PLTNET 2"],
-        ["3", "label", "PLTNET 3"],
-        ["4", "label", "PLTNET 4"],
-        ["5", "label", "COY"],
-        ["6", "label", "CAS"],
-        ["7", "label", "FIRES"]
-    ],
-    [//INDEPENDENT
-        ["1", "label", "PLTNET 1"],
-        ["2", "label", "PLTNET 2"],
-        ["3", "label", "PLTNET 3"],
-        ["4", "label", "PLTNET 4"],
-        ["5", "label", "COY"],
-        ["6", "label", "CAS"],
-        ["7", "label", "FIRES"]
-    ],
-    [//DEFAULT - USE THIS IF SCRAMBLE IS OFF
-        ["1", "label", "PLTNET 1"],
-        ["2", "label", "PLTNET 2"],
-        ["3", "label", "PLTNET 3"],
-        ["4", "label", "PLTNET 4"],
-        ["5", "label", "COY"],
-        ["6", "label", "CAS"],
-        ["7", "label", "FIRES"]
-    ]
+	[//WEST - USE SIDE SETTINGS ONLY IF SCRAMBLE IS ON
+		["1", "label", "PLTNET 1"],
+		["2", "label", "PLTNET 2"],
+		["3", "label", "PLTNET 3"],
+		["4", "label", "PLTNET 4"],
+		["5", "label", "COY"],
+		["6", "label", "CAS"],
+		["7", "label", "FIRES"]
+	],
+	[//EAST
+		["1", "label", "PLTNET 1"],
+		["2", "label", "PLTNET 2"],
+		["3", "label", "PLTNET 3"],
+		["4", "label", "PLTNET 4"],
+		["5", "label", "COY"],
+		["6", "label", "CAS"],
+		["7", "label", "FIRES"]
+	],
+	[//INDEPENDENT
+		["1", "label", "PLTNET 1"],
+		["2", "label", "PLTNET 2"],
+		["3", "label", "PLTNET 3"],
+		["4", "label", "PLTNET 4"],
+		["5", "label", "COY"],
+		["6", "label", "CAS"],
+		["7", "label", "FIRES"]
+	],
+	[//DEFAULT - USE THIS IF SCRAMBLE IS OFF
+		["1", "label", "PLTNET 1"],
+		["2", "label", "PLTNET 2"],
+		["3", "label", "PLTNET 3"],
+		["4", "label", "PLTNET 4"],
+		["5", "label", "COY"],
+		["6", "label", "CAS"],
+		["7", "label", "FIRES"]
+	]
 ];
 
 //////////////
@@ -100,17 +100,17 @@ FW_enable_babel = false;
 //define all available languages here
 
 FW_all_languages = [
-    ["en", "English"],
-    ["ru", "Russian"],
-    ["fr", "French"]
+	["en", "English"],
+	["ru", "Russian"],
+	["fr", "French"]
 ];
 
 //define languages for different sides
 FW_languages_babel = [
-    ["fr", "en"],//WEST
-    ["ru", "en"],//EAST
-    ["fr", "en", "ru"],//INDEPENDENT
-    ["en"]//DEFAULT/CIVILIAN
+	["fr", "en"],//WEST
+	["ru", "en"],//EAST
+	["fr", "en", "ru"],//INDEPENDENT
+	["en"]//DEFAULT/CIVILIAN
 ];
 
 ///////////////////////
@@ -162,11 +162,11 @@ FW_languages_babel = [
   ACRE2 has a built in direct speech slider allowing you to determine how far your voice in direct speech should travel. The system has five states and by default starts in the middle state. The below table contains an approximated table with empirical testing by Bullhorn.
   
   Volume state  |  Loud (m)  |  Quiet (m)  |  Barely audible (m)
-  -2            |  1         |  2          |  13
-  -1            |  3         |  15         |  55
-   0            |  8         |  30         |  100
-  +1            |  12        |  45         |  145
-  +2            |  15        |  55         |  195
+  -2			|  1		 |  2		  |  13
+  -1			|  3		 |  15		 |  55
+   0			|  8		 |  30		 |  100
+  +1			|  12		|  45		 |  145
+  +2			|  15		|  55		 |  195
 */
 
 FW_Acre_Volume_Value = -1;

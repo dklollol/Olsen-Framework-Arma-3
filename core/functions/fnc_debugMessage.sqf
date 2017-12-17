@@ -19,16 +19,16 @@ private _found = false;
 
 {
 
-    if (_x == _message) exitWith {
+	if (_x == _message) exitWith {
 
-        _found = true;
+		_found = true;
 
-    };
+	};
 
 } forEach FW_DebugMessages;
 
 if (!_found) then {
 
-    FW_DebugMessages set [count FW_DebugMessages, _message];
+	FW_DebugMessages set [count FW_DebugMessages, _message];
 
 };

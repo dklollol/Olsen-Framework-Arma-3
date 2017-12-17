@@ -15,22 +15,22 @@
  */
 
 params [
-    ["_team", "", [""]],
-    ["_index", 0, [0]],
-    "_value"
+	["_team", "", [""]],
+	["_index", 0, [0]],
+	"_value"
 ];
 
 private _return = false;
 
 {
 
-    if ((_x select 0) == _team) exitWith {
+	if ((_x select 0) == _team) exitWith {
 
-        _x set [_index, _value];
+		_x set [_index, _value];
 
-        _return = true;
+		_return = true;
 
-    };
+	};
 
 } forEach FW_Teams;
 

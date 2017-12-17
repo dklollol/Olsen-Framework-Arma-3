@@ -16,13 +16,13 @@ class DIA_MARKERFIREMISSION
 		MFM_BURSTDELAYEDIT,MFM_SPOTTINGDISTANCEDIT,MFM_FIREBUTTON,MFM_CANCELBUTTON};
 		class MFM_BACKGROUND: RscText
 		{
-		    idc = -1;
+			idc = -1;
 			x = ARTIWIDTHMAINSPACE * safezoneW + safezoneX - ARTIBORDERTHICKNESS;
 			y = (ARTIHEIGHTMAINSPACE + ARTILAYOUTHEIGHTSPACE * 0) * safezoneH + safezoneY - ARTIBORDERTHICKNESS;
 			w =  ( ARTILAYOUTWIDTH +  ARTILAYOUTWIDTHSPACE) *  safezoneW  + ARTIBORDERTHICKNESS * 2 ;
 			h = ARTILAYOUTHEIGHTSPACE * 10 * safezoneH + ARTIBORDERTHICKNESS * 2 ;
-		    	shadow = 0;
-		    colorBackground[] = {0.65,0.65,0.65,0.7};
+				shadow = 0;
+			colorBackground[] = {0.65,0.65,0.65,0.7};
 		};
 		class MFM_DESCRIPTIONTEXT: RscText
 		{

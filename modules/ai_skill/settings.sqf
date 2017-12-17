@@ -59,7 +59,7 @@
 
 //"aimingshake" 			Affects how steadily the AI can hold a weapon (Higher value = less weapon sway)
 
-//"aimingspeed"		       Affects how quickly the AI can rotate and stabilize its aim (Higher value = faster, less error)
+//"aimingspeed"			   Affects how quickly the AI can rotate and stabilize its aim (Higher value = faster, less error)
 
 //"commanding" 				Affects how quickly recognized targets are shared with the group (Higher value = faster reporting)
 

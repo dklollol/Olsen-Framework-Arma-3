@@ -54,6 +54,6 @@ if (!isNull(_target)) then {
 
 } else {
 
-    cutText ["Something went wrong, target doesn't exist.", 'PLAIN DOWN'];
+	cutText ["Something went wrong, target doesn't exist.", 'PLAIN DOWN'];
 
 };

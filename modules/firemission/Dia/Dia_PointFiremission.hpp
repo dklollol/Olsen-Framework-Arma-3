@@ -16,13 +16,13 @@ class DIA_POINTFIREMISSION
 		PFM_BURSTDELAYEDIT,PFM_SPOTTINGDISTANCEDIT,PFM_FIREBUTTON,PFM_CANCELBUTTON};
 		class PFM_BACKGROUND: RscText
 		{
-		    idc = -1;
+			idc = -1;
 			x = ARTIWIDTHMAINSPACE * safezoneW + safezoneX - ARTIBORDERTHICKNESS;
 			y = (ARTIHEIGHTMAINSPACE + ARTILAYOUTHEIGHTSPACE * 0) * safezoneH + safezoneY - ARTIBORDERTHICKNESS;
 			w =  ( ARTILAYOUTWIDTH +  ARTILAYOUTWIDTHSPACE) *  safezoneW  + ARTIBORDERTHICKNESS * 2 ;
 			h = ARTILAYOUTHEIGHTSPACE * 10 * safezoneH + ARTIBORDERTHICKNESS * 2 ;
-		    	shadow = 0;
-		    colorBackground[] = {0.65,0.65,0.65,0.7};
+				shadow = 0;
+			colorBackground[] = {0.65,0.65,0.65,0.7};
 		};
 		class PFM_DESCRIPTIONTEXT: RscText
 		{
