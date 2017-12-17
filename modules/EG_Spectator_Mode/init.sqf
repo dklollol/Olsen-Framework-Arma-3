@@ -285,6 +285,7 @@ if (!isDedicated) then {
 						
 						if (!isNull killcam_killer) then {
 							DEBUG_MSG("found valid killer")
+							killcam_distance = killcam_killer distance (_this select 1);
 							_pos = ([_pos, -1.8, ([(_this select 1), killcam_killer] call BIS_fnc_dirTo)] call BIS_fnc_relPos);
 							_cam setposATL _pos;
 							
@@ -320,7 +321,7 @@ if (!isDedicated) then {
 										drawLine3D [[(_u select 0)+0.01, (_u select 1)-0.01, (_u select 2)+0.01], [(_k select 0)+0.01, (_k select 1)-0.01, (_k select 2)+0.01], [1,0,0,1]];
 									};
 									if (!isNull killcam_killer) then {
-										drawIcon3D [killcam_texture, [1,0,0,1], [eyePos killcam_killer select 0, eyePos killcam_killer select 1, (ASLtoAGL eyePos killcam_killer select 2) + 0.4], 0.7, 0.7, 0, "killer: " + name killcam_killer, 1, 0.04, "PuristaMedium"];
+										drawIcon3D [killcam_texture, [1,0,0,1], [eyePos killcam_killer select 0, eyePos killcam_killer select 1, (ASLtoAGL eyePos killcam_killer select 2) + 0.4], 0.7, 0.7, 0, (name killcam_killer) + ", " + (str round killcam_distance) + "m", 1, 0.04, "PuristaMedium"];
 									};
 								}
 								else {
