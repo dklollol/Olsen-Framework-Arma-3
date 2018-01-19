@@ -55,7 +55,7 @@ aidrivers_createUnit = {
 	_unit addVest vest _caller;
 	_unit addHeadGear headGear _caller;
 	
-	_target setVariable ["aidrivers_driver", _unit];
+	_target setVariable ["aidrivers_driver", _unit, true];
 
 	_unit moveInDriver _target;
 	_unit setBehaviour "COMBAT";
@@ -69,7 +69,7 @@ aidrivers_createUnit = {
 			hint "Existing AI driver has been removed";
 		};
 	}];
-	_target setVariable ["aidrivers_getInID", _getInID];
+	_target setVariable ["aidrivers_getInID", _getInID, true];
 
 	[{vehicle (_this select 0) != _this select 0}, { //waiting for spawned unit to get into vehicle
 		private _pfhID = [{
