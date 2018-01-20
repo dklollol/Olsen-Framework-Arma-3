@@ -86,7 +86,7 @@ aidrivers_createUnit = {
 				[_target, _caller] call aidrivers_removeUnit;
 			};
 		}, 1, _this] call CBA_fnc_addPerFrameHandler;
-		(_this select 1) setVariable ["aidrivers_pfhID", _pfhID];
+		(_this select 1) setVariable ["aidrivers_pfhID", _pfhID, true];
 	}, [_unit, _target, _caller]] call CBA_fnc_WaitUntilAndExecute;
 
 	hint "Driver added";
