@@ -1,4 +1,4 @@
-["AI_Attack", "Allows for continious ai attack", "Sacher"] call FNC_RegisterModule;
+["AI Attack", "Allows for continious ai attack", "Sacher"] call FNC_RegisterModule;
 
 FNC_AtkRegisterPath =
 {
