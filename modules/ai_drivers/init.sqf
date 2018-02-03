@@ -22,7 +22,6 @@ aidrivers_removeUnit = {
         if ((count _handle) != 0) then {
             [_handle select 1] remoteExec ["CBA_fnc_removePerFrameHandler", _handle select 0];
         };
-        _target removeEventHandler ["getIn", _target getVariable ["aidrivers_getInID", -1]];
     };
     hint "Driver removed";
 };
@@ -62,15 +61,6 @@ aidrivers_createUnit = {
     
     doStop _unit;
 
-    private _getInID = _target addEventHandler ["GetIn", {
-        params ["_vehicle", "_position", "_unit"];
-        if (!isNull (_target getVariable ["aidrivers_driver", objNull])) then {
-            (_target getVariable ["aidrivers_driver", objNull]) setDamage 1;
-            hint "Existing AI driver has been removed";
-        };
-    }];
-    _target setVariable ["aidrivers_getInID", _getInID, true];
-
     [{vehicle (_this select 0) != _this select 0}, { //waiting for spawned unit to get into vehicle
         private _pfhID = [{
             _this select 0 params ["_unit", "_target", "_caller"];
@@ -100,6 +90,16 @@ private _action = ["ai_driver","Add/Remove AI driver","",{
     vehicle _player == _target && ((assignedVehicleRole _player) select 0) == "Turret"
 }] call ace_interact_menu_fnc_createAction;
 
+private _unflipAction = ["ai_driver_unflip","Unflip vehicle","",{
+    [_target, surfaceNormal position _target] remoteExec ["setVectorUp", 2, false];
+    _target setPos [getpos _target select 0, getpos _target select 1, (getpos _target select 2) + 2];
+},
+{
+    vehicle _player == _target && ((assignedVehicleRole _player) select 0) == "Turret" && {(vectorUp _target) select 2 < 0}
+}] call ace_interact_menu_fnc_createAction;
+
 {
     [_x, 1, ["ACE_SelfActions"], _action] call ace_interact_menu_fnc_addActionToObject;
+    [_x, 1, ["ACE_SelfActions"], _unflipAction] call ace_interact_menu_fnc_addActionToObject;
 } foreach VEHS;
+
