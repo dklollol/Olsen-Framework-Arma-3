@@ -1,5 +1,5 @@
 //ace_cookoff_enable = false; //this disables cookoff fire effect
-//ace_cookoff_ammoCookoffDuration = 0; //this disables secondary explosions
+//ace_cookoff_enableAmmoCookoff = false; //this disables secondary explosions
 
 if (isServer) then { //This scope is only for the server
 
@@ -21,13 +21,13 @@ if (!isDedicated) then { //This scope is only for the player
 
 	setViewDistance 2500; //View distance for the player
 
-	//call FNC_forceTerrainGrid; //uncomment this to force high terrain setting. This will prevent faraway objects from appearing as floating.
+	//call FNC_forceTerrainGrid; //uncomment this to force high terrain setting. This will prevent faraway objects from appearing as floating. Useful for missions with long sightlines.
 	
 	switch (side player) do { //Checks what team the player is on
 
 		case west: { //If player is west he receives this respawn ticket count
 			
-			FW_RespawnTickets = 0;//If respawn is enabled you must create empty game logics, for respawn points, following the name format fw_side_respawn. Example: fw_west_respawn
+			FW_RespawnTickets = 0; //If respawn is enabled you must create empty game logics, for respawn points, following the name format fw_side_respawn. Example: fw_west_respawn
 			
 		}; //End of west case
 	}; //End of switch
