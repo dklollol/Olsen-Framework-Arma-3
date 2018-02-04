@@ -5,10 +5,10 @@ FNC_SetHostage = {
 	_unit = _this select 0;
 
 	if (hasInterface) then {
-        _unit addAction ["<t color='#FBB829'>Rescue Hostage</t>",{
-            [-2,{_this call FNC_RescueHostage;},[_this select 0, _this select 1]] call CBA_fnc_globalExecute;
-        }, nil, 6, true, true, "", "(_target distance _this) < 2 && !(_target getVariable ['FW_Rescued', false]);"];
-    };
+		_unit addAction ["<t color='#FBB829'>Rescue Hostage</t>",{
+			[-2,{_this call FNC_RescueHostage;},[_this select 0, _this select 1]] call CBA_fnc_globalExecute;
+		}, nil, 6, true, true, "", "(_target distance _this) < 2 && !(_target getVariable ['FW_Rescued', false]);"];
+	};
 
 	if (!isServer) exitWith {};
 

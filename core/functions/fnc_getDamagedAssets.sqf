@@ -19,22 +19,22 @@ private _destroyedAssets = [];
 
 {
 
-    if (_x getVariable "FW_AssetTeam" == _team) then {
+	if (_x getVariable "FW_AssetTeam" == _team) then {
 
-        if (alive _x) then {
+		if (alive _x) then {
 
-            if (!canMove _x && !canFire _x) then {
+			if (!canMove _x && !canFire _x) then {
 
-                _disabledAssets set [count _disabledAssets, _x getVariable "FW_AssetName"];
+				_disabledAssets set [count _disabledAssets, _x getVariable "FW_AssetName"];
 
-            };
+			};
 
-        } else {
+		} else {
 
-            _destroyedAssets set [count _destroyedAssets, _x getVariable "FW_AssetName"];
+			_destroyedAssets set [count _destroyedAssets, _x getVariable "FW_AssetName"];
 
-        };
-    };
+		};
+	};
 
 } forEach vehicles;
 

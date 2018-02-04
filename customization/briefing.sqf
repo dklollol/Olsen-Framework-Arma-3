@@ -5,9 +5,11 @@ switch (side player) do { //Checks what team the player is on
 case west: { //If player is west he receives this briefing
 
 NEWTAB("I. Situation:")
-This is an example:<br/>
+<font color='#BBBBBB' size='16' face='PuristaBold'>This is an example header:</font><br/>
 <br/>
-So is this.
+Example text.<br/>
+<br/>
+This is how you create a <marker name='markerName'>marker</marker>.
 ENDTAB;
 
 NEWTAB("A. Enemy Forces:")

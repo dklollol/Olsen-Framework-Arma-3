@@ -27,27 +27,27 @@ if !([_item] call FNC_checkClassname) exitWith {};
 
 if (count _this > 3) then {
 
-    _amount = _this select 3;
+	_amount = _this select 3;
 
 };
 
 for "_x" from 1 to _amount do {
 
-    if (_vehicle canAdd _item) then {
+	if (_vehicle canAdd _item) then {
 
-        if (_type == "backpack") then {
+		if (_type == "backpack") then {
 
-            _vehicle addBackpackCargoGlobal [_item, 1];
+			_vehicle addBackpackCargoGlobal [_item, 1];
 
-        } else {
+		} else {
 
-            _vehicle addItemCargoGlobal [_item, 1];
+			_vehicle addItemCargoGlobal [_item, 1];
 
-        };
+		};
 
-    } else {
+	} else {
 
-        (format ["FNC_AddItemVehicle: Warning couldn't fit %1, in %2, case %3", _item, _vehicle, _loadoutType]) call FNC_DebugMessage;
+		(format ["FNC_AddItemVehicle: Warning couldn't fit %1, in %2, case %3", _item, _vehicle, _loadoutType]) call FNC_DebugMessage;
 
-    };
+	};
 };

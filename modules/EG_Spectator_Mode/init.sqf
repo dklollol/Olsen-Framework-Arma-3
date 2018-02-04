@@ -19,46 +19,46 @@ if (!isDedicated) then {
 			};
 		};
 	};
-    
-    eg_keyHandler_display_hidden = false;
-    
-    eg_keyHandler = {
-        params ["_control", "_code", "_shift", "_control", "_alt"];
+	
+	eg_keyHandler_display_hidden = false;
+	
+	eg_keyHandler = {
+		params ["_control", "_code", "_shift", "_control", "_alt"];
 
-        private _acre = ["ACRE2", "HeadSet"] call CBA_fnc_getKeybind;
-        if (!isNil "_acre") then {
-            private _action = _acre select 4;
-            private _keys = _acre select 5;
+		private _acre = ["ACRE2", "HeadSet"] call CBA_fnc_getKeybind;
+		if (!isNil "_acre") then {
+			private _action = _acre select 4;
+			private _keys = _acre select 5;
 
-            if (_code == _keys select 0 && (_keys select 1) isEqualTo [_shift, _control, _alt]) then {
-                call _action;
-            };
-        };
-        
-        if (_code == 35 && !_shift && _control && !_alt) then {
-            if (!eg_keyHandler_display_hidden) then {
-                (findDisplay 60492) closedisplay 1;
-                eg_keyHandler_display_hidden = true;
-            };
-        };
+			if (_code == _keys select 0 && (_keys select 1) isEqualTo [_shift, _control, _alt]) then {
+				call _action;
+			};
+		};
+		
+		if (_code == 35 && !_shift && _control && !_alt) then {
+			if (!eg_keyHandler_display_hidden) then {
+				(findDisplay 60492) closedisplay 1;
+				eg_keyHandler_display_hidden = true;
+			};
+		};
 	};
-    
-    eg_keyHandler2 = {
-        params ["_control", "_code", "_shift", "_control", "_alt"];
-        
-        if (_code == 35 && !_shift && _control && !_alt &&
-        !isNil "eg_keyHandler_display_hidden" &&
-        {eg_keyHandler_display_hidden}
-        ) then {
-            ([] call BIS_fnc_displayMission) createDisplay "RscDisplayEGSpectator";
-            eg_keyHandler_display_hidden = false;
-            
-            eg_keyHandle = (findDisplay 60492) displayAddEventHandler ["keyDown", {call eg_keyHandler;}];
-            if (killcam_active) then {
-                killcam_keyHandle = (findDisplay 60492) displayAddEventHandler ["keyDown", {call killcam_toggleFnc;}];
-            };
-        };
-    };
+	
+	eg_keyHandler2 = {
+		params ["_control", "_code", "_shift", "_control", "_alt"];
+		
+		if (_code == 35 && !_shift && _control && !_alt &&
+		!isNil "eg_keyHandler_display_hidden" &&
+		{eg_keyHandler_display_hidden}
+		) then {
+			([] call BIS_fnc_displayMission) createDisplay "RscDisplayEGSpectator";
+			eg_keyHandler_display_hidden = false;
+			
+			eg_keyHandle = (findDisplay 60492) displayAddEventHandler ["keyDown", {call eg_keyHandler;}];
+			if (killcam_active) then {
+				killcam_keyHandle = (findDisplay 60492) displayAddEventHandler ["keyDown", {call killcam_toggleFnc;}];
+			};
+		};
+	};
 
 	#include "settings.sqf"
 
@@ -66,20 +66,20 @@ if (!isDedicated) then {
 		DEBUG_MSG("killcam activated")
 		//hitHandler used for retrieving information if killed EH won't fire properly
 		killcam_hitHandle = player addEventHandler ["Hit", {
-            params ["_unit", "_causedBy", "_damage"];
+			params ["_unit", "_causedBy", "_damage"];
 			DEBUG_MSG("HIT EH")
 			if (vehicle _causedBy != vehicle player && _causedBy != objNull) then {
 				DEBUG_MSG("HIT data valid")
 				//we store this information in case it's needed if killed EH doesn't fire
 				killcam_LastHit = [_this, time, ASLtoAGL eyePos _unit, ASLtoAGL eyePos _causedBy];
 			};
-            if (_damage > 1) then {_damage = 1};
-            killcam_LastHitDamage = _damage;
+			if (_damage > 1) then {_damage = 1};
+			killcam_LastHitDamage = _damage;
 		}];
 
 		//START OF KILLED EH///////////
 		killcam_killedHandle = player addEventHandler ["Killed", {
-            params ["_unit", "_killer"];
+			params ["_unit", "_killer"];
 			//let's remove hit EH, it's not needed
 			player removeEventHandler ["hit", killcam_hitHandle];
 			
@@ -95,15 +95,15 @@ if (!isDedicated) then {
 				//we will try to retrieve info from our hit EH
 				DEBUG_MSG("using hit EH")
 				_last_hit_info = [];
-                if (!isNil "killcam_LastHit") then {
-                    _last_hit_info = killcam_LastHit;
-                };
+				if (!isNil "killcam_LastHit") then {
+					_last_hit_info = killcam_LastHit;
+				};
 				
 				//hit info retrieved, now we check if it's not caused by fall damage etc.
 				//also we won't use info that's over 10 seconds old
-                private _damage = 0.5;
+				private _damage = 0.5;
 				if (count _last_hit_info != 0) then {
-                    _last_hit_info params ["_data", "_time", "_unitPos", "_killerPos"];
+					_last_hit_info params ["_data", "_time", "_unitPos", "_killerPos"];
 					if (_time + 10 > time &&
 					(_data select 1) != objNull &&
 					(_data select 1) != player
@@ -129,42 +129,42 @@ if (!isDedicated) then {
 				};
 			};
 
-            [] spawn {
-                if (eg_instant_death) then {
-                    private _damage = 0.5;
-                    if (!isNil "killcam_LastHitDamage") then {
-                        _damage = killcam_LastHitDamage;
-                    };
-                    sleep 0.1;
-                    cutText ["\n", "BLACK", 1.01-_damage, true];
-                    ["FW_death", 0, true] call ace_common_fnc_setHearingCapability;
-                    sleep 1.01-_damage;
-                    0 fadeSound 0;
-                    sleep 0.89+_damage;
-                    
-                    ["<t color='#FF0000'>YOU ARE DEAD</t>", 0, 0.4, 2, 0.5, 0, 1000] spawn BIS_fnc_dynamicText;
-                    
-                    sleep 3;
-                    cutText ["\n","BLACK IN", 5];
-                    ["FW_death", 0, false] call ace_common_fnc_setHearingCapability;
-                    0 fadeSound 1;
-                } else {
-                    ("BIS_layerEstShot" call BIS_fnc_rscLayer) cutRsc ["RscStatic", "PLAIN"];
+			[] spawn {
+				if (eg_instant_death) then {
+					private _damage = 0.5;
+					if (!isNil "killcam_LastHitDamage") then {
+						_damage = killcam_LastHitDamage;
+					};
+					sleep 0.1;
+					cutText ["\n", "BLACK", 1.01-_damage, true];
+					["FW_death", 0, true] call ace_common_fnc_setHearingCapability;
+					sleep 1.01-_damage;
+					0 fadeSound 0;
+					sleep 0.89+_damage;
+					
+					["<t color='#FF0000'>YOU ARE DEAD</t>", 0, 0.4, 2, 0.5, 0, 1000] spawn BIS_fnc_dynamicText;
+					
+					sleep 3;
+					cutText ["\n","BLACK IN", 5];
+					["FW_death", 0, false] call ace_common_fnc_setHearingCapability;
+					0 fadeSound 1;
+				} else {
+					("BIS_layerEstShot" call BIS_fnc_rscLayer) cutRsc ["RscStatic", "PLAIN"];
 
-                    sleep 0.4;
+					sleep 0.4;
 
-                    playSound "Simulation_Fatal";
-                    call BIS_fnc_VRFadeOut;
+					playSound "Simulation_Fatal";
+					call BIS_fnc_VRFadeOut;
 
-                    sleep 1;
+					sleep 1;
 
-                    playSound ("Transition" + str (1 + floor random 3));
+					playSound ("Transition" + str (1 + floor random 3));
 
-                    sleep 1;
-                    call BIS_fnc_VRFadeIn;
-                };
-            };
-            
+					sleep 1;
+					call BIS_fnc_VRFadeIn;
+				};
+			};
+			
 		}];
 		//END OF KILLED EH///////////
 
@@ -259,14 +259,14 @@ if (!isDedicated) then {
 				_cam = missionNamespace getVariable ["BIS_EGSpectatorCamera_camera", objNull];
 				
 				if (_cam != objNull) then {
-                    
-                    [{!isNull (findDisplay 60492)}, {
+					
+					[{!isNull (findDisplay 60492)}, {
 							DEBUG_MSG("Display loaded, attaching key EH")
 							eg_keyHandle = (findDisplay 60492) displayAddEventHandler ["keyDown", {call eg_keyHandler;}];
-                            eg_keyHandle = (findDisplay 46) displayAddEventHandler ["keyDown", {call eg_keyHandler2}];
+							eg_keyHandle = (findDisplay 46) displayAddEventHandler ["keyDown", {call eg_keyHandler2}];
 					}, []] call CBA_fnc_waitUntilAndExecute;
-                    
-                    
+					
+					
 					if (!killcam_active) then {
 						//we move 2 meters back so player's body is visible
 						_pos = ([_pos, -2, _dir] call BIS_fnc_relPos);
@@ -285,6 +285,7 @@ if (!isDedicated) then {
 						
 						if (!isNull killcam_killer) then {
 							DEBUG_MSG("found valid killer")
+							killcam_distance = killcam_killer distance (_this select 1);
 							_pos = ([_pos, -1.8, ([(_this select 1), killcam_killer] call BIS_fnc_dirTo)] call BIS_fnc_relPos);
 							_cam setposATL _pos;
 							
@@ -320,7 +321,7 @@ if (!isDedicated) then {
 										drawLine3D [[(_u select 0)+0.01, (_u select 1)-0.01, (_u select 2)+0.01], [(_k select 0)+0.01, (_k select 1)-0.01, (_k select 2)+0.01], [1,0,0,1]];
 									};
 									if (!isNull killcam_killer) then {
-										drawIcon3D [killcam_texture, [1,0,0,1], [eyePos killcam_killer select 0, eyePos killcam_killer select 1, (ASLtoAGL eyePos killcam_killer select 2) + 0.4], 0.7, 0.7, 0, "killer: " + name killcam_killer, 1, 0.04, "PuristaMedium"];
+										drawIcon3D [killcam_texture, [1,0,0,1], [eyePos killcam_killer select 0, eyePos killcam_killer select 1, (ASLtoAGL eyePos killcam_killer select 2) + 0.4], 0.7, 0.7, 0, (name killcam_killer) + ", " + (str round killcam_distance) + "m", 1, 0.04, "PuristaMedium"];
 									};
 								}
 								else {
@@ -337,9 +338,9 @@ if (!isDedicated) then {
 					_killcam_msg = "Press <t color='#FFA500'>K</t> to toggle indicator showing location where you were killed from.<br/>";
 				};
 				_text = format ["<t size='0.5' color='#ffffff'>%1
-                Close spectator HUD by pressing <t color='#FFA500'>CTRL+H</t>.<br/>
-                Press <t color='#FFA500'>SHIFT</t>, <t color='#FFA500'>ALT</t> or <t color='#FFA500'>SHIFT+ALT</t> to modify camera speed. Open map by pressing <t color='#FFA500'>M</t> and click anywhere to move camera to that postion.<br/> 
-                Spectator controls can be customized in game <t color='#FFA500'>options->controls->'Camera'</t> tab.</t>", _killcam_msg];
+				Close spectator HUD by pressing <t color='#FFA500'>CTRL+H</t>.<br/>
+				Press <t color='#FFA500'>SHIFT</t>, <t color='#FFA500'>ALT</t> or <t color='#FFA500'>SHIFT+ALT</t> to modify camera speed. Open map by pressing <t color='#FFA500'>M</t> and click anywhere to move camera to that postion.<br/> 
+				Spectator controls can be customized in game <t color='#FFA500'>options->controls->'Camera'</t> tab.</t>", _killcam_msg];
 				
 				[_text, 0.55, 0.8, 20, 1] spawn BIS_fnc_dynamicText;
 

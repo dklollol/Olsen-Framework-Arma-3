@@ -74,7 +74,7 @@ private["_attachOffset","_attachObj","_attachSpecsAuto","_attachSpecs","_attachS
 
 	_unit  	 	 	= _this param [0, objNull, [objNull]];
 	_animset 	 	= _this param [1, "STAND", [""]];
-	_gear    	 	= _this param [2, "RANDOM", [""]];
+	_gear		 	= _this param [2, "RANDOM", [""]];
 	_forcedSnapPoint= _this param [3, objNull, [objNull]];
 	_interpolate	= _this param [4, false, [true]];
 	_attach			= _this param [5, true, [true]];

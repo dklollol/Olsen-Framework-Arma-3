@@ -16,10 +16,10 @@ private _new = _this select 0;
 
 if (!(_new getVariable "FW_Dead")) then {
 
-    _new call FNC_EventSpawned;
+	_new call FNC_EventSpawned;
 
 } else {
 
-    _new call FNC_UntrackUnit;
+	_new call FNC_UntrackUnit;
 
 };

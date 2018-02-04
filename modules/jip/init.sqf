@@ -19,6 +19,7 @@ if (!isDedicated) then {
 
 		[] spawn {
 			sleep 5;
+			player call FNC_UntrackUnit;
 			player setDamage 1;
 
 			sleep 8;

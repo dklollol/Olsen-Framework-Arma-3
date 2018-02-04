@@ -25,42 +25,42 @@ _position = "NONE";
 
 if (count _items > 1) then {
 
-    if (typeName (_items select 1) == "ARRAY") then {
+	if (typeName (_items select 1) == "ARRAY") then {
 
-        _position = "ARRAY";
+		_position = "ARRAY";
 
-    } else {
+	} else {
 
-        if (typeName (_items select 1) == "SCALAR") then {
+		if (typeName (_items select 1) == "SCALAR") then {
 
-            _amount = _items select 1;
+			_amount = _items select 1;
 
-            _items = _items select 0;
+			_items = _items select 0;
 
-        };
-    };
+		};
+	};
 };
 
 _randomPick = (_items select (([1, count _items] call FNC_RandomRange) - 1));
 
 if (_position == "ARRAY") then {
 
-    if (typeName (_randomPick select 0) == "ARRAY") then {
+	if (typeName (_randomPick select 0) == "ARRAY") then {
 
-        {
+		{
 
-            ([_vehicle, _loadoutType] + _x) call FNC_AddItemVehicleOrg;
+			([_vehicle, _loadoutType] + _x) call FNC_AddItemVehicleOrg;
 
-        } forEach _randomPick;
+		} forEach _randomPick;
 
-    } else {
+	} else {
 
-        ([_vehicle, _loadoutType] + _randomPick) call FNC_AddItemVehicleOrg;
+		([_vehicle, _loadoutType] + _randomPick) call FNC_AddItemVehicleOrg;
 
-    };
+	};
 
 } else {
 
-    [_vehicle, _loadoutType, _randomPick, _amount] call FNC_AddItemVehicleOrg;
+	[_vehicle, _loadoutType, _randomPick, _amount] call FNC_AddItemVehicleOrg;
 
 };

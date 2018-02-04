@@ -18,27 +18,27 @@ private _newArray = [];
 
 {
 
-    if (!(_x in _foundArray)) then {
+	if (!(_x in _foundArray)) then {
 
-        private _string = _x;
+		private _string = _x;
 
-        _foundArray set [count _foundArray, _string];
+		_foundArray set [count _foundArray, _string];
 
-        private _count = 0;
+		private _count = 0;
 
-        {
+		{
 
-            if (_string == _x) then {
+			if (_string == _x) then {
 
-                _count = _count + 1;
+				_count = _count + 1;
 
-            };
+			};
 
-        } forEach _array;
+		} forEach _array;
 
-        _newArray set [count _newArray, format ["%1 X %2", _count, _string]];
+		_newArray set [count _newArray, format ["%1 X %2", _count, _string]];
 
-    };
+	};
 
 } forEach _array;
 

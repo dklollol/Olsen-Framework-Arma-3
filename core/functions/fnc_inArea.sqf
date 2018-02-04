@@ -14,8 +14,8 @@
  */
 
 params [
-    ["_unit", objNull, [objNull]],
-    ["_marker", "", [""]]
+	["_unit", objNull, [objNull]],
+	["_marker", "", [""]]
 ];
 
 private _pos = markerPos _marker;
@@ -27,7 +27,7 @@ private _radius = _xSize;
 
 if (_ySize > _xSize) then {
 
-    _radius = _ySize;
+	_radius = _ySize;
 
 };
 
@@ -35,52 +35,52 @@ _result = false;
 
 if ((_unit distance _pos) <= (_radius * 1.5)) then {
 
-    private _pos_x = (getPosASL _unit) select 0;
-    private _pos_y = (getPosASL _unit) select 1;
+	private _pos_x = (getPosASL _unit) select 0;
+	private _pos_y = (getPosASL _unit) select 1;
 
-    _angle = markerDir _marker;
+	_angle = markerDir _marker;
 
-    private _pos_x = _pos_x - (_pos select 0);
-    private _pos_y = _pos_y - (_pos select 1);
+	private _pos_x = _pos_x - (_pos select 0);
+	private _pos_y = _pos_y - (_pos select 1);
 
-    if (_angle != 0) then {
+	if (_angle != 0) then {
 
-        private _temp = _pos_x * cos(_angle) - _pos_y * sin(_angle);
-        _pos_y = _pos_x * sin(_angle) + _pos_y * cos(_angle);
-        _pos_x = _temp;
+		private _temp = _pos_x * cos(_angle) - _pos_y * sin(_angle);
+		_pos_y = _pos_x * sin(_angle) + _pos_y * cos(_angle);
+		_pos_x = _temp;
 
-    };
+	};
 
-    if ((markerShape _marker) == "ELLIPSE") then {
+	if ((markerShape _marker) == "ELLIPSE") then {
 
-        if (_xSize == _ySize) then {
+		if (_xSize == _ySize) then {
 
-            if ((_unit distance _pos) <= _radius) then {
+			if ((_unit distance _pos) <= _radius) then {
 
-                _result = true;
+				_result = true;
 
-            };
+			};
 
-        } else {
+		} else {
 
-            if (((_pos_x ^ 2) / (_xSize ^ 2) + (_pos_y ^ 2) / (_ySize ^ 2)) <= 1) then {
+			if (((_pos_x ^ 2) / (_xSize ^ 2) + (_pos_y ^ 2) / (_ySize ^ 2)) <= 1) then {
 
-                _result = true;
+				_result = true;
 
-            };
+			};
 
-        };
+		};
 
-    } else {
+	} else {
 
 
-        if ((abs _pos_x) <= _xSize && (abs _pos_y) <= _ySize) then {
+		if ((abs _pos_x) <= _xSize && (abs _pos_y) <= _ySize) then {
 
-            _result = true;
+			_result = true;
 
-        };
+		};
 
-    };
+	};
 
 };
 

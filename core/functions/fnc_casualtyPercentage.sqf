@@ -21,12 +21,12 @@ private _current = [_team, 4] call FNC_GetTeamVariable;
 
 if (_start == 0) then {
 
-    private _tempText = format ["Casualty count:<br></br>Warning no units on team ""%1"".", _team];
-    _tempText call FNC_DebugMessage;
+	private _tempText = format ["Casualty count:<br></br>Warning no units on team ""%1"".", _team];
+	_tempText call FNC_DebugMessage;
 
 } else {
 
-    _count = (_start - _current) / (_start * 0.01);
+	_count = (_start - _current) / (_start * 0.01);
 
 };
 

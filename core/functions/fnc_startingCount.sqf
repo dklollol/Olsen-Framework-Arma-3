@@ -14,10 +14,10 @@
 
 {
 
-    if (!(_x getVariable ["FW_DontTrack", false])) then {
+	if (!(_x getVariable ["FW_DontTrack", false])) then {
 
-        _x call FNC_TrackUnit;
+		_x call FNC_TrackUnit;
 
-    };
+	};
 
 } forEach allUnits;

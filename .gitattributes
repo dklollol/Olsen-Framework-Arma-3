@@ -1,4 +1,8 @@
 * text=auto
+*.sqf text eol=crlf
+*.hpp text eol=crlf
+*.ext text eol=crlf
+
 *.png binary
 *.jpg binary
 *.paa binary
