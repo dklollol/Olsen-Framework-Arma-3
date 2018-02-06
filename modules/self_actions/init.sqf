@@ -19,7 +19,7 @@ if (!isDedicated && hasInterface) then {
 					default {_str = "<t size='1.5'>You are in <br/><t color='#FFFFFF'>WHITE</t> team.</t> "};
 				};
 				hint parseText _str;
-			}, {assignedTeam player != nil}] call ace_interact_menu_fnc_createAction;
+			}, {!isNil {assignedTeam player}}] call ace_interact_menu_fnc_createAction;
 			[player, 1, ["ACE_SelfActions"], _teamColor] call ace_interact_menu_fnc_addActionToObject;
 		};
 
