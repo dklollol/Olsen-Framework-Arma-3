@@ -98,7 +98,7 @@ private _unflipAction = ["ai_driver_unflip","Unflip vehicle","",{
     vehicle _player == _target && ((assignedVehicleRole _player) select 0) == "Turret" && {(vectorUp _target) select 2 < 0}
 }] call ace_interact_menu_fnc_createAction;
 
-FNC_AddAIDriver = {
+FNC_enableAIDriver = {
     private _vehs = _this;
     if (typeName _vehs != "ARRAY") then {
         _vehs = [_vehs];
@@ -110,4 +110,4 @@ FNC_AddAIDriver = {
 
 };
 
-VEHS call FNC_AddAIDriver;
+VEHS call FNC_enableAIDriver;
