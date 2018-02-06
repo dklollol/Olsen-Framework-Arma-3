@@ -17,23 +17,23 @@ private _scenario = _this;
 
 if (time > 0) then {
 
-    FW_MissionEnded = true;
+	FW_MissionEnded = true;
 
-    if (!isNil "aCount_endCount") then {call aCount_endCount};
-    
-    {
+	if (!isNil "aCount_endCount") then {call aCount_endCount};
+	
+	{
 
-        private _team = (_x select 0);
+		private _team = (_x select 0);
 
-        private _assets = _team call FNC_GetDamagedAssets;
+		private _assets = _team call FNC_GetDamagedAssets;
 
-        [_team, 5, _assets select 0] call FNC_SetTeamVariable;
-        [_team, 6, _assets select 1] call FNC_SetTeamVariable;
+		[_team, 5, _assets select 0] call FNC_SetTeamVariable;
+		[_team, 6, _assets select 1] call FNC_SetTeamVariable;
 
-    } forEach FW_Teams;
+	} forEach FW_Teams;
 
-    ["FW_EndMission", [_scenario, FW_TimeLimit, FW_Teams]] call CBA_fnc_globalEvent;
-    
+	["FW_EndMission", [_scenario, FW_TimeLimit, FW_Teams]] call CBA_fnc_globalEvent;
+	
 } else {
-    "End Conditions have just been triggered. Mission will have to be ended manually." remoteExec ["systemChat", 0, false];
+	"End Conditions have just been triggered. Mission will have to be ended manually." remoteExec ["systemChat", 0, false];
 };

@@ -18,7 +18,7 @@ private _unit = _this;
 
 removeHeadgear _unit;
 if (!isPlayer _unit || !((goggles _unit) in WHITELIST) || (!isNil "FW_force_remove_facewear" && {FW_force_remove_facewear})) then {
-    removeGoggles _unit;
+	removeGoggles _unit;
 };
 removeVest _unit;
 removeBackpack _unit;

@@ -18,13 +18,13 @@ params ["_scenario", "_timeLimit", "_teams"];
 
 [] spawn {
 
-    sleep 4;
-    {
+	sleep 4;
+	{
 
-        _x enableSimulation false;
-        removeAllWeapons _x;
+		_x enableSimulation false;
+		removeAllWeapons _x;
 
-    } forEach allPlayers;
+	} forEach allPlayers;
 };
 
 _leftText = "";
@@ -35,7 +35,7 @@ _bottomTextRight = "";
 _textSide = 0;
 {
 
-    _x params ["_name", "_side", "_type", "_start", "_current", "_disabled", "_destroyed"];
+	_x params ["_name", "_side", "_type", "_start", "_current", "_disabled", "_destroyed"];
 
 	_temp = format ["%1<br />Casualties: %2 out of %3<br />", _name, (_start - _current), _start];
 

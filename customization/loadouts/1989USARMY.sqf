@@ -18,34 +18,37 @@
 
 #define package "1989USARMY_"
 
-#define uniform \
+SET_GROUP(uniform)
 	["usm_bdu_w"] call FNC_AddItem;
+END_GROUP;
 	
-#define IFAK \
-	["ACE_fieldDressing", 3, "uniform"] call FNC_AddItem; \
-	["ACE_elasticBandage", 3, "uniform"] call FNC_AddItem; \
-	["ACE_packingBandage", 3, "uniform"] call FNC_AddItem; \
-	["ACE_quikclot", 3, "vest"] call FNC_AddItem; \
-	["ACE_morphine", 1, "vest"] call FNC_AddItem; \
-	["ACE_epinephrine", 1, "vest"] call FNC_AddItem; \
+SET_GROUP(IFAK)
+	["ACE_fieldDressing", 3, "uniform"] call FNC_AddItem;
+	["ACE_elasticBandage", 3, "uniform"] call FNC_AddItem;
+	["ACE_packingBandage", 3, "uniform"] call FNC_AddItem;
+	["ACE_quikclot", 3, "vest"] call FNC_AddItem;
+	["ACE_morphine", 1, "vest"] call FNC_AddItem;
+	["ACE_epinephrine", 1, "vest"] call FNC_AddItem;
 	["ACE_tourniquet", 1, "vest"] call FNC_AddItem;
+END_GROUP;
 	
-#define items \
-	["ItemMap"] call FNC_AddItem; \
-	["ItemCompass"] call FNC_AddItem; \
-	["ItemWatch"] call FNC_AddItem; \
-	["ACE_MapTools"] call FNC_AddItem; \
+SET_GROUP(items)
+	["ItemMap"] call FNC_AddItem;
+	["ItemCompass"] call FNC_AddItem;
+	["ItemWatch"] call FNC_AddItem;
+	["ACE_MapTools"] call FNC_AddItem;
 	["ACE_earplugs"] call FNC_AddItem;
-	
+END_GROUP;
+
 case (package + "RF"): { //Rifleman
 	
 	["usm_vest_pasgt_lbe_rm"] call FNC_AddItem;  //Vest
 	
 	["usm_helmet_pasgt_w","usm_helmet_pasgt_g_w"] call FNC_AddItemRandom; //Helmets
 	
-	uniform;
-	IFAK;
-	items;
+	ADD_GROUP(uniform);
+	ADD_GROUP(IFAK);
+	ADD_GROUP(items);
 	
 	["rhs_mag_m67",1,"vest"] call FNC_AddItem; //Frag Grenade
 	["rhs_mag_an_m8hc",2,"vest"] call FNC_AddItem; //Smoke Grenade
@@ -63,9 +66,9 @@ case (package + "RFAT"): { //LAT Rifleman
 	
 	["usm_helmet_pasgt_w","usm_helmet_pasgt_g_w"] call FNC_AddItemRandom; //Helmets
 	
-	uniform;
-	IFAK;
-	items;
+	ADD_GROUP(uniform);
+	ADD_GROUP(IFAK);
+	ADD_GROUP(items);
 	
 	["rhs_mag_m67",1,"vest"] call FNC_AddItem; //Frag Grenade
 	["rhs_mag_an_m8hc",2,"vest"] call FNC_AddItem; //Smoke Grenade
@@ -88,9 +91,9 @@ case (package + "SL"): { //Squad Leader
 	
 	["Binocular"] call FNC_AddItem;
 	
-	uniform;
-	IFAK;
-	items;
+	ADD_GROUP(uniform);
+	ADD_GROUP(IFAK);
+	ADD_GROUP(items);
 	
 	["rhs_mag_m67",1,"vest"] call FNC_AddItem; //Frag Grenade
 	["rhs_mag_an_m8hc",2,"vest"] call FNC_AddItem; //Smoke Grenade
@@ -112,9 +115,9 @@ case (package + "PSG"): { //Platoon Sergeant
 	
 	["Binocular"] call FNC_AddItem;
 	
-	uniform;
-	IFAK;
-	items;
+	ADD_GROUP(uniform);
+	ADD_GROUP(IFAK);
+	ADD_GROUP(items);
 	
 	["rhs_mag_m67",1,"vest"] call FNC_AddItem; //Frag Grenade
 	["rhs_mag_an_m8hc",2,"vest"] call FNC_AddItem; //Smoke Grenade
@@ -139,9 +142,9 @@ case (package + "PL"): { //Platoon Leader
 	
 	["Binocular"] call FNC_AddItem;
 	
-	uniform;
-	IFAK;
-	items;
+	ADD_GROUP(uniform);
+	ADD_GROUP(IFAK);
+	ADD_GROUP(items);
 	
 	["rhs_mag_m67",1,"vest"] call FNC_AddItem; //Frag Grenade
 	["rhs_mag_an_m8hc",2,"vest"] call FNC_AddItem; //Smoke Grenade
@@ -160,9 +163,9 @@ case (package + "RTO"): { //Radio Telephone Operator
 	
 	["usm_helmet_pasgt_w","usm_helmet_pasgt_g_w"] call FNC_AddItemRandom; //Helmets
 	
-	uniform;
-	IFAK;
-	items;
+	ADD_GROUP(uniform);
+	ADD_GROUP(IFAK);
+	ADD_GROUP(items);
 	
 	["rhs_mag_m67",1,"vest"] call FNC_AddItem; //Frag Grenade
 	["rhs_mag_an_m8hc",2,"vest"] call FNC_AddItem; //Smoke Grenade
@@ -180,9 +183,9 @@ case (package + "TL"): { //Team Leader
 	
 	["usm_helmet_pasgt_w","usm_helmet_pasgt_g_w"] call FNC_AddItemRandom; //Helmets
 	
-	uniform;
-	IFAK;
-	items;
+	ADD_GROUP(uniform);
+	ADD_GROUP(IFAK);
+	ADD_GROUP(items);
 	
 	["rhs_mag_m67",1,"vest"] call FNC_AddItem; //Frag Grenade
 	["rhs_mag_an_m8hc",2,"vest"] call FNC_AddItem; //Smoke Grenade
@@ -200,9 +203,9 @@ case (package + "TLLAT"): { //Team Leader with Disposable AT
 	
 	["usm_helmet_pasgt_w","usm_helmet_pasgt_g_w"] call FNC_AddItemRandom; //Helmets
 	
-	uniform;
-	IFAK;
-	items;
+	ADD_GROUP(uniform);
+	ADD_GROUP(IFAK);
+	ADD_GROUP(items);
 	
 	["rhs_mag_m67",1,"vest"] call FNC_AddItem; //Frag Grenade
 	["rhs_mag_an_m8hc",2,"vest"] call FNC_AddItem; //Smoke Grenade
@@ -222,9 +225,9 @@ case (package + "MG"): { //Machine Gunner
 
 	["usm_helmet_pasgt_w","usm_helmet_pasgt_g_w"] call FNC_AddItemRandom; //Helmets
 	
-	uniform;
-	IFAK;
-	items;
+	ADD_GROUP(uniform);
+	ADD_GROUP(IFAK);
+	ADD_GROUP(items);
 	
 	["rhs_mag_m67",1,"vest"] call FNC_AddItem; //Frag Grenade
 	["rhs_mag_an_m8hc",2,"vest"] call FNC_AddItem; //Smoke Grenade
@@ -243,9 +246,9 @@ case (package + "GREN"): { //Grenadier
 	
 	["usm_helmet_pasgt_w","usm_helmet_pasgt_g_w"] call FNC_AddItemRandom; //Helmets
 	
-	uniform;
-	IFAK;
-	items;
+	ADD_GROUP(uniform);
+	ADD_GROUP(IFAK);
+	ADD_GROUP(items);
 	
 	["rhs_mag_m67",1,"vest"] call FNC_AddItem; //Frag Grenade
 	["rhs_mag_an_m8hc",2,"vest"] call FNC_AddItem; //Smoke Grenade
@@ -269,9 +272,9 @@ case (package + "DRGN"): { //Dragon ATGM Gunner
 	
 	["ACE_M47_Daysight"] call FNC_AddItem; //Dragon Optic
 	
-	uniform;
-	IFAK;
-	items;
+	ADD_GROUP(uniform);
+	ADD_GROUP(IFAK);
+	ADD_GROUP(items);
 	
 	["rhs_mag_m67",1,"vest"] call FNC_AddItem; //Frag Grenade
 	["rhs_mag_an_m8hc",2,"vest"] call FNC_AddItem; //Smoke Grenade
@@ -294,9 +297,9 @@ case (package + "TC"): { //Tank Commander
 	
 	["Binocular"] call FNC_AddItem;
 	
-	uniform;
-	IFAK;
-	items;
+	ADD_GROUP(uniform);
+	ADD_GROUP(IFAK);
+	ADD_GROUP(items);
 	
 	["rhs_mag_30Rnd_556x45_M855A1_Stanag_No_Tracer",1,"vest"] call FNC_AddItem; //Magazines
 	
@@ -310,9 +313,9 @@ case (package + "GNR"): { //Vehicle Gunner
 	
 	["rhsusf_cvc_green_helmet","rhsusf_cvc_green_ess"] call FNC_AddItemRandom; //Helmets
 	
-	uniform;
-	IFAK;
-	items;
+	ADD_GROUP(uniform);
+	ADD_GROUP(IFAK);
+	ADD_GROUP(items);
 	
 	["rhs_mag_30Rnd_556x45_M855A1_Stanag_No_Tracer",1,"vest"] call FNC_AddItem; //Magazines
 	
@@ -327,9 +330,9 @@ case (package + "DRVR"): { //Vehicle Driver
 	
 	["rhsusf_cvc_green_helmet","rhsusf_cvc_green_ess"] call FNC_AddItemRandom; //Helmets
 	
-	uniform;
-	IFAK;
-	items;
+	ADD_GROUP(uniform);
+	ADD_GROUP(IFAK);
+	ADD_GROUP(items);
 	
 	["rhs_mag_30Rnd_556x45_M855A1_Stanag_No_Tracer",1,"vest"] call FNC_AddItem; //Magazines
 	["ToolKit",1,"backpack"] call FNC_AddItem; //Toolkit to Repair Tracks
@@ -345,9 +348,9 @@ case (package + "MD"): { //Medic
 
 	["usm_helmet_pasgt_w","usm_helmet_pasgt_g_w"] call FNC_AddItemRandom; //Helmets
 	
-	uniform;
-	IFAK;
-	items;
+	ADD_GROUP(uniform);
+	ADD_GROUP(IFAK);
+	ADD_GROUP(items);
 	
 	["rhs_mag_m67",1,"vest"] call FNC_AddItem; //Frag Grenade
 	["rhs_mag_an_m8hc",2,"vest"] call FNC_AddItem; //Smoke Grenades

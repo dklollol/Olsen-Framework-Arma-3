@@ -25,4 +25,4 @@
 	killcam_active = true;
 
 // Makes screen turn black instantly and mutes all audio when killed
-    eg_instant_death = true;
+	eg_instant_death = true;

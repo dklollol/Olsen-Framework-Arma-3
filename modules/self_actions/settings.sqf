@@ -1,0 +1,3 @@
+#define ENABLE_CHECKING_TEAM_COLOR true
+#define ENABLE_VIEWING_MAP true
+#define ENABLE_CUTTING_GRASS true

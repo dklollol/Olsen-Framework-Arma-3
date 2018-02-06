@@ -5,6 +5,7 @@ PREP(eventPlayerSpawned);
 PREP(eventSpawned);
 PREP(eventRespawned);
 PREP(eventDisconnect);
+PREP(forceTerrainGrid);
 PREP(trackUnit);
 PREP(untrackUnit);
 PREP(StartingCount);
@@ -33,8 +34,8 @@ if (isServer) then {
 
 	"west" call FNC_CreateRespawnMarker;
 	"east" call FNC_CreateRespawnMarker;
-	"guerrila" call FNC_CreateRespawnMarker;
-	"civilian" call FNC_CreateRespawnMarker;
+	"guer" call FNC_CreateRespawnMarker;
+	"civ" call FNC_CreateRespawnMarker;
 
 	FW_Teams = []; //DO NOT REMOVE
 	FW_MissionEnded = false; //Mission has not ended
@@ -57,6 +58,13 @@ if (!isDedicated) then {
 		//Tells the server the player has spawned
 		["FW_PlayerSpawned", player] call CBA_fnc_serverEvent;
 
+		["endMission", {
+			private _msg = "Mission ended by admin";
+			if (count (_this select 0) > 0) then {
+				_msg = _msg + ": " + _this select 0;
+			};
+			_msg call FNC_EndMission;
+		}, "admin"] call CBA_fnc_registerChatCommand;
 	};
 
 	//"FW_EndMission" player event sends the received variables to the end screen

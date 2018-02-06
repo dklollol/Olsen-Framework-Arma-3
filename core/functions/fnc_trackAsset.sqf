@@ -15,9 +15,9 @@
  */
 
 params [
-    ["_asset", objNull, [objNull]],
-    ["_name", "", [""]],
-    ["_team", "", [""]]
+	["_asset", objNull, [objNull]],
+	["_name", "", [""]],
+	["_team", "", [""]]
 ];
 
 private _asset = vehicle (_asset);

@@ -22,34 +22,38 @@
 
 #define package "2000MSV_"
 
-#define uniform \
+SET_GROUP(uniform)
 	["rhs_uniform_flora"] call FNC_AddItem;
+END_GROUP;
 	
-#define IFAK \
-	["ACE_fieldDressing", 3, "uniform"] call FNC_AddItem; \
-	["ACE_elasticBandage", 3, "uniform"] call FNC_AddItem; \
-	["ACE_packingBandage", 3, "uniform"] call FNC_AddItem; \
-	["ACE_quikclot", 3, "uniform"] call FNC_AddItem; \
-	["ACE_morphine", 1, "uniform"] call FNC_AddItem; \
+SET_GROUP(IFAK)
+	["ACE_fieldDressing", 3, "uniform"] call FNC_AddItem;
+	["ACE_elasticBandage", 3, "uniform"] call FNC_AddItem;
+	["ACE_packingBandage", 3, "uniform"] call FNC_AddItem;
+	["ACE_quikclot", 3, "uniform"] call FNC_AddItem;
+	["ACE_morphine", 1, "uniform"] call FNC_AddItem;
 	["ACE_tourniquet", 1, "uniform"] call FNC_AddItem;
+END_GROUP;
 	
-#define items \
-	["ItemMap"] call FNC_AddItem; \
-	["ItemCompass"] call FNC_AddItem; \
-	["ItemWatch"] call FNC_AddItem; \
+SET_GROUP(items)
+	["ItemMap"] call FNC_AddItem;
+	["ItemCompass"] call FNC_AddItem;
+	["ItemWatch"] call FNC_AddItem;
 	["ACE_earplugs"] call FNC_AddItem;
+END_GROUP;
 	
-#define helmet \
+SET_GROUP(helmet)
 	["rhs_6b26","rhs_6b26_bala","rhs_6b26_ess","rhs_6b26_ess_bala"] call FNC_AddItemRandom;
 	//["rhs_6b26"] call FNC_AddItem;
+END_GROUP;
 	
 case (package + "RF"): { //Rifleman
 	
 	["rhs_6b23_rifleman"] call FNC_AddItem;  //Vest
-	uniform;
-	helmet;
-	IFAK;
-	items;
+	ADD_GROUP(uniform);
+	ADD_GROUP(helmet);
+	ADD_GROUP(IFAK);
+	ADD_GROUP(items);
 	
 	["rhs_mag_rdg2_white", 1] call FNC_AddItem; //White smoke
 	["rhs_mag_rgn", 1] call FNC_AddItem; //Frag grenade
@@ -68,10 +72,10 @@ case (package + "RPG") : { //RPG Grenadier
 	["rhs_6b23_rifleman"] call FNC_AddItem;  //Vest
 	["rhs_rpg_empty"] call FNC_AddItem; // RPG Carrier
 	
-	uniform;
-	helmet;
-	IFAK;
-	items;
+	ADD_GROUP(uniform);
+	ADD_GROUP(helmet);
+	ADD_GROUP(IFAK);
+	ADD_GROUP(items);
 	
 	["rhs_mag_rdg2_white", 1] call FNC_AddItem; //White smoke
 	["rhs_mag_rgn", 1] call FNC_AddItem; //Frag grenade
@@ -94,10 +98,10 @@ case (package + "RPGASST") : { // RPG Assistant
 	["rhs_6b23_rifleman"] call FNC_AddItem;  //Vest
 	["rhs_rpg_empty"] call FNC_AddItem; // RPG Carrier
 	
-	uniform;
-	helmet;
-	IFAK;
-	items;
+	ADD_GROUP(uniform);
+	ADD_GROUP(helmet);
+	ADD_GROUP(IFAK);
+	ADD_GROUP(items);
 	
 	["rhs_mag_rdg2_white", 1] call FNC_AddItem; //White smoke
 	["rhs_mag_rgn", 1] call FNC_AddItem; //Frag grenade
@@ -115,11 +119,11 @@ case (package + "RPGASST") : { // RPG Assistant
 
 case (package + "EFR") : { //Efreitor
 	
-	uniform;
+	ADD_GROUP(uniform);
 	["rhs_6b23_6sh92_vog_headset"] call FNC_AddItem; //vest
 	["rhs_6b26_ess"] call FNC_AddItem; // helmet
-	IFAK;
-	items;
+	ADD_GROUP(IFAK);
+	ADD_GROUP(items);
 	
 	["ACRE_PRC343",1,"uniform"] call FNC_AddItem; // SR Radio
 	
@@ -139,11 +143,11 @@ case (package + "EFR") : { //Efreitor
 
 case (package + "SL") : { //Section Leader
 	
-	uniform;
+	ADD_GROUP(uniform);
 	["rhs_6b23_6sh92_headset_mapcase"] call FNC_AddItem; //vest
 	["rhs_6b26"] call FNC_AddItem; // helmet
-	IFAK;
-	items;
+	ADD_GROUP(IFAK);
+	ADD_GROUP(items);
 	["Binocular"] call FNC_AddItem; // Binoculars
 	
 	["ACRE_PRC343",1,"uniform"] call FNC_AddItem; // SR Radio
@@ -162,12 +166,12 @@ case (package + "SL") : { //Section Leader
 	
 case (package + "PL") : { // PLT Commander
 	
-	uniform;
+	ADD_GROUP(uniform);
 	["rhs_6b23_crewofficer"] call FNC_AddItem; // vest
 	["rhs_assault_umbts"] call FNC_AddItem; // Radio Backpack
 	["rhs_6b26_ess","rhs_6b26"] call FNC_AddItemRandom; // helmet
-	IFAK;
-	items;
+	ADD_GROUP(IFAK);
+	ADD_GROUP(items);
 	["Binocular"] call FNC_AddItem; // Binoculars
 	
 	["ACRE_PRC343",1,"uniform"] call FNC_AddItem; // SR Radio
@@ -191,11 +195,11 @@ case (package + "PL") : { // PLT Commander
 
 case (package + "COY") : { // Company Commander
 	
-	uniform;
+	ADD_GROUP(uniform);
 	["rhs_6b23_crewofficer"] call FNC_AddItem; // vest
 	["rhs_6b26_ess","rhs_6b26"] call FNC_AddItemRandom; // helmet
-	IFAK;
-	items;
+	ADD_GROUP(IFAK);
+	ADD_GROUP(items);
 	["Binocular"] call FNC_AddItem; // Binoculars
 	
 	["ACRE_PRC343",1,"uniform"] call FNC_AddItem; // SR Radio
@@ -215,11 +219,11 @@ case (package + "COY") : { // Company Commander
 };
 case (package + "COYSGT") : { // Company Sergeant
 	
-	uniform;
+	ADD_GROUP(uniform);
 	["rhs_6b23_6sh92_vog_headset"] call FNC_AddItem; //vest
 	["rhs_6b26_ess","rhs_6b26"] call FNC_AddItemRandom; // helmet
-	IFAK;
-	items;
+	ADD_GROUP(IFAK);
+	ADD_GROUP(items);
 	["Binocular"] call FNC_AddItem; // Binoculars
 	
 	["ACRE_PRC343",1,"uniform"] call FNC_AddItem; // SR Radio
@@ -241,11 +245,11 @@ case (package + "COYSGT") : { // Company Sergeant
 };
 case (package + "PLTSGT") : { // PLT Sergeant
 
-	uniform;
+	ADD_GROUP(uniform);
 	["rhs_6b23_6sh92_vog_headset"] call FNC_AddItem; //vest
 	["rhs_6b26_ess","rhs_6b26"] call FNC_AddItemRandom; // helmet
-	IFAK;
-	items;
+	ADD_GROUP(IFAK);
+	ADD_GROUP(items);
 	["Binocular"] call FNC_AddItem; // Binoculars
 	
 	["ACRE_PRC343",1,"uniform"] call FNC_AddItem; // SR Radio
@@ -270,10 +274,10 @@ case (package + "RTO"): { // RTO
 	
 	
 	
-	uniform;
-	helmet;
-	IFAK;
-	items;
+	ADD_GROUP(uniform);
+	ADD_GROUP(helmet);
+	ADD_GROUP(IFAK);
+	ADD_GROUP(items);
 	["rhs_assault_umbts"] call FNC_AddItem; // Radio Backpack
 	
 	["ACRE_PRC117F",1,"backpack"] call FNC_AddItem; // COY Radio
@@ -290,11 +294,11 @@ case (package + "RTO"): { // RTO
 
 case (package + "MKS") : { // Marksman	
 	
-	uniform;
+	ADD_GROUP(uniform);
 	["rhs_6b23_sniper"] call FNC_AddItem;
-	helmet;
-	IFAK;
-	items;
+	ADD_GROUP(helmet);
+	ADD_GROUP(IFAK);
+	ADD_GROUP(items);
 	
 	["rhs_mag_rdg2_white", 1] call FNC_AddItem; //White smoke
 	["rhs_mag_rgn", 1] call FNC_AddItem; //Frag grenade
@@ -310,12 +314,12 @@ case (package + "MKS") : { // Marksman
 
 case (package + "MG") : { //Machinegunner
 	
-	uniform;
+	ADD_GROUP(uniform);
 	["rhs_6b23_rifleman"] call FNC_AddItem;  //Vest
 	["rhs_sidor"] call FNC_AddItem; // Backpack
-	helmet;
-	IFAK;
-	items;
+	ADD_GROUP(helmet);
+	ADD_GROUP(IFAK);
+	ADD_GROUP(items);
 	
 	["rhs_mag_rdg2_white", 1] call FNC_AddItem; //White smoke
 	["rhs_mag_rgn", 1] call FNC_AddItem; //Frag grenade
@@ -329,11 +333,11 @@ case (package + "MGASST") : { // MG Assistant
 	
 	["rhs_6b23_rifleman"] call FNC_AddItem;  //Vest
 	
-	uniform;
-	helmet;
+	ADD_GROUP(uniform);
+	ADD_GROUP(helmet);
 	["rhs_sidor"] call FNC_AddItem; // Backpack
-	IFAK;
-	items;
+	ADD_GROUP(IFAK);
+	ADD_GROUP(items);
 	["Binocular"] call FNC_AddItem; // Binoculars
 	
 	["rhs_mag_rdg2_white", 1] call FNC_AddItem; //White smoke
@@ -349,11 +353,11 @@ case (package + "MGASST") : { // MG Assistant
 
 case (package + "DRVR") : { // Driver
 	
-	uniform;
+	ADD_GROUP(uniform);
 	["rhs_6b23_engineer"] call FNC_AddItem; // Vest
 	["rhs_tsh4_ess","rhs_tsh4_ess_bala"] call FNC_AddItemRandom; //Helmets 
-	IFAK;
-	items;
+	ADD_GROUP(IFAK);
+	ADD_GROUP(items);
 	
 	["rhs_mag_rdg2_white", 1] call FNC_AddItem; //White smoke
 	["rhs_mag_rgn", 1] call FNC_AddItem; //Frag grenade
@@ -367,11 +371,11 @@ case (package + "DRVR") : { // Driver
 
 case (package + "GNR") : { // Gunner
 	
-	uniform;
+	ADD_GROUP(uniform);
 	["rhs_6b23_engineer"] call FNC_AddItem; // Vest
 	["rhs_tsh4","rhs_tsh4_bala"] call FNC_AddItemRandom; //Helmets 
-	IFAK;
-	items;
+	ADD_GROUP(IFAK);
+	ADD_GROUP(items);
 	
 	["ACRE_PRC148",1,"uniform"] call FNC_AddItem; // PLT Radio
 	
@@ -388,12 +392,12 @@ case (package + "GNR") : { // Gunner
 
 case (package + "MED") : { // Medic
 	
-	uniform;
+	ADD_GROUP(uniform);
 	["rhs_6b23_medic"] call FNC_AddItem; // vest
 	["rhs_medic_bag"] call FNC_AddItem; // medic bag
-	IFAK;
-	items;
-	helmet;
+	ADD_GROUP(IFAK);
+	ADD_GROUP(items);
+	ADD_GROUP(helmet);
 	
 	["ACRE_PRC148",1,"uniform"] call FNC_AddItem; // PLT Radio
 	
@@ -423,12 +427,12 @@ case (package + "MED") : { // Medic
 
 case (package + "RPK") : { //RPK
 
-	uniform;
+	ADD_GROUP(uniform);
 	["rhs_6b23_rifleman"] call FNC_AddItem;  //Vest
 	["rhs_sidor"] call FNC_AddItem; // Backpack
-	helmet;
-	IFAK;
-	items;
+	ADD_GROUP(helmet);
+	ADD_GROUP(IFAK);
+	ADD_GROUP(items);
 	
 	["rhs_mag_rdg2_white", 1] call FNC_AddItem; //White smoke
 	["rhs_mag_rgn", 1] call FNC_AddItem; //Frag grenade
@@ -442,11 +446,11 @@ case (package + "RPK") : { //RPK
 
 case (package + "CMDR") : { // Gunner
 	
-	uniform;
+	ADD_GROUP(uniform);
 	["rhs_6b23_engineer"] call FNC_AddItem; // Vest
 	["rhs_tsh4","rhs_tsh4_bala"] call FNC_AddItemRandom; //Helmets 
-	IFAK;
-	items;
+	ADD_GROUP(IFAK);
+	ADD_GROUP(items);
 	["Binocular"] call FNC_AddItem; // Binoculars
 	
 	["ACRE_PRC148",1,"uniform"] call FNC_AddItem; // PLT Radio

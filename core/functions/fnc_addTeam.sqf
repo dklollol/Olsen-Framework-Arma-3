@@ -15,17 +15,17 @@
  */
 
 params [
-    ["_side", sideUnknown, [sideUnknown]],
-    ["_name", "Unknown", [""]],
-    ["_type", "ai", [""]]
+	["_side", sideUnknown, [sideUnknown]],
+	["_name", "Unknown", [""]],
+	["_type", "ai", [""]]
 ];
 
 if (isMultiplayer) then {
 
-    FW_Teams set [count FW_Teams, [_name, _side, _type,  0, 0, [], []]];
+	FW_Teams set [count FW_Teams, [_name, _side, _type,  0, 0, [], []]];
 
 } else {
 
-    FW_Teams set [count FW_Teams, [_name, _side, "ai",  0, 0, [], []]];
+	FW_Teams set [count FW_Teams, [_name, _side, "ai",  0, 0, [], []]];
 
 };

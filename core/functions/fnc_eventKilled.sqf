@@ -14,22 +14,22 @@
  */
 
 params [
-    ["_unit", objNull, [objNull]],
-    ["_killer", objNull, [objNull]]
+	["_unit", objNull, [objNull]],
+	["_killer", objNull, [objNull]]
 ];
 
 if (_unit getVariable ["FW_Tracked", false]) then {
 
-    {
-        _x params ["", "_side", "_type", "", "_current"];
+	{
+		_x params ["", "_side", "_type", "", "_current"];
 
-        if (!(_unit getVariable ["FW_HasDied", false]) &&  !(_unit getVariable ["FW_Dead", false]) && _unit getVariable "FW_Side" == _side and ((_type != "ai" && isPlayer _unit) || (_type == "ai"))) exitWith {
+		if (!(_unit getVariable ["FW_HasDied", false]) &&  !(_unit getVariable ["FW_Dead", false]) && _unit getVariable "FW_Side" == _side and ((_type != "ai" && isPlayer _unit) || (_type == "ai"))) exitWith {
 
-            _unit setVariable ["FW_HasDied", true];
-        
-            _x set [4, _current - 1];
+			_unit setVariable ["FW_HasDied", true];
+		
+			_x set [4, _current - 1];
 
-        };
+		};
 
-    } forEach FW_Teams;
+	} forEach FW_Teams;
 };

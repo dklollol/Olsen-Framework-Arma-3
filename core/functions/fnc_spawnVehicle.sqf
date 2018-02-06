@@ -18,13 +18,13 @@ if(!isNil "aCount_addEH") then { ["aCount_event_addEH", _unit] call CBA_fnc_serv
 if (_unit getVariable ["FW_AssetName", ""] == "" && (count _this >= 3)) then
 {
   {
-    if (_x select 1 == (_this select 2)) exitWith {
-      _vehCfg = (configFile >> "CfgVehicles" >> (typeOf _unit));
-      if (isText(_vehCfg >> "displayName")) then
-      {
-        [_unit, getText(_vehCfg >> "displayName"), _x select 0] call FNC_TrackAsset;
-      };
-    };
+	if (_x select 1 == (_this select 2)) exitWith {
+	  _vehCfg = (configFile >> "CfgVehicles" >> (typeOf _unit));
+	  if (isText(_vehCfg >> "displayName")) then
+	  {
+		[_unit, getText(_vehCfg >> "displayName"), _x select 0] call FNC_TrackAsset;
+	  };
+	};
   } forEach FW_Teams;
 };
 _unit

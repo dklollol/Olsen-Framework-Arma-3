@@ -14,24 +14,27 @@
 
 #define package "1989VDV_"
 
-#define uniform \
+SET_GROUP(uniform)
 	["rhsgref_uniform_ttsko_forest"] call FNC_AddItem;
+END_GROUP;
 	
-#define IFAK \
-	["ACE_fieldDressing", 3, "uniform"] call FNC_AddItem; \
-	["ACE_elasticBandage", 3, "uniform"] call FNC_AddItem; \
-	["ACE_packingBandage", 3, "uniform"] call FNC_AddItem; \
-	["ACE_quikclot", 3, "uniform"] call FNC_AddItem; \
-	["ACE_morphine", 1, "uniform"] call FNC_AddItem; \
-	["ACE_epinephrine", 1, "uniform"] call FNC_AddItem; \
+SET_GROUP(IFAK)
+	["ACE_fieldDressing", 3, "uniform"] call FNC_AddItem;
+	["ACE_elasticBandage", 3, "uniform"] call FNC_AddItem;
+	["ACE_packingBandage", 3, "uniform"] call FNC_AddItem;
+	["ACE_quikclot", 3, "uniform"] call FNC_AddItem;
+	["ACE_morphine", 1, "uniform"] call FNC_AddItem;
+	["ACE_epinephrine", 1, "uniform"] call FNC_AddItem;
 	["ACE_tourniquet", 1, "uniform"] call FNC_AddItem;
+END_GROUP;
 	
-#define items \
-	["ItemMap"] call FNC_AddItem; \
-	["ItemCompass"] call FNC_AddItem; \
-	["ItemWatch"] call FNC_AddItem; \
-	["ACE_MapTools"] call FNC_AddItem; \
+SET_GROUP(items)
+	["ItemMap"] call FNC_AddItem;
+	["ItemCompass"] call FNC_AddItem;
+	["ItemWatch"] call FNC_AddItem;
+	["ACE_MapTools"] call FNC_AddItem;
 	["ACE_earplugs"] call FNC_AddItem;
+END_GROUP;
 	
 case (package + "RF"): { //Rifleman
 	
@@ -39,9 +42,9 @@ case (package + "RF"): { //Rifleman
 	
 	["rhsgref_ssh68_ttsko_forest"] call FNC_AddItem; //Helmet
 	
-	uniform;
-	IFAK;
-	items;
+	ADD_GROUP(items);
+	ADD_GROUP(IFAK);
+	ADD_GROUP(items);
 	
 	["rhs_mag_rdg2_white", 1] call FNC_AddItem; //White smoke
 	["rhs_mag_rgd5", 1] call FNC_AddItem; //Frag grenade
@@ -60,9 +63,9 @@ case (package + "RFLAT"): { //AT Rifleman
 	
 	["rhsgref_ssh68_ttsko_forest"] call FNC_AddItem; //Helmet
 	
-	uniform;
-	IFAK;
-	items;
+	ADD_GROUP(items);
+	ADD_GROUP(IFAK);
+	ADD_GROUP(items);
 	
 	["rhs_mag_rdg2_white", 1] call FNC_AddItem; //White smoke
 	["rhs_mag_rgd5", 1] call FNC_AddItem; //Frag grenade
@@ -84,9 +87,9 @@ case (package + "AR"): { //Automatic Rifleman
 	
 	["rhsgref_ssh68_ttsko_forest"] call FNC_AddItem; //Helmet
 	
-	uniform;
-	IFAK;
-	items;
+	ADD_GROUP(items);
+	ADD_GROUP(IFAK);
+	ADD_GROUP(items);
 	
 	["rhs_mag_rdg2_white", 1] call FNC_AddItem; //White smoke
 	["rhs_mag_rgd5", 1] call FNC_AddItem; //Frag grenade
@@ -106,9 +109,9 @@ case (package + "RFAT"): { //AT Rifleman
 	
 	["rhsgref_ssh68_ttsko_forest"] call FNC_AddItem; //Helmet
 	
-	uniform;
-	IFAK;
-	items;
+	ADD_GROUP(items);
+	ADD_GROUP(IFAK);
+	ADD_GROUP(items);
 	
 	["rhs_mag_rdg2_white", 1] call FNC_AddItem; //White smoke
 	["rhs_mag_rgd5", 1] call FNC_AddItem; //Frag grenade
@@ -132,9 +135,9 @@ case (package + "RFASST"): { //Assitant RPG Gunner
 	
 	["rhsgref_ssh68_ttsko_forest"] call FNC_AddItem; //Helmet
 	
-	uniform;
-	IFAK;
-	items;
+	ADD_GROUP(items);
+	ADD_GROUP(IFAK);
+	ADD_GROUP(items);
 	
 	["rhs_mag_rdg2_white", 1] call FNC_AddItem; //White smoke
 	["rhs_mag_rgd5", 1] call FNC_AddItem; //Frag grenade
@@ -155,9 +158,9 @@ case (package + "TL"): { //Team Leader/Efreitor
 
 	["rhsgref_ssh68_ttsko_forest"] call FNC_AddItem; //Helmet
 	
-	uniform;
-	IFAK;
-	items;
+	ADD_GROUP(items);
+	ADD_GROUP(IFAK);
+	ADD_GROUP(items);
 
 	["rhs_mag_rdg2_white", 1] call FNC_AddItem; //White smoke
 	["rhs_mag_rgd5", 1] call FNC_AddItem; //Frag grenade
@@ -182,9 +185,9 @@ case (package + "SL"): { //Squad Leader
 
 	["rhsgref_ssh68_ttsko_forest"] call FNC_AddItem; //Helmet
 	
-	uniform;
-	IFAK;
-	items;
+	ADD_GROUP(items);
+	ADD_GROUP(IFAK);
+	ADD_GROUP(items);
 	
 	["Binocular"] call FNC_AddItem;
 
@@ -207,9 +210,9 @@ case (package + "PL"): { //Platoon Leader
 
 	["rhsgref_ssh68_ttsko_forest"] call FNC_AddItem; //Helmet
 	
-	uniform;
-	IFAK;
-	items;
+	ADD_GROUP(items);
+	ADD_GROUP(IFAK);
+	ADD_GROUP(items);
 	
 	["Binocular"] call FNC_AddItem;
 
@@ -231,9 +234,9 @@ case (package + "MRKSMN"): { //Marksman
 	
 	["rhsgref_ssh68_ttsko_forest"] call FNC_AddItem; //Helmet
 	
-	uniform;
-	IFAK;
-	items;
+	ADD_GROUP(items);
+	ADD_GROUP(IFAK);
+	ADD_GROUP(items);
 	
 	["rhs_mag_rdg2_white", 1] call FNC_AddItem; //White smoke
 	["rhs_mag_rgd5", 1] call FNC_AddItem; //Frag grenade
@@ -252,9 +255,9 @@ case (package + "GNR"): { //Vehicle Gunner
 	
 	["rhs_tsh4"] call FNC_AddItem; //Helmet
 	
-	uniform;
-	IFAK;
-	items;
+	ADD_GROUP(items);
+	ADD_GROUP(IFAK);
+	ADD_GROUP(items);
 	
 	["Binocular"] call FNC_AddItem;
 	
@@ -276,9 +279,9 @@ case (package + "DRVR"): { //Vehicle Driver
 	
 	["rhs_tsh4"] call FNC_AddItem; //Helmet
 	
-	uniform;
-	IFAK;
-	items;
+	ADD_GROUP(items);
+	ADD_GROUP(IFAK);
+	ADD_GROUP(items);
 	
 	["rhs_mag_rdg2_white", 1] call FNC_AddItem; //White smoke
 	["rhs_mag_rgd5", 1] call FNC_AddItem; //Frag grenade
