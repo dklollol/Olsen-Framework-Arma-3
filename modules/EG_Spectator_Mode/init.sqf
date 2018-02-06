@@ -185,7 +185,7 @@ if (!isDedicated) then {
 			};
 
 			if (!isNull(_respawnPoint)) then {
-				player setPos getPosATL _respawnPoint;
+				player setPosATL getPosATL _respawnPoint;
 			};
 
 			FW_RespawnTickets = FW_RespawnTickets - 1;
@@ -202,13 +202,9 @@ if (!isDedicated) then {
 			
 			player setVariable ["FW_Dead", true, true]; //Tells the framework the player is dead
 			
-			player remoteExecCall ["hideObject", 0];
-			player remoteExecCall ["hideObjectGlobal", 2];
-			
+			player hideObjectGlobal true;
 			player setCaptive true;
-			player allowdamage false;
-			[player, true] remoteExec ["setCaptive", 2];
-			[player, false] remoteExec ["allowdamage", 2];
+			player allowDamage false;
 
 			player call FNC_RemoveAllGear;
 			player addWeapon "itemMap";
