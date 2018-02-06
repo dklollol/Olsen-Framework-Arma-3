@@ -3,13 +3,13 @@ private _eastCasualty = "VDV" call FNC_CasualtyPercentage; //Gets the casualty p
 
 if (_westCasualty >= 50) exitWith {
 	
-	"VDV DECISIVE VICTORY<br />USMC has retreated due to casualties." call FNC_EndMission;
+	"VDV VICTORY<br />USMC has retreated due to casualties." call FNC_EndMission;
 	
 };
 
 if (_eastCasualty >= 75) exitWith {
 	
-	"USMC DECISIVE VICTORY<br />VDV has retreated due to casualties." call FNC_EndMission;
+	"USMC VICTORY<br />VDV has retreated due to casualties." call FNC_EndMission;
 	
 };
 /*
