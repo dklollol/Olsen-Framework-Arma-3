@@ -219,8 +219,21 @@ if (!isDedicated) then {
 			if (!(player getVariable ["FW_Spectating", false])) then {
 
 				player setVariable ["FW_Spectating", true, true];
+
 				[true] call acre_api_fnc_setSpectator;
-				
+				//If babel is enabled, allowed spectator to hear all languages present in mission.
+				if (!isNil "FW_enable_babel" && {FW_enable_babel}) then {
+					_missionLanguages = [];
+					{
+						{
+							if (!(_x in _missionLanguages)) then {
+								_missionLanguages pushback _x;
+							};
+						} foreach _x;
+					} forEach FW_languages_babel;
+					_missionLanguages call acre_api_fnc_babelSetSpokenLanguages;
+				};
+
 				//we set default pos in case all methods fail and we end up with 0,0,0
 				_pos = [2000, 2000, 100];
 				_dir = 0;
