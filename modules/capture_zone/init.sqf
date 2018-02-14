@@ -3,7 +3,7 @@
 FNC_setCapturezone = 
 {
 
-	[_this,_colors,_intervall,_messages] execVM "modules\capturezone\capturezone.sqf";
+	[_this,_colors,_intervall,_messages] execVM "modules\capture_zone\capturezone.sqf";
 };
 FNC_setIntervall =
 {
