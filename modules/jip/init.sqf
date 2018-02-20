@@ -13,7 +13,7 @@ if (isServer) then {
 	};
 };
 
-if (!isDedicated && hasInterface && side player != LOGIC) then {
+if (!isDedicated && hasInterface &&str side player != "LOGIC") then {
 
 	if (FW_JIPTYPE == "DENY" && missionNamespace getVariable ["FW_JIPDenied", false]) exitWith {
 
