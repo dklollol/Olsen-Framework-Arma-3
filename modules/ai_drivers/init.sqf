@@ -23,6 +23,7 @@ aidrivers_removeUnit = {
             [_handle select 1] remoteExec ["CBA_fnc_removePerFrameHandler", _handle select 0];
         };
     };
+    FW_AiDriverVehicle = objNull;
     false call FNC_toggleDriverCam;
     hint "Driver removed";
 };
@@ -62,6 +63,8 @@ aidrivers_createUnit = {
     
     doStop _unit;
 
+    FW_AidriverLastTimeIn = time;
+
     [{vehicle (_this select 0) != _this select 0}, { //waiting for spawned unit to get into vehicle
         private _pfhID = [{
             _this select 0 params ["_unit", "_target", "_caller"];
@@ -73,14 +76,16 @@ aidrivers_createUnit = {
                 doStop _unit;
             } else {
                 _unit enableAI "PATH";
+                FW_AidriverLastTimeIn = time;
             };
-            if (!alive _target || !alive _caller || !alive _unit || (vehicle _unit) != _target || (driver _target) != _unit) then {
+            if (time > 120 + FW_AidriverLastTimeIn || !alive _target || !alive _caller || !alive _unit || (vehicle _unit) != _target || (driver _target) != _unit) then {
                 [_target, _caller] call aidrivers_removeUnit;
             };
         }, 1, _this] call CBA_fnc_addPerFrameHandler;
         (_this select 1) setVariable ["aidrivers_pfhID", [(_this select 2), _pfhID], true];
     }, [_unit, _target, _caller]] call CBA_fnc_WaitUntilAndExecute;
 
+    FW_AiDriverVehicle = _target;
     hint "Driver added";
 
 };
@@ -130,7 +135,7 @@ FNC_enableAIDriver = {
         [_target, _player] call aidrivers_toggle;
     },
     {
-        vehicle _player == _target && ((assignedVehicleRole _player) select 0) == "Turret"
+        vehicle _player == _target && ((assignedVehicleRole _player) select 0) == "Turret" && FW_AiDriverVehicle in [objNull, vehicle _player]
     }] call ace_interact_menu_fnc_createAction;
 
     //unflip action
@@ -139,7 +144,7 @@ FNC_enableAIDriver = {
         _target setPos [getpos _target select 0, getpos _target select 1, (getpos _target select 2) + 2];
     },
     {
-        vehicle _player == _target && ((assignedVehicleRole _player) select 0) == "Turret" && {(vectorUp _target) select 2 < 0}
+        vehicle _player == _target && ((assignedVehicleRole _player) select 0) == "Turret" && (vectorUp _target) select 2 < 0
     }] call ace_interact_menu_fnc_createAction;
 
     //PIP action
@@ -173,5 +178,7 @@ FNC_enableAIDriver = {
     } foreach _vehs;
 
 };
+
+FW_AiDriverVehicle = objNull;
 
 VEHS call FNC_enableAIDriver;
