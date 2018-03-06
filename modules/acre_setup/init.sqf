@@ -17,7 +17,7 @@ if (isServer && FW_enable_channel_names) then {
 	} foreach FW_ChannelNames;
 };
 
-if(!isDedicated) then {
+if(!isDedicated && hasInterface) then {
 	[] spawn {
 		waitUntil { !isNull acre_player };
 
