@@ -1,4 +1,4 @@
-["Disconect Control", "Controls when player bodies should be deleted", "Olsen &amp; Perfk"] call FNC_RegisterModule;
+["Disconnect Control", "Controls when player bodies should be deleted", "Olsen &amp; Perfk"] call FNC_RegisterModule;
 
 ace_respawn_RemoveDeadBodiesDisconnected = false;
 
