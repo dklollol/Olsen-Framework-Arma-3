@@ -68,6 +68,7 @@ aidrivers_createUnit = {
 
             private _handle = _this select 1;
             if (vehicle _caller != _target) then {
+                false call FNC_toggleDriverCam;
                 _unit disableAI "PATH";
                 doStop _unit;
             } else {
