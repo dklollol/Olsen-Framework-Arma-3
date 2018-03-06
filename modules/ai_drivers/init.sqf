@@ -23,6 +23,7 @@ aidrivers_removeUnit = {
             [_handle select 1] remoteExec ["CBA_fnc_removePerFrameHandler", _handle select 0];
         };
     };
+    false call FNC_toggleDriverCam;
     hint "Driver removed";
 };
 
@@ -83,29 +84,91 @@ aidrivers_createUnit = {
 
 };
 
-private _action = ["ai_driver","Add/Remove AI driver","",{
-    [_target, _player] call aidrivers_toggle;
-},
-{
-    vehicle _player == _target && ((assignedVehicleRole _player) select 0) == "Turret"
-}] call ace_interact_menu_fnc_createAction;
+FNC_toggleDriverCam = {
+    if (_this) then {
+        FW_driverCam = "camera" camCreate [0,0,0];
+        FW_driverCam cameraEffect ["INTERNAL", "BACK","FW_rtt"];
+        FW_driverCam camSetFov 0.9;
+        FW_driverCam camCommit 0;
 
-private _unflipAction = ["ai_driver_unflip","Unflip vehicle","",{
-    [_target, surfaceNormal position _target] remoteExec ["setVectorUp", 2, false];
-    _target setPos [getpos _target select 0, getpos _target select 1, (getpos _target select 2) + 2];
-},
-{
-    vehicle _player == _target && ((assignedVehicleRole _player) select 0) == "Turret" && {(vectorUp _target) select 2 < 0}
-}] call ace_interact_menu_fnc_createAction;
+        FW_pipNvEnabled = false;
+        
+        _veh = vehicle player;
+        _mempoint = getText ( configfile >> "CfgVehicles" >> (typeOf _veh) >> "memoryPointDriverOptics" );
+        FW_driverCam attachTo [_veh,[0,0,0], _mempoint];
+        
+        with uiNamespace do {
+            "FW_pipDriver" cutRsc ["RscTitleDisplayEmpty", "PLAIN"];
+            FW_pipDisplay = uiNamespace getVariable "RscTitleDisplayEmpty";
+            FW_driverPipDisplay = FW_pipDisplay ctrlCreate ["RscPicture", -1];
+            FW_driverPipDisplay ctrlSetPosition [0.1,1,0.75,0.5];
+            FW_driverPipDisplay ctrlCommit 0;
+            FW_driverPipDisplay ctrlSetText "#(argb,512,512,1)r2t(FW_rtt,1.0)";
+        };
+
+    } else {
+        if (!isNil "FW_driverCam" && {!isNull FW_driverCam}) then {
+            with uiNamespace do {
+                FW_pipDisplay closeDisplay 2;
+            };
+            detach FW_driverCam;
+            FW_driverCam cameraEffect ["terminate", "back", "FW_rtt"];
+            camDestroy FW_driverCam;
+        };
+    };
+};
 
 FNC_enableAIDriver = {
     private _vehs = _this;
     if (typeName _vehs != "ARRAY") then {
         _vehs = [_vehs];
     };
+
+    //AI driver action
+    private _action = ["ai_driver","Add/Remove AI driver","",{
+        [_target, _player] call aidrivers_toggle;
+    },
+    {
+        vehicle _player == _target && ((assignedVehicleRole _player) select 0) == "Turret"
+    }] call ace_interact_menu_fnc_createAction;
+
+    //unflip action
+    private _unflipAction = ["ai_driver_unflip","Unflip vehicle","",{
+        [_target, surfaceNormal position _target] remoteExec ["setVectorUp", 2, false];
+        _target setPos [getpos _target select 0, getpos _target select 1, (getpos _target select 2) + 2];
+    },
+    {
+        vehicle _player == _target && ((assignedVehicleRole _player) select 0) == "Turret" && {(vectorUp _target) select 2 < 0}
+    }] call ace_interact_menu_fnc_createAction;
+
+    //PIP action
+    private _pipAction = ["ai_driver_pip","Enable/Disable driver's view","",{
+        (isNil "FW_driverCam" || {isNull FW_driverCam}) call FNC_toggleDriverCam;
+    },
+    {
+        vehicle _player == _target && ((assignedVehicleRole _player) select 0) == "Turret" && !isNull (_target getVariable ["aidrivers_driver", objNull])
+    }] call ace_interact_menu_fnc_createAction;
+
+    //toggle NV for PIP
+    private _pipNvAction = ["ai_driver_pip_nv","Enable/Disable NV in driver's view","",{
+        if (isNil "FW_pipNvEnabled") then {
+            FW_pipNvEnabled = false;
+        };
+        "FW_rtt" setPiPEffect ([[1], [0]] select FW_pipNvEnabled);
+        FW_pipNvEnabled = !FW_pipNvEnabled;
+    },
+    {
+        vehicle _player == _target &&
+        ((assignedVehicleRole _player) select 0) == "Turret" &&
+        (!isNil "FW_driverCam" && {!isNull FW_driverCam})
+    }] call ace_interact_menu_fnc_createAction;
+
+
     {
         [_x, 1, ["ACE_SelfActions"], _action] call ace_interact_menu_fnc_addActionToObject;
         [_x, 1, ["ACE_SelfActions"], _unflipAction] call ace_interact_menu_fnc_addActionToObject;
+        [_x, 1, ["ACE_SelfActions"], _pipAction] call ace_interact_menu_fnc_addActionToObject;
+        [_x, 1, ["ACE_SelfActions"], _pipNvAction] call ace_interact_menu_fnc_addActionToObject;
     } foreach _vehs;
 
 };
