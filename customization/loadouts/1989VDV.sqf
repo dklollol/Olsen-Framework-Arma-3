@@ -42,7 +42,7 @@ case (package + "RF"): { //Rifleman
 	
 	["rhsgref_ssh68_ttsko_forest"] call FNC_AddItem; //Helmet
 	
-	ADD_GROUP(items);
+	ADD_GROUP(uniform);
 	ADD_GROUP(IFAK);
 	ADD_GROUP(items);
 	
@@ -63,7 +63,7 @@ case (package + "RFLAT"): { //AT Rifleman
 	
 	["rhsgref_ssh68_ttsko_forest"] call FNC_AddItem; //Helmet
 	
-	ADD_GROUP(items);
+	ADD_GROUP(uniform);
 	ADD_GROUP(IFAK);
 	ADD_GROUP(items);
 	
@@ -87,7 +87,7 @@ case (package + "AR"): { //Automatic Rifleman
 	
 	["rhsgref_ssh68_ttsko_forest"] call FNC_AddItem; //Helmet
 	
-	ADD_GROUP(items);
+	ADD_GROUP(uniform);
 	ADD_GROUP(IFAK);
 	ADD_GROUP(items);
 	
@@ -109,7 +109,7 @@ case (package + "RFAT"): { //AT Rifleman
 	
 	["rhsgref_ssh68_ttsko_forest"] call FNC_AddItem; //Helmet
 	
-	ADD_GROUP(items);
+	ADD_GROUP(uniform);
 	ADD_GROUP(IFAK);
 	ADD_GROUP(items);
 	
@@ -135,7 +135,7 @@ case (package + "RFASST"): { //Assitant RPG Gunner
 	
 	["rhsgref_ssh68_ttsko_forest"] call FNC_AddItem; //Helmet
 	
-	ADD_GROUP(items);
+	ADD_GROUP(uniform);
 	ADD_GROUP(IFAK);
 	ADD_GROUP(items);
 	
@@ -158,7 +158,7 @@ case (package + "TL"): { //Team Leader/Efreitor
 
 	["rhsgref_ssh68_ttsko_forest"] call FNC_AddItem; //Helmet
 	
-	ADD_GROUP(items);
+	ADD_GROUP(uniform);
 	ADD_GROUP(IFAK);
 	ADD_GROUP(items);
 
@@ -185,7 +185,7 @@ case (package + "SL"): { //Squad Leader
 
 	["rhsgref_ssh68_ttsko_forest"] call FNC_AddItem; //Helmet
 	
-	ADD_GROUP(items);
+	ADD_GROUP(uniform);
 	ADD_GROUP(IFAK);
 	ADD_GROUP(items);
 	
@@ -210,7 +210,7 @@ case (package + "PL"): { //Platoon Leader
 
 	["rhsgref_ssh68_ttsko_forest"] call FNC_AddItem; //Helmet
 	
-	ADD_GROUP(items);
+	ADD_GROUP(uniform);
 	ADD_GROUP(IFAK);
 	ADD_GROUP(items);
 	
@@ -234,7 +234,7 @@ case (package + "MRKSMN"): { //Marksman
 	
 	["rhsgref_ssh68_ttsko_forest"] call FNC_AddItem; //Helmet
 	
-	ADD_GROUP(items);
+	ADD_GROUP(uniform);
 	ADD_GROUP(IFAK);
 	ADD_GROUP(items);
 	
@@ -255,7 +255,7 @@ case (package + "GNR"): { //Vehicle Gunner
 	
 	["rhs_tsh4"] call FNC_AddItem; //Helmet
 	
-	ADD_GROUP(items);
+	ADD_GROUP(uniform);
 	ADD_GROUP(IFAK);
 	ADD_GROUP(items);
 	
@@ -279,7 +279,7 @@ case (package + "DRVR"): { //Vehicle Driver
 	
 	["rhs_tsh4"] call FNC_AddItem; //Helmet
 	
-	ADD_GROUP(items);
+	ADD_GROUP(uniform);
 	ADD_GROUP(IFAK);
 	ADD_GROUP(items);
 	
