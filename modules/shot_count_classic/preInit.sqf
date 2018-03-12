@@ -4,10 +4,10 @@
 //Much script by beta, some script by TinfoilHate
 //Sets up ammo counting
 
-	if (isServer) then {
+	
 		#include "settings.sqf"
 
-
+    if (isServer) then {
 		aCount_bluArray = [];
 		aCount_redArray = [];
 		{	//0 = varname, 1 = friendly name, 2 = array of classes
