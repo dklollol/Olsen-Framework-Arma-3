@@ -1,12 +1,12 @@
 //check if mission is live or not
-params ["","_didJIP"];
-
-if (_didJIP) then {
-	if (time > FW_JIPDENYTIME) exitwith {};
+_jiptime = 30;
+if (!isNil "FW_JIPDENYTIME") then {
+	_jiptime = FW_JIPDENYTIME;
 };
 
 _unit = player;
-_var = _unit getvariable ["StartInVehicle",nil];
+_var = _unit getvariable "StartInVehicle";
+if (time > _jiptime) exitwith {};
 if (isNil "_var") exitwith {};
 if (count "_var" <= 0) exitwith {};
 _var params ["_vehicle",["_seattype","ANY"],["_seatindex",0]];

@@ -3,6 +3,6 @@ class StartInVehicle {
 	{
 		file = "modules\start_in_vehicle\functions\VehicleStart";
 		class moveInVehicle {};
-		class startInVehicle {postInit = 1;};
+		class startInVehicle {};
 	};
 };
