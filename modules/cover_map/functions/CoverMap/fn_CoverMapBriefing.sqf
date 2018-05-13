@@ -1,5 +1,4 @@
 //Covers Map outside marker and centers map on marker center in briefing map
-
 if (!hasinterface) exitwith {};
 if ((time > 0 || getClientState isEqualTo "BRIEFING READ")) exitwith {};
 params ["_marker",["_centered",true],["_zoomlevel",0.4],"_name",["_AOnumber",1]];

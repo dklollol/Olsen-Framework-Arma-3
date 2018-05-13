@@ -104,17 +104,9 @@ _marker setMarkerColorLocal "colorBlack";
 
 [_zoomlevel,_p] spawn {
 	params [["_zoomlevel",0.4],"_p"];
-	_hadmap = player getvariable ["hasMap",true];
 	disableSerialization;
-	openMap true;
 	waitUntil{visibleMap};
 	MapAnimAdd [0, _zoomlevel, _p];
 	MapAnimCommit;
 	waitUntil{mapAnimDone};
-	openMap false;
-	waitUntil{!visibleMap};
-	
-	if (!_hadmap) then {
-		player unlinkItem "ItemMap";
-	};
 };
