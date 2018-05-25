@@ -1,15 +1,15 @@
 ["Capture Zone", "Adds functionality for defining and monitoring capture zones.", "Sacher"] call FNC_RegisterModule;
 
-FNC_setCapturezone = 
+FNC_setCapturezone =
 {
 
-	[_this,_colors,_intervall,_messages] execVM "modules\capturezone\capturezone.sqf";
+	[_this,_colors,_intervall,_messages] execVM "modules\capture_zone\capturezone.sqf";
 };
 FNC_setIntervall =
 {
-	_intervall = _this;	
+	_intervall = _this;
 };
-FNC_setColors = 
+FNC_setColors =
 {
 	_colors = _this;
 };
@@ -32,7 +32,7 @@ FNC_isCaptured =
 			};
 		}
 	}forEach CZMARKERCOLLECTION;
-	
+
 	_return
 
 };
@@ -48,4 +48,3 @@ if(isServer) then {
 	_colors = ["ColorBlue","ColorRed","ColorGreen","ColorYellow","ColorWhite","ColorKhaki"];
 	#include "settings.sqf"
 };
-
