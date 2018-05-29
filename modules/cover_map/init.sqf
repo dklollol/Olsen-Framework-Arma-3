@@ -37,7 +37,7 @@ if (hasinterface) then {
 			[player, 1, ["ACE_SelfActions","ACE_Equipment"], _MapChangeMenu] call ace_interact_menu_fnc_addActionToObject;
 			{
 				call compile format ["
-					private _MapChangeAction%1 = ['switch_MapAO', 'Switch Map to %2', '', {%4 call FNC_AOCoverAndCenterMap;}, {(visibleMap) && (FW_map_currentAO != %3) && (player getvariable ['HasAltMaps',false])}] call ace_interact_menu_fnc_createAction;
+					private _MapChangeAction%1 = ['switch_MapAO', 'Switch Map to %2', '', {%4 call CoverMap_fnc_CoverMapLive;}, {(visibleMap) && (FW_map_currentAO != %3) && (player getvariable ['HasAltMaps',false])}] call ace_interact_menu_fnc_createAction;
 					[player, 1, ['ACE_SelfActions','ACE_Equipment','MapChangeMenu'], _MapChangeAction%1] call ace_interact_menu_fnc_addActionToObject;
 				",_forEachIndex,_x select 3,_x select 4,_x];
 			} foreach _AOMarkers;
