@@ -43,7 +43,7 @@ if (!isDedicated && hasInterface) then {
 				(_player getVariable "mis_originalSide" == _target getVariable "mis_originalSide")
 			}] call ace_interact_menu_fnc_createAction;
 
-			[player, 0, ["ACE_MainActions"], _shareMap, true] call ace_interact_menu_fnc_addActionToObject;
+			["Man", 0, ["ACE_MainActions"], _shareMap, true] call ace_interact_menu_fnc_addActionToClass;
 		};
 
 		//cut grass interaction
