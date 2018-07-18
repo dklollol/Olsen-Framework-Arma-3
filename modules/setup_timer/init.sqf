@@ -74,9 +74,9 @@ if (!isDedicated && !_aborted) then {
 					_pos = getPosATL _vehicle;
 					
 				} else {
-				
-					_vehicle setPos _pos;
-					
+					if (((getPos _vehicle) distance [0,0,0]) > 10) then {
+						_vehicle setPos _pos;
+					};
 				};
 				
 				_timeLeft = round(_startTime + (_marker select 0) - serverTime);
