@@ -59,11 +59,11 @@ if (!isDedicated) then {
 		["FW_PlayerSpawned", player] call CBA_fnc_serverEvent;
 
 		["endMission", {
-			private _msg = "Mission ended by admin";
+			private _msg = "Mission ended by the admin";
 			if (count (_this select 0) > 0) then {
-				_msg = _msg + ": " + _this select 0;
+				_msg = _msg + ": " + (_this select 0);
 			};
-			_msg call FNC_EndMission;
+			_msg remoteExecCall ["FNC_EndMission", 2];
 		}, "admin"] call CBA_fnc_registerChatCommand;
 	};
 
