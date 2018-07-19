@@ -12,6 +12,7 @@ if (isServer) then {
 	[] spawn { //Spawns code running in parallel
 
 		while {!FW_MissionEnded} do { //Loops while the mission is not ended
+			if (!isNil "FW_Disable_Endconditions") exitWith {};
 			
 			#include "customization\endConditions.sqf" //DO NOT REMOVE
 			
