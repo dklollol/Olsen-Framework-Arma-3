@@ -170,199 +170,269 @@ if (!isDedicated) then {
 
 	};
 
-	FNC_SpectatePrep = {
+	FNC_RespawnedRemoteFunc = {
+		private _respawnName = toLower(format ["fw_%1_respawn", side player]);
+		private _respawnPoint = missionNamespace getVariable [_respawnName, objNull];
+		private _loadout = (player getVariable ["FW_Loadout", ""]);
 
-		private ["_respawnName", "_respawnPoint", "_text", "_loadout", "_pos", "_dir", "_cam", "_body", "_temp", "_temp1", "_killcam_msg"];
+		if (_loadout != "") then {
+			[player, _loadout] call FNC_GearScript;
+		};
 
-		if (FW_RespawnTickets > 0) then {
+		if (!isNull(_respawnPoint)) then {
+			player setPosATL getPosATL _respawnPoint;
+		};
 
-			_respawnName = toLower(format ["fw_%1_respawn", side player]);
-			_respawnPoint = missionNamespace getVariable [_respawnName, objNull];
-			_loadout = (player getVariable ["FW_Loadout", ""]);
 
-			if (_loadout != "") then {
-				[player, _loadout] call FNC_GearScript;
+		private _p = "";
+		if (FW_RespawnTickets != 1) then {
+			_p = "s";
+		};
+		private _message2 = format ["you can respawn %1 time%2", FW_RespawnTickets, _p];
+
+		private _sideTickets = 0;
+		switch (side player) do {
+			case west: {
+				_sideTickets = FW_RespawnTicketsWest;
 			};
-
-			if (!isNull(_respawnPoint)) then {
-				player setPosATL getPosATL _respawnPoint;
+			case east: {
+				_sideTickets = FW_RespawnTicketsEast;
 			};
-
-			FW_RespawnTickets = FW_RespawnTickets - 1;
-			_text = "respawns left";
-
-			if (FW_RespawnTickets == 1) then {
-				_text = "respawn left";
+			case independent: {
+				_sideTickets = FW_RespawnTicketsInd;
 			};
+			case civilian: {
+				_sideTickets = FW_RespawnTicketsCiv;
+			};
+		};
+		private _p2 = "";
+		if (_sideTickets != 1) then {
+			_p2 = "s";
+		};
+		cutText [format ['Your side has %1 ticket%2 left, %3', _sideTickets, _p2, _message2], 'PLAIN DOWN'];
 
-			cutText [format ['%1 %2', FW_RespawnTickets, _text], 'PLAIN DOWN'];
-			player setVariable ["FW_Body", player, true];
-		} 
-		else {
-			
-			player setVariable ["FW_Dead", true, true]; //Tells the framework the player is dead
-			
-			player hideObjectGlobal true;
-			player setCaptive true;
-			player allowDamage false;
 
-			player call FNC_RemoveAllGear;
-			player addWeapon "itemMap";
+		player setVariable ["FW_Body", player, true];
+	};
 
-			player setPos [0, 0, 0];
-			[player] join grpNull;
+	FNC_SpectatingRemoteFunc = {
+		player setVariable ["FW_Dead", true, true]; //Tells the framework the player is dead
+		
+		player hideObjectGlobal true;
+		player setCaptive true;
+		player allowDamage false;
 
-			if (!(player getVariable ["FW_Spectating", false])) then {
+		player call FNC_RemoveAllGear;
+		player addWeapon "itemMap";
 
-				player setVariable ["FW_Spectating", true, true];
+		player setPos [0, 0, 0];
+		[player] join grpNull;
 
-				[true] call acre_api_fnc_setSpectator;
-				//If babel is enabled, allowed spectator to hear all languages present in mission.
-				if (!isNil "FW_enable_babel" && {FW_enable_babel}) then {
-					_missionLanguages = [];
+		if (!(player getVariable ["FW_Spectating", false])) then {
+
+			player setVariable ["FW_Spectating", true, true];
+
+			[true] call acre_api_fnc_setSpectator;
+			//If babel is enabled, allowed spectator to hear all languages present in mission.
+			if (!isNil "FW_enable_babel" && {FW_enable_babel}) then {
+				private _missionLanguages = [];
+				{
 					{
-						{
-							if (!(_x in _missionLanguages)) then {
-								_missionLanguages pushback _x;
-							};
-						} foreach _x;
-					} forEach FW_languages_babel;
-					_missionLanguages call acre_api_fnc_babelSetSpokenLanguages;
-				};
+						if (!(_x in _missionLanguages)) then {
+							_missionLanguages pushback _x;
+						};
+					} foreach _x;
+				} forEach FW_languages_babel;
+				_missionLanguages call acre_api_fnc_babelSetSpokenLanguages;
+			};
 
-				//we set default pos in case all methods fail and we end up with 0,0,0
+			//we set default pos in case all methods fail and we end up with 0,0,0
+			private _pos = [2000, 2000, 100];
+			private _dir = 0;
+			
+			if (getMarkerColor eg_spectator_marker == "") then {
+				if (!isNull killcam_body) then {
+					//set camera pos on player body
+					_pos = [(getpos killcam_body) select 0, (getpos killcam_body) select 1, ((getposATL killcam_body) select 2)+1.2];
+					_dir = getDir killcam_body;
+				};
+			} else {
+				_pos = getmarkerpos eg_spectator_marker;
+			};
+			
+			if (abs(_pos select 0) < 2 && abs(_pos select 1) < 2) then {
 				_pos = [2000, 2000, 100];
-				_dir = 0;
-				
-				//our function is called from Respawned EH, so select 1 is player's body
-				_body = (_this select 1);
-				if (getMarkerColor eg_spectator_marker == "") then {
-					if (!isNull _body) then {
-						//set camera pos on player body
-						_pos = [(getpos _body) select 0, (getpos _body) select 1, ((getposATL _body) select 2)+1.2];
-						_dir = getDir _body;
-					};
-				} else {
-					_pos = getmarkerpos eg_spectator_marker;
-				};
-				
-				if (abs(_pos select 0) < 2 && abs(_pos select 1) < 2) then {
-					_pos = [2000, 2000, 100];
-				};
+			};
 
-				["Initialize", 
-					[
-					player,
-					eg_Whitelisted_Sides,
-					eg_Ai_Viewed_By_Spectator,
-					eg_Free_Camera_Mode_Available,
-					eg_Third_Person_Perspective_Camera_mode_Available,
-					eg_Show_Focus_Info_Widget,
-					eg_Show_Camera_Buttons_Widget,
-					eg_Show_Controls_Helper_Widget,
-					eg_Show_Header_Widget,
-					eg_Show_Entities_And_Locations_Lists
-					]
-				] call BIS_fnc_EGSpectator;
+			["Initialize", 
+				[
+				player,
+				eg_Whitelisted_Sides,
+				eg_Ai_Viewed_By_Spectator,
+				eg_Free_Camera_Mode_Available,
+				eg_Third_Person_Perspective_Camera_mode_Available,
+				eg_Show_Focus_Info_Widget,
+				eg_Show_Camera_Buttons_Widget,
+				eg_Show_Controls_Helper_Widget,
+				eg_Show_Header_Widget,
+				eg_Show_Entities_And_Locations_Lists
+				]
+			] call BIS_fnc_EGSpectator;
+			
+			private _cam = missionNamespace getVariable ["BIS_EGSpectatorCamera_camera", objNull];
+			
+			if (_cam != objNull) then {
 				
-				_cam = missionNamespace getVariable ["BIS_EGSpectatorCamera_camera", objNull];
+				[{!isNull (findDisplay 60492)}, {
+						DEBUG_MSG("Display loaded, attaching key EH")
+						eg_keyHandle = (findDisplay 60492) displayAddEventHandler ["keyDown", {call eg_keyHandler;}];
+						eg_keyHandle = (findDisplay 46) displayAddEventHandler ["keyDown", {call eg_keyHandler2}];
+				}, []] call CBA_fnc_waitUntilAndExecute;
 				
-				if (_cam != objNull) then {
+				
+				if (!killcam_active) then {
+					//we move 2 meters back so player's body is visible
+					_pos = ([_pos, -2, _dir] call BIS_fnc_relPos);
+					_cam setposATL _pos;
+					_cam setDir _dir;
+				}
+				else {
+					missionNamespace setVariable ["killcam_toggle", false];
 					
+					//this cool piece of code adds key handler to spectator display
+					//it takes some time for display to create, so we have to delay it.
 					[{!isNull (findDisplay 60492)}, {
-							DEBUG_MSG("Display loaded, attaching key EH")
-							eg_keyHandle = (findDisplay 60492) displayAddEventHandler ["keyDown", {call eg_keyHandler;}];
-							eg_keyHandle = (findDisplay 46) displayAddEventHandler ["keyDown", {call eg_keyHandler2}];
+						DEBUG_MSG("Display loaded, attaching key EH")
+						killcam_keyHandle = (findDisplay 60492) displayAddEventHandler ["keyDown", {call killcam_toggleFnc;}];
 					}, []] call CBA_fnc_waitUntilAndExecute;
 					
-					
-					if (!killcam_active) then {
-						//we move 2 meters back so player's body is visible
-						_pos = ([_pos, -2, _dir] call BIS_fnc_relPos);
+					if (!isNull killcam_killer) then {
+						DEBUG_MSG("found valid killer")
+						killcam_distance = killcam_killer distance killcam_body;
+						_pos = ([_pos, -1.8, ([killcam_body, killcam_killer] call BIS_fnc_dirTo)] call BIS_fnc_relPos);
 						_cam setposATL _pos;
-						_cam setDir _dir;
+						
+						//vector magic
+						_temp1 = ([getposASL _cam, getposASL killcam_killer] call BIS_fnc_vectorFromXToY);
+						_temp = (_temp1 call CBA_fnc_vect2Polar);
+						
+						//we check if camera is not pointing up, just in case
+						if (abs(_temp select 2) > 89) then {_temp set [2, 0]};
+						[_cam, [_temp select 1, _temp select 2]] call BIS_fnc_setObjectRotation;
 					}
 					else {
-						missionNamespace setVariable ["killcam_toggle", false];
-						
-						//this cool piece of code adds key handler to spectator display
-						//it takes some time for display to create, so we have to delay it.
-						[{!isNull (findDisplay 60492)}, {
-							DEBUG_MSG("Display loaded, attaching key EH")
-							killcam_keyHandle = (findDisplay 60492) displayAddEventHandler ["keyDown", {call killcam_toggleFnc;}];
-						}, []] call CBA_fnc_waitUntilAndExecute;
-						
-						if (!isNull killcam_killer) then {
-							DEBUG_MSG("found valid killer")
-							killcam_distance = killcam_killer distance (_this select 1);
-							_pos = ([_pos, -1.8, ([(_this select 1), killcam_killer] call BIS_fnc_dirTo)] call BIS_fnc_relPos);
-							_cam setposATL _pos;
-							
-							//vector magic
-							_temp1 = ([getposASL _cam, getposASL killcam_killer] call BIS_fnc_vectorFromXToY);
-							_temp = (_temp1 call CBA_fnc_vect2Polar);
-							
-							//we check if camera is not pointing up, just in case
-							if (abs(_temp select 2) > 89) then {_temp set [2, 0]};
-							[_cam, [_temp select 1, _temp select 2]] call BIS_fnc_setObjectRotation;
-						}
-						else {
-							DEBUG_MSG("no valid killer")
-							_cam setposATL _pos;
-							_cam setDir _dir;
-						};
-						
-						killcam_texture = "a3\ui_f\data\gui\cfg\debriefing\enddeath_ca.paa";
-						
-						killcam_drawHandle = addMissionEventHandler ["Draw3D", {
-							//we don't draw hud unless we toggle it by keypress
-							if (missionNamespace getVariable ["killcam_toggle", false]) then {
-							
-								if ((killcam_killer_pos select 0) != 0) then {
-									
-									_u = killcam_unit_pos;
-									_k = killcam_killer_pos;
-									if ((_u distance _k) < 2000) then {
-										//TODO do it better
-										drawLine3D [[(_u select 0)+0.01, (_u select 1)+0.01, (_u select 2)+0.01], [(_k select 0)+0.01, (_k select 1)+0.01, (_k select 2)+0.01], [1,0,0,1]];
-										drawLine3D [[(_u select 0)-0.01, (_u select 1)-0.01, (_u select 2)-0.01], [(_k select 0)-0.01, (_k select 1)-0.01, (_k select 2)-0.01], [1,0,0,1]];
-										drawLine3D [[(_u select 0)-0.01, (_u select 1)+0.01, (_u select 2)-0.01], [(_k select 0)-0.01, (_k select 1)+0.01, (_k select 2)-0.01], [1,0,0,1]];
-										drawLine3D [[(_u select 0)+0.01, (_u select 1)-0.01, (_u select 2)+0.01], [(_k select 0)+0.01, (_k select 1)-0.01, (_k select 2)+0.01], [1,0,0,1]];
-									};
-									if (!isNull killcam_killer) then {
-										drawIcon3D [killcam_texture, [1,0,0,1], [eyePos killcam_killer select 0, eyePos killcam_killer select 1, (ASLtoAGL eyePos killcam_killer select 2) + 0.4], 0.7, 0.7, 0, (name killcam_killer) + ", " + (str round killcam_distance) + "m", 1, 0.04, "PuristaMedium"];
-									};
-								}
-								else {
-									cutText ["killer info unavailable", "PLAIN DOWN"];
-									missionNamespace setVariable ["killcam_toggle", false];
-								};
-							};
-						}];//draw EH
-					};//killcam (not) active
-				};//checking camera
-				
-				_killcam_msg = "";
-				if (killcam_active) then {
-					_killcam_msg = "Press <t color='#FFA500'>K</t> to toggle indicator showing location where you were killed from.<br/>";
-				};
-				_text = format ["<t size='0.5' color='#ffffff'>%1
-				Close spectator HUD by pressing <t color='#FFA500'>CTRL+H</t>.<br/>
-				Press <t color='#FFA500'>SHIFT</t>, <t color='#FFA500'>ALT</t> or <t color='#FFA500'>SHIFT+ALT</t> to modify camera speed. Open map by pressing <t color='#FFA500'>M</t> and click anywhere to move camera to that postion.<br/> 
-				Spectator controls can be customized in game <t color='#FFA500'>options->controls->'Camera'</t> tab.</t>", _killcam_msg];
-				
-				[_text, 0.55, 0.8, 20, 1] spawn BIS_fnc_dynamicText;
-
-				[] spawn {
-					while {(player getVariable ["FW_Spectating", false])} do {
-						player setOxygenRemaining 1;
-						sleep 0.25;
+						DEBUG_MSG("no valid killer")
+						_cam setposATL _pos;
+						_cam setDir _dir;
 					};
-				};
-			} //not already spectator check
-			else {
-				call BIS_fnc_VRFadeIn;
+					
+					killcam_texture = "a3\ui_f\data\gui\cfg\debriefing\enddeath_ca.paa";
+					
+					killcam_drawHandle = addMissionEventHandler ["Draw3D", {
+						//we don't draw hud unless we toggle it by keypress
+						if (missionNamespace getVariable ["killcam_toggle", false]) then {
+						
+							if ((killcam_killer_pos select 0) != 0) then {
+								
+								_u = killcam_unit_pos;
+								_k = killcam_killer_pos;
+								if ((_u distance _k) < 2000) then {
+									//TODO do it better
+									drawLine3D [[(_u select 0)+0.01, (_u select 1)+0.01, (_u select 2)+0.01], [(_k select 0)+0.01, (_k select 1)+0.01, (_k select 2)+0.01], [1,0,0,1]];
+									drawLine3D [[(_u select 0)-0.01, (_u select 1)-0.01, (_u select 2)-0.01], [(_k select 0)-0.01, (_k select 1)-0.01, (_k select 2)-0.01], [1,0,0,1]];
+									drawLine3D [[(_u select 0)-0.01, (_u select 1)+0.01, (_u select 2)-0.01], [(_k select 0)-0.01, (_k select 1)+0.01, (_k select 2)-0.01], [1,0,0,1]];
+									drawLine3D [[(_u select 0)+0.01, (_u select 1)-0.01, (_u select 2)+0.01], [(_k select 0)+0.01, (_k select 1)-0.01, (_k select 2)+0.01], [1,0,0,1]];
+								};
+								if (!isNull killcam_killer) then {
+									private _killerName = name killcam_killer;
+									drawIcon3D [killcam_texture, [1,0,0,1], [eyePos killcam_killer select 0, eyePos killcam_killer select 1, (ASLtoAGL eyePos killcam_killer select 2) + 0.4], 0.7, 0.7, 0, _killerName + ", " + (str round killcam_distance) + "m", 1, 0.04, "PuristaMedium"];
+								};
+							}
+							else {
+								cutText ["killer info unavailable", "PLAIN DOWN"];
+								missionNamespace setVariable ["killcam_toggle", false];
+							};
+						};
+					}];//draw EH
+				};//killcam (not) active
+			};//checking camera
+			
+			private _killcam_msg = "";
+			if (killcam_active) then {
+				_killcam_msg = "Press <t color='#FFA500'>K</t> to toggle indicator showing location where you were killed from.<br/>";
 			};
+			private _text = format ["<t size='0.5' color='#ffffff'>%1
+			Close spectator HUD by pressing <t color='#FFA500'>CTRL+H</t>.<br/>
+			Press <t color='#FFA500'>SHIFT</t>, <t color='#FFA500'>ALT</t> or <t color='#FFA500'>SHIFT+ALT</t> to modify camera speed. Open map by pressing <t color='#FFA500'>M</t> and click anywhere to move camera to that postion.<br/> 
+			Spectator controls can be customized in game <t color='#FFA500'>options->controls->'Camera'</t> tab.</t>", _killcam_msg];
+			
+			[_text, 0.55, 0.8, 20, 1] spawn BIS_fnc_dynamicText;
+
+			[] spawn {
+				while {(player getVariable ["FW_Spectating", false])} do {
+					player setOxygenRemaining 1;
+					sleep 0.25;
+				};
+			};
+		} //not already spectator check
+		else {
+			call BIS_fnc_VRFadeIn;
+		};
+	};
+
+	FNC_SpectatePrep = {
+		killcam_body = _this select 1; //needed in killcam later on (we set it here because remoteExecs)
+
+		private _side = side player;
+		if (FW_RespawnTickets > 0) then {
+		FW_RespawnTickets = FW_RespawnTickets - 1;
+			_side remoteExecCall ["FNC_RequestRespawnFromServer", 2];
+		}
+		else {
+			call FNC_SpectatingRemoteFunc;
+		};
+	};
+};
+
+if (isServer) then {
+	FNC_RequestRespawnFromServer = {
+		private _side = _this;
+		private _canRespawn = false;
+		switch (_side) do {
+			case west: {
+				if (FW_RespawnTicketsWest > 0) then {
+					FW_RespawnTicketsWest = FW_RespawnTicketsWest - 1;
+					publicVariable "FW_RespawnTicketsWest";
+					_canRespawn = true;
+				};
+			};
+			case east: {
+				if (FW_RespawnTicketsEast > 0) then {
+					FW_RespawnTicketsEast = FW_RespawnTicketsEast - 1;
+					publicVariable "FW_RespawnTicketsEast";
+					_canRespawn = true;
+				};
+			};
+			case independent: {
+				if (FW_RespawnTicketsInd > 0) then {
+					FW_RespawnTicketsInd = FW_RespawnTicketsInd - 1;
+					publicVariable "FW_RespawnTicketsInd";
+					_canRespawn = true;
+				};
+			};
+			case civilian: {
+				if (FW_RespawnTicketsCiv > 0) then {
+					FW_RespawnTicketsCiv = FW_RespawnTicketsCiv - 1;
+					publicVariable "FW_RespawnTicketsCiv";
+					_canRespawn = true;
+				};
+			};
+		};
+		if (_canRespawn) then {
+			remoteExecCall ["FNC_RespawnedRemoteFunc", remoteExecutedOwner];
+		}
+		else {
+			remoteExecCall ["FNC_SpectatingRemoteFunc", remoteExecutedOwner];
 		};
 	};
 };

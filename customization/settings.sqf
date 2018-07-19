@@ -13,6 +13,15 @@ if (isServer) then {
 	
 	// [resistance, "Local Militia", "player"] call FNC_AddTeam; //Adds a player team called Local Militia on side resistance (aka independent)
 
+	//Ticket pools for different sides
+	FW_RespawnTicketsWest = 0;
+	publicVariable "FW_RespawnTicketsWest";
+	FW_RespawnTicketsEast = 0;
+	publicVariable "FW_RespawnTicketsEast";
+	FW_RespawnTicketsInd = 0;
+	publicVariable "FW_RespawnTicketsInd";
+	FW_RespawnTicketsCiv = 0;
+	publicVariable "FW_RespawnTicketsCiv";
 };
 
 if (!isDedicated) then {

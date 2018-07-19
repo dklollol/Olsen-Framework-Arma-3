@@ -33,20 +33,35 @@ if (!isDedicated) then {
 			
 		};
 		
-		_text = "respawns left";
-		
-		if (FW_RespawnTickets == 1) then {
-			
-			_text = "respawn left";
-			
-		};
-		
-		_text spawn {
-
+		[] spawn {
 			sleep 5;
-			cutText [format ['%1 %2', FW_RespawnTickets, _this], 'PLAIN DOWN'];
+			
+			private _p = "";
+			if (FW_RespawnTickets != 1) then {
+				_p = "s";
+			};
+			private _message2 = format ["you can respawn %1 time%2", FW_RespawnTickets, _p];
 
+			private _sideTickets = 0;
+			switch (side player) do {
+				case west: {
+					_sideTickets = FW_RespawnTicketsWest;
+				};
+				case east: {
+					_sideTickets = FW_RespawnTicketsEast;
+				};
+				case independent: {
+					_sideTickets = FW_RespawnTicketsInd;
+				};
+				case civilian: {
+					_sideTickets = FW_RespawnTicketsCiv;
+				};
+			};
+			private _p2 = "";
+			if (_sideTickets != 1) then {
+				_p2 = "s";
+			};
+			cutText [format ['Your side has %1 ticket%2 left, %3', _sideTickets, _p2, _message2], 'PLAIN DOWN'];
 		};
-
 	};
 };
