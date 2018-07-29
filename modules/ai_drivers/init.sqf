@@ -140,11 +140,19 @@ FNC_enableAIDriver = {
 
     //unflip action
     private _unflipAction = ["ai_driver_unflip","Unflip vehicle","",{
-        [_target, surfaceNormal position _target] remoteExec ["setVectorUp", 2, false];
+        [_target, surfaceNormal position _target] remoteExec ["setVectorUp", _target, false];
         _target setPos [getpos _target select 0, getpos _target select 1, (getpos _target select 2) + 2];
     },
     {
         vehicle _player == _target && ((assignedVehicleRole _player) select 0) == "Turret" && (vectorUp _target) select 2 < 0
+    }] call ace_interact_menu_fnc_createAction;
+
+    //engine off action
+    private _engineOffAction = ["ai_driver_engineoff","Turn off engine","",{
+        [_target, false] remoteExec ["engineOn", _target];
+    },
+    {
+        vehicle _player == _target && ((assignedVehicleRole _player) select 0) == "Turret" && isEngineOn _target
     }] call ace_interact_menu_fnc_createAction;
 
     //PIP action
@@ -173,6 +181,7 @@ FNC_enableAIDriver = {
     {
         [_x, 1, ["ACE_SelfActions"], _action] call ace_interact_menu_fnc_addActionToObject;
         [_x, 1, ["ACE_SelfActions"], _unflipAction] call ace_interact_menu_fnc_addActionToObject;
+        [_x, 1, ["ACE_SelfActions"], _engineOffAction] call ace_interact_menu_fnc_addActionToObject;
         [_x, 1, ["ACE_SelfActions"], _pipAction] call ace_interact_menu_fnc_addActionToObject;
         [_x, 1, ["ACE_SelfActions"], _pipNvAction] call ace_interact_menu_fnc_addActionToObject;
     } foreach _vehs;
