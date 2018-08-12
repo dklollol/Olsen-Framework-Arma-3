@@ -32,7 +32,7 @@ aidrivers_createUnit = {
     params ["_target", "_caller"];
     
     if (!isNull driver _target) exitWith {};
-    private _turret = (assignedVehicleRole _player) select 1;
+    private _turret = (assignedVehicleRole _caller) select 1;
     _caller moveInDriver _target;
     _caller moveInTurret [_target, _turret];
     
