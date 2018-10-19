@@ -22,6 +22,18 @@ if (isServer) then {
 	publicVariable "FW_RespawnTicketsInd";
 	FW_RespawnTicketsCiv = 0;
 	publicVariable "FW_RespawnTicketsCiv";
+
+	//wave respawn
+	FW_WaveSizeWest = 0; //How many players have to respawn before wave is released
+	FW_WaveSizeEast = 0;
+	FW_WaveSizeInd = 0;
+	FW_WaveSizeCiv = 0;
+
+	//Players should be put in enclosed space, when their number reaches treshold, the defined "gate" will disappear for 30 seconds
+	//FW_RespawnPenGateWest = YourEditorObjectName;
+	//FW_RespawnPenGateEast = YourEditorObjectName;
+	//FW_RespawnPenGateInd = YourEditorObjectName;
+	//FW_RespawnPenGateCiv = YourEditorObjectName;
 };
 
 if (!isDedicated) then {
