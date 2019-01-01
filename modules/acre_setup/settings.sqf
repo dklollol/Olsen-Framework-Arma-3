@@ -131,7 +131,7 @@ FW_enable_addRackDebug = false;
  * 4: Name of rack displayed to user (long and short variants, both strings) <ARRAY>
  *	- long: long rackname, suggested names are; Upper/Lower Dash
  *	- short: short rackname, max of four characters. Suggested name: Dash
- * 5: who can access the radio (whitelist) <ARRAY>
+ * 5: who can access the radio (whitelist) (strings) <ARRAY>
  *	0 - driver
  *	1 - gunner
  *	2 - commander
@@ -144,13 +144,17 @@ FW_enable_addRackDebug = false;
  *	9 - [0-8, _index]
  *	http://acre2.idi-systems.com/wiki/frameworks/vehicle-racks#configuration-examples
  * 6: who cannot access the rack (blacklist) <ARRAY>
+ *  - Strings or an arrays of a string and a number for the vehicle specific position
+ *  - Ex: ["driver",["cargo",0], ["cargo",1]]
  *	- 0 to 8 from param 5 
  *	- http://acre2.idi-systems.com/wiki/frameworks/vehicle-racks#configuration-examples
- * 7: side for radio to be configured for
+ * 7: side for radio to be configured for <SIDE> (west, east, independent, civilian, etc)
 */
 
 //ORR = object receiving rack
 FW_ORRList = [
+	//These examples will cause errors if you do not comment them out or remove them.
+	//If you want to test the module, make an object and give it the variable name accVic, or change this name to whatever you want it to be
 	["accVic", "ACRE_VRC103", true, false, ["Radio Rack One", "R1"], ["driver",["cargo",0], ["cargo",1]], ["cargo"], west],
 	["accVic", "ACRE_VRC103", false, true, ["Radio Rack Two", "R2"], ["driver",["cargo",0], ["cargo",1]], ["cargo"], west],
 	["accVic", "ACRE_VRC103", true, true, ["Radio Rack Three", "R3"], ["driver", ["cargo",0]], ["cargo"], west]
