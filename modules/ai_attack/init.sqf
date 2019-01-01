@@ -79,8 +79,15 @@ FNC_AtkRandomStart =
 		_delay = _this select 7;
 		_spawnDelay = _this select 8;
 		_shouldClean = true;
-		if((_this select 9) == 0) then {_shouldClean = false; };
-
+				if((typeName (_this select 9)) == "SCALAR") then
+		{
+			_shouldClean = (_this select 9) == 1;
+		}
+		else
+		{
+			_shouldClean = (_this select 9);
+		};
+		
 		{
 				_found = ATKcachedPaths find _x;
 				if(_found < 0) then
