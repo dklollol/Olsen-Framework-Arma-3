@@ -17,9 +17,9 @@ _type = _this select 1;
 
 if (count _this > 2) then {
 
-    _groupId = _this select 2;
+	_groupId = _this select 2;
 
-    (group _unit) setGroupId [_groupId];
+	(group _unit) setGroupId [_groupId];
 
 };
 
