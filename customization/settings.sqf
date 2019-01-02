@@ -13,6 +13,28 @@ if (isServer) then {
 	
 	// [resistance, "Local Militia", "player"] call FNC_AddTeam; //Adds a player team called Local Militia on side resistance (aka independent)
 
+	//Ticket pools for different sides
+	FW_RespawnTicketsWest = 0;
+	publicVariable "FW_RespawnTicketsWest";
+	FW_RespawnTicketsEast = 0;
+	publicVariable "FW_RespawnTicketsEast";
+	FW_RespawnTicketsInd = 0;
+	publicVariable "FW_RespawnTicketsInd";
+	FW_RespawnTicketsCiv = 0;
+	publicVariable "FW_RespawnTicketsCiv";
+
+	//wave respawn
+	FW_WaveSizeWest = 0; //How many players have to respawn before wave is released
+	FW_WaveSizeEast = 0;
+	FW_WaveSizeInd = 0;
+	FW_WaveSizeCiv = 0;
+
+	//Players should be put in enclosed space, when their number reaches treshold, the defined "gate" will disappear for 30 seconds
+	//it has to be defined for wave respawn to work
+	//FW_RespawnPenGateWest = YourEditorObjectName;
+	//FW_RespawnPenGateEast = YourEditorObjectName;
+	//FW_RespawnPenGateInd = YourEditorObjectName;
+	//FW_RespawnPenGateCiv = YourEditorObjectName;
 };
 
 if (!isDedicated) then {

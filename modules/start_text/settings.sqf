@@ -33,4 +33,24 @@ switch (side player) do { //Checks what team the player is on
 		];
 
 	}; //End of east case
+
+	case independent: {
+
+		_startTextArray = [
+			["TITLEQUOTE", "Malden"],
+			["TEXT", "Near Saint Maire"],
+			["DATETIME"]
+		];
+
+	};
+
+	case civilian: {
+
+		_startTextArray = [
+			["TITLEQUOTE", "Malden"],
+			["TEXT", "Near Saint Maire"],
+			["DATETIME"]
+		];
+
+	};
 }; //End of switch

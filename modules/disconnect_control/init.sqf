@@ -1,4 +1,4 @@
-["Disconect Control", "Controls when player bodies should be deleted", "Olsen &amp; Perfk"] call FNC_RegisterModule;
+["Disconnect Control", "Controls when player bodies should be deleted", "Olsen and Perfk"] call FNC_RegisterModule;
 
 ace_respawn_RemoveDeadBodiesDisconnected = false;
 
@@ -14,7 +14,6 @@ FNC_EventDisconnect_BodyCleanup = {
 
 	if (_unit getVariable ["FW_Tracked", false]) then {
 		
-
 		#include "settings.sqf"
 
 		if (time < disconnect_control_time * 60 && (side _unit) in disconnect_control_sides) then {

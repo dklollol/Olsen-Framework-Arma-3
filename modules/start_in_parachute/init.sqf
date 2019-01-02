@@ -10,7 +10,7 @@ FNC_DOPARACHUTE = {
 		_elev = _this select 1;
 		_rand = 100;
 		_stear = false;
-		_class = "NonSteerable_Parachute_F";
+		_class = ["NonSteerable_Parachute_F", "rhs_d6_Parachute"] select (isClass (configFile >> "CfgVehicles" >> "rhs_d6_Parachute"));
 		_doPara = false;
 
 		if (count _this > 2) then {

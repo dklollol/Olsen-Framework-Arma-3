@@ -3,8 +3,10 @@
 
 class DIA_ENDSCREEN {
 	idd = 300;
-	movingEnable = false;
-	enableSimulation = true;
+	fadeout = 0;
+	fadein = 0;
+	duration = 30;
+	onLoad = "uiNamespace setVariable ['FW_EndScreen', _this select 0];";
 	controlsBackground[] = {BACKGROUND};
 	objects[] = {};
 	controls[] = {TEXT_TITLE, TEXT_LEFT, TEXT_RIGHT, TEXT_BOTTOM_LEFT,TEXT_BOTTOM_MIDDLE, TEXT_BOTTOM_RIGHT};

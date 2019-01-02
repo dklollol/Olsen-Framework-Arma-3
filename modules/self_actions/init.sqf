@@ -43,7 +43,7 @@ if (!isDedicated && hasInterface) then {
 				(_player getVariable "mis_originalSide" == _target getVariable "mis_originalSide")
 			}] call ace_interact_menu_fnc_createAction;
 
-			[player, 0, ["ACE_MainActions"], _shareMap, true] call ace_interact_menu_fnc_addActionToObject;
+			["Man", 0, ["ACE_MainActions"], _shareMap, true] call ace_interact_menu_fnc_addActionToClass;
 		};
 
 		//cut grass interaction
@@ -59,7 +59,6 @@ if (!isDedicated && hasInterface) then {
 				[player,"AinvPknlMstpSlayWrflDnon_medic"] remoteExec ['playMove'];
 	
 				[{mis_macheteDone}, {
-					_cutter = "ClutterCutter_small_EP1" createVehicle [0,0,0];
 					_cutter = createVehicle ["ClutterCutter_small_EP1", [getposATL player, 1, getDir player] call BIS_fnc_relPos, [], 0, "CAN_COLLIDE"];
 					player removeEventHandler ["AnimDone", _this];
 	
