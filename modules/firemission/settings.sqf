@@ -184,12 +184,11 @@
 		* 0: unit <object> artillery gun
 		* 1: startPoint <vector> position of startPoint
 		* 2: endPoint <vector> position of endPoint
-		* 3: dispersion <float> dispersion in meters
-		* 4: burstCount <int> number of bursts to fire
-		* 5: roundsPerBurst <int> number of rounds per burst
-		* 6: burstWaitTime <int> downtime between bursts
-		* 7: minSpottedDistance <int> range in m of how close a spotting round needs to be to be accepted
-		* 8: roundIndex <int> ammunition index from FNC_GetAmmoDisplayNameAndIndex
+		* 3: burstCount <int> number of bursts to fire
+		* 4: roundsPerBurst <int> number of rounds per burst
+		* 5: burstWaitTime <int> downtime between bursts
+		* 6: minSpottedDistance <int> range in m of how close a spotting round needs to be to be accepted
+		* 7: roundIndex <int> ammunition index from FNC_GetAmmoDisplayNameAndIndex
 
 		*
 		* Return Value:
