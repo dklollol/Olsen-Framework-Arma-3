@@ -30,6 +30,7 @@ if (isServer) then {
 	FW_WaveSizeCiv = 0;
 
 	//Players should be put in enclosed space, when their number reaches treshold, the defined "gate" will disappear for 30 seconds
+	//it has to be defined for wave respawn to work
 	//FW_RespawnPenGateWest = YourEditorObjectName;
 	//FW_RespawnPenGateEast = YourEditorObjectName;
 	//FW_RespawnPenGateInd = YourEditorObjectName;
