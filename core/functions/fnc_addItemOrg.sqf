@@ -16,10 +16,9 @@
  * Public: No
  */
 
-params ["_unit", "_loadoutType", "_item"];
-private ["_succes", "_parents", "_type", "_message"];
-private _amount = 1;
-private _position = "none";
+params ["_unit", "_loadoutType", "_item", "_succes", "_parents", "_type", "_message", "_amount", "_position"];
+_amount = 1;
+_position = "none";
 
 if !([_item, _unit] call FNC_checkClassname) exitWith {};
 

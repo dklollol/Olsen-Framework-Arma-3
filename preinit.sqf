@@ -13,6 +13,7 @@ PREP(canLinkItem);
 PREP(canAttachItem);
 PREP(addItemOrg);
 PREP(addItemRandomOrg);
+PREP(addItemRandomOrgPercent);
 PREP(addItemVehicleOrg);
 PREP(addItemVehicleRandomOrg);
 PREP(removeAllGear);

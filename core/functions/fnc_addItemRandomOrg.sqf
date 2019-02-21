@@ -13,10 +13,7 @@
  * Public: No
  */
 
-private ["_unit", "_loadoutType", "_items", "_amount", "_position", "_randomPick"];
-_unit = (_this select 0) select 0;
-_loadoutType = (_this select 0) select 1;
-_items = _this select 1;
+params ["_unit", "_loadoutType", "_items", "_amount", "_position", "_randomPick"];
 _amount = 1;
 _position = "NONE";
 
