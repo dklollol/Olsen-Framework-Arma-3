@@ -481,7 +481,7 @@ FNC_AtkVehicleStart =
 FNC_AtkStopAttack =
 {
 
-	_found = ATKcachedAttacks find _this select 0;
+	_found = ATKcachedAttacks find (_this select 0);
 	if(_found < 0) then
 	{
 		_temp = format ["AI Attack module:<br></br>Attack ""%1"" does not exist and therefore cannot be stopped, in file ""modules\ai_attack\settings.sqf"" does not exist.", _x];
@@ -489,7 +489,7 @@ FNC_AtkStopAttack =
 	}
 	else
 	{
-			terminate ATKcachedAttacks select (_found +1);
+			terminate (ATKcachedAttacks select (_found +1));
 	};
 
 };
